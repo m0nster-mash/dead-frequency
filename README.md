@@ -68,7 +68,7 @@ npm run db:studio
 ### Create Admin
 
 ```bash
-npx auth@latest create-admin --email admin@gmail.com --name "admin" --password "password"
+npx auth@latest create-admin --email admin@email.com --name "admin" --password "password"
 ```
 
 ### Kill Docker and remove old instances
