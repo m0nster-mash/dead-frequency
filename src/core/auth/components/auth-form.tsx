@@ -23,8 +23,8 @@ export function AuthForm({mode}: AuthFormProps) {
         const name = String(formData.get("name") || "");
 
         const result = mode === "register" ?
-            await authClient.signUp.email({name, email, password, callbackUrl: "/dashboard"}) :
-            await authClient.signIn.email({email, password, callbackUrl: "/dashboard"});
+            await authClient.signUp.email({name, email, password, callbackURL: "/dashboard"}) :
+            await authClient.signIn.email({email, password, callbackURL: "/dashboard"});
 
         if (result.error) {
             setError(result.error.message || "Authentication failed");
