@@ -1,4 +1,4 @@
-import {AuthCard} from "@/core/auth";
+import {AuthCard} from "@core/auth";
 
 export default function RegisterPage() {
     return <AuthCard initialMode="register"/>;
