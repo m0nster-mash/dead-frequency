@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type {Metadata} from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -6,10 +6,10 @@ export const metadata: Metadata = {
     description: "go away",
 };
 
-export default function RootLayout({ children }: LayoutProps < "/" > ) {
+export default function RootLayout({children}: LayoutProps<"/">) {
     return (
         <html lang="en">
-      <body>{children}</body>
-    </html>
+        <body>{children}</body>
+        </html>
     );
 }

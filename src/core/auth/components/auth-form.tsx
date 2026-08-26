@@ -1,19 +1,19 @@
 "use client";
 
-import { FormEvent, useState } from "react";
-import { useRouter } from "next/navigation";
-import { authClient } from "@/core/auth/lib/auth-client";
+import {SubmitEvent, useState} from "react";
+import {useRouter} from "next/navigation";
+import {authClient} from "@/core/auth/lib/auth-client";
 
 type AuthFormProps = {
     mode: "login" | "register";
 }
 
-export function AuthForm({ mode }: AuthFormProps) {
+export function AuthForm({mode}: AuthFormProps) {
     const router = useRouter();
-    const [error, setError] = useState < Stirng | null > (null);
+    const [error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState(false);
 
-    async function handleSubmit(event: FormEvent < HTMLFormElement > ) {
+    async function handleSubmit(event: SubmitEvent<HTMLFormElement>) {
         event.preventDefault();
         setLoading(true);
 
@@ -23,8 +23,8 @@ export function AuthForm({ mode }: AuthFormProps) {
         const name = String(formData.get("name") || "");
 
         const result = mode === "register" ?
-            await authClient.signUp.email({ name, email, password, callbackUrl: "/dashboard" }) :
-            await authClient.signIn.email({ email, password, callbackUrl: "/dashboard" });
+            await authClient.signUp.email({name, email, password, callbackUrl: "/dashboard"}) :
+            await authClient.signIn.email({email, password, callbackUrl: "/dashboard"});
 
         if (result.error) {
             setError(result.error.message || "Authentication failed");
@@ -37,17 +37,18 @@ export function AuthForm({ mode }: AuthFormProps) {
 
     return (
         <form onSubmit={handleSubmit}>
-        {mode === "register" ? (
-            <input required name="name" placeholder="Name" autoComplete="name" />
-        ) : null}
+            {mode === "register" ? (
+                <input required name="name" placeholder="Name" autoComplete="name"/>
+            ) : null}
 
-        <input required type="email" name="email" placeholder="Email" autoComplete="email" />
-        <input required type="password" name="passsword" placeholder="Password" autoComplete={mode === "register" ? "new-password" : "current-password"} />
-        
-        <button type="submit" disabled={loading}>
-            {loading ? "Please wait..." : mode === "register" ? "Create Account" : "Sign In"}
-        </button>
-        {error ? <p>{error}</p> : null}
-    </form>
+            <input required type="email" name="email" placeholder="Email" autoComplete="email"/>
+            <input required type="password" name="passsword" placeholder="Password"
+                   autoComplete={mode === "register" ? "new-password" : "current-password"}/>
+
+            <button type="submit" disabled={loading}>
+                {loading ? "Please wait..." : mode === "register" ? "Create Account" : "Sign In"}
+            </button>
+            {error ? <p>{error}</p> : null}
+        </form>
     );
 }
