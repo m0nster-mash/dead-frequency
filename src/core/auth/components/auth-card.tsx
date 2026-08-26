@@ -83,7 +83,7 @@ export function AuthCard({ initialMode = "login" }: AuthCardProps) {
 	        		<label className="form-label" htmlFor="password">
 	        			Password
 	        		</label>
-	        		<input id="password" required type="password" ame="password" placeholder="••••••••" autoComplete={mode === "register" ? "new-password" : "current-password"} />
+	        		<input id="password" required type="password" name="password" placeholder="••••••••" autoComplete={mode === "register" ? "new-password" : "current-password"} />
 	        	</div>
 	        	{error ? <p className="form-error">{error}</p> : null}
 	        	<button type="submit" disabled={loading} className="form-submit">
