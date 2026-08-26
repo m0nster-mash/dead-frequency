@@ -1,3 +1,5 @@
+import { AuthCard } from "@/core/auth";
+
 export default function RegisterPage() {
-    return <p>Registration area.</p>;
+    return <AuthCard initialMode="register"/>;
 }

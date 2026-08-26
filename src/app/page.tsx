@@ -1,12 +1,25 @@
-import LoginPage from "./login/page";
-import RegisterPage from "./register/page";
+import Link from "next/link";
+import { headers } from "next/headers";
+import { auth } from "@/core/auth";
+import { AuthCard } from "@/core/auth";
 
-export default function HomePage() {
+export default async function Home() {
+    const session = await auth.api.getSession({
+        headers: await headers()
+    });
+
     return (
-        <div>
-          <h1>Welcome to the Home Page</h1>
-          <LoginPage />
-          <RegisterPage />
-        </div>
+        <main>
+            <h1>go away</h1>
+            {session?.user ? (
+                <div>
+                    <p>Signed in as {session.user.email}</p>
+                </div>
+            ) : (
+                <div>
+                    <AuthCard initialMode="register"/>
+                </div>
+            )}
+        </main>
     );
 }
