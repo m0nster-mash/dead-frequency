@@ -7,7 +7,7 @@ export default async function GuestLayout({ children }: { children: React.ReactN
         header: await header()
     });
 
-    if (session ? .user) {
+    if (session?.user) {
         redirect("/dashboard");
     }
 
