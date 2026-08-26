@@ -3,8 +3,8 @@
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import { authClient } from "@/core/auth/lib/auth-client";
-import "@/shared/styles/forms.css";
-import styles from "./auth-card.module.css";
+// import "@/shared/styles/forms.css";
+// import styles from "./auth-card.module.css";
 
 type Mode = "login" | "register";
 type AuthCardProps = { initialMode ? : Mode; };
@@ -92,19 +92,19 @@ export function AuthCard({ initialMode = "login" }: AuthCardProps) {
 	        </form>
 	        <p>
 	        	{mode === "login" ? (
-	        		<p>
+	        		<span>
 	        			Need an account?
 	        			<span onClick={() => switchMode("register")}>
 	        				Register
 	        			</span>
-	        		</p>
+	        		</span>
 	        	) : (
-	        		<p>
+	        		<span>
 	        			Already have an account?
 	        			<span onClick={() => switchMode("login")}>
 	        				Sign in
 	        			</span>
-	        		</p>
+	        		</span>
 	        	)}
 	        </p>
 	    </div>

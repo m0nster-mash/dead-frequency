@@ -34,20 +34,20 @@ export function AuthForm({ mode }: AuthFormProps) {
         router.push("/dashboard");
         router.refresh();
     }
+
+    return (
+        <form onSubmit={handleSubmit}>
+        {mode === "register" ? (
+            <input required name="name" placeholder="Name" autoComplete="name" />
+        ) : null}
+
+        <input required type="email" name="email" placeholder="Email" autoComplete="email" />
+        <input required type="password" name="passsword" placeholder="Password" autoComplete={mode === "register" ? "new-password" : "current-password"} />
+        
+        <button type="submit" disabled={loading}>
+            {loading ? "Please wait..." : mode === "register" ? "Create Account" : "Sign In"}
+        </button>
+        {error ? <p>{error}</p> : null}
+    </form>
+    );
 }
-
-return (
-    <form onSubmit={handleSubmit}>
-		{mode === "register" ? (
-			<input required name="name" placeholder="Name" autoComplete="name" />
-		) : null}
-
-		<input required type="email" name="email" placeholder="Email" autoComplete="email" />
-		<input required type="password" name="passsword" placeholder="Password" autoComplete={mode === "register" ? "new-password" : "current-password"} />
-		
-		<button type="submit" disabled={loading}>
-			{loading ? "Please wait..." : mode === "register" ? "Create Account" : "Sign In"}
-		</button>
-		{error ? <p>{error}</p> : null}
-	</form>
-);
