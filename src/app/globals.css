@@ -115,6 +115,8 @@
     --form-danger: var(--color-danger);
     --form-danger-muted: var(--color-danger-muted);
 
+    --form-shadow-focus: var(--palette-gray);
+
     /* --------------------------------------------------------------------------
      * Layout / Motion
      * -------------------------------------------------------------------------- */

@@ -1,6 +1,7 @@
 # dead-frequencey
 
-Vanilla setup for:
+### Vanilla setup for:
+
 - Next.js (App Router, TypeScript)
 - Better Auth (email/password auth)
 - Drizzle ORM
@@ -43,16 +44,8 @@ npm run db:migrate
 ```bash
 npm run dev
 ```
+## Other Helpful Commands
 
-## Auth routes/pages
-
-- Better Auth API: `/api/auth/[...all]`
-- Login page: `/login`
-- Register page: `/register`
-- Protected page: `/dashboard`
-
-
-## Other
 ### Generate Secret
 
 ```bash
@@ -81,8 +74,8 @@ docker compose up -d
 docker exec -it dead-frequency-postgres-1 psql -U postgres -l
 ```
 
-
 ### Install dependencies when copying repo
+
 ```bash
 npm install
 npm install drizzle-orm postgres
