@@ -1,3 +1,5 @@
+import { AuthCard } from "@/core/auth";
+
 export default function LoginPage() {
-    return <p>Login area.</p>;
+    return <AuthCard initialMode="login"/>;
 }
