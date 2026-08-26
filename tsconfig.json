@@ -1,38 +1,51 @@
 {
-    "compilerOptions":
-    {
-        "target": "ES2017",
-        "lib": ["dom", "dom.iterable", "esnext"],
-        "allowJs": true,
-        "skipLibCheck": true,
-        "strict": true,
-        "noEmit": true,
-        "esModuleInterop": true,
-        "module": "esnext",
-        "moduleResolution": "bundler",
-        "resolveJsonModule": true,
-        "isolatedModules": true,
-        "jsx": "react-jsx",
-        "incremental": true,
-        "plugins": [
-        {
-            "name": "next"
-        }],
-        "paths":
-        {
-            "@/*": ["./src/*"],
-            "@core/auth": ["./src/core/auth/index.ts"],
-            "@core/dashboard": ["./src/core/dashboard/index.ts"],
-            "@shared/*": ["./src/shared/*"]
-        }
-    },
-    "include": [
-        "next-env.d.ts",
-        "**/*.ts",
-        "**/*.tsx",
-        ".next/types/**/*.ts",
-        ".next/dev/types/**/*.ts",
-        "**/*.mts"
+  "compilerOptions": {
+    "target": "ES2017",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
     ],
-    "exclude": ["node_modules"]
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "react-jsx",
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ],
+      "@core/auth": [
+        "./src/core/auth/index.ts"
+      ],
+      "@core/dashboard": [
+        "./src/core/dashboard/index.ts"
+      ],
+      "@shared/*": [
+        "./src/shared/*"
+      ]
+    }
+  },
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    ".next/dev/types/**/*.ts",
+    "**/*.mts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

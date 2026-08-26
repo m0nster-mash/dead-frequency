@@ -1,6 +1,6 @@
 "use client";
 
-import {FormEvent, useState} from "react";
+import {SubmitEvent, useState} from "react";
 import {useRouter} from "next/navigation";
 import {authClient} from "@/core/auth/lib/auth-client";
 import "@/shared/styles/forms.css";
@@ -23,7 +23,7 @@ export function AuthCard({initialMode = "login"}: AuthCardProps) {
         setError(null);
     }
 
-    async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    async function handleSubmit(event: SubmitEvent<HTMLFormElement>) {
         event.preventDefault();
         setLoading(true);
         setError(null);
