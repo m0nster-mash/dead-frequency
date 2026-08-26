@@ -2,7 +2,7 @@ import Link from "next/link";
 import { headers } from "next/headers";
 import { auth } from "@/core/auth";
 import { AuthCard } from "@/core/auth";
-import { SignOutButton } from "@/core/auth/components/sign-out-button";
+import DashboardPage from "./dashboard/page";
 
 export default async function Home() {
     const session = await auth.api.getSession({
@@ -13,15 +13,13 @@ export default async function Home() {
         <main>
             <h1>go away</h1>
             {session?.user ? (
-                <div>
-                    <p>Signed in as {session.user.email}</p>
-                    <p><SignOutButton /></p>
-                </div>
+                <div><DashboardPage /></div>
             ) : (
-                <div>
-                    <AuthCard initialMode="register"/>
-                </div>
+                <div><AuthCard initialMode="register"/></div>
             )}
+            <div>
+                <Link href="/styletest">Click here to see the style test page.</Link>
+            </div>
         </main>
     );
 }

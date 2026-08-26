@@ -1,55 +1,141 @@
 :root {
-    /* Base surfaces */
-    --color-bg: #ffffff;
-    --color-bg-elevated: #f5f5f7;
-    --color-surface: rgba(20, 20, 28, 0.75);
-    --color-surface-hover: rgba(255, 255, 255, 0.07);
-    --color-surface-muted: rgba(255, 255, 255, 0.04);
-    --color-surface-tabs: rgba(255, 255, 255, 0.06);
 
-    /* Text */
-    --color-foreground: #171717;
-    --color-text: #f5f5f7;
-    --color-text-muted: rgba(245, 245, 247, 0.65);
-    --color-text-subtle: rgba(245, 245, 247, 0.55);
-    --color-text-faint: rgba(245, 245, 247, 0.35);
-    --color-text-inactive: rgba(245, 245, 247, 0.6);
+    /* ==========================================================================
+     * Core Palette
+     *
+     * Raw colour values live here only.
+     * Semantic tokens below reference these values.
+     * ========================================================================== */
 
-    /* Brand / primary */
-    --color-primary-start: #6366f1;
-    --color-primary-end: #d946ef;
-    --color-primary-gradient: linear-gradient(135deg, var(--color-primary-start) 0%, var(--color-primary-end) 100%);
-    --color-brand-gradient: linear-gradient(135deg, #a5b4fc 0%, #f0abfc 100%);
-    --color-accent: #a5b4fc;
-    --color-accent-soft: #c4b5fd;
+    /* CRT neutrals */
+    --palette-black: #050707;
+    --palette-charcoal: #0b1010;
+    --palette-slate: #151c1b;
+    --palette-gray: #27302e;
+    --palette-gray-light: #59615d;
+    --palette-white: #d8ddd5;
+    --palette-white-bright: #eef1e9;
 
-    /* Borders */
-    --color-border: rgba(255, 255, 255, 0.08);
-    --color-border-input: rgba(255, 255, 255, 0.1);
-    --color-border-focus: var(--color-accent);
+    /* Phosphor / CRT green */
+    --palette-green-dark: #183b32;
+    --palette-green: #4f8f70;
+    --palette-green-bright: #8fbe9d;
 
-    /* Status */
-    --color-danger: #fca5a5;
-    --color-danger-bg: rgba(248, 113, 113, 0.1);
-    --color-danger-border: rgba(248, 113, 113, 0.25);
+    /* Warning / horror red */
+    --palette-red-dark: #4a1718;
+    --palette-red: #a63d3d;
+    --palette-red-bright: #d76a5f;
 
-    /* Effects */
-    --shadow-card: 0 20px 60px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.03) inset;
-    --shadow-primary: 0 8px 20px rgba(99, 102, 241, 0.35);
-    --shadow-primary-hover: 0 10px 24px rgba(99, 102, 241, 0.45);
-    --shadow-tab-active: 0 4px 14px rgba(99, 102, 241, 0.4);
-    --ring-focus: 0 0 0 3px rgba(99, 102, 241, 0.25);
+    /* ==========================================================================
+     * Semantic Colors
+     * ========================================================================== */
+    /* --------------------------------------------------------------------------
+     * Backgrounds
+     * -------------------------------------------------------------------------- */
+    --color-background: var(--palette-black);
+    --color-background-subtle: var(--palette-charcoal);
+    --color-surface: var(--palette-slate);
+    --color-surface-raised: var(--palette-gray);
+    --color-surface-hover: var(--palette-gray);
 
-    /* Page background */
-    --gradient-page: radial-gradient(circle at 20% 20%, #1e1b4b 0%, #0a0a0a 45%, #050505 100%);
+    /* --------------------------------------------------------------------------
+     * Content
+     * -------------------------------------------------------------------------- */
+    --color-text: var(--palette-white);
+    --color-text-strong: var(--palette-white-bright);
+    --color-text-muted: var(--palette-gray-light);
+    --color-text-disabled: var(--palette-gray-light);
+
+    /* --------------------------------------------------------------------------
+     * Brand / Primary
+     * -------------------------------------------------------------------------- */
+    --color-primary: var(--palette-green);
+    --color-primary-hover: var(--palette-green-bright);
+    --color-primary-muted: var(--palette-green-dark);
+    --color-on-primary: var(--palette-black);
+
+    /* --------------------------------------------------------------------------
+     * Borders / Dividers
+     * -------------------------------------------------------------------------- */
+    --color-border: var(--palette-gray);
+    --color-border-subtle: var(--palette-slate);
+    --color-border-strong: var(--palette-gray-light);
+    --color-focus: var(--palette-green-bright);
+
+    /* --------------------------------------------------------------------------
+     * Status
+     * -------------------------------------------------------------------------- */
+    --color-danger: var(--palette-red);
+    --color-danger-hover: var(--palette-red-bright);
+    --color-danger-muted: var(--palette-red-dark);
+    --color-on-danger: var(--palette-white-bright);
+
+    /* --------------------------------------------------------------------------
+     * Effects
+     * -------------------------------------------------------------------------- */
+    --shadow-color: var(--palette-black);
+
+    --shadow-sm:
+        0 2px 6px var(--shadow-color);
+
+    --shadow-md:
+        0 8px 24px var(--shadow-color);
+
+    --shadow-lg:
+        0 16px 48px var(--shadow-color);
+
+    --ring-focus:
+        0 0 0 3px var(--color-primary-muted);
+
+    /* --------------------------------------------------------------------------
+     * Page Treatment
+     * -------------------------------------------------------------------------- */
+    --gradient-page:
+        radial-gradient(circle at 50% 0%,
+        var(--palette-green-dark) 0%,
+        var(--palette-charcoal) 35%,
+        var(--palette-black) 75%);
+
+    /* --------------------------------------------------------------------------
+     * Form
+     * -------------------------------------------------------------------------- */
+    --form-background: var(--color-background);
+    --form-surface: var(--color-surface);
+    --form-border: var(--color-border);
+    --form-border-hover: var(--color-border-strong);
+
+    --form-text: var(--color-text);
+    --form-placeholder: var(--color-text-muted);
+    --form-label: var(--color-text);
+
+    --form-accent: var(--color-primary);
+    --form-accent-hover: var(--color-primary-hover);
+    --form-accent-muted: var(--color-primary-muted);
+
+    --form-danger: var(--color-danger);
+    --form-danger-muted: var(--color-danger-muted);
+
+    /* --------------------------------------------------------------------------
+     * Layout / Motion
+     * -------------------------------------------------------------------------- */
+    --form-radius: 4px;
+    --form-radius-sm: 2px;
+    --form-transition: 140ms ease;
+
+    /* --------------------------------------------------------------------------
+     * Typography
+     * -------------------------------------------------------------------------- */
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Inter,
+        Roboto,
+        Helvetica,
+        Arial,
+        sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-    :root {
-        --color-bg: #0a0a0a;
-        --color-foreground: #ededed;
-    }
-}
 
 html {
     height: 100%;
@@ -65,9 +151,12 @@ body {
     min-height: 100%;
     display: flex;
     flex-direction: column;
-    color: var(--color-foreground);
-    background: var(--color-bg);
+
+    color: var(--color-text);
+    background: var(--color-background);
+
     font-family: Arial, Helvetica, sans-serif;
+
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
@@ -83,8 +172,7 @@ a {
     text-decoration: none;
 }
 
-@media (prefers-color-scheme: dark) {
-    html {
-        color-scheme: dark;
-    }
+:focus-visible {
+    outline: none;
+    box-shadow: var(--ring-focus);
 }

@@ -3,7 +3,7 @@
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import { authClient } from "@/core/auth/lib/auth-client";
-// import "@/shared/styles/forms.css";
+import "@/shared/styles/forms.css";
 // import styles from "./auth-card.module.css";
 
 type Mode = "login" | "register";
@@ -62,31 +62,31 @@ export function AuthCard({ initialMode = "login" }: AuthCardProps) {
 	        		Register
 	        	</button>
 	        </div>
-	        <form className="form" onSubmit={handleSubmit} key={mode}>
+	        <form onSubmit={handleSubmit} key={mode}>
 	        	{mode === "register" ? (
-	        		<div className="form-field">
-	        			<label className="form-label" htmlFor="name">
+	        		<div>
+	        			<label htmlFor="name">
 	        				Name 
 	        			</label>
-	        			<input id="name" required name="name" placeholder="Jane Doe" autoComplete="name" className="form-input"/>
+	        			<input id="name" required name="name" placeholder="Jane Doe" autoComplete="name"/>
 	        		</div>          
 	        	) : null}
 
-	        	<div className="form-field">
-	        		<label className="form-label" htmlFor="email">
+	        	<div>
+	        		<label htmlFor="email">
 	        			Emails
 	        		</label>
-	        		<input id="email" required type="email" name="email" placeholder="you@example.com" autoComplete="email" className="form-input" />
+	        		<input id="email" required type="email" name="email" placeholder="you@example.com" autoComplete="email" />
 	        	</div>
 
-	        	<div className="form-field">
-	        		<label className="form-label" htmlFor="password">
+	        	<div>
+	        		<label htmlFor="password">
 	        			Password
 	        		</label>
 	        		<input id="password" required type="password" name="password" placeholder="••••••••" autoComplete={mode === "register" ? "new-password" : "current-password"} />
 	        	</div>
-	        	{error ? <p className="form-error">{error}</p> : null}
-	        	<button type="submit" disabled={loading} className="form-submit">
+	        	{error ? <p>{error}</p> : null}
+	        	<button type="submit" disabled={loading}>
 	        		{loading ? "Please wait..." : mode === "register" ? "Create account" : "Sign in"}
 	        	</button>
 	        </form>
