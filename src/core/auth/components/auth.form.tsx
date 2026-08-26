@@ -2,7 +2,7 @@
 
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
-import { authClient } from "@/lib/auth-client";
+import { authClient } from "@/core/auth/lib/auth-client";
 
 type AuthFormProps = {
     mode: "login" | "register";
@@ -37,7 +37,6 @@ export function AuthForm({ mode }: AuthFormProps) {
 }
 
 return (
-
     <form onSubmit={handleSubmit}>
 		{mode === "register" ? (
 			<input required name="name" placeholder="Name" autoComplete="name" />
