@@ -2,7 +2,7 @@ export default function Header() {
     return (
         <header className="topbar">
             <div className="topbar-left">
-                <button id="mobileMenu" aria-label="Open navigation">
+                <button className="icon-button mobile-menu-button" id="mobileMenu" aria-label="Open navigation">
                     <svg viewBox="0 0 24 24">
                         <path d="M4 6h16M4 12h16M4 18h16"/>
                     </svg>

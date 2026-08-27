@@ -1,12 +1,23 @@
-export default function Sidebar() {
+type SidebarProps = {
+    collapsed: boolean;
+    onToggle: () => void;
+};
+
+export default function Sidebar({collapsed, onToggle}: SidebarProps) {
     return (
-        <aside className="sidebar" id="sidebar">
+        <aside className={`sidebar${collapsed ? " sidebar--collapsed" : ""}`}
+               id="sidebar"
+               style={{width: "var(--current-sidebar-width)"}}>
             <div className="sidebar-header">
                 <a href="#" className="brand">
                     <span className="brand-mark">N</span>
                     <span className="brand-name">Nexus</span>
                 </a>
-                <button className="icon-button sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar">
+                <button className="icon-button sidebar-toggle"
+                        id="sidebarToggle"
+                        aria-label="Toggle sidebar"
+                        aria-expanded={!collapsed}
+                        onClick={onToggle}>
                     <svg viewBox="0 0 24 24" aria-hidden="true">
                         <path d="M15 18l-6-6 6-6"/>
                     </svg>
@@ -65,7 +76,7 @@ export default function Sidebar() {
             </nav>
             <div className="sidebar-footer">
                 <div className="user-card">
-                    <div className="avatar">JD</div>
+                    <div className="avatar">SK</div>
                     <div className="user-info">
                         <strong>Jordan Davis</strong>
                         <span>Administrator</span>
