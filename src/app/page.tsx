@@ -2,8 +2,7 @@ import Link from "next/link";
 import {headers} from "next/headers";
 import {auth} from "@/core/auth";
 import {AuthCard} from "@/core/auth";
-import DashboardPage from "@/app/(user)/dashboard/page";
-import SessionLayout from "@/app/components/session-layout";
+import DashboardPage from "./dashboard/page";
 
 export default async function Home() {
     const session = await auth.api.getSession({
@@ -12,7 +11,6 @@ export default async function Home() {
 
     return (
         <main>
-            <SessionLayout>
                 <h1>go away</h1>
                 <div>
                     {session?.user
@@ -22,7 +20,6 @@ export default async function Home() {
                 <div>
                     <Link href="/styletest">Click here to see the style test page.</Link>
                 </div>
-            </SessionLayout>
         </main>
     );
 }
