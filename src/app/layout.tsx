@@ -13,16 +13,16 @@ export default function RootLayout({children}: LayoutProps<"/">) {
     return (
         <html lang="en">
         <body>
-            <div className="app-shell">
-                <Header />
-                <div className="app-body">
-                    <Sidebar />
-                    <main className="app-content">
-                        {children}
-                    </main>
-                </div>
-                <Footer />
+        <div className="app-shell">
+            <Header/>
+            <div className="app-body">
+                <Sidebar/>
+                <main className="app-content">
+                    {children}
+                </main>
             </div>
+            <Footer/>
+        </div>
         </body>
         </html>
     );
