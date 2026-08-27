@@ -13,11 +13,9 @@ export default async function Home() {
         <main>
                 <h1>go away</h1>
                 <div>
-                    {session?.user ? (
-                        <DashboardPage/>
-                    ) : (
-                        <AuthCard initialMode="register"/>
-                    )}
+                    {session?.user
+                        ? (<DashboardPage/>)
+                        : (<AuthCard initialMode="register"/>)}
                 </div>
                 <div>
                     <Link href="/styletest">Click here to see the style test page.</Link>
