@@ -1,0 +1,91 @@
+.page {
+    min-height: 75vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+}
+
+.card {
+    width: 100%;
+    max-width: 400px;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 20px;
+    padding: 2.25rem 2rem;
+    box-shadow: var(--shadow-color);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    color: var(--color-text);
+}
+
+.brand {
+    text-align: center;
+    margin-bottom: 1.75rem;
+}
+
+.brandTitle {
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    background: var(--gradient-page);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.brandSubtitle {
+    margin-top: 0.35rem;
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+}
+
+.tabs {
+    display: flex;
+    gap: 4px;
+    background: var(--color-primary);
+    padding: 4px;
+    border-radius: 12px;
+    margin-bottom: 1.75rem;
+}
+
+.tab {
+    flex: 1;
+    border: none;
+    background: transparent;
+    color: var(--color-primary-muted);
+    font-size: 0.9rem;
+    font-weight: 600;
+    padding: 0.55rem 0.75rem;
+    border-radius: 9px;
+    cursor: pointer;
+    transition: color 0.2s ease, background 0.2s ease;
+}
+
+.tab:hover {
+    color: var(--color-text);
+}
+
+.tabActive {
+    background: var(--gradient-page);
+    color: var(--color-text);
+    box-shadow: var(--shadow-color);
+}
+
+.footer {
+    margin-top: 1.5rem;
+    text-align: center;
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+}
+
+.footerLink {
+    color: var(--color-text-strong);
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.footerLink:hover {
+    text-decoration: underline;
+}
