@@ -13,14 +13,10 @@ export default async function Home() {
     return (
         <main>
             <SessionLayout>
-                <h1>go away</h1>
                 <div>
                     {session?.user
                         ? (<DashboardPage/>)
                         : (<AuthCard initialMode="register"/>)}
-                </div>
-                <div>
-                    <Link href="/styletest">Click here to see the style test page.</Link>
                 </div>
             </SessionLayout>
         </main>

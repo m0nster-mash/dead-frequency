@@ -1,0 +1,194 @@
+.shell {
+    display: flex;
+    min-height: 100vh;
+    width: 100%;
+    background: var(--gradient-page);
+    color: var(--color-text);
+}
+
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    width: 240px;
+    flex-shrink: 0;
+    background: var(--color-surface);
+    border-right: 1px solid var(--color-border);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    transition: width 0.2s ease;
+    overflow: hidden;
+}
+
+.sidebarCollapsed {
+    width: 64px;
+}
+
+.sidebarHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 1rem;
+    border-bottom: 1px solid var(--color-border);
+    white-space: nowrap;
+}
+
+.brand {
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    background: var(--gradient-page);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.collapseButton {
+    border: 1px solid var(--color-border);
+    background: var(--color-background-subtle);
+    color: var(--color-text);
+    border-radius: 8px;
+    width: 28px;
+    height: 28px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    line-height: 1;
+    flex-shrink: 0;
+}
+
+.collapseButton:hover {
+    background: var(--color-surface-hover);
+}
+
+.profile {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem;
+    border-bottom: 1px solid var(--color-border);
+    white-space: nowrap;
+    transition: background 0.15s ease;
+}
+
+.profile:hover {
+    background: var(--color-surface-hover);
+}
+
+.profileCollapsed {
+    justify-content: center;
+    padding: 1rem 0.5rem;
+}
+
+.avatar {
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+    border-radius: 8px;
+    background: var(--gradient-page);
+    border: 1px solid var(--color-border-subtle);
+}
+
+.profileInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    overflow: hidden;
+}
+
+.profileName {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.profileEmail {
+    font-size: 0.72rem;
+    color: var(--color-text-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.nav {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 0.75rem 0.5rem;
+    flex: 1;
+}
+
+.navItem {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.6rem 0.65rem;
+    border-radius: 10px;
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+    font-weight: 500;
+    white-space: nowrap;
+    transition: background 0.15s ease, color 0.15s ease;
+}
+
+.navItem:hover {
+    background: var(--color-surface-hover);
+    color: var(--color-text);
+}
+
+.navItemActive {
+    background: var(--gradient-page);
+    color: var(--color-text);
+    box-shadow: var(--shadow-color);
+}
+
+.navIcon {
+    font-size: 1.1rem;
+    flex-shrink: 0;
+    width: 1.25rem;
+    text-align: center;
+}
+
+.navLabel {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.sidebarFooter {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 1rem;
+    border-top: 1px solid var(--color-border);
+}
+
+.userInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    overflow: hidden;
+}
+
+.userName {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.userEmail {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.content {
+    flex: 1;
+    padding: 2rem;
+    overflow-y: auto;
+}
