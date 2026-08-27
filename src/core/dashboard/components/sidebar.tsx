@@ -68,13 +68,13 @@ export default async function Sidebar() {
                     </svg>
                     <span>Settings</span>
                 </a>
-                <a href="#" className="nav-item">
-                    <svg viewBox="0 0 24 24">
-                        <path d="M4 4h16v16H4z"/>
-                        <path d="M8 8h8M8 12h8M8 16h5"/>
-                    </svg>
-                    <span>Documents</span>
-                </a>
+                {/*<a href="#" className="nav-item">*/}
+                {/*    <svg viewBox="0 0 24 24">*/}
+                {/*        <path d="M4 4h16v16H4z"/>*/}
+                {/*        <path d="M8 8h8M8 12h8M8 16h5"/>*/}
+                {/*    </svg>*/}
+                {/*    <span>Documents</span>*/}
+                {/*</a>*/}
             </nav>
             <div className="sidebar-footer">
                 {session ? (

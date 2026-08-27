@@ -1,4 +1,3 @@
-import Link from "next/link";
 import {headers} from "next/headers";
 import {auth} from "@/core/auth";
 import {AuthCard} from "@/core/auth";
@@ -16,9 +15,6 @@ export default async function Home() {
                 {session?.user
                     ? (<DashboardPage/>)
                     : (<AuthCard initialMode="register"/>)}
-            </div>
-            <div>
-                <Link href="/styletest">Click here to see the style test page.</Link>
             </div>
         </main>
     );
