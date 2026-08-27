@@ -1,7 +1,7 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { useSidebar } from "./sidebar-context";
+import { useSidebar } from "../../../app/dashboard/components/sidebar-context";
 
 type SidebarFrameProps = {
     toggleButton: ReactNode;

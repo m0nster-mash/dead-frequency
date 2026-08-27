@@ -1,7 +1,7 @@
 "use client";
 
 import type { CSSProperties, ReactNode } from "react";
-import { useSidebar } from "./sidebar-context";
+import { useSidebar } from "@/app/dashboard/components/sidebar-context";
 
 type AppShellFrameProps = {
     sidebar: ReactNode;

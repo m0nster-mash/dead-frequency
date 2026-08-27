@@ -2,6 +2,7 @@ import {headers} from "next/headers";
 import {auth} from "@core/auth";
 import SidebarFrame from "./sidebar-frame";
 import SidebarToggleButton from "./sidebar-toggle-button";
+import {SignOutButton} from "@core/auth";
 
 export default async function Sidebar() {
     const requestHeaders = await headers();
@@ -26,7 +27,7 @@ export default async function Sidebar() {
             </div>
             <nav className="sidebar-nav">
                 <p className="nav-label">Workspace</p>
-                <a href="#" className="nav-item active">
+                <a href="/" className="nav-item active">
                     <svg viewBox="0 0 24 24">
                         <rect x="3" y="3" width="7" height="7" rx="1"/>
                         <rect x="14" y="3" width="7" height="7" rx="1"/>
@@ -35,29 +36,29 @@ export default async function Sidebar() {
                     </svg>
                     <span>Dashboard</span>
                 </a>
-                <a href="#" className="nav-item">
-                    <svg viewBox="0 0 24 24">
-                        <path d="M4 19V5"/>
-                        <path d="M4 19h16"/>
-                        <path d="M7 16l4-5 3 3 5-7"/>
-                    </svg>
-                    <span>Analytics</span>
-                </a>
-                <a href="#" className="nav-item">
+                {/*<a href="/" className="nav-item">*/}
+                {/*    <svg viewBox="0 0 24 24">*/}
+                {/*        <path d="M4 19V5"/>*/}
+                {/*        <path d="M4 19h16"/>*/}
+                {/*        <path d="M7 16l4-5 3 3 5-7"/>*/}
+                {/*    </svg>*/}
+                {/*    <span>Analytics</span>*/}
+                {/*</a>*/}
+                <a href="/style-test" className="nav-item">
                     <svg viewBox="0 0 24 24">
                         <path d="M4 5h16v14H4z"/>
                         <path d="M8 9h8M8 13h5"/>
                     </svg>
-                    <span>Projects</span>
+                    <span>Style Test</span>
                 </a>
-                <a href="#" className="nav-item">
-                    <svg viewBox="0 0 24 24">
-                        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
-                        <circle cx="9" cy="7" r="4"/>
-                        <path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
-                    </svg>
-                    <span>Team</span>
-                </a>
+                {/*<a href="#" className="nav-item">*/}
+                {/*    <svg viewBox="0 0 24 24">*/}
+                {/*        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>*/}
+                {/*        <circle cx="9" cy="7" r="4"/>*/}
+                {/*        <path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>*/}
+                {/*    </svg>*/}
+                {/*    <span>Team</span>*/}
+                {/*</a>*/}
                 <p className="nav-label nav-label-spaced">Management</p>
                 <a href="#" className="nav-item">
                     <svg viewBox="0 0 24 24">
@@ -77,7 +78,7 @@ export default async function Sidebar() {
             </nav>
             <div className="sidebar-footer">
                 {session ? (
-                    <button>Logout</button>
+                    <SignOutButton />
                 ) : (<div></div>)}
             </div>
         </SidebarFrame>

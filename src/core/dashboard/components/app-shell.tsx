@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { SidebarProvider } from "./sidebar-context";
+import { SidebarProvider } from "@/app/dashboard/components/sidebar-context";
 import AppShellFrame from "./app-shell-frame";
 import Sidebar from "./sidebar";
 import Header from "./header";

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import AppShell from "@/app/dashboard/components/app-shell";
+import AppShell from "@/core/dashboard/components/app-shell";
 
 export const metadata: Metadata = {
     title: "dead-frequency",

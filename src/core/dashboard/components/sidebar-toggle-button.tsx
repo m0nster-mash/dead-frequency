@@ -1,6 +1,6 @@
 "use client";
 
-import {useSidebar} from "./sidebar-context";
+import {useSidebar} from "../../../app/dashboard/components/sidebar-context";
 
 export default function SidebarToggleButton() {
     const {collapsed, toggle} = useSidebar();
