@@ -1,36 +1,28 @@
-import { headers } from "next/headers";
+import {headers} from "next/headers";
 import {auth} from "@core/auth";
+import SidebarFrame from "./sidebar-frame";
+import SidebarToggleButton from "./sidebar-toggle-button";
 
-type SidebarProps = {
-    collapsed: boolean;
-    onToggle: () => void;
-};
-
-export default async function Sidebar({collapsed, onToggle}: SidebarProps) {
+export default async function Sidebar() {
     const requestHeaders = await headers();
-    const session = await auth.api.getSession({ headers: requestHeaders });
+    const session = await auth.api.getSession({headers: requestHeaders});
 
-    if(session === null) {
-        return;
-    }
+    const userName = session ? session.user.name : null;
+    const userRole = session ? session.user.role : null;
 
     return (
-        <aside className={`sidebar${collapsed ? " sidebar--collapsed" : ""}`}
-               id="sidebar"
-               style={{width: "var(--current-sidebar-width)"}}>
-            <div className="sidebar-header">
-                <a href="#" className="brand">
-                    <span className="brand-name">dead-frequency</span>
-                </a>
-                <button className="icon-button sidebar-toggle"
-                        id="sidebarToggle"
-                        aria-label="Toggle sidebar"
-                        aria-expanded={!collapsed}
-                        onClick={onToggle}>
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
-                        <path d="M15 18l-6-6 6-6"/>
-                    </svg>
-                </button>
+        <SidebarFrame toggleButton={<SidebarToggleButton/>}>
+            <div className="sidebar-footer">
+                {session ? (
+                    <div className="user-card">
+                        <div className="avatar">SK</div>
+                        <div className="user-info">
+                            <strong>{userName}</strong>
+                            <span>{userRole}</span>
+                        </div>
+                        <button className="more-button" aria-label="More options">•••</button>
+                    </div>
+                ) : (<span></span>)}
             </div>
             <nav className="sidebar-nav">
                 <p className="nav-label">Workspace</p>
@@ -84,15 +76,10 @@ export default async function Sidebar({collapsed, onToggle}: SidebarProps) {
                 </a>
             </nav>
             <div className="sidebar-footer">
-                <div className="user-card">
-                    <div className="avatar">SK</div>
-                    <div className="user-info">
-                        <strong>{session.user.name}</strong>
-                        <span>{session.user.role}</span>
-                    </div>
-                    <button className="more-button" aria-label="More options">•••</button>
-                </div>
+                {session ? (
+                    <button>Logout</button>
+                ) : (<div></div>)}
             </div>
-        </aside>
+        </SidebarFrame>
     );
 }

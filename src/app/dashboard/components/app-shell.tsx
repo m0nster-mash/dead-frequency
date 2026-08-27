@@ -1,4 +1,6 @@
-// import {useState, type CSSProperties, ReactNode} from "react";
+import type { ReactNode } from "react";
+import { SidebarProvider } from "./sidebar-context";
+import AppShellFrame from "./app-shell-frame";
 import Sidebar from "./sidebar";
 import Header from "./header";
 
@@ -6,22 +8,16 @@ type AppShellProps = {
     children: ReactNode;
 };
 
-export default function AppShell({children}: AppShellProps) {
-    const [collapsed, setCollapsed] = useState(false);
-
-    const shellStyle = {
-        "--current-sidebar-width": collapsed
-            ? "var(--sidebar-collapsed-width)"
-            : "var(--sidebar-width)",
-    } as CSSProperties;
-
+// This stays a Server Component. It never uses hooks itself — it just
+// composes Server Components (Sidebar, Header) and hands them to the
+// Client Component (AppShellFrame) as props/children, so they never
+// get pulled into the client bundle.
+export default function AppShell({ children }: AppShellProps) {
     return (
-        <div className="app" style={shellStyle}>
-            <Sidebar collapsed={collapsed} onToggle={() => setCollapsed((v) => !v)}/>
-            <div className="main-shell">
-                <Header/>
-                <main className="app-content">{children}</main>
-            </div>
-        </div>
+        <SidebarProvider>
+            <AppShellFrame sidebar={<Sidebar />} header={<Header />}>
+                {children}
+            </AppShellFrame>
+        </SidebarProvider>
     );
 }
