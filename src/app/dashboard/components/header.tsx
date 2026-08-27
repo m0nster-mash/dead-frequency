@@ -2,14 +2,7 @@ export default function Header() {
     return (
         <header className="topbar">
             <div className="topbar-left">
-                <button className="icon-button mobile-menu-button" id="mobileMenu" aria-label="Open navigation">
-                    <svg viewBox="0 0 24 24">
-                        <path d="M4 6h16M4 12h16M4 18h16"/>
-                    </svg>
-                </button>
                 <div className="breadcrumb">
-                    <span>Workspace</span>
-                    <span>/</span>
                     <strong>Dashboard</strong>
                 </div>
             </div>
@@ -21,7 +14,7 @@ export default function Header() {
                     </svg>
                     <span className="notification-dot"></span>
                 </button>
-                <div className="topbar-avatar">JD</div>
+                <div className="topbar-avatar">SP</div>
             </div>
         </header>
     );

@@ -1,6 +1,4 @@
-"use client";
-
-import {useState, type CSSProperties, ReactNode} from "react";
+// import {useState, type CSSProperties, ReactNode} from "react";
 import Sidebar from "./sidebar";
 import Header from "./header";
 

@@ -57,6 +57,30 @@
 
     --transition-fast: 150ms ease;
     --transition-normal: 250ms ease;
+
+
+    /* Form */
+    --form-background: var(--color-bg);
+    --form-surface: var(--color-surface);
+    --form-border: var(--color-border);
+    --form-border-hover: var(--color-border-strong);
+
+    --form-text: var(--color-primary-text);
+    --form-placeholder: var(--color-text-muted);
+    --form-label: var(--color-primary-text);
+
+    --form-accent: var(--color-primary);
+    --form-accent-hover: var(--color-primary-hover);
+    --form-accent-muted: var(--color-surface-muted);
+
+    --form-danger: var(--color-danger);
+    --form-danger-muted: var(--color-danger-bg);
+
+    --form-shadow-focus: var(--color-gray-500);
+
+    --form-radius: 4px;
+    --form-radius-sm: 2px;
+    --form-transition: 140ms ease;
 }
 
 
@@ -118,7 +142,6 @@ svg {
     overflow: hidden;
 }
 
-
 /* =========================================================
    SIDEBAR
    ========================================================= */
@@ -170,8 +193,9 @@ svg {
 }
 
 .brand-name {
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 700;
+    letter-spacing: 0.15em;
     white-space: nowrap;
 }
 

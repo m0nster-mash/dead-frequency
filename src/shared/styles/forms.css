@@ -150,7 +150,7 @@ input.error,
 textarea.error,
 select.error {
     border-color: var(--form-danger);
-    background-color: var(--color-danger-muted);
+    background-color: var(--color-danger-bg);
 }
 
 /* ==========================================================================
