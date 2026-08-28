@@ -1,6 +1,7 @@
 import {headers} from "next/headers";
 import {auth} from "@core/auth";
 import BellIcon from "@/shared/svg/bell-icon.svg";
+import {ThemeToggle} from "@/app/components/theme-toggle"
 
 export default async function Header() {
     const requestHeaders = await headers();
@@ -23,6 +24,7 @@ export default async function Header() {
                 </div>
             </div>
             <div className="topbar-right">
+                <ThemeToggle />
                 <button className="icon-button notification-button" aria-label="Notifications">
                     <BellIcon/>
                     <span className="notification-dot"></span>
