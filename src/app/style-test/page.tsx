@@ -2,7 +2,7 @@
 
 import {useState} from "react";
 import Image from 'next/image'
-import Form from 'next/form'
+import './style-test.css'
 
 function StyleTestPage() {
     const [checked, setChecked] = useState(true);
@@ -14,9 +14,6 @@ function StyleTestPage() {
         <div>
             <div className="test-harness-header">
                 <h1 className="margin:0;">HTML Element Test Page</h1>
-                <p>Every standard HTML element, organized into sections. Elements themselves carry no styling — apply
-                    your
-                    stylesheet to see its effects.</p>
             </div>
 
             <nav className="toc" aria-label="Table of contents">
@@ -34,29 +31,33 @@ function StyleTestPage() {
                     <li><a href="#quotes-code">Quotes &amp; Code</a></li>
                 </ul>
             </nav>
-
             <div>
-
                 {/*HEADINGS */}
                 <section className="test-section" id="headings">
                     <span className="section-label">Headings</span>
-                    <div className="component-row"><span className="component-tag">&lt;h1&gt;</span><h1>Heading Level
-                        1</h1>
+                    <div className="component-row">
+                        <div className="component-tag">&lt;h1&gt;</div>
+                        <h1>Heading Level 1</h1>
                     </div>
-                    <div className="component-row"><span className="component-tag">&lt;h2&gt;</span><h2>Heading Level
-                        2</h2>
+                    <div className="component-row">
+                        <span className="component-tag">&lt;h2&gt;</span>
+                        <h2>Heading Level 2</h2>
                     </div>
-                    <div className="component-row"><span className="component-tag">&lt;h3&gt;</span><h3>Heading Level
-                        3</h3>
+                    <div className="component-row">
+                        <span className="component-tag">&lt;h3&gt;</span>
+                        <h3>Heading Level 3</h3>
                     </div>
-                    <div className="component-row"><span className="component-tag">&lt;h4&gt;</span><h4>Heading Level
-                        4</h4>
+                    <div className="component-row">
+                        <span className="component-tag">&lt;h4&gt;</span>
+                        <h4>Heading Level 4</h4>
                     </div>
-                    <div className="component-row"><span className="component-tag">&lt;h5&gt;</span><h5>Heading Level
-                        5</h5>
+                    <div className="component-row">
+                        <span className="component-tag">&lt;h5&gt;</span>
+                        <h5>Heading Level 5</h5>
                     </div>
-                    <div className="component-row"><span className="component-tag">&lt;h6&gt;</span><h6>Heading Level
-                        6</h6>
+                    <div className="component-row">
+                        <span className="component-tag">&lt;h6&gt;</span>
+                        <h6>Heading Level 6</h6>
                     </div>
                 </section>
 
@@ -65,43 +66,62 @@ function StyleTestPage() {
                     <span className="section-label">Text &amp; Inline Semantics</span>
 
                     <div className="component-row">
-                        <span className="component-tag">&lt;p&gt;</span>
-                        <p>This is a standard paragraph of text used to test line height, font size, color, and margin
-                            defaults
-                            across a normal block of prose content.</p>
+                        <div className="component-tag">&lt;p&gt;</div>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                            labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                            laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
+                            voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+                            cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
                     </div>
 
                     <div className="component-row">
                         <span className="component-tag">&lt;strong&gt; / &lt;b&gt; / &lt;em&gt; / &lt;i&gt;</span>
-                        <p><strong>Strong importance text.</strong> <b>Bold text.</b> <em>Emphasized text.</em> <i>Italic
-                            text.</i></p>
+                        <ul>
+                            <li className={"list-element"}><strong>Strong importance text.</strong></li>
+                            <li className={"list-element"}><b>Bold text.</b></li>
+                            <li className={"list-element"}><em>Emphasized text.</em></li>
+                            <li className={"list-element"}>Italic text.</li>
+                        </ul>
                     </div>
 
                     <div className="component-row">
                         <span className="component-tag">&lt;mark&gt; / &lt;small&gt; / &lt;u&gt; / &lt;s&gt;</span>
-                        <p>
-                            <mark>Marked/highlighted text.</mark>
-                            <small>Small print text.</small> <u>Underlined text.</u> <s>Strikethrough text.</s></p>
+                        <ul>
+                            <li className={"list-element"}>
+                                <mark>Marked/highlighted text.</mark>
+                            </li>
+                            <li className={"list-element"}><small>Small print text.</small></li>
+                            <li className={"list-element"}><u>Underlined text.</u></li>
+                            <li className={"list-element"}><s>Strikethrough text.</s></li>
+                        </ul>
                     </div>
 
                     <div className="component-row">
                         <span className="component-tag">&lt;del&gt; / &lt;ins&gt;</span>
-                        <p>
-                            <del>Deleted text.</del>
-                            <ins>Inserted text.</ins>
-                        </p>
+                        <ul>
+                            <li className={"list-element"}>
+                                <del>Deleted text.</del>
+                            </li>
+                            <li className={"list-element"}>
+                                <ins>Inserted text.</ins>
+                            </li>
+                        </ul>
                     </div>
 
                     <div className="component-row">
                         <span className="component-tag">&lt;sub&gt; / &lt;sup&gt;</span>
-                        <p>Water is H<sub>2</sub>O. Einstein's equation is E = mc<sup>2</sup>.</p>
+                        <ul>
+                            <li className={"list-element"}>Water is H<sub>2</sub>O.</li>
+                            <li className={"list-element"}> Einstein's equation is E = mc<sup>2</sup>.</li>
+                        </ul>
                     </div>
 
                     <div className="component-row">
                         <span className="component-tag">&lt;abbr&gt; / &lt;cite&gt; / &lt;dfn&gt;</span>
-                        <p><abbr title="HyperText Markup Language">HTML</abbr> is defined by the <cite>W3C
-                            specification</cite>.
-                            A <dfn>dfn element</dfn> represents a term being defined.</p>
+                        <p>
+                            <abbr title="HyperText Markup Language">HTML</abbr> is defined by the <cite>W3C
+                            specification</cite>. A <dfn>dfn element</dfn> represents a term being defined.
+                        </p>
                     </div>
 
                     <div className="component-row">

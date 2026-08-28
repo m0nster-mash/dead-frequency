@@ -6,7 +6,7 @@ body {
 
 .test-harness-header {
     padding: 1.5rem 2rem;
-    border-bottom: 3px solid #333;
+    border-bottom: 3px solid var(--color-border-strong);
 }
 
 .test-harness-header p {
@@ -31,12 +31,13 @@ section.test-section {
     border-radius: 4px;
     margin: 2rem 0;
     padding: 1rem 1.5rem 1.5rem 1.5rem;
+    background-color: #FFF;
 }
 
 section.test-section > .section-label {
     display: inline-block;
     font-family: monospace;
-    font-size: 0.75rem;
+    font-size: var(--font-size-xs);
     text-transform: uppercase;
     letter-spacing: 0.05em;
     background: #eee;
@@ -60,7 +61,14 @@ section.test-section > .section-label {
 .component-row > .component-tag {
     display: block;
     font-family: monospace;
-    font-size: 0.7rem;
     color: #888;
     margin-bottom: 0.4rem;
+    padding: 8px;
+    background-color: #eee;
+    font-size: var(--font-size-md);
+    border: 1px solid var(--color-border);
+}
+
+.list-element {
+    padding: 0.5em;
 }
