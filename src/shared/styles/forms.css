@@ -1,400 +1,400 @@
-/* ==========================================================================
- * Base resets scoped to form controls
- * ========================================================================== */
+/*!* ==========================================================================*/
+/* * Base resets scoped to form controls*/
+/* * ========================================================================== *!*/
 
-input,
-textarea,
-select,
-button {
-    font-family: inherit;
-    font-size: 0.95rem;
-    color: var(--form-text);
-    margin: 0;
-}
+/*input,*/
+/*textarea,*/
+/*select,*/
+/*button {*/
+/*    font-family: inherit;*/
+/*    font-size: 0.95rem;*/
+/*    color: var(--form-text);*/
+/*    margin: 0;*/
+/*}*/
 
-*,
-*::before,
-*::after {
-    box-sizing: border-box;
-}
+/**,*/
+/**::before,*/
+/**::after {*/
+/*    box-sizing: border-box;*/
+/*}*/
 
-/* ==========================================================================
- * Layout helpers
- * ========================================================================== */
+/*!* ==========================================================================*/
+/* * Layout helpers*/
+/* * ========================================================================== *!*/
 
-form {
-    max-width: 480px;
-}
+/*form {*/
+/*    max-width: 480px;*/
+/*}*/
 
-.form-field {
-    margin-bottom: 1.25rem;
-}
+/*.form-field {*/
+/*    margin-bottom: 1.25rem;*/
+/*}*/
 
-fieldset {
-    border: 1px solid var(--form-border);
-    border-radius: var(--form-radius);
-    padding: 1.25rem 1.5rem 1.5rem;
-    margin: 0 0 1.5rem;
-}
+/*fieldset {*/
+/*    border: 1px solid var(--form-border);*/
+/*    border-radius: var(--form-radius);*/
+/*    padding: 1.25rem 1.5rem 1.5rem;*/
+/*    margin: 0 0 1.5rem;*/
+/*}*/
 
-legend {
-    padding: 0 0.5rem;
-    font-weight: 600;
-    font-size: 0.95rem;
-    color: var(--form-text);
-}
+/*legend {*/
+/*    padding: 0 0.5rem;*/
+/*    font-weight: 600;*/
+/*    font-size: 0.95rem;*/
+/*    color: var(--form-text);*/
+/*}*/
 
-label {
-    display: block;
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: var(--form-label);
-    margin-bottom: 0.4rem;
-    letter-spacing: 0.01em;
-}
+/*label {*/
+/*    display: block;*/
+/*    font-size: 0.85rem;*/
+/*    font-weight: 600;*/
+/*    color: var(--form-label);*/
+/*    margin-bottom: 0.4rem;*/
+/*    letter-spacing: 0.01em;*/
+/*}*/
 
-.form-hint {
-    font-size: 0.8rem;
-    color: var(--form-placeholder);
-    margin-top: 0.35rem;
-}
+/*.form-hint {*/
+/*    font-size: 0.8rem;*/
+/*    color: var(--form-placeholder);*/
+/*    margin-top: 0.35rem;*/
+/*}*/
 
-.form-error {
-    font-size: 0.8rem;
-    color: var(--form-danger);
-    margin-top: 0.35rem;
-}
+/*.form-error {*/
+/*    font-size: 0.8rem;*/
+/*    color: var(--form-danger);*/
+/*    margin-top: 0.35rem;*/
+/*}*/
 
-/* ==========================================================================
- * Text inputs, text areas, selects
- * ========================================================================== */
+/*!* ==========================================================================*/
+/* * Text inputs, text areas, selects*/
+/* * ========================================================================== *!*/
 
-input[type="text"],
-input[type="email"],
-input[type="password"],
-input[type="number"],
-input[type="tel"],
-input[type="url"],
-input[type="search"],
-input[type="date"],
-input[type="time"],
-input[type="datetime-local"],
-input[type="month"],
-input[type="week"],
-textarea,
-select {
-    width: 100%;
-    padding: 0.6rem 0.75rem;
-    background-color: var(--form-background);
-    border: 1px solid var(--form-border);
-    border-radius: var(--form-radius-sm);
-    transition: border-color var(--form-transition), box-shadow var(--form-transition);
-    line-height: 1.4;
-}
+/*input[type="text"],*/
+/*input[type="email"],*/
+/*input[type="password"],*/
+/*input[type="number"],*/
+/*input[type="tel"],*/
+/*input[type="url"],*/
+/*input[type="search"],*/
+/*input[type="date"],*/
+/*input[type="time"],*/
+/*input[type="datetime-local"],*/
+/*input[type="month"],*/
+/*input[type="week"],*/
+/*textarea,*/
+/*select {*/
+/*    width: 100%;*/
+/*    padding: 0.6rem 0.75rem;*/
+/*    background-color: var(--form-background);*/
+/*    border: 1px solid var(--form-border);*/
+/*    border-radius: var(--form-radius-sm);*/
+/*    transition: border-color var(--form-transition), box-shadow var(--form-transition);*/
+/*    line-height: 1.4;*/
+/*}*/
 
-input:hover,
-textarea:hover,
-select:hover {
-    border-color: var(--form-border-hover);
-}
+/*input:hover,*/
+/*textarea:hover,*/
+/*select:hover {*/
+/*    border-color: var(--form-border-hover);*/
+/*}*/
 
-input::placeholder,
-textarea::placeholder {
-    color: var(--form-placeholder);
-}
+/*input::placeholder,*/
+/*textarea::placeholder {*/
+/*    color: var(--form-placeholder);*/
+/*}*/
 
-input:focus,
-textarea:focus,
-select:focus {
-    outline: none;
-    border-color: var(--form-accent);
-    box-shadow: var(--form-shadow-focus);
-}
+/*input:focus,*/
+/*textarea:focus,*/
+/*select:focus {*/
+/*    outline: none;*/
+/*    border-color: var(--form-accent);*/
+/*    box-shadow: var(--form-shadow-focus);*/
+/*}*/
 
-textarea {
-    resize: vertical;
-    min-height: 6rem;
-}
+/*textarea {*/
+/*    resize: vertical;*/
+/*    min-height: 6rem;*/
+/*}*/
 
-select {
-    appearance: none;
-    background-repeat: no-repeat;
-    background-position: right 0.85rem center;
-    padding-right: 2.25rem;
-    cursor: pointer;
-}
+/*select {*/
+/*    appearance: none;*/
+/*    background-repeat: no-repeat;*/
+/*    background-position: right 0.85rem center;*/
+/*    padding-right: 2.25rem;*/
+/*    cursor: pointer;*/
+/*}*/
 
-select[multiple] {
-    background-image: none;
-    padding-right: 0.75rem;
-}
+/*select[multiple] {*/
+/*    background-image: none;*/
+/*    padding-right: 0.75rem;*/
+/*}*/
 
-/* Disabled state */
-input:disabled,
-textarea:disabled,
-select:disabled {
-    background-color: var(--form-surface);
-    color: var(--form-placeholder);
-    border-color: var(--form-border);
-    cursor: not-allowed;
-    opacity: 0.75;
-}
+/*!* Disabled state *!*/
+/*input:disabled,*/
+/*textarea:disabled,*/
+/*select:disabled {*/
+/*    background-color: var(--form-surface);*/
+/*    color: var(--form-placeholder);*/
+/*    border-color: var(--form-border);*/
+/*    cursor: not-allowed;*/
+/*    opacity: 0.75;*/
+/*}*/
 
-/* Invalid state */
-input:invalid:not(:placeholder-shown):not(:focus),
-textarea:invalid:not(:placeholder-shown):not(:focus) {
-    border-color: var(--form-danger);
-}
+/*!* Invalid state *!*/
+/*input:invalid:not(:placeholder-shown):not(:focus),*/
+/*textarea:invalid:not(:placeholder-shown):not(:focus) {*/
+/*    border-color: var(--form-danger);*/
+/*}*/
 
-input.error,
-textarea.error,
-select.error {
-    border-color: var(--form-danger);
-    background-color: var(--color-danger-muted);
-}
+/*input.error,*/
+/*textarea.error,*/
+/*select.error {*/
+/*    border-color: var(--form-danger);*/
+/*    background-color: var(--color-danger-bg);*/
+/*}*/
 
-/* ==========================================================================
- * Checkboxes & radios
- * ========================================================================== */
+/*!* ==========================================================================*/
+/* * Checkboxes & radios*/
+/* * ========================================================================== *!*/
 
-.form-check {
-    display: flex;
-    align-items: flex-start;
-    gap: 0.6rem;
-    margin-bottom: 0.6rem;
-}
+/*.form-check {*/
+/*    display: flex;*/
+/*    align-items: flex-start;*/
+/*    gap: 0.6rem;*/
+/*    margin-bottom: 0.6rem;*/
+/*}*/
 
-.form-check label {
-    font-weight: 400;
-    font-size: 0.9rem;
-    color: var(--form-text);
-    margin-bottom: 0;
-    cursor: pointer;
-}
+/*.form-check label {*/
+/*    font-weight: 400;*/
+/*    font-size: 0.9rem;*/
+/*    color: var(--form-text);*/
+/*    margin-bottom: 0;*/
+/*    cursor: pointer;*/
+/*}*/
 
-input[type="checkbox"],
-input[type="radio"] {
-    appearance: none;
-    width: 1.15rem;
-    height: 1.15rem;
-    flex: 0 0 auto;
-    margin-top: 0.1rem;
-    border: 1.5px solid var(--form-border-hover);
-    background-color: var(--form-background);
-    cursor: pointer;
-    display: inline-grid;
-    place-content: center;
-    transition: background-color var(--form-transition), border-color var(--form-transition);
-}
+/*input[type="checkbox"],*/
+/*input[type="radio"] {*/
+/*    appearance: none;*/
+/*    width: 1.15rem;*/
+/*    height: 1.15rem;*/
+/*    flex: 0 0 auto;*/
+/*    margin-top: 0.1rem;*/
+/*    border: 1.5px solid var(--form-border-hover);*/
+/*    background-color: var(--form-background);*/
+/*    cursor: pointer;*/
+/*    display: inline-grid;*/
+/*    place-content: center;*/
+/*    transition: background-color var(--form-transition), border-color var(--form-transition);*/
+/*}*/
 
-input[type="checkbox"] {
-    border-radius: 4px;
-}
+/*input[type="checkbox"] {*/
+/*    border-radius: 4px;*/
+/*}*/
 
-input[type="radio"] {
-    border-radius: 50%;
-}
+/*input[type="radio"] {*/
+/*    border-radius: 50%;*/
+/*}*/
 
-input[type="checkbox"]::before {
-    content: "";
-    width: 0.65rem;
-    height: 0.65rem;
-    transform: scale(0);
-    transition: transform var(--form-transition);
-    box-shadow: inset 1em 1em white;
-    clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
-}
+/*input[type="checkbox"]::before {*/
+/*    content: "";*/
+/*    width: 0.65rem;*/
+/*    height: 0.65rem;*/
+/*    transform: scale(0);*/
+/*    transition: transform var(--form-transition);*/
+/*    box-shadow: inset 1em 1em white;*/
+/*    clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);*/
+/*}*/
 
-input[type="radio"]::before {
-    content: "";
-    width: 0.55rem;
-    height: 0.55rem;
-    border-radius: 50%;
-    transform: scale(0);
-    transition: transform var(--form-transition);
-    box-shadow: inset 1em 1em white;
-}
+/*input[type="radio"]::before {*/
+/*    content: "";*/
+/*    width: 0.55rem;*/
+/*    height: 0.55rem;*/
+/*    border-radius: 50%;*/
+/*    transform: scale(0);*/
+/*    transition: transform var(--form-transition);*/
+/*    box-shadow: inset 1em 1em white;*/
+/*}*/
 
-input[type="checkbox"]:checked,
-input[type="radio"]:checked {
-    background-color: var(--form-accent);
-    border-color: var(--form-accent);
-}
+/*input[type="checkbox"]:checked,*/
+/*input[type="radio"]:checked {*/
+/*    background-color: var(--form-accent);*/
+/*    border-color: var(--form-accent);*/
+/*}*/
 
-input[type="checkbox"]:checked::before,
-input[type="radio"]:checked::before {
-    transform: scale(1);
-}
+/*input[type="checkbox"]:checked::before,*/
+/*input[type="radio"]:checked::before {*/
+/*    transform: scale(1);*/
+/*}*/
 
-input[type="checkbox"]:focus-visible,
-input[type="radio"]:focus-visible {
-    outline: none;
-    box-shadow: var(--form-shadow-focus);
-}
+/*input[type="checkbox"]:focus-visible,*/
+/*input[type="radio"]:focus-visible {*/
+/*    outline: none;*/
+/*    box-shadow: var(--form-shadow-focus);*/
+/*}*/
 
-input[type="checkbox"]:disabled,
-input[type="radio"]:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-}
+/*input[type="checkbox"]:disabled,*/
+/*input[type="radio"]:disabled {*/
+/*    opacity: 0.5;*/
+/*    cursor: not-allowed;*/
+/*}*/
 
-/* ==========================================================================
- * Range
- * ========================================================================== */
+/*!* ==========================================================================*/
+/* * Range*/
+/* * ========================================================================== *!*/
 
-input[type="range"] {
-    width: 100%;
-    height: 1.25rem;
-    background: transparent;
-    appearance: none;
-    cursor: pointer;
-}
+/*input[type="range"] {*/
+/*    width: 100%;*/
+/*    height: 1.25rem;*/
+/*    background: transparent;*/
+/*    appearance: none;*/
+/*    cursor: pointer;*/
+/*}*/
 
-input[type="range"]::-webkit-slider-runnable-track {
-    height: 4px;
-    background: var(--form-border);
-    border-radius: 2px;
-}
+/*input[type="range"]::-webkit-slider-runnable-track {*/
+/*    height: 4px;*/
+/*    background: var(--form-border);*/
+/*    border-radius: 2px;*/
+/*}*/
 
-input[type="range"]::-webkit-slider-thumb {
-    appearance: none;
-    margin-top: -7px;
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    background: var(--form-accent);
-    border: 3px solid var(--form-background);
-    box-shadow: 0 0 0 1px var(--form-border-hover);
-    cursor: pointer;
-    transition: box-shadow var(--form-transition);
-}
+/*input[type="range"]::-webkit-slider-thumb {*/
+/*    appearance: none;*/
+/*    margin-top: -7px;*/
+/*    width: 18px;*/
+/*    height: 18px;*/
+/*    border-radius: 50%;*/
+/*    background: var(--form-accent);*/
+/*    border: 3px solid var(--form-background);*/
+/*    box-shadow: 0 0 0 1px var(--form-border-hover);*/
+/*    cursor: pointer;*/
+/*    transition: box-shadow var(--form-transition);*/
+/*}*/
 
-input[type="range"]:focus-visible::-webkit-slider-thumb {
-    box-shadow: var(--form-shadow-focus);
-}
+/*input[type="range"]:focus-visible::-webkit-slider-thumb {*/
+/*    box-shadow: var(--form-shadow-focus);*/
+/*}*/
 
-input[type="range"]::-moz-range-track {
-    height: 4px;
-    background: var(--form-border);
-    border-radius: 2px;
-}
+/*input[type="range"]::-moz-range-track {*/
+/*    height: 4px;*/
+/*    background: var(--form-border);*/
+/*    border-radius: 2px;*/
+/*}*/
 
-input[type="range"]::-moz-range-thumb {
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    background: var(--form-accent);
-    border: 3px solid var(--form-background);
-    box-shadow: 0 0 0 1px var(--form-border-hover);
-    cursor: pointer;
-}
+/*input[type="range"]::-moz-range-thumb {*/
+/*    width: 18px;*/
+/*    height: 18px;*/
+/*    border-radius: 50%;*/
+/*    background: var(--form-accent);*/
+/*    border: 3px solid var(--form-background);*/
+/*    box-shadow: 0 0 0 1px var(--form-border-hover);*/
+/*    cursor: pointer;*/
+/*}*/
 
-/* ==========================================================================
- * File input
- * ========================================================================== */
+/*!* ==========================================================================*/
+/* * File input*/
+/* * ========================================================================== *!*/
 
-input[type="file"] {
-    width: 100%;
-    padding: 0.5rem;
-    border: 1px dashed var(--form-border-hover);
-    border-radius: var(--form-radius-sm);
-    background-color: var(--form-surface);
-    font-size: 0.85rem;
-    cursor: pointer;
-}
+/*input[type="file"] {*/
+/*    width: 100%;*/
+/*    padding: 0.5rem;*/
+/*    border: 1px dashed var(--form-border-hover);*/
+/*    border-radius: var(--form-radius-sm);*/
+/*    background-color: var(--form-surface);*/
+/*    font-size: 0.85rem;*/
+/*    cursor: pointer;*/
+/*}*/
 
-input[type="file"]::file-selector-button {
-    font-family: inherit;
-    font-size: 0.82rem;
-    font-weight: 600;
-    color: var(--form-text);
-    background-color: var(--form-background);
-    border: 1px solid var(--form-border);
-    border-radius: var(--form-radius-sm);
-    padding: 0.4rem 0.75rem;
-    margin-right: 0.75rem;
-    cursor: pointer;
-    transition: background-color var(--form-transition), border-color var(--form-transition);
-}
+/*input[type="file"]::file-selector-button {*/
+/*    font-family: inherit;*/
+/*    font-size: 0.82rem;*/
+/*    font-weight: 600;*/
+/*    color: var(--form-text);*/
+/*    background-color: var(--form-background);*/
+/*    border: 1px solid var(--form-border);*/
+/*    border-radius: var(--form-radius-sm);*/
+/*    padding: 0.4rem 0.75rem;*/
+/*    margin-right: 0.75rem;*/
+/*    cursor: pointer;*/
+/*    transition: background-color var(--form-transition), border-color var(--form-transition);*/
+/*}*/
 
-input[type="file"]::file-selector-button:hover {
-    background-color: var(--form-surface);
-    border-color: var(--form-border-hover);
-}
+/*input[type="file"]::file-selector-button:hover {*/
+/*    background-color: var(--form-surface);*/
+/*    border-color: var(--form-border-hover);*/
+/*}*/
 
-/* ==========================================================================
- * Buttons
- * ========================================================================== */
+/*!* ==========================================================================*/
+/* * Buttons*/
+/* * ========================================================================== *!*/
 
-button,
-input[type="submit"],
-input[type="button"],
-input[type="reset"] {
-    appearance: none;
-    border: 1px solid var(--form-accent);
-    background-color: var(--form-accent);
-    color: #ffffff;
-    font-weight: 600;
-    font-size: 0.9rem;
-    padding: 0.65rem 1.25rem;
-    border-radius: var(--form-radius-sm);
-    cursor: pointer;
-    transition: background-color var(--form-transition), border-color var(--form-transition),
-    transform var(--form-transition);
-}
+/*button,*/
+/*input[type="submit"],*/
+/*input[type="button"],*/
+/*input[type="reset"] {*/
+/*    appearance: none;*/
+/*    border: 1px solid var(--form-accent);*/
+/*    background-color: var(--form-accent);*/
+/*    color: #ffffff;*/
+/*    font-weight: 600;*/
+/*    font-size: 0.9rem;*/
+/*    padding: 0.65rem 1.25rem;*/
+/*    border-radius: var(--form-radius-sm);*/
+/*    cursor: pointer;*/
+/*    transition: background-color var(--form-transition), border-color var(--form-transition),*/
+/*    transform var(--form-transition);*/
+/*}*/
 
-button:hover,
-input[type="submit"]:hover,
-input[type="button"]:hover,
-input[type="reset"]:hover {
-    background-color: var(--form-accent-hover);
-    border-color: var(--form-accent-hover);
-}
+/*button:hover,*/
+/*input[type="submit"]:hover,*/
+/*input[type="button"]:hover,*/
+/*input[type="reset"]:hover {*/
+/*    background-color: var(--form-accent-hover);*/
+/*    border-color: var(--form-accent-hover);*/
+/*}*/
 
-button:active,
-input[type="submit"]:active,
-input[type="button"]:active,
-input[type="reset"]:active {
-    transform: translateY(1px);
-}
+/*button:active,*/
+/*input[type="submit"]:active,*/
+/*input[type="button"]:active,*/
+/*input[type="reset"]:active {*/
+/*    transform: translateY(1px);*/
+/*}*/
 
-button:focus-visible,
-input[type="submit"]:focus-visible,
-input[type="button"]:focus-visible,
-input[type="reset"]:focus-visible {
-    outline: none;
-    box-shadow: var(--form-shadow-focus);
-}
+/*button:focus-visible,*/
+/*input[type="submit"]:focus-visible,*/
+/*input[type="button"]:focus-visible,*/
+/*input[type="reset"]:focus-visible {*/
+/*    outline: none;*/
+/*    box-shadow: var(--form-shadow-focus);*/
+/*}*/
 
-button:disabled,
-input[type="submit"]:disabled,
-input[type="button"]:disabled,
-input[type="reset"]:disabled {
-    background-color: var(--form-border);
-    border-color: var(--form-border);
-    color: var(--form-placeholder);
-    cursor: not-allowed;
-}
+/*button:disabled,*/
+/*input[type="submit"]:disabled,*/
+/*input[type="button"]:disabled,*/
+/*input[type="reset"]:disabled {*/
+/*    background-color: var(--form-border);*/
+/*    border-color: var(--form-border);*/
+/*    color: var(--form-placeholder);*/
+/*    cursor: not-allowed;*/
+/*}*/
 
-/* Secondary / ghost button — opt in with class="btn-secondary" */
-.btn-secondary {
-    background-color: transparent;
-    color: var(--form-accent);
-    border-color: var(--form-border);
-}
+/*!* Secondary / ghost button — opt in with class="btn-secondary" *!*/
+/*.btn-secondary {*/
+/*    background-color: transparent;*/
+/*    color: var(--form-accent);*/
+/*    border-color: var(--form-border);*/
+/*}*/
 
-.btn-secondary:hover {
-    background-color: var(--form-surface);
-    border-color: var(--form-border-hover);
-    color: var(--form-accent-hover);
-}
+/*.btn-secondary:hover {*/
+/*    background-color: var(--form-surface);*/
+/*    border-color: var(--form-border-hover);*/
+/*    color: var(--form-accent-hover);*/
+/*}*/
 
-/* ==========================================================================
- * Reduced motion
- * ========================================================================== */
+/*!* ==========================================================================*/
+/* * Reduced motion*/
+/* * ========================================================================== *!*/
 
-@media (prefers-reduced-motion: reduce) {
-    * {
-        transition: none !important;
-    }
-}
+/*@media (prefers-reduced-motion: reduce) {*/
+/*    * {*/
+/*        transition: none !important;*/
+/*    }*/
+/*}*/
