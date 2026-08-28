@@ -13,7 +13,7 @@ export function SignOutButton() {
     }
 
     return (
-        <button type="button" onClick={handleSignOut}>
+        <button className="button-sign-out" type="button" onClick={handleSignOut}>
             Sign out
         </button>
     );
