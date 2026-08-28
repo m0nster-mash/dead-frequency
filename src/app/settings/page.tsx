@@ -2,12 +2,9 @@ import {headers} from "next/headers";
 import {redirect} from "next/navigation";
 import {auth} from "@/core/auth";
 import AppShell from "@/core/dashboard/components/app-shell";
+import {AccountSettingsForm} from "@/core/settings/components/account-settings-form";
 
-function AccountSettingsForm(props: { currentName: any, currentEmail: any }) {
-    return null;
-}
-
-async function SettingsPage() {
+export default async function SettingsPage() {
     const session = await auth.api.getSession({
         headers: await headers(),
     });
@@ -23,9 +20,7 @@ async function SettingsPage() {
             <div>
                 <header>
                     <h1>Account Settings</h1>
-                    <p>
-                        Update your username, email, and password.
-                    </p>
+                    <p> Update your username, email, and password. </p>
                 </header>
 
                 <AccountSettingsForm currentName={session.user.name ?? ""}
