@@ -1,18 +1,18 @@
 "use client";
 
-import {FormEvent, useState} from "react";
+import {SubmitEvent, useState} from "react";
 import {useRouter} from "next/navigation";
 import {authClient} from "@/core/auth/lib/auth-client";
 
 type DeleteUserModalProps = {
-    onClose: () => void;
-    onDeleted?: () => void;
+    onCloseAction: () => void;
+    onDeletedAction?: () => void;
     userEmail: string;
     userId: string;
 };
 
 export function DeleteUserModal({
-                                    userId, userEmail, onClose, onDeleted,
+                                    userId, userEmail, onCloseAction, onDeletedAction,
                                 }: DeleteUserModalProps) {
     const router = useRouter();
     const [confirmation, setConfirmation] = useState("");
@@ -21,7 +21,7 @@ export function DeleteUserModal({
 
     const isConfirmed = confirmation.trim().toLowerCase() === userEmail.toLowerCase();
 
-    async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    async function handleSubmit(event: SubmitEvent<HTMLFormElement>) {
         event.preventDefault();
         if (!isConfirmed) {
             return;
@@ -39,13 +39,13 @@ export function DeleteUserModal({
         }
 
         setLoading(false);
-        onDeleted?.();
-        onClose();
+        onDeletedAction?.();
+        onCloseAction();
         router.refresh();
     }
 
     return (
-        <div role="presentation" onClick={onClose}>
+        <div role="presentation" onClick={onCloseAction}>
             <div role="dialog"
                  aria-modal="true"
                  aria-labelledby="delete-user-title"
@@ -71,7 +71,7 @@ export function DeleteUserModal({
 
                     <div>
                         <button type="button"
-                                onClick={onClose}
+                                onClick={onCloseAction}
                                 disabled={loading}>
                             Cancel
                         </button>
