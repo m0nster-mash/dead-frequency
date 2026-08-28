@@ -13,10 +13,11 @@ export default async function Sidebar() {
 
     const userName = session ? session.user.name : null;
     const userRole = session ? session.user.role : null;
+    const isAdmin = userRole === "admin";
 
     return (
         <SidebarFrame toggleButton={<SidebarToggleButton/>}>
-            <div className="sidebar-footer">
+            <div>
                 {session ? (
                     <div className="user-card">
                         <div className="avatar">SK</div>
@@ -29,7 +30,7 @@ export default async function Sidebar() {
                 ) : (<span></span>)}
             </div>
             <nav className="sidebar-nav">
-                <p className="nav-label">Workspace</p>
+                <h5>Workspace</h5>
                 <a href="/" className="nav-item active">
                     <SquareIcon/>
                     <span>Dashboard</span>
@@ -38,17 +39,31 @@ export default async function Sidebar() {
                     <PageIcon/>
                     <span>Style Test</span>
                 </a>
-                <p className="nav-label nav-label-spaced">Management</p>
-                <a href="#" className="nav-item">
-                    <GearIcon/>
-                    <span>Settings</span>
+                <h5>Other Menu</h5>
+                <a href="/" className="nav-item">
+                    <SquareIcon/>
+                    <span>Whatever</span>
                 </a>
+                <a href="/style-test" className="nav-item">
+                    <PageIcon/>
+                    <span>Something Else</span>
+                </a>
+                {isAdmin ? (
+                    <span>
+                        <h5>Management</h5>
+                        <a href="#" className="nav-item">
+                            <GearIcon/>
+                            <span>Settings</span>
+                        </a>
+                    </span>
+                ) : (<span></span>)}
+
             </nav>
-            <div className="sidebar-footer">
-                {session ? (
+            {session ? (
+                <div className="sidebar-footer">
                     <SignOutButton/>
-                ) : (<div></div>)}
-            </div>
+                </div>
+            ) : (<div></div>)}
         </SidebarFrame>
     );
 }

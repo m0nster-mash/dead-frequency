@@ -1,7 +1,88 @@
 :root {
+
+    --theme-white: #ffffff;
+    --theme-black: #000000;
+
+    --theme-blue-101: #b2c7ff;
+    --theme-blue-102: #a4bcff;
+    --theme-blue-103: #95b0ff;
+    --theme-blue-104: #87a4ff;
+    --theme-blue-105: #7998ff;
+    --theme-blue-106: #6c8cff;
+
+    --theme-blue-001: #2f6bff;
+    --theme-blue-002: #275cde;
+    --theme-blue-003: #204ebe;
+    --theme-blue-004: #193f9e;
+    --theme-blue-005: #123280;
+    --theme-blue-006: #0c2563;
+
+    --theme-light-blue-001: #b9e4ff;
+    --theme-light-blue-002: #a1dbff;
+    --theme-light-blue-003: #96d5ff;
+    --theme-light-blue-004: #87d1ff;
+    --theme-light-blue-005: #7dccff;
+    --theme-light-blue-006: #61c2ff;
+
+    --theme-green-001: #b8ffc1;
+    --theme-green-002: #9dffac;
+    --theme-green-003: #94ff9d;
+    --theme-green-004: #74ff86;
+    --theme-green-005: #4aff6b;
+
+    --theme-red-001: #ffb5b2;
+    --theme-red-002: #ff9b99;
+    --theme-red-003: #ff9590;
+    --theme-red-004: #ff7c79;
+    --theme-red-005: #ff6161;
+
+    --theme-brown-001: #ff7a59;
+    --theme-brown-002: #de694c;
+    --theme-brown-003: #be5940;
+    --theme-brown-004: #9e4934;
+    --theme-brown-005: #803a28;
+    --theme-brown-006: #632b1d;
+
+    --theme-yellow-001: #ffdcb8;
+    --theme-yellow-002: #ffd5aa;
+    --theme-yellow-003: #ffce9b;
+    --theme-yellow-004: #ffc78c;
+    --theme-yellow-005: #ffbf7c;
+    --theme-yellow-006: #ffb86c;
+    --theme-yellow-007: #ffb961;
+    --theme-yellow-008: #ffac38;
+
+    --theme-grey-001: #f2f2f2;
+    --theme-grey-002: #e4e4e4;
+    --theme-grey-003: #d7d7d7;
+    --theme-grey-004: #cacaca;
+    --theme-grey-005: #bdbdbd;
+
+    --theme-grey-tonal-001: #e9f1ff;
+    --theme-grey-tonal-002: #dee5f2;
+    --theme-grey-tonal-003: #d3d9e4;
+    --theme-grey-tonal-004: #c8ced7;
+    --theme-grey-tonal-005: #bec2ca;
+    --theme-grey-tonal-006: #b3b7be;
+
+    --theme-slate-001: #0f1320;
+    --theme-slate-002: #222633;
+    --theme-slate-003: #363b47;
+    --theme-slate-004: #4c505b;
+    --theme-slate-005: #636771;
+    --theme-slate-006: #7b7e87;
+
+    --theme-slate-tonal-001: #171d33;
+    --theme-slate-tonal-002: #2a3045;
+    --theme-slate-tonal-003: #3e4458;
+    --theme-slate-tonal-004: #53596b;
+    --theme-slate-tonal-005: #696f7f;
+    --theme-slate-tonal-006: #818593;
+
+
     /* Core Colours */
     /* ============================================================
-       Semantic Color Palette
+       Semantic Colour Palette
        Ranges: 001 (lightest) -> 010 (darkest) per hue family
        ============================================================ */
     /* Red */
@@ -208,59 +289,120 @@
     --color-neutral-900: #35373b; /* hsl(220 6% 22%) */
     --color-neutral-1000: #1d1e20; /* hsl(220 6% 12%) */
 
-    /* Layout */
+    /* Core Colours */
+    --color-white: #ffffff;
+    --color-black: #000000;
+
+    /* ============================================================
+       SEMANTIC TOKENS — LIGHT THEME
+       ------------------------------------------------------------
+       Components should use these semantic tokens rather than
+       referencing the raw colour palette directly.
+
+       To retheme the UI, change the palette mapping below.
+       The core colour palette above should remain stable.
+       ============================================================ */
+
+    /* Surfaces */
+    --color-bg: var(--theme-grey-001);
+    --color-surface: var(--theme-white);
+    --color-surface-raised: var(--theme-grey-002);
+    --color-surface-muted: var(--theme-grey-003);
+    --color-surface-overlay: rgb(255 255 255 / 94%);
+    --color-overlay: rgb(29 30 32 / 25%);
+
+    /* Content */
+    --color-text-primary: var(--theme-slate-003);
+    --color-text-secondary: var(--color-neutral-800);
+    --color-text-muted: var(--placeholder);
+    --color-text-inverse: var(--color-white);
+    --color-text-placeholder: var(--color-neutral-600);
+
+    /* Borders */
+    --color-border: var(--color-neutral-300);
+    --color-border-strong: var(--color-neutral-500);
+    --color-border-secondary: var(--color-neutral-400);
+    --color-border-muted: var(--color-neutral-200);
+
+    /* Brand / actions */
+    --color-action-primary: var(--placeholder);
+    --color-action-primary-hover: var(--placeholder);
+    --color-action-primary-text: var(--color-text-inverse);
+    --color-action-secondary: transparent;
+    --color-action-secondary-hover: var(--color-neutral-200);
+    --color-action-secondary-text: var(--color-text-secondary);
+    --color-focus-ring: rgb(29 30 32 / 18%);
+
+    /* Feedback */
+    --color-success: var(--color-green-800);
+    --color-success-bg: var(--color-green-100);
+    --color-warning: var(--color-amber-800);
+    --color-warning-bg: var(--color-amber-100);
+    --color-danger: var(--color-red-800);
+    --color-danger-bg: var(--color-red-100);
+
+    /* Sidebar */
+    --color-sidebar-bg: var(--color-surface);
+    --color-sidebar-text: var(--color-neutral-700);
+    --color-sidebar-text-active: var(--color-text-primary);
+    --color-sidebar-item-hover: var(--color-neutral-200);
+    --color-sidebar-item-active: var(--placeholder);
+
+    /* Effects — RGBA equivalents are semantic so they can be rethemed. */
+    --shadow-sm: 0 1px 2px rgb(29 30 32 / 4%);
+    --shadow-md: 0 4px 18px rgb(29 30 32 / 6%);
+
+
+    /* NEW TOKENS */
+    --color-icon-default: var(--color-neutral-900);
+    --color-avatar-default: var(--color-cyan-700);
+    --color-text-user: var(--color-neutral-700);
+
+    --placeholder: var(--color-cyan-500);
+    --test: var(--color-fuchsia-600);
+
+    /* ============================================================
+       SIZE TOKENS — DEFINED ONLY, NOT APPLIED
+       ------------------------------------------------------------
+       These are intentionally not substituted into the stylesheet
+       yet. They provide a future single source of truth for sizing.
+       ============================================================ */
+    --size-space-1: 0.25rem;
+    --size-space-2: 0.5rem;
+    --size-space-3: 0.75rem;
+    --size-space-4: 1.0rem;
+    --size-space-5: 1.25rem;
+    --size-space-6: 1.5rem;
+    --size-space-7: 2.0rem;
+
+    --size-control-sm: 36px;
+    --size-control-md: 40px;
+    --size-control-lg: 48px;
+
+    --size-icon-sm: 18px;
+    --size-icon-md: 20px;
+    --size-icon-lg: 24px;
+
+    --size-radius-sm: 6px;
+    --size-radius-md: 10px;
+    --size-radius-lg: 14px;
+
+
+    /* ============================================================
+       LAYOUT / TYPOGRAPHY / MOTION
+       ============================================================ */
     --sidebar-width: 250px;
     --sidebar-collapsed-width: 76px;
     --topbar-height: 68px;
     --current-sidebar-width: var(--sidebar-width);
 
-    /* Typography */
     --font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-
     --font-size-xs: 0.75rem;
     --font-size-sm: 0.875rem;
     --font-size-md: 1rem;
     --font-size-lg: 1.125rem;
     --font-size-xl: 1.5rem;
     --font-size-2xl: 2rem;
-
-    /* Semantic colors */
-    --color-bg: var(--color-neutral-100);
-    --color-surface: var(--color-neutral-200);
-    --color-surface-raised: var(--color-neutral-300);
-    --color-surface-muted:  var(--color-neutral-400);
-
-    --color-text-primary: var(--color-neutral-900);
-    --color-text-secondary: var(--color-neutral-800);
-    --color-text-muted: var(--color-neutral-600);
-
-    --color-border: var(--color-neutral-600);
-    --color-border-strong: var(--color-neutral-800);
-    --color-border-secondary: var(--color-neutral-700);
-    --color-border-muted: var(--color-neutral-200);
-
-    --color-primary: #17191c;
-    --color-primary-hover: #30343a;
-    --color-primary-text: #ffffff;
-
-    --color-success: #16835b;
-    --color-success-bg: #eaf7f1;
-
-    --color-warning: #b87509;
-    --color-warning-bg: #fff6df;
-
-    --color-danger: #c24141;
-    --color-danger-bg: #fdf0f0;
-
-    /* Sidebar */
-    --sidebar-bg: #ffffff;
-    --sidebar-text: #69717d;
-    --sidebar-text-active: #17191c;
-    --sidebar-active-bg: #f1f3f5;
-
-    /* Effects */
-    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
-    --shadow-md: 0 4px 18px rgba(0, 0, 0, 0.06);
 
     --radius-sm: 6px;
     --radius-md: 10px;
@@ -269,31 +411,40 @@
     --transition-fast: 150ms ease;
     --transition-normal: 250ms ease;
 
+    /* Form semantic aliases */
+    /*--form-background: var(--color-bg);*/
+    /*--form-surface: var(--color-surface);*/
+    /*--form-border: var(--color-border-secondary);*/
+    /*--form-border-hover: var(--color-border-strong);*/
+    /*--form-text: var(--color-text-primary);*/
+    /*--form-placeholder: var(--color-text-placeholder);*/
+    /*--form-label: var(--color-text-primary);*/
+    /*--form-accent: var(--color-action-primary);*/
+    /*--form-accent-hover: var(--color-action-primary-hover);*/
+    /*--form-accent-muted: var(--color-surface-muted);*/
+    /*--form-danger: var(--color-danger);*/
+    /*--form-danger-muted: var(--color-danger-bg);*/
+    /*--form-shadow-focus: var(--color-focus-ring);*/
 
-    /* Form */
-    --form-background: var(--color-bg);
-    --form-surface: var(--color-surface);
-    --form-border: var(--color-border-secondary);
-    --form-border-hover: var(--color-border-strong);
-
-    --form-text: var(--color-primary-text);
-    --form-placeholder: var(--color-text-muted);
-    --form-label: var(--color-primary-text);
-
-    --form-accent: var(--color-primary);
-    --form-accent-hover: var(--color-primary-hover);
-    --form-accent-muted: var(--color-surface-muted);
-
-    --form-danger: var(--color-danger);
-    --form-danger-muted: var(--color-danger-bg);
-
-    --form-shadow-focus: var(--color-gray-500);
+    --form-background: var(--placeholder);
+    --form-surface: var(--placeholder);
+    --form-border: var(--placeholder);
+    --form-border-hover: var(--placeholder);
+    --form-text: var(--placeholder);
+    --form-placeholder: var(--placeholder);
+    --form-label: var(--placeholder);
+    --form-accent: var(--placeholder);
+    --form-accent-hover: var(--placeholder);
+    --form-accent-muted: var(--placeholder);
+    --form-danger: var(--placeholder);
+    --form-danger-muted: var(--placeholder);
+    --form-shadow-focus: var(--placeholder);
 
     --form-radius: 4px;
     --form-radius-sm: 2px;
     --form-transition: 140ms ease;
-}
 
+}
 
 /* =========================================================
    RESET
@@ -353,11 +504,7 @@ button {
  * ========================================================================== */
 
 form {
-    max-width: 480px;
-}
-
-.form-field {
-    margin-bottom: 1.25rem;
+    /*max-width: 480px;*/
 }
 
 fieldset {
@@ -372,6 +519,8 @@ legend {
     font-weight: 600;
     font-size: 0.95rem;
     color: var(--form-text);
+    letter-spacing: 0.1rem;
+    font-variant: small-caps;
 }
 
 label {
@@ -379,20 +528,8 @@ label {
     font-size: 0.85rem;
     font-weight: 600;
     color: var(--form-label);
-    margin-bottom: 0.4rem;
-    letter-spacing: 0.01em;
-}
-
-.form-hint {
-    font-size: 0.8rem;
-    color: var(--form-placeholder);
-    margin-top: 0.35rem;
-}
-
-.form-error {
-    font-size: 0.8rem;
-    color: var(--form-danger);
-    margin-top: 0.35rem;
+    /*margin-bottom: 0.4rem;*/
+    letter-spacing: 0.05em;
 }
 
 /* ==========================================================================
@@ -417,7 +554,7 @@ select {
     padding: 0.6rem 0.75rem;
     background-color: var(--form-background);
     border: 1px solid var(--form-border);
-    border-radius: var(--form-radius-sm);
+    border-radius: var(--form-radius);
     transition: border-color var(--form-transition), box-shadow var(--form-transition);
     line-height: 1.4;
 }
@@ -487,21 +624,6 @@ select.error {
  * Checkboxes & radios
  * ========================================================================== */
 
-.form-check {
-    display: flex;
-    align-items: flex-start;
-    gap: 0.6rem;
-    margin-bottom: 0.6rem;
-}
-
-.form-check label {
-    font-weight: 400;
-    font-size: 0.9rem;
-    color: var(--form-text);
-    margin-bottom: 0;
-    cursor: pointer;
-}
-
 input[type="checkbox"],
 input[type="radio"] {
     appearance: none;
@@ -509,7 +631,7 @@ input[type="radio"] {
     height: 1.15rem;
     flex: 0 0 auto;
     margin-top: 0.1rem;
-    border: 1.5px solid var(--form-border-hover);
+    border: 1px solid var(--form-border-hover);
     background-color: var(--form-background);
     cursor: pointer;
     display: inline-grid;
@@ -663,11 +785,11 @@ input[type="reset"] {
     appearance: none;
     border: 1px solid var(--form-accent);
     background-color: var(--form-accent);
-    color: #ffffff;
+    color: var(--color-action-primary-text);
     font-weight: 600;
     font-size: 0.9rem;
     padding: 0.65rem 1.25rem;
-    border-radius: var(--form-radius-sm);
+    border-radius: var(--form-radius);
     cursor: pointer;
     transition: background-color var(--form-transition), border-color var(--form-transition),
     transform var(--form-transition);
@@ -706,19 +828,6 @@ input[type="reset"]:disabled {
     cursor: not-allowed;
 }
 
-/* Secondary / ghost button — opt in with class="btn-secondary" */
-.btn-secondary {
-    background-color: transparent;
-    color: var(--form-accent);
-    border-color: var(--form-border);
-}
-
-.btn-secondary:hover {
-    background-color: var(--form-surface);
-    border-color: var(--form-border-hover);
-    color: var(--form-accent-hover);
-}
-
 /* ==========================================================================
  * Reduced motion
  * ========================================================================== */
@@ -753,7 +862,7 @@ input[type="reset"]:disabled {
     flex-direction: column;
     width: var(--sidebar-width);
     height: 100vh;
-    background: var(--sidebar-bg);
+    background: var(--color-sidebar-bg);
     border-right: 1px solid var(--color-border);
     transition: width var(--transition-normal), transform var(--transition-normal);
 }
@@ -776,16 +885,12 @@ input[type="reset"]:disabled {
 .brand-mark {
     display: grid;
     place-items: center;
-
     flex: 0 0 34px;
     width: 34px;
     height: 34px;
-
     border-radius: 9px;
-
-    background: var(--color-primary);
-    color: var(--color-primary-text);
-
+    background: var(--color-action-primary);
+    color: var(--color-action-primary-text);
     font-size: 15px;
     font-weight: 700;
 }
@@ -811,7 +916,7 @@ input[type="reset"]:disabled {
     padding: 0;
     border: 0;
     border-radius: var(--radius-sm);
-    color: var(--color-text-secondary);
+    color: var(--color-icon-default);
     background: transparent;
     transition: background var(--transition-fast), color var(--transition-fast);
 }
@@ -831,15 +936,6 @@ input[type="reset"]:disabled {
     overflow-y: auto;
 }
 
-.nav-label {
-    margin: 0 10px 8px;
-    color: var(--color-text-muted);
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-}
-
 .nav-label-spaced {
     margin-top: 28px;
 }
@@ -847,26 +943,26 @@ input[type="reset"]:disabled {
 .nav-item {
     display: flex;
     align-items: center;
+    text-decoration: none;
     gap: 12px;
     min-height: 42px;
     margin-bottom: 3px;
     padding: 0 10px;
     border-radius: var(--radius-sm);
-    color: var(--sidebar-text);
+    color: var(--color-sidebar-text);
     font-size: var(--font-size-sm);
     font-weight: 500;
-
     transition: background var(--transition-fast), color var(--transition-fast);
 }
 
 .nav-item:hover {
-    color: var(--sidebar-text-active);
-    background: var(--sidebar-active-bg);
+    color: var(--color-sidebar-text-active);
+    background: var(--color-sidebar-item-hover);
 }
 
 .nav-item.active {
-    color: var(--sidebar-text-active);
-    background: var(--sidebar-active-bg);
+    color: var(--color-sidebar-text-active);
+    background: var(--color-sidebar-item-active);
     font-weight: 600;
 }
 
@@ -882,10 +978,12 @@ input[type="reset"]:disabled {
 }
 
 .user-card {
+    padding: 14px;
     display: flex;
     align-items: center;
     gap: 10px;
     min-width: 0;
+    border-bottom: 1px solid var(--color-border);
 }
 
 .avatar,
@@ -895,8 +993,8 @@ input[type="reset"]:disabled {
     flex: 0 0 36px;
     width: 36px;
     height: 36px;
-    border-radius: 50%;
-    background: var(--color-surface-muted);
+    border-radius: 25px;
+    background: var(--color-avatar-default);
     color: var(--color-text-primary);
     font-size: 11px;
     font-weight: 700;
@@ -918,14 +1016,19 @@ input[type="reset"]:disabled {
 
 .user-info span {
     margin-top: 2px;
-    color: var(--color-text-muted);
+    color: var(--color-text-user);
     font-size: 11px;
 }
 
 .more-button {
     border: 0;
     background: transparent;
-    color: var(--color-text-muted);
+    color: var(--color-icon-default);
+}
+
+.more-button:hover {
+    border: 0;
+    background: var(--color-action-secondary-hover);
 }
 
 
@@ -1013,7 +1116,7 @@ input[type="reset"]:disabled {
     justify-content: space-between;
     height: var(--topbar-height);
     padding: 0 28px;
-    background: rgba(255, 255, 255, 0.94);
+    background: var(--color-surface-overlay);
     border-bottom: 1px solid var(--color-border);
     backdrop-filter: blur(10px);
     transition: left var(--transition-normal);
@@ -1034,7 +1137,7 @@ input[type="reset"]:disabled {
     display: flex;
     align-items: center;
     gap: 9px;
-    color: var(--color-text-muted);
+    color: var(--placeholder);
     font-size: var(--font-size-sm);
 }
 
@@ -1080,9 +1183,6 @@ input[type="reset"]:disabled {
     right: -18px;
     width: 36px;
     height: 36px;
-    border: 1px solid var(--color-border);
-    background: var(--color-surface);
-    box-shadow: var(--shadow-sm);
 }
 
 .sidebar--collapsed .sidebar-toggle svg {
@@ -1138,15 +1238,6 @@ input[type="reset"]:disabled {
     margin-bottom: 28px;
 }
 
-.eyebrow {
-    margin: 0 0 5px;
-    color: var(--color-text-muted);
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-}
-
 h1,
 h2,
 h3,
@@ -1180,8 +1271,8 @@ h1 {
     padding: 0 15px;
     border: 0;
     border-radius: var(--radius-sm);
-    color: var(--color-primary-text);
-    background: var(--color-primary);
+    color: var(--color-action-primary-text);
+    background: var(--color-action-primary);
     font-size: var(--font-size-sm);
     font-weight: 600;
     white-space: nowrap;
@@ -1189,7 +1280,7 @@ h1 {
 }
 
 .primary-button:hover {
-    background: var(--color-primary-hover);
+    background: var(--color-action-primary-hover);
 }
 
 .primary-button span {
@@ -1273,7 +1364,7 @@ h1 {
         position: fixed;
         z-index: 95;
         inset: 0;
-        background: rgba(0, 0, 0, 0.25);
+        background: var(--color-overlay);
         backdrop-filter: blur(2px);
     }
 
