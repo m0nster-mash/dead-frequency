@@ -362,33 +362,6 @@
     --test: var(--color-fuchsia-600);
 
     /* ============================================================
-       SIZE TOKENS — DEFINED ONLY, NOT APPLIED
-       ------------------------------------------------------------
-       These are intentionally not substituted into the stylesheet
-       yet. They provide a future single source of truth for sizing.
-       ============================================================ */
-    --size-space-1: 0.25rem;
-    --size-space-2: 0.5rem;
-    --size-space-3: 0.75rem;
-    --size-space-4: 1.0rem;
-    --size-space-5: 1.25rem;
-    --size-space-6: 1.5rem;
-    --size-space-7: 2.0rem;
-
-    --size-control-sm: 36px;
-    --size-control-md: 40px;
-    --size-control-lg: 48px;
-
-    --size-icon-sm: 18px;
-    --size-icon-md: 20px;
-    --size-icon-lg: 24px;
-
-    --size-radius-sm: 6px;
-    --size-radius-md: 10px;
-    --size-radius-lg: 14px;
-
-
-    /* ============================================================
        LAYOUT / TYPOGRAPHY / MOTION
        ============================================================ */
     --sidebar-width: 250px;
@@ -444,6 +417,52 @@
     --form-radius-sm: 2px;
     --form-transition: 140ms ease;
 
+
+    /* ============================================================
+       SIZE TOKENS — DEFINED ONLY, NOT APPLIED
+       ------------------------------------------------------------
+       These are intentionally not substituted into the stylesheet
+       yet. They provide a future single source of truth for sizing.
+       ============================================================ */
+    --size-space-1: 0.25rem;
+    --size-space-2: 0.5rem;
+    --size-space-3: 0.75rem;
+    --size-space-4: 1.0rem;
+    --size-space-5: 1.25rem;
+    --size-space-6: 1.5rem;
+    --size-space-7: 2.0rem;
+
+    --size-control-sm: 36px;
+    --size-control-md: 40px;
+    --size-control-lg: 48px;
+
+    --size-icon-sm: 18px;
+    --size-icon-md: 20px;
+    --size-icon-lg: 24px;
+
+    --size-radius-sm: 6px;
+    --size-radius-md: 10px;
+    --size-radius-lg: 14px;
+}
+
+.light {
+    /* Surfaces */
+    --color-bg: var(--theme-grey-001);
+    --color-surface: var(--theme-white);
+    --color-surface-raised: var(--theme-grey-002);
+    --color-surface-muted: var(--theme-grey-003);
+    --color-surface-overlay: rgb(255 255 255 / 94%);
+    --color-overlay: rgb(29 30 32 / 25%);
+}
+
+.dark {
+    /* Surfaces */
+    --color-bg: var(--theme-slate-002);
+    --color-surface: var(--theme-slate-003);
+    --color-surface-raised: var(--theme-slate-004);
+    --color-surface-muted: var(--theme-slate-005);
+    --color-surface-overlay: rgb(255 255 255 / 94%);
+    --color-overlay: rgb(29 30 32 / 25%);
 }
 
 /* =========================================================
