@@ -3,7 +3,7 @@
 import {SubmitEvent, useState} from "react";
 import {useRouter} from "next/navigation";
 import {authClient} from "@/core/auth/lib/auth-client";
-import "@/shared/styles/forms.css";
+import {DeleteUserModal} from "@/core/admin/components/delete-user-modal";
 
 type AdminEditUserFormProps = {
     userId: string;

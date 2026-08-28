@@ -51,9 +51,9 @@ export default async function Sidebar() {
                 {isAdmin ? (
                     <span>
                         <h5>Management</h5>
-                        <a href="#" className="nav-item">
+                        <a href="/admin" className="nav-item">
                             <GearIcon/>
-                            <span>Settings</span>
+                            <span>Admin Panel</span>
                         </a>
                     </span>
                 ) : (<span></span>)}

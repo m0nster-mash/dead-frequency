@@ -2,6 +2,7 @@ import {headers} from "next/headers";
 import {redirect} from "next/navigation";
 import {auth} from "@/core/auth";
 import AppShell from "@/core/dashboard/components/app-shell";
+import {AdminUserTable} from "@/core/admin/components/admin-user-table";
 
 export default async function AdminPage() {
     const requestHeaders = await headers();
@@ -38,16 +39,15 @@ export default async function AdminPage() {
                     </p>
                 </header>
 
-                <AdminUserTable users={users.map((user) => ({
-                    id: user.id,
-                    name: user.name ?? "",
-                    email: user.email,
-                    role: user.role ?? "user",
-                    banned: Boolean(user.banned)>
-                currentUserId = {session.user.id}
-                    </AdminUserTable>
-
-                    </div>
-                    </AppShell>
-                    );
-                }
+                <AdminUserTable
+                    users={users.map((user) => ({
+                        id: user.id,
+                        name: user.name ?? "",
+                        email: user.email,
+                        role: user.role ?? "user",
+                        banned: Boolean(user.banned)
+                    }))} currentUserId={session.user.id}/>
+            </div>
+        </AppShell>
+    );
+}
