@@ -1,0 +1,66 @@
+
+body {
+    margin: 0;
+    padding: 0 0 4rem 0;
+}
+
+.test-harness-header {
+    padding: 1.5rem 2rem;
+    border-bottom: 3px solid #333;
+}
+
+.test-harness-header p {
+    margin: 0.25rem 0 0 0;
+}
+
+.toc {
+    padding: 1rem 2rem;
+    border-bottom: 1px solid #ccc;
+}
+
+.toc ul {
+    columns: 3;
+}
+
+main {
+    padding: 0 2rem;
+}
+
+section.test-section {
+    border: 1px dashed #999;
+    border-radius: 4px;
+    margin: 2rem 0;
+    padding: 1rem 1.5rem 1.5rem 1.5rem;
+}
+
+section.test-section > .section-label {
+    display: inline-block;
+    font-family: monospace;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    background: #eee;
+    color: #333;
+    padding: 0.15rem 0.5rem;
+    border-radius: 3px;
+    margin-bottom: 0.75rem;
+}
+
+.component-row {
+    margin: 1.25rem 0;
+    padding-top: 1rem;
+    border-top: 1px solid #eee;
+}
+
+.component-row:first-of-type {
+    border-top: none;
+    padding-top: 0;
+}
+
+.component-row > .component-tag {
+    display: block;
+    font-family: monospace;
+    font-size: 0.7rem;
+    color: #888;
+    margin-bottom: 0.4rem;
+}

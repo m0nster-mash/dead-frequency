@@ -70,7 +70,7 @@ export function AuthCard({initialMode = "login"}: AuthCardProps) {
                         <label htmlFor="name">
                             Name
                         </label>
-                        <input id="name" required name="name" placeholder="Jane Doe" autoComplete="name"/>
+                        <input id="name" type={"text"} required name="name" placeholder="Jane Doe" autoComplete="name"/>
                     </div>
                 ) : null}
 

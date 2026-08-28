@@ -10,7 +10,7 @@ export default async function Home() {
 
     return (
         <main>
-            <h1>go away</h1>
+            <h1 className="go-away">go away</h1>
             <div>
                 {session?.user
                     ? (<DashboardPage/>)

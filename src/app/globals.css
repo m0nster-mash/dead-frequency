@@ -199,6 +199,12 @@ svg {
     white-space: nowrap;
 }
 
+.go-away {
+    display: flex;
+    float: right;
+    letter-spacing: 0.15em;
+}
+
 .icon-button {
     display: grid;
     place-items: center;
