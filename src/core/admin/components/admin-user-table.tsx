@@ -68,7 +68,7 @@ export function AdminUserTable({users, currentUserId}: AdminUserTableProps) {
             {userPendingDelete && (
                 <DeleteUserModal userId={userPendingDelete.id}
                                  userEmail={userPendingDelete.email}
-                                 onClose={() => setUserPendingDelete(null)}/>
+                                 onCloseAction={() => setUserPendingDelete(null)}/>
             )}
         </div>
     );

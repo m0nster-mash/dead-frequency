@@ -39,6 +39,12 @@ export default async function Sidebar() {
                     <PageIcon/>
                     <span>Style Test</span>
                 </a>
+                {session ? (
+                    <a href="/settings" className="nav-item">
+                        <GearIcon/>
+                        <span>Settings</span>
+                    </a>
+                ) : (<span></span>)}
                 <h5>Other Menu</h5>
                 <a href="/" className="nav-item">
                     <SquareIcon/>
@@ -63,7 +69,7 @@ export default async function Sidebar() {
                 <div className="sidebar-footer">
                     <SignOutButton/>
                 </div>
-            ) : (<div></div>)}
+            ) : (<span></span>)}
         </SidebarFrame>
     );
 }
