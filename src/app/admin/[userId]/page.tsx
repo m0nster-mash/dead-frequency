@@ -90,7 +90,7 @@ export default async function AdminUserDetailsPage({params}: PageProps) {
                   userRole={session.user.role}>
             <div>
                 <header>
-                    <Link href="/dashboard/admin"> ← Back to Admin Panel </Link>
+                    <Link href="/admin"> ← Back to Admin Panel </Link>
                     <h1>{user.name || user.email}</h1>
                     <p>User details</p>
                 </header>
@@ -107,7 +107,7 @@ export default async function AdminUserDetailsPage({params}: PageProps) {
                 </section>
 
                 <div>
-                    <Link href={`/dashboard/admin/${user.id}/edit`}> ✏️ Edit user </Link>
+                    <Link href={`/admin/${user.id}/edit`}> ✏️ Edit user </Link>
                 </div>
             </div>
         </AppShell>

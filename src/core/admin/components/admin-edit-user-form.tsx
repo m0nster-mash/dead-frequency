@@ -233,7 +233,7 @@ export function AdminEditUserForm({
                 <DeleteUserModal userId={userId}
                                  userEmail={currentEmail}
                                  onCloseAction={() => setShowDeleteModal(false)}
-                                 onDeletedAction={() => router.push("/dashboard/admin")}/>
+                                 onDeletedAction={() => router.push("/admin")}/>
             )}
         </div>
     );

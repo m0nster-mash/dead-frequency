@@ -44,7 +44,7 @@ export default async function AdminEditUserPage({params}: PageProps) {
                   userRole={session.user.role}>
             <div>
                 <header>
-                    <Link href={`/dashboard/admin/${user.id}`}>
+                    <Link href={`/admin/${user.id}`}>
                         ← Back to user details
                     </Link>
                     <h1>Edit {user.name || user.email}</h1>

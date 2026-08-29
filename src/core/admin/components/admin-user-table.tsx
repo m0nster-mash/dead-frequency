@@ -43,10 +43,10 @@ export function AdminUserTable({users, currentUserId}: AdminUserTableProps) {
                                 : (<span>Active</span>)}
                         </td>
                         <td>
-                            <Link href={`/dashboard/admin/${user.id}`}
+                            <Link href={`/admin/${user.id}`}
                                   title="View details"
                                   aria-label={`View details for ${user.email}`}> 🔍 </Link>
-                            <Link href={`/dashboard/admin/${user.id}/edit`}
+                            <Link href={`/admin/${user.id}/edit`}
                                   title="Edit user"
                                   aria-label={`Edit ${user.email}`}> ✏️ </Link>
                             <button type="button"
