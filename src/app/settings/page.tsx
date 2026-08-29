@@ -1,7 +1,7 @@
 import {headers} from "next/headers";
 import {redirect} from "next/navigation";
 import {auth} from "@/core/auth";
-import AppShell from "@/core/dashboard/components/app-shell";
+import {AppShell} from "@/core/dashboard/components/app-shell";
 import {AccountSettingsForm} from "@/core/settings/components/account-settings-form";
 
 export default async function SettingsPage() {

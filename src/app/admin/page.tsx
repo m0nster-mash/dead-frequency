@@ -1,7 +1,7 @@
 import {headers} from "next/headers";
 import {redirect} from "next/navigation";
 import {auth} from "@/core/auth";
-import AppShell from "@/core/dashboard/components/app-shell";
+import {AppShell} from "@/core/dashboard/components/app-shell";
 import {AdminUserTable} from "@/core/admin/components/admin-user-table";
 
 export default async function AdminPage() {

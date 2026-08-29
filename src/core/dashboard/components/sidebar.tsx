@@ -7,7 +7,7 @@ import PageIcon from "@/shared/svg/page-icon.svg";
 import SquareIcon from "@/shared/svg/four-squares-icon.svg";
 import GearIcon from "@/shared/svg/gear-icon.svg";
 
-export default async function Sidebar() {
+export async function Sidebar() {
     const requestHeaders = await headers();
     const session = await auth.api.getSession({headers: requestHeaders});
 

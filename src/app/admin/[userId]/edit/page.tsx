@@ -2,7 +2,7 @@ import {headers} from "next/headers";
 import {notFound, redirect} from "next/navigation";
 import Link from "next/link";
 import {auth} from "@/core/auth";
-import AppShell from "@/core/dashboard/components/app-shell";
+import {AppShell} from "@/core/dashboard/components/app-shell";
 import {AdminEditUserForm} from "@/core/admin/components/admin-edit-user-form";
 
 type PageProps = {
