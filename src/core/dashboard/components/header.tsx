@@ -2,6 +2,7 @@ import {headers} from "next/headers";
 import {auth} from "@core/auth";
 import BellIcon from "@/shared/svg/bell-icon.svg";
 import {ThemeToggle} from "@/app/components/theme-toggle"
+import Breadcrumbs from "@/core/dashboard/components/breadcrumbs";
 
 export default async function Header() {
     const requestHeaders = await headers();
@@ -19,12 +20,10 @@ export default async function Header() {
     return (
         <header className="topbar">
             <div className="topbar-left">
-                <div className="breadcrumb">
-                    <strong>Dashboard</strong>
-                </div>
+                <Breadcrumbs/>
             </div>
             <div className="topbar-right">
-                <ThemeToggle />
+                <ThemeToggle/>
                 <button className="icon-button notification-button" aria-label="Notifications">
                     <BellIcon/>
                     <span className="notification-dot"></span>
