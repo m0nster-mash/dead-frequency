@@ -17,7 +17,7 @@ export default function Breadcrumbs() {
                 const isLast = index === segments.length - 1;
 
                 return (
-                    <span>
+                    <span id="breadcrumbs">
                         <span aria-hidden="true">/</span>
                         {isLast ? (
                             <span aria-current="page"> {label} </span>

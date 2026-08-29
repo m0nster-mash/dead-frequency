@@ -82,3 +82,26 @@ npm install drizzle-orm postgres
 npm install -D drizzle-kit tsx dotenv
 npm install auth
 ```
+
+# TO-DO List
+
+## Styles
+- [ ] Fix formatting on Table of Context
+- [ ] Fix formatting on Style Test Page
+- [ ] Add Breadcrumb styles
+- [ ] Style the title area
+- [ ] Style the user profile/settings page
+- [ ] Style admin panel areas
+
+## Misc.
+- [ ] Fix `#top` page anchor on `app/page.tsx`
+- [ ] Create nicer Dark/Light mode button
+- [ ] Handle user key that appears in breadcrumbs in `admin/[user_id]` area
+
+## Project Ideas
+- [ ] Kanban board
+- [ ] Simple forum
+- [ ] Simple checklist
+- [ ] Simple chat box
+- [ ] `txt` export formatter
+- [ ] Name ranker & data display

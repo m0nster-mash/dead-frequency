@@ -3,6 +3,9 @@
 import {useState} from "react";
 import Image from 'next/image'
 import './style-test.css'
+import {PageHeader} from "@/core/dashboard/components/panels/page-header";
+import {MainContentPanel} from "@/core/dashboard/components/panels/main-card";
+import {TableOfContents} from "@/core/dashboard/components/panels/table-of-contents";
 
 function StyleTestPage() {
     const [checked, setChecked] = useState(true);
@@ -12,29 +15,70 @@ function StyleTestPage() {
 
     return (
         <div>
-            <div className="test-harness-header">
-                <h1 className="margin:0;">HTML Element Test Page</h1>
-            </div>
+            <PageHeader
+                eyebrow="Style Test"
+                title="HTML Element Test Page"
+                subtitle="An example of each major HTML element, for the purpose of testing out styles and themes."
+                items={[
+                    {
+                        id: "headings",
+                        label: "Headings",
+                        level: 2,
+                    },
+                    {
+                        id: "text",
+                        label: "Text & Inline Semantics",
+                        level: 2,
+                    },
+                    {
+                        id: "lists",
+                        label: "Lists",
+                        level: 2,
+                    },
+                    {
+                        id: "links-media",
+                        label: "Links & Media",
+                        level: 2,
+                    },
+                    {
+                        id: "tables",
+                        label: "Tables",
+                        level: 2,
+                    },
+                    {
+                        id: "forms",
+                        label: "Forms",
+                        level: 2,
+                    },
+                    {
+                        id: "buttons",
+                        label: "Buttons & Interactive",
+                        level: 2,
+                    },
+                    {
+                        id: "semantic",
+                        label: "Semantic / Layout",
+                        level: 2,
+                    },
+                    {
+                        id: "embedded",
+                        label: "Embedded & Misc",
+                        level: 2,
+                    },
+                    {
+                        id: "quotes-code",
+                        label: "Quotes & Code",
+                        level: 2,
+                    },
+                ]}
+            />
 
-            <nav className="toc" aria-label="Table of contents">
-                <strong>Sections:</strong>
-                <ul>
-                    <li><a href="#headings">Headings</a></li>
-                    <li><a href="#text">Text &amp; Inline Semantics</a></li>
-                    <li><a href="#lists">Lists</a></li>
-                    <li><a href="#links-media">Links &amp; Media</a></li>
-                    <li><a href="#tables">Tables</a></li>
-                    <li><a href="#forms">Forms</a></li>
-                    <li><a href="#buttons">Buttons &amp; Interactive</a></li>
-                    <li><a href="#semantic">Semantic / Layout</a></li>
-                    <li><a href="#embedded">Embedded &amp; Misc</a></li>
-                    <li><a href="#quotes-code">Quotes &amp; Code</a></li>
-                </ul>
-            </nav>
-            <div>
-                {/*HEADINGS */}
-                <section className="test-section" id="headings">
-                    <span className="section-label">Headings</span>
+            <MainContentPanel
+                title="Headings"
+                id="headings"
+                description="HTML heading elements from H1 through H6.">
+
+                <section className="test-section">
                     <div className="component-row">
                         <div className="component-tag">&lt;h1&gt;</div>
                         <h1>Heading Level 1</h1>
@@ -61,10 +105,14 @@ function StyleTestPage() {
                     </div>
                 </section>
 
-                {/*TEXT & INLINE SEMANTICS*/}
-                <section className="test-section" id="text">
-                    <span className="section-label">Text &amp; Inline Semantics</span>
+            </MainContentPanel>
 
+            <MainContentPanel
+                title="Text & Inline Semantic"
+                id="text"
+                description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.">
+
+                <section className="test-section">
                     <div className="component-row">
                         <div className="component-tag">&lt;p&gt;</div>
                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
@@ -145,11 +193,14 @@ function StyleTestPage() {
                         <hr/>
                     </div>
                 </section>
+            </MainContentPanel>
 
-                {/* LISTS */}
-                <section className="test-section" id="lists">
-                    <span className="section-label">Lists</span>
+            <MainContentPanel
+                title="Lists"
+                id="lists"
+                description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.">
 
+                <section className="test-section">
                     <div className="component-row">
                         <span className="component-tag">&lt;ul&gt;</span>
                         <ul>
@@ -183,11 +234,14 @@ function StyleTestPage() {
                         </dl>
                     </div>
                 </section>
+            </MainContentPanel>
 
-                {/* LINKS & MEDIA */}
-                <section className="test-section" id="links-media">
-                    <span className="section-label">Links &amp; Media</span>
+            <MainContentPanel
+                title="Links & Media"
+                id="links-media"
+                description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.">
 
+                <section className="test-section">
                     <div className="component-row">
                         <span className="component-tag">&lt;a&gt;</span>
                         <p><a href="#">A standard hyperlink</a> and <a href="#" target="_blank" rel="noopener">a link
@@ -220,10 +274,14 @@ function StyleTestPage() {
                         <video controls width="250"></video>
                     </div>
                 </section>
+            </MainContentPanel>
 
-                {/* TABLES */}
-                <section className="test-section" id="tables">
-                    <span className="section-label">Tables</span>
+            <MainContentPanel
+                title="Tables"
+                id="tables"
+                description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.">
+
+                <section className="test-section">
                     <div className="component-row">
                         <span className="component-tag">&lt;table&gt;</span>
                         <table border={1}>
@@ -256,10 +314,14 @@ function StyleTestPage() {
                         </table>
                     </div>
                 </section>
+            </MainContentPanel>
 
-                {/* FORMS */}
-                <section className="test-section" id="forms">
-                    <span className="section-label">Forms</span>
+            <MainContentPanel
+                title="Forms"
+                id="forms"
+                description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.">
+
+                <section className="test-section">
 
                     <form action="#" onSubmit={(e) => e.preventDefault()}>
                         <fieldset>
@@ -465,11 +527,14 @@ function StyleTestPage() {
                         </fieldset>
                     </form>
                 </section>
+            </MainContentPanel>
 
-                {/* BUTTONS & INTERACTIVE */}
-                <section className="test-section" id="buttons">
-                    <span className="section-label">Buttons &amp; Interactive</span>
+            <MainContentPanel
+                title="Buttons & Interactive"
+                id="buttons"
+                description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.">
 
+                <section className="test-section">
                     <div className="component-row">
                         <span className="component-tag">&lt;button&gt;</span>
                         <button type="button">Standard Button</button>
@@ -491,14 +556,17 @@ function StyleTestPage() {
                         </dialog>
                     </div>
                 </section>
+            </MainContentPanel>
 
-                {/* SEMANTIC / LAYOUT ELEMENTS */}
-                <section className="test-section" id="semantic">
-                    <span className="section-label">Semantic / Layout Elements</span>
+            <MainContentPanel
+                title="Semantic / Layout Elements"
+                id="semantic"
+                description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.">
 
+                <section className="test-section">
                     <div className="component-row">
-                <span
-                    className="component-tag">&lt;header&gt; / &lt;nav&gt; / &lt;main&gt; / &lt;article&gt; / &lt;section&gt; / &lt;aside&gt; / &lt;footer&gt;</span>
+                        <span
+                            className="component-tag">&lt;header&gt; / &lt;nav&gt; / &lt;main&gt; / &lt;article&gt; / &lt;section&gt; / &lt;aside&gt; / &lt;footer&gt;</span>
                         <header>
                             <p>This is a nested &lt;header&gt; element (page banner content).</p>
                         </header>
@@ -528,15 +596,19 @@ function StyleTestPage() {
                         </blockquote>
                     </div>
                 </section>
+            </MainContentPanel>
 
-                {/* EMBEDDED & MISC */}
-                <section className="test-section" id="embedded">
-                    <span className="section-label">Embedded &amp; Misc</span>
+            <MainContentPanel
+                title="Embedded & Misc"
+                id="embedded"
+                description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.">
+
+                <section className="test-section">
 
                     <div className="component-row">
-                        {/*<span className="component-tag">&lt;iframe&gt;</span>*/}
-                        {/*<iframe srcdoc="&lt;p&gt;Content inside an iframe&lt;/p&gt;" width="300" height="80"*/}
-                        {/*        title="Test iframe"></iframe>*/}
+                        <span className="component-tag">&lt;iframe&gt;</span>
+                        <iframe srcDoc="&lt;p&gt;Content inside an iframe&lt;/p&gt;" width="300" height="80"
+                                title="Test iframe"></iframe>
                     </div>
 
                     <div className="component-row">
@@ -552,23 +624,24 @@ function StyleTestPage() {
                         </svg>
                     </div>
                 </section>
+            </MainContentPanel>
 
-                {/* QUOTES & CODE */}
-                <section className="test-section" id="quotes-code">
-                    <span className="section-label">Quotes &amp; Code</span>
+            <MainContentPanel
+                title="Quotes & Code"
+                id="quotes-code"
+                description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.">
 
+                <section className="test-section">
                     <div className="component-row">
                         <span className="component-tag">&lt;q&gt;</span>
                         <p>She said, <q>this is an inline quotation</q>, during the meeting.</p>
                     </div>
 
-                    {/*<div className="component-row">*/}
-                    {/*    <span className="component-tag">&lt;code&gt; / &lt;pre&gt;</span>*/}
-                    {/*    <p>Inline code example: <code>const x = 42;</code></p>*/}
-                    {/*    <pre><code>function greet(name) {*/}
-                    {/*        return "Hello, " + name;*/}
-                    {/*    }</code></pre>*/}
-                    {/*</div>*/}
+                    <div className="component-row">
+                        <span className="component-tag">&lt;code&gt; / &lt;pre&gt;</span>
+                        <p>Inline code example: <code>const x = 42;</code></p>
+                        <pre><code>function greet(name)</code></pre>
+                    </div>
 
                     <div className="component-row">
                         <span className="component-tag">&lt;kbd&gt; / &lt;samp&gt; / &lt;var&gt;</span>
@@ -576,7 +649,7 @@ function StyleTestPage() {
                             Variable: <var>x</var> = 10.</p>
                     </div>
                 </section>
-            </div>
+            </MainContentPanel>
         </div>
     );
 }
