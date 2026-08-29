@@ -7,7 +7,7 @@ import PageIcon from "@/shared/svg/page-icon.svg";
 import SquareIcon from "@/shared/svg/four-squares-icon.svg";
 import GearIcon from "@/shared/svg/gear-icon.svg";
 
-export default async function Sidebar() {
+export async function Sidebar() {
     const requestHeaders = await headers();
     const session = await auth.api.getSession({headers: requestHeaders});
 
@@ -39,6 +39,12 @@ export default async function Sidebar() {
                     <PageIcon/>
                     <span>Style Test</span>
                 </a>
+                {session ? (
+                    <a href="/settings" className="nav-item">
+                        <GearIcon/>
+                        <span>Settings</span>
+                    </a>
+                ) : (<span></span>)}
                 <h5>Other Menu</h5>
                 <a href="/" className="nav-item">
                     <SquareIcon/>
@@ -51,9 +57,9 @@ export default async function Sidebar() {
                 {isAdmin ? (
                     <span>
                         <h5>Management</h5>
-                        <a href="#" className="nav-item">
+                        <a href="/admin" className="nav-item">
                             <GearIcon/>
-                            <span>Settings</span>
+                            <span>Admin Panel</span>
                         </a>
                     </span>
                 ) : (<span></span>)}
@@ -63,7 +69,7 @@ export default async function Sidebar() {
                 <div className="sidebar-footer">
                     <SignOutButton/>
                 </div>
-            ) : (<div></div>)}
+            ) : (<span></span>)}
         </SidebarFrame>
     );
 }
