@@ -3,9 +3,7 @@
 import {SubmitEvent, useState} from "react";
 import {useRouter} from "next/navigation";
 import {authClient} from "@/core/auth/lib/auth-client";
-import "@/shared/styles/forms.css";
-import {MainContentPanel} from "@/core/dashboard/components/panels/main-card";
-// import styles from "./auth-card.module.css";
+import styles from "./auth-card.module.css";
 
 type Mode = "login" | "register";
 type AuthCardProps = { initialMode?: Mode; };
@@ -49,69 +47,98 @@ export function AuthCard({initialMode = "login"}: AuthCardProps) {
     }
 
     return (
-        <MainContentPanel title={mode}>
-            <div>
-                <div>Dead Frequency</div>
-                <div>
-                    {mode === "login" ? "Sign in to continue" : "Create an account to get started"}
-                </div>
-            </div>
-
-            <div role="tablist" aria-label="Authentication mode">
-                <button type="button" role="tab" onClick={() => switchMode("login")}>
-                    Sign in
-                </button>
-                <button type="button" role="tab" onClick={() => switchMode("register")}>
-                    Register
-                </button>
-            </div>
-            <form onSubmit={handleSubmit} key={mode}>
-                {mode === "register" ? (
-                    <div>
-                        <label htmlFor="name">
-                            Name
-                        </label>
-                        <input id="name" type={"text"} required name="name" placeholder="Jane Doe" autoComplete="name"/>
+        <div className={styles.wrapper}>
+            <div className={styles.card}>
+                <div className={styles.header}>
+                    <div className={styles.brand}>Dead Frequency</div>
+                    <div className={styles.subtitle}>
+                        {mode === "login" ? "Sign in to continue" : "Create an account to get started"}
                     </div>
-                ) : null}
-
-                <div>
-                    <label htmlFor="email">
-                        Emails
-                    </label>
-                    <input id="email" required type="email" name="email" placeholder="you@example.com"
-                           autoComplete="email"/>
                 </div>
 
-                <div>
-                    <label htmlFor="password">
-                        Password
-                    </label>
-                    <input id="password" required type="password" name="password" placeholder="••••••••"
-                           autoComplete={mode === "register" ? "new-password" : "current-password"}/>
+                <div className={styles.tabs} role="tablist" aria-label="Authentication mode">
+                    <button type="button"
+                            role="tab"
+                            aria-selected={mode === "login"}
+                            className={mode === "login" ? `${styles.tab} ${styles.tabActive}` : styles.tab}
+                            onClick={() => switchMode("login")}>
+                        Sign in
+                    </button>
+                    <button type="button"
+                            role="tab"
+                            aria-selected={mode === "register"}
+                            className={mode === "register" ? `${styles.tab} ${styles.tabActive}` : styles.tab}
+                            onClick={() => switchMode("register")}>
+                        Register
+                    </button>
                 </div>
-                {error ? <p>{error}</p> : null}
-                <button type="submit" disabled={loading}>
-                    {loading ? "Please wait..." : mode === "register" ? "Create account" : "Sign in"}
-                </button>
-            </form>
-            <p>
-                {mode === "login" ? (
-                    <span>
-	        			Need an account?
-	        			<span onClick={() => switchMode("register")}>
-	        				Register
-	        			</span>
-	        		</span>
-                ) : (
-                    <span>
-	        			Already have an account?
-	        			<span onClick={() => switchMode("login")}>
-	        				Sign in
-	        			</span>
-	        		</span>
-                )}
-            </p>
-        </MainContentPanel>
+
+                <form className={styles.form} onSubmit={handleSubmit} key={mode}>
+                    {mode === "register" ? (
+                        <div className={styles.field}>
+                            <label className={styles.label} htmlFor="name">
+                                Name
+                            </label>
+                            <input id="name"
+                                   className={styles.input}
+                                   type="text"
+                                   required
+                                   name="name"
+                                   placeholder="Jane Doe"
+                                   autoComplete="name"/>
+                        </div>
+                    ) : null}
+
+                    <div className={styles.field}>
+                        <label className={styles.label} htmlFor="email">
+                            Email
+                        </label>
+                        <input id="email"
+                               className={styles.input}
+                               required
+                               type="email"
+                               name="email"
+                               placeholder="you@example.com"
+                               autoComplete="email"/>
+                    </div>
+
+                    <div className={styles.field}>
+                        <label className={styles.label} htmlFor="password">
+                            Password
+                        </label>
+                        <input id="password"
+                               className={styles.input}
+                               required
+                               type="password"
+                               name="password"
+                               placeholder="••••••••"
+                               autoComplete={mode === "register" ? "new-password" : "current-password"}/>
+                    </div>
+                    {error ? <p className={styles.error}>{error}</p> : null}
+
+                    <button className={styles.submit} type="submit" disabled={loading}>
+                        {loading ? "Please wait..." : mode === "register" ? "Create account" : "Sign in"}
+                    </button>
+                </form>
+
+                <p className={styles.footer}>
+                    {mode === "login" ? (
+                        <span>
+                            Need an account?
+                            <span className={styles.link} onClick={() => switchMode("register")}>
+                                Register
+                            </span>
+                        </span>
+                    ) : (
+                        <span>
+                            Already have an account?
+                            <span className={styles.link} onClick={() => switchMode("login")}>
+                                Sign in
+                            </span>
+                        </span>
+                    )}
+                </p>
+            </div>
+        </div>
     );
 }
