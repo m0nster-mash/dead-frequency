@@ -4,6 +4,7 @@ import {SubmitEvent, useState} from "react";
 import {useRouter} from "next/navigation";
 import {authClient} from "@/core/auth/lib/auth-client";
 import "@/shared/styles/forms.css";
+import {MainContentPanel} from "@/core/dashboard/components/panels/main-card";
 // import styles from "./auth-card.module.css";
 
 type Mode = "login" | "register";
@@ -48,7 +49,7 @@ export function AuthCard({initialMode = "login"}: AuthCardProps) {
     }
 
     return (
-        <div>
+        <MainContentPanel title={mode}>
             <div>
                 <div>Dead Frequency</div>
                 <div>
@@ -111,6 +112,6 @@ export function AuthCard({initialMode = "login"}: AuthCardProps) {
 	        		</span>
                 )}
             </p>
-        </div>
+        </MainContentPanel>
     );
 }
