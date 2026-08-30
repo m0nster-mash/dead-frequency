@@ -1,24 +1,26 @@
 "use client";
 
 import {ReactNode, useEffect} from "react";
-import { useRouter } from "next/navigation";
+import {useRouter} from "next/navigation";
 
-export default function RequireAuth({
-  session,
-  children,
-}: {
-  session: unknown;
-  children: ReactNode;
+export default function RequireAuth({session, children,}: {
+    session: unknown;
+    children: ReactNode;
 }) {
-  const router = useRouter();
+    const router = useRouter();
 
-  useEffect(() => {
+    useEffect(() => {
+        // if (!session) {
+        //     router.push("/login");
+        // }
+        if (!session) {
+            router.push("/login");
+        }
+    }, [session, router]);
+
     if (!session) {
-      router.push("/login");
+        return null;
     }
-  }, [session, router]);
 
-  if (!session) return null;
-
-  return <>{children}</>;
+    return <>{children}</>;
 }
