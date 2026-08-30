@@ -7,19 +7,21 @@
 - Drizzle ORM
 - PostgreSQL in Docker
 
-## 1) Install dependencies
+## Setup Steps
+
+### 1) Install dependencies
 
 ```bash
 npm install
 ```
 
-## 2) Start PostgreSQL with Docker
+### 2) Start PostgreSQL with Docker
 
 ```bash
 docker compose up -d
 ```
 
-## 3) Configure environment
+### 3) Configure environment
 
 Copy `.env.example` to `.env` and set values:
 
@@ -32,18 +34,19 @@ cp .env.example .env
 - `BETTER_AUTH_URL`: app URL (usually `http://localhost:3000`)
 - `NEXT_PUBLIC_APP_URL`: app URL for auth client
 
-## 4) Create database tables
+### 4) Create database tables
 
 ```bash
 npm run db:generate
 npm run db:migrate
 ```
 
-## 5) Run the app
+### 5) Run the app
 
 ```bash
 npm run dev
 ```
+
 ## Other Helpful Commands
 
 ### Generate Secret
@@ -86,6 +89,7 @@ npm install auth
 # TO-DO List
 
 ## Styles
+
 - [ ] Fix formatting on Table of Context
 - [ ] Fix formatting on Style Test Page
 - [ ] Add Breadcrumb styles
@@ -94,14 +98,20 @@ npm install auth
 - [ ] Style admin panel areas
 
 ## Misc.
+
 - [ ] Fix `#top` page anchor on `app/page.tsx`
 - [ ] Create nicer Dark/Light mode button
 - [ ] Handle user key that appears in breadcrumbs in `admin/[user_id]` area
+- [ ] Make popup modals for login/registration area
+- [ ] Clean up folder structure
 
 ## Project Ideas
+
 - [ ] Kanban board
 - [ ] Simple forum
-- [ ] Simple checklist
+- [ ] Simple To-Do List
 - [ ] Simple chat box
 - [ ] `txt` export formatter
 - [ ] Name ranker & data display
+- [ ] CSS/HTML code + results viewer
+- [ ] Blog with comment section
