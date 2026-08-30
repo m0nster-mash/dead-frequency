@@ -2,6 +2,7 @@ import {headers} from "next/headers";
 import {auth} from "@/core/auth";
 import {AuthCard} from "@/core/auth";
 import DashboardPage from "./dashboard/page";
+import HomePage from "@/app/home/page";
 
 export default async function Home() {
     const session = await auth.api.getSession({
@@ -14,7 +15,7 @@ export default async function Home() {
             <div>
                 {session?.user
                     ? (<DashboardPage/>)
-                    : (<AuthCard initialMode="register"/>)}
+                    : (<HomePage/>)}
             </div>
         </main>
     );

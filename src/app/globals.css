@@ -1703,6 +1703,7 @@ Row 1 — Main header
 .main-content-card {
     width: 100%;
     overflow: hidden;
+    padding: 1rem;
 }
 
 /* --------------------------------
@@ -1713,7 +1714,6 @@ Row 1 — Main header
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
-
     gap: 2rem;
 }
 
@@ -1733,7 +1733,7 @@ Row 1 — Main header
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    float:right;
+    float: right;
     flex-shrink: 0;
     width: 2rem;
     height: 2rem;
