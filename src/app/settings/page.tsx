@@ -1,8 +1,8 @@
 import {headers} from "next/headers";
 import {redirect} from "next/navigation";
 import {auth} from "@/core/auth";
-import {AppShell} from "@/core/dashboard/components/app-shell";
 import {AccountSettingsForm} from "@/core/settings/components/account-settings-form";
+import {PageHeader} from "@/core/dashboard/components/panels/page-header";
 
 export default async function SettingsPage() {
     const session = await auth.api.getSession({
@@ -14,18 +14,15 @@ export default async function SettingsPage() {
     }
 
     return (
-        <AppShell userName={session.user.name}
-                  userEmail={session.user.email}
-                  userRole={session.user.role}>
-            <div>
-                <header>
-                    <h1>Account Settings</h1>
-                    <p> Update your username, email, and password. </p>
-                </header>
 
-                <AccountSettingsForm currentName={session.user.name ?? ""}
-                                     currentEmail={session.user.email}/>
-            </div>
-        </AppShell>
+        <div>
+            <PageHeader
+                eyebrow={"Settings"}
+                title={"Account Settings"}
+                subtitle={"Update your username, email, and password."}/>
+
+            <AccountSettingsForm currentName={session.user.name ?? ""}
+                                 currentEmail={session.user.email}/>
+        </div>
     );
 }

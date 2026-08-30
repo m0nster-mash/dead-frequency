@@ -3,6 +3,8 @@
 import {SubmitEvent, useState} from "react";
 import {useRouter} from "next/navigation";
 import {authClient} from "@/core/auth/lib/auth-client";
+import {MainContentPanel} from "@/core/dashboard/components/panels/main-card";
+import styles from "./settings.module.css";
 
 type AccountSettingsFormProps = {
     currentName: string;
@@ -136,86 +138,113 @@ export function AccountSettingsForm({
     }
 
     return (
-        <div>
-            <section>
-                <h2>Username</h2>
-                <form onSubmit={handleProfileSubmit}>
-                    <div>
-                        <label htmlFor="name"> Username </label>
-                        <input id="name"
-                               name="name"
-                               defaultValue={currentName}
-                               placeholder="Your name"
-                               autoComplete="name"
-                               required/>
-                    </div>
-                    {profileState.error ? <p>{profileState.error}</p> : null}
-                    {profileState.success ? (<p>{profileState.success}</p>) : null}
-                    <button type="submit" disabled={profileState.loading}>
-                        {profileState.loading ? "Saving..." : "Save username"}
-                    </button>
-                </form>
-            </section>
+        <div className={styles.wrapper}>
+            <MainContentPanel title={"Update Username"}>
+                <div className={styles.section}>
+                    <p className={styles.sectionSubtitle}>
+                        This is the name that will be displayed across the app.
+                    </p>
+                    <form className={styles.form} onSubmit={handleProfileSubmit}>
+                        <div className={styles.field}>
+                            <label className={styles.label} htmlFor="name"> Username </label>
+                            <input id="name"
+                                   name="name"
+                                   className={styles.input}
+                                   defaultValue={currentName}
+                                   placeholder="Your name"
+                                   autoComplete="name"
+                                   required/>
+                        </div>
+                        {profileState.error ? <p className={styles.error}>{profileState.error}</p> : null}
+                        {profileState.success ? (<p className={styles.success}>{profileState.success}</p>) : null}
+                        <div className={styles.actions}>
+                            <button type="submit" className={styles.submit} disabled={profileState.loading}>
+                                {profileState.loading ? "Saving..." : "Save username"}
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </MainContentPanel>
 
-            <section>
-                <h2>Email address</h2>
-                <form onSubmit={handleEmailSubmit}>
-                    <div>
-                        <label htmlFor="email"> Email </label>
-                        <input id="email"
-                               name="email"
-                               type="email"
-                               defaultValue={currentEmail}
-                               placeholder="you@example.com"
-                               autoComplete="email"
-                               required/>
-                    </div>
-                    {emailState.error ? <p>{emailState.error}</p> : null}
-                    {emailState.success ? <p>{emailState.success}</p> : null}
-                    <button type="submit" disabled={emailState.loading}>
-                        {emailState.loading ? "Saving..." : "Update email"}
-                    </button>
-                </form>
-            </section>
+            <MainContentPanel title={"Update Email"}>
+                <div className={styles.section}>
+                    <p className={styles.sectionSubtitle}>
+                        We&apos;ll send a confirmation to your new address if verification is required.
+                    </p>
+                    <form className={styles.form} onSubmit={handleEmailSubmit}>
+                        <div className={styles.field}>
+                            <label className={styles.label} htmlFor="email"> Email </label>
+                            <input id="email"
+                                   name="email"
+                                   type="email"
+                                   className={styles.input}
+                                   defaultValue={currentEmail}
+                                   placeholder="you@example.com"
+                                   autoComplete="email"
+                                   required/>
+                        </div>
+                        {emailState.error ? <p className={styles.error}>{emailState.error}</p> : null}
+                        {emailState.success ? <p className={styles.success}>{emailState.success}</p> : null}
+                        <div className={styles.actions}>
+                            <button type="submit" className={styles.submit} disabled={emailState.loading}>
+                                {emailState.loading ? "Saving..." : "Update email"}
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </MainContentPanel>
 
-            <section>
-                <h2>Password</h2>
-                <form onSubmit={handlePasswordSubmit}>
-                    <div>
-                        <label htmlFor="currentPassword">
-                            Current password
-                        </label>
-                        <input id="currentPassword"
-                               name="currentPassword"
-                               type="password"
-                               autoComplete="current-password"
-                               required/>
-                    </div>
-                    <div>
-                        <label htmlFor="newPassword"> New password </label>
-                        <input id="newPassword"
-                               name="newPassword"
-                               type="password"
-                               autoComplete="new-password"
-                               required/>
-                    </div>
-                    <div>
-                        <label htmlFor="confirmPassword">
-                            Confirm new password
-                        </label>
-                        <input id="confirmPassword"
-                               name="confirmPassword"
-                               type="password"
-                               autoComplete="new-password"
-                               required/>
-                    </div>
-                    {passwordState.error ? <p>{passwordState.error}</p> : null}
-                    {passwordState.success ? (<p>{passwordState.success}</p>) : null}
-                    <button type="submit" disabled={passwordState.loading}>
-                        {passwordState.loading ? "Saving..." : "Update password"}
-                    </button>
-                </form>
-            </section>
+            <MainContentPanel title={"Update Password"}>
+                <div className={styles.section}>
+                    <p className={styles.sectionSubtitle}>
+                        Use at least 8 characters. Updating your password will sign you out of other sessions.
+                    </p>
+                    <form className={styles.form} onSubmit={handlePasswordSubmit}>
+                        <div className={styles.field}>
+                            <label className={styles.label} htmlFor="currentPassword">
+                                Current password
+                            </label>
+                            <input id="currentPassword"
+                                   name="currentPassword"
+                                   type="password"
+                                   className={styles.input}
+                                   autoComplete="current-password"
+                                   required/>
+                        </div>
+                        <hr className={styles.divider}/>
+                        <div className={styles.row}>
+                            <div className={styles.field}>
+                                <label className={styles.label} htmlFor="newPassword"> New password </label>
+                                <input id="newPassword"
+                                       name="newPassword"
+                                       type="password"
+                                       className={styles.input}
+                                       autoComplete="new-password"
+                                       required/>
+                            </div>
+                            <div className={styles.field}>
+                                <label className={styles.label} htmlFor="confirmPassword">
+                                    Confirm new password
+                                </label>
+                                <input id="confirmPassword"
+                                       name="confirmPassword"
+                                       type="password"
+                                       className={styles.input}
+                                       autoComplete="new-password"
+                                       required/>
+                            </div>
+                        </div>
+                        {passwordState.error ? <p className={styles.error}>{passwordState.error}</p> : null}
+                        {passwordState.success ? (
+                            <p className={styles.success}>{passwordState.success}</p>) : null}
+                        <div className={styles.actions}>
+                            <button type="submit" className={styles.submit} disabled={passwordState.loading}>
+                                {passwordState.loading ? "Saving..." : "Update password"}
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </MainContentPanel>
         </div>
     );
 }
