@@ -3,6 +3,7 @@
 import {SubmitEvent, useState} from "react";
 import {useRouter} from "next/navigation";
 import {authClient} from "@/core/auth/lib/auth-client";
+import {MainContentPanel} from "@/core/dashboard/components/panels/main-card";
 
 type AccountSettingsFormProps = {
     currentName: string;
@@ -137,85 +138,91 @@ export function AccountSettingsForm({
 
     return (
         <div>
-            <section>
-                <h2>Username</h2>
-                <form onSubmit={handleProfileSubmit}>
-                    <div>
-                        <label htmlFor="name"> Username </label>
-                        <input id="name"
-                               name="name"
-                               defaultValue={currentName}
-                               placeholder="Your name"
-                               autoComplete="name"
-                               required/>
-                    </div>
-                    {profileState.error ? <p>{profileState.error}</p> : null}
-                    {profileState.success ? (<p>{profileState.success}</p>) : null}
-                    <button type="submit" disabled={profileState.loading}>
-                        {profileState.loading ? "Saving..." : "Save username"}
-                    </button>
-                </form>
-            </section>
+            <MainContentPanel title={"Update Username"}>
+                <section>
+                    <h2>Username</h2>
+                    <form onSubmit={handleProfileSubmit}>
+                        <div>
+                            <label htmlFor="name"> Username </label>
+                            <input id="name"
+                                   name="name"
+                                   defaultValue={currentName}
+                                   placeholder="Your name"
+                                   autoComplete="name"
+                                   required/>
+                        </div>
+                        {profileState.error ? <p>{profileState.error}</p> : null}
+                        {profileState.success ? (<p>{profileState.success}</p>) : null}
+                        <button type="submit" disabled={profileState.loading}>
+                            {profileState.loading ? "Saving..." : "Save username"}
+                        </button>
+                    </form>
+                </section>
+            </MainContentPanel>
 
-            <section>
-                <h2>Email address</h2>
-                <form onSubmit={handleEmailSubmit}>
-                    <div>
-                        <label htmlFor="email"> Email </label>
-                        <input id="email"
-                               name="email"
-                               type="email"
-                               defaultValue={currentEmail}
-                               placeholder="you@example.com"
-                               autoComplete="email"
-                               required/>
-                    </div>
-                    {emailState.error ? <p>{emailState.error}</p> : null}
-                    {emailState.success ? <p>{emailState.success}</p> : null}
-                    <button type="submit" disabled={emailState.loading}>
-                        {emailState.loading ? "Saving..." : "Update email"}
-                    </button>
-                </form>
-            </section>
+            <MainContentPanel title={"Update Email"}>
+                <section>
+                    <h2>Email address</h2>
+                    <form onSubmit={handleEmailSubmit}>
+                        <div>
+                            <label htmlFor="email"> Email </label>
+                            <input id="email"
+                                   name="email"
+                                   type="email"
+                                   defaultValue={currentEmail}
+                                   placeholder="you@example.com"
+                                   autoComplete="email"
+                                   required/>
+                        </div>
+                        {emailState.error ? <p>{emailState.error}</p> : null}
+                        {emailState.success ? <p>{emailState.success}</p> : null}
+                        <button type="submit" disabled={emailState.loading}>
+                            {emailState.loading ? "Saving..." : "Update email"}
+                        </button>
+                    </form>
+                </section>
 
-            <section>
-                <h2>Password</h2>
-                <form onSubmit={handlePasswordSubmit}>
-                    <div>
-                        <label htmlFor="currentPassword">
-                            Current password
-                        </label>
-                        <input id="currentPassword"
-                               name="currentPassword"
-                               type="password"
-                               autoComplete="current-password"
-                               required/>
-                    </div>
-                    <div>
-                        <label htmlFor="newPassword"> New password </label>
-                        <input id="newPassword"
-                               name="newPassword"
-                               type="password"
-                               autoComplete="new-password"
-                               required/>
-                    </div>
-                    <div>
-                        <label htmlFor="confirmPassword">
-                            Confirm new password
-                        </label>
-                        <input id="confirmPassword"
-                               name="confirmPassword"
-                               type="password"
-                               autoComplete="new-password"
-                               required/>
-                    </div>
-                    {passwordState.error ? <p>{passwordState.error}</p> : null}
-                    {passwordState.success ? (<p>{passwordState.success}</p>) : null}
-                    <button type="submit" disabled={passwordState.loading}>
-                        {passwordState.loading ? "Saving..." : "Update password"}
-                    </button>
-                </form>
-            </section>
+            </MainContentPanel>
+            <MainContentPanel title={"Update Password"}>
+                <section>
+                    <h2>Password</h2>
+                    <form onSubmit={handlePasswordSubmit}>
+                        <div>
+                            <label htmlFor="currentPassword">
+                                Current password
+                            </label>
+                            <input id="currentPassword"
+                                   name="currentPassword"
+                                   type="password"
+                                   autoComplete="current-password"
+                                   required/>
+                        </div>
+                        <div>
+                            <label htmlFor="newPassword"> New password </label>
+                            <input id="newPassword"
+                                   name="newPassword"
+                                   type="password"
+                                   autoComplete="new-password"
+                                   required/>
+                        </div>
+                        <div>
+                            <label htmlFor="confirmPassword">
+                                Confirm new password
+                            </label>
+                            <input id="confirmPassword"
+                                   name="confirmPassword"
+                                   type="password"
+                                   autoComplete="new-password"
+                                   required/>
+                        </div>
+                        {passwordState.error ? <p>{passwordState.error}</p> : null}
+                        {passwordState.success ? (<p>{passwordState.success}</p>) : null}
+                        <button type="submit" disabled={passwordState.loading}>
+                            {passwordState.loading ? "Saving..." : "Update password"}
+                        </button>
+                    </form>
+                </section>
+            </MainContentPanel>
         </div>
     );
 }
