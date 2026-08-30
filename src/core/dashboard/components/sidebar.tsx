@@ -69,7 +69,14 @@ export async function Sidebar() {
                 <div className="sidebar-footer">
                     <SignOutButton/>
                 </div>
-            ) : (<span></span>)}
+            ) : (
+                <div>
+                    <a href="/login" className="nav-item">
+                        <GearIcon/>
+                        <span>Login / Register</span>
+                    </a>
+                </div>
+            )}
         </SidebarFrame>
     );
 }

@@ -8,12 +8,15 @@ export const metadata: Metadata = {
     title: "dead-frequency",
 };
 
-export default function RootLayout({children}: { children: ReactNode }) {
+export default function RootLayout({children, auth}: { children: ReactNode, auth: ReactNode }) {
     return (
         <html lang="en">
         <body>
         <ThemeProvider>
-            <AppShell>{children}</AppShell>
+            <AppShell>
+                {children}
+                {auth}
+            </AppShell>
         </ThemeProvider>
         </body>
         </html>

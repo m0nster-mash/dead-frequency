@@ -7,18 +7,15 @@ import {StatsGrid} from "@/core/dashboard/components/panels/stat-card";
 import {ChartPanel} from "@/core/dashboard/components/panels/card-panel";
 import {ActivityPanel} from "@/core/dashboard/components/panels/activity-panel";
 import {MainContentPanel} from "@/core/dashboard/components/panels/main-card";
+import RequireAuth from "@/app/components/require-auth";
 
 export default async function DashboardPage() {
     const session = await auth.api.getSession({
         headers: await headers()
     });
 
-    if (!session) {
-        redirect("/login");
-    }
-
     return (
-        <>
+       <RequireAuth session={session}>
             <PageHeader
                 eyebrow="Overview"
                 title="Good morning, <user>."
@@ -34,6 +31,6 @@ export default async function DashboardPage() {
                 <ActivityPanel items={[/* ... */]} />
             </section>
 
-        </>
+        </RequireAuth>
     );
 }
