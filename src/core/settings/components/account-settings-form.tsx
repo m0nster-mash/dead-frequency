@@ -140,7 +140,6 @@ export function AccountSettingsForm({
         <div>
             <MainContentPanel title={"Update Username"}>
                 <section>
-                    <h2>Username</h2>
                     <form onSubmit={handleProfileSubmit}>
                         <div>
                             <label htmlFor="name"> Username </label>
@@ -162,7 +161,6 @@ export function AccountSettingsForm({
 
             <MainContentPanel title={"Update Email"}>
                 <section>
-                    <h2>Email address</h2>
                     <form onSubmit={handleEmailSubmit}>
                         <div>
                             <label htmlFor="email"> Email </label>
@@ -185,7 +183,6 @@ export function AccountSettingsForm({
             </MainContentPanel>
             <MainContentPanel title={"Update Password"}>
                 <section>
-                    <h2>Password</h2>
                     <form onSubmit={handlePasswordSubmit}>
                         <div>
                             <label htmlFor="currentPassword">
