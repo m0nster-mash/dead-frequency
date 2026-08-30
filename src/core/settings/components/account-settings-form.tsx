@@ -138,7 +138,7 @@ export function AccountSettingsForm({
     }
 
     return (
-        <div className={styles.wrapper}>
+        <div>
             <MainContentPanel title={"Update Username"}>
                 <div className={styles.section}>
                     <p className={styles.sectionSubtitle}>

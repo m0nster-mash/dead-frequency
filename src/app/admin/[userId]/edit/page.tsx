@@ -4,6 +4,7 @@ import Link from "next/link";
 import {auth} from "@/core/auth";
 import {AppShell} from "@/core/dashboard/components/app-shell";
 import {AdminEditUserForm} from "@/core/admin/components/admin-edit-user-form";
+import {PageHeader} from "@/core/dashboard/components/panels/page-header";
 
 type PageProps = {
     params: Promise<{ userId: string }>;
@@ -39,24 +40,16 @@ export default async function AdminEditUserPage({params}: PageProps) {
     }
 
     return (
-        <AppShell userName={session.user.name}
-                  userEmail={session.user.email}
-                  userRole={session.user.role}>
-            <div>
-                <header>
-                    <Link href={`/admin/${user.id}`}>
-                        ← Back to user details
-                    </Link>
-                    <h1>Edit {user.name || user.email}</h1>
-                    <p>Update this user&apos;s account details.</p>
-                </header>
+        <div>
+            <PageHeader eyebrow={"Viewing Profile Details For..."}
+                        title={user.name + " (" + user.email + ")"}
+                        subtitle={"Update this user&apos;s account details."}/>
 
-                <AdminEditUserForm userId={user.id}
-                                   currentName={user.name ?? ""}
-                                   currentEmail={user.email}
-                                   currentRole={user.role ?? "user"}
-                                   isCurrentUser={user.id === session.user.id}/>
-            </div>
-        </AppShell>
+            <AdminEditUserForm userId={user.id}
+                               currentName={user.name ?? ""}
+                               currentEmail={user.email}
+                               currentRole={user.role ?? "user"}
+                               isCurrentUser={user.id === session.user.id}/>
+        </div>
     );
 }

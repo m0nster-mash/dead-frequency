@@ -3,6 +3,7 @@
 import {useState} from "react";
 import Link from "next/link";
 import {DeleteUserModal} from "@/core/admin/components/delete-user-modal";
+import {MainContentPanel} from "@/core/dashboard/components/panels/main-card";
 
 type AdminUser = {
     id: string;
@@ -21,7 +22,7 @@ export function AdminUserTable({users, currentUserId}: AdminUserTableProps) {
     const [userPendingDelete, setUserPendingDelete] = useState<AdminUser | null>(null);
 
     return (
-        <div>
+        <MainContentPanel title={"User Table"}>
             <table>
                 <thead>
                 <tr>
@@ -70,6 +71,6 @@ export function AdminUserTable({users, currentUserId}: AdminUserTableProps) {
                                  userEmail={userPendingDelete.email}
                                  onCloseAction={() => setUserPendingDelete(null)}/>
             )}
-        </div>
+        </MainContentPanel>
     );
 }
