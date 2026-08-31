@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import {usePathname} from "next/navigation";
-import styles from "@/shared/styles/components.module.css";
+import styles from "@shared/styles/dashboard.module.css";
 
 export default function Breadcrumbs() {
     const pathname = usePathname();
@@ -24,12 +24,10 @@ export default function Breadcrumbs() {
                     <span className={styles.separator} aria-hidden="true">
                         /
                     </span>
-
                         {isLast ? (
                             <span
                                 className={styles.current}
-                                aria-current="page"
-                            >
+                                aria-current="page">
                             [ {label} ]
                         </span>
                         ) : (

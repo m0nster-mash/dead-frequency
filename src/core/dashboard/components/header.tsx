@@ -3,6 +3,7 @@ import {auth} from "@core/auth";
 import BellIcon from "@/shared/svg/bell-icon.svg";
 import {ThemeToggle} from "@/app/components/theme-toggle"
 import Breadcrumbs from "@/core/dashboard/components/breadcrumbs";
+import styles from "@shared/styles/dashboard.module.css";
 
 export default async function Header() {
     const requestHeaders = await headers();
@@ -18,17 +19,17 @@ export default async function Header() {
         : "?";
 
     return (
-        <header className="topbar">
-            <div className="topbar-left">
+        <header className={styles.topbar}>
+            <div className={styles.topbarLeft}>
                 <Breadcrumbs/>
             </div>
-            <div className="topbar-right">
+            <div className={styles.topbarRight}>
                 <ThemeToggle/>
-                <button className="icon-button notification-button" aria-label="Notifications">
+                <button className={`${styles.iconButton} ${styles.notificationButton}`} aria-label="Notifications">
                     <BellIcon/>
-                    <span className="notification-dot"></span>
+                    <span className={styles.notificationDot}></span>
                 </button>
-                <div className="topbar-avatar">{initials}</div>
+                <div className={styles.top}>{initials}</div>
             </div>
         </header>
     );

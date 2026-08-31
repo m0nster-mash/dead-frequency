@@ -6,6 +6,7 @@ import {SignOutButton} from "@core/auth";
 import PageIcon from "@/shared/svg/page-icon.svg";
 import SquareIcon from "@/shared/svg/four-squares-icon.svg";
 import GearIcon from "@/shared/svg/gear-icon.svg";
+import styles from "@shared/styles/dashboard.module.css";
 
 export async function Sidebar() {
     const requestHeaders = await headers();
@@ -19,45 +20,45 @@ export async function Sidebar() {
         <SidebarFrame toggleButton={<SidebarToggleButton/>}>
             <div>
                 {session ? (
-                    <div className="user-card">
-                        <div className="avatar">SK</div>
-                        <div className="user-info">
+                    <div className={styles.userCard}>
+                        <div className={styles.avatar}>SK</div>
+                        <div className={styles.userInfo}>
                             <strong>{userName}</strong>
                             <span>{userRole}</span>
                         </div>
-                        <button className="more-button" aria-label="More options">•••</button>
+                        <button className={styles.moreButton} aria-label="More options">•••</button>
                     </div>
                 ) : (<span></span>)}
             </div>
-            <nav className="sidebar-nav">
+            <nav className={styles.sidebarNav}>
                 <h5>Workspace</h5>
-                <a href="/" className="nav-item active">
+                <a href="/" className={`${styles.navItem} ${styles.active}`}>
                     <SquareIcon/>
                     <span>Dashboard</span>
                 </a>
-                <a href="/style-test" className="nav-item">
+                <a href="/style-test" className={styles.navItem}>
                     <PageIcon/>
                     <span>Style Test</span>
                 </a>
                 {session ? (
-                    <a href="/settings" className="nav-item">
+                    <a href="/settings" className={styles.navItem}>
                         <GearIcon/>
                         <span>Settings</span>
                     </a>
                 ) : (<span></span>)}
                 <h5>Other Menu</h5>
-                <a href="/" className="nav-item">
+                <a href="/" className={styles.navItem}>
                     <SquareIcon/>
                     <span>Whatever</span>
                 </a>
-                <a href="/style-test" className="nav-item">
+                <a href="/style-test" className={styles.navItem}>
                     <PageIcon/>
                     <span>Something Else</span>
                 </a>
                 {isAdmin ? (
                     <span>
                         <h5>Management</h5>
-                        <a href="/admin" className="nav-item">
+                        <a href="/admin" className={styles.navItem}>
                             <GearIcon/>
                             <span>Admin Panel</span>
                         </a>
@@ -66,12 +67,12 @@ export async function Sidebar() {
 
             </nav>
             {session ? (
-                <div className="sidebar-footer">
+                <div className={styles.sidebarFooter}>
                     <SignOutButton/>
                 </div>
             ) : (
                 <div>
-                    <a href="/login" className="nav-item">
+                    <a href="/login" className={styles.navItem}>
                         <GearIcon/>
                         <span>Login / Register</span>
                     </a>
