@@ -2,14 +2,17 @@
 
 import Link from "next/link";
 import {usePathname} from "next/navigation";
+import styles from "@/shared/styles/components.module.css";
 
 export default function Breadcrumbs() {
     const pathname = usePathname();
     const segments = pathname.split("/").filter(Boolean);
 
     return (
-        <nav aria-label="Breadcrumb">
-            <Link href="/"> Home </Link>
+        <nav className={styles.breadcrumbs} aria-label="Breadcrumb">
+            <Link className={styles.home} href="/">
+                Home
+            </Link>
 
             {segments.map((segment, index) => {
                 const href = "/" + segments.slice(0, index + 1).join("/");
@@ -17,14 +20,25 @@ export default function Breadcrumbs() {
                 const isLast = index === segments.length - 1;
 
                 return (
-                    <span id="breadcrumbs">
-                        <span aria-hidden="true">/</span>
+                    <span className={styles.item} key={segment}>
+                    <span className={styles.separator} aria-hidden="true">
+                        /
+                    </span>
+
                         {isLast ? (
-                            <span aria-current="page"> {label} </span>
+                            <span
+                                className={styles.current}
+                                aria-current="page"
+                            >
+                            [ {label} ]
+                        </span>
                         ) : (
-                            <Link href={href}> {label} </Link>
+                            <Link className={styles.link} href={href}>
+                                {label}
+                            </Link>
                         )}
-                    </span>);
+                </span>
+                );
             })}
         </nav>
     );
