@@ -4,6 +4,8 @@ import {SubmitEvent, useState} from "react";
 import {useRouter} from "next/navigation";
 import {authClient} from "@/core/auth/lib/auth-client";
 import {DeleteUserModal} from "@/core/admin/components/delete-user-modal";
+import {MainContentPanel} from "@/core/dashboard/components/panels/main-card";
+import styles from "@/shared/styles/form-panel.module.css";
 
 type AdminEditUserFormProps = {
     userId: string;
@@ -155,79 +157,99 @@ export function AdminEditUserForm({
     }
 
     return (
-        <div>
-            <section>
-                <h2>Profile</h2>
-                <form onSubmit={handleProfileSubmit}>
-                    <div>
-                        <label htmlFor="name"> Username </label>
-                        <input id={"name"}
-                               name={"name"}
-                               defaultValue={currentName}
-                               required/>
-                    </div>
-                    <div>
-                        <label htmlFor="email"> Email </label>
-                        <input id="email"
-                               name="email"
-                               type="email"
-                               defaultValue={currentEmail}
-                               required/>
-                    </div>
-                    <div>
-                        <label htmlFor="role"> Role </label>
-                        <select id="role"
-                                name="role"
-                                defaultValue={currentRole}
-                                disabled={isCurrentUser}>
-                            <option value="user">User</option>
-                            <option value="admin">Admin</option>
-                        </select>
-                        {isCurrentUser && (<p>You can't change your own role.</p>)}
-                    </div>
-                    {profileState.error ? <p>{profileState.error}</p> : null}
-                    {profileState.success ? (<p>{profileState.success}</p>) : null}
-                    <button type="submit" disabled={profileState.loading}>
-                        {profileState.loading ? "Saving..." : "Save changes"}
-                    </button>
-                </form>
-            </section>
+        <div className={styles.wrapper}>
+            <MainContentPanel title={"Profile Details"}>
+                <div className={styles.section}>
+                    <form className={styles.form} onSubmit={handleProfileSubmit}>
+                        <div className={styles.field}>
+                            <label className={styles.label} htmlFor="name"> Username </label>
+                            <input id={"name"}
+                                   name={"name"}
+                                   className={styles.input}
+                                   defaultValue={currentName}
+                                   required/>
+                        </div>
+                        <div className={styles.field}>
+                            <label className={styles.label} htmlFor="email"> Email </label>
+                            <input id="email"
+                                   name="email"
+                                   type="email"
+                                   className={styles.input}
+                                   defaultValue={currentEmail}
+                                   required/>
+                        </div>
+                        <div className={styles.field}>
+                            <label className={styles.label} htmlFor="role"> Role </label>
+                            <select id="role"
+                                    name="role"
+                                    className={styles.input}
+                                    defaultValue={currentRole}
+                                    disabled={isCurrentUser}>
+                                <option value="user">User</option>
+                                <option value="admin">Admin</option>
+                            </select>
+                            {isCurrentUser && (<p className={styles.sectionSubtitle}>You can&apos;t change your own role.</p>)}
+                        </div>
+                        {profileState.error ? <p className={styles.error}>{profileState.error}</p> : null}
+                        {profileState.success ? (<p className={styles.success}>{profileState.success}</p>) : null}
+                        <div className={styles.actions}>
+                            <button type="submit" className={styles.submit} disabled={profileState.loading}>
+                                {profileState.loading ? "Saving..." : "Save changes"}
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </MainContentPanel>
 
-            <section>
-                <h2>Password</h2>
-                <form onSubmit={handlePasswordSubmit}>
-                    <div>
-                        <label htmlFor="newPassword"> New password </label>
-                        <input id="newPassword"
-                               name="newPassword"
-                               type="password"
-                               autoComplete="new-password"
-                               required/>
+            <MainContentPanel title={"Password"}>
+                <div className={styles.section}>
+                    <form className={styles.form} onSubmit={handlePasswordSubmit}>
+                        <div className={styles.row}>
+                            <div className={styles.field}>
+                                <label className={styles.label} htmlFor="newPassword"> New password </label>
+                                <input id="newPassword"
+                                       name="newPassword"
+                                       type="password"
+                                       className={styles.input}
+                                       autoComplete="new-password"
+                                       required/>
+                            </div>
+                            <div className={styles.field}>
+                                <label className={styles.label} htmlFor="confirmPassword"> Confirm new password </label>
+                                <input id="confirmPassword"
+                                       name="confirmPassword"
+                                       type="password"
+                                       className={styles.input}
+                                       autoComplete="new-password"
+                                       required/>
+                            </div>
+                        </div>
+                        {passwordState.error ? <p className={styles.error}>{passwordState.error}</p> : null}
+                        {passwordState.success ? (<p className={styles.success}>{passwordState.success}</p>) : null}
+                        <div className={styles.actions}>
+                            <button type="submit" className={styles.submit} disabled={passwordState.loading}>
+                                {passwordState.loading ? "Saving..." : "Update password"}
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </MainContentPanel>
+
+            <MainContentPanel title={"Delete User"}>
+                <div className={styles.section}>
+                    <p className={styles.sectionSubtitle}>
+                        Deleting this user removes their account and sessions permanently.
+                    </p>
+                    <div className={styles.actions}>
+                        <button type="button"
+                                className={styles.submit}
+                                disabled={isCurrentUser}
+                                onClick={() => setShowDeleteModal(true)}>
+                            Delete user
+                        </button>
                     </div>
-                    <div>
-                        <label htmlFor="confirmPassword"> Confirm new password </label>
-                        <input id="confirmPassword"
-                               name="confirmPassword"
-                               type="password"
-                               autoComplete="new-password"
-                               required/>
-                    </div>
-                    {passwordState.error ? <p>{passwordState.error}</p> : null}
-                    {passwordState.success ? (<p>{passwordState.success}</p>) : null}
-                    <button type="submit" disabled={passwordState.loading}>
-                        {passwordState.loading ? "Saving..." : "Update password"}
-                    </button>
-                </form>
-            </section>
-            <section>
-                <h2>Danger zone</h2>
-                <p> Deleting this user removes their account and sessions permanently. </p>
-                <button type="button"
-                        disabled={isCurrentUser}
-                        onClick={() => setShowDeleteModal(true)}>
-                    Delete user
-                </button>
-            </section>
+                </div>
+            </MainContentPanel>
 
             {showDeleteModal && (
                 <DeleteUserModal userId={userId}

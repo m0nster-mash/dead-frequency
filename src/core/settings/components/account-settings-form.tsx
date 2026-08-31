@@ -4,7 +4,7 @@ import {SubmitEvent, useState} from "react";
 import {useRouter} from "next/navigation";
 import {authClient} from "@/core/auth/lib/auth-client";
 import {MainContentPanel} from "@/core/dashboard/components/panels/main-card";
-import styles from "./settings.module.css";
+import styles from "@/shared/styles/form-panel.module.css";
 
 type AccountSettingsFormProps = {
     currentName: string;

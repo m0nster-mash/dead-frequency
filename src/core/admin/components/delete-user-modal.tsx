@@ -3,6 +3,7 @@
 import {SubmitEvent, useState} from "react";
 import {useRouter} from "next/navigation";
 import {authClient} from "@/core/auth/lib/auth-client";
+import styles from "@/shared/styles/form-panel.module.css";
 
 type DeleteUserModalProps = {
     onCloseAction: () => void;
@@ -45,20 +46,25 @@ export function DeleteUserModal({
     }
 
     return (
-        <div role="presentation" onClick={onCloseAction}>
-            <div role="dialog"
-                 aria-modal="true"
+        <div className={styles.modalOverlay} role="presentation" onClick={onCloseAction}>
+            <div className={styles.modal}
+                 role="dialog" aria-modal="true"
                  aria-labelledby="delete-user-title"
                  onClick={(event) => event.stopPropagation()}>
-                <h2 id="delete-user-title"> Delete user </h2>
-                <p> Are you sure you want to delete <strong>{userEmail}</strong>? This
-                    cannot be undone. </p>
-                <form className="form" onSubmit={handleSubmit}>
-                    <div className="form-field">
-                        <label className="form-label" htmlFor="confirm-email">
+                <h2 id="delete-user-title" className={styles.modalTitle}>
+                    Delete user
+                </h2>
+                <p className={styles.modalDescription}>
+                    Are you sure you want to delete{" "}
+                    <strong>{userEmail}</strong>?
+                    This cannot be undone.
+                </p>
+                <form className={styles.modalForm} onSubmit={handleSubmit}>
+                    <div className={styles.modalField}>
+                        <label className={styles.modalLabel} htmlFor="confirm-email">
                             Type <strong>{userEmail}</strong> to confirm
                         </label>
-                        <input className="form-input"
+                        <input className={styles.modalInput}
                                id="confirm-email"
                                name="confirmEmail"
                                autoComplete="off"
@@ -66,22 +72,18 @@ export function DeleteUserModal({
                                onChange={(event) => setConfirmation(event.target.value)}
                                required/>
                     </div>
-
-                    {error ? <p className="form-error">{error}</p> : null}
-
-                    <div>
-                        <button type="button"
-                                onClick={onCloseAction}
-                                disabled={loading}>
+                    {error ? (<p className={styles.modalError}> {error} </p>) : null}
+                    <div className={styles.modalActions}>
+                        <button type="button" className={styles.modalCancel} onClick={onCloseAction} disabled={loading}>
                             Cancel
                         </button>
                         <button type="submit"
+                                className={styles.modalSubmit}
                                 disabled={!isConfirmed || loading}>
                             {loading ? "Deleting..." : "Delete user"}
                         </button>
                     </div>
                 </form>
             </div>
-        </div>
-    );
+        </div>);
 }

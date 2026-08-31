@@ -1,0 +1,757 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-space-6);
+}
+
+.section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-space-2);
+}
+
+.sectionTitle {
+    font-size: var(--font-size-lg);
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin: 0;
+}
+
+.sectionSubtitle {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+    margin: 0 0 var(--size-space-2) 0;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-space-4);
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-space-2);
+}
+
+.row {
+    display: flex;
+    gap: var(--size-space-4);
+    flex-wrap: wrap;
+}
+
+.row > .field {
+    flex: 1 1 220px;
+}
+
+.label {
+    font-size: var(--font-size-xs);
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    color: var(--form-label);
+}
+
+.input {
+    width: 100%;
+    padding: var(--size-space-3) var(--size-space-3);
+    background-color: var(--form-background);
+    border: 1px solid var(--form-border);
+    border-radius: var(--form-radius);
+    color: var(--form-text);
+    font-size: var(--font-size-md);
+    transition: border-color var(--form-transition), box-shadow var(--form-transition);
+}
+
+.input:hover {
+    border-color: var(--form-border-hover);
+}
+
+.input:focus {
+    outline: none;
+    border-color: var(--form-accent);
+    box-shadow: var(--form-shadow-focus);
+}
+
+.input::placeholder {
+    color: var(--form-placeholder);
+}
+
+.input:disabled {
+    background-color: var(--form-surface);
+    color: var(--form-placeholder);
+    border-color: var(--form-border);
+    cursor: not-allowed;
+    opacity: 0.75;
+}
+
+.actions {
+    display: flex;
+    align-items: center;
+    gap: var(--size-space-3);
+    margin-top: var(--size-space-1);
+}
+
+.submit {
+    padding: var(--size-space-3) var(--size-space-5);
+    border: 1px solid var(--form-accent);
+    background-color: var(--form-accent);
+    color: var(--color-action-primary-text);
+    font-weight: 600;
+    font-size: var(--font-size-sm);
+    border-radius: var(--form-radius);
+    cursor: pointer;
+    transition: background-color var(--form-transition), border-color var(--form-transition),
+    transform var(--form-transition);
+    white-space: nowrap;
+}
+
+.submit:hover:not(:disabled) {
+    background-color: var(--form-accent-hover);
+    border-color: var(--form-accent-hover);
+}
+
+.submit:active:not(:disabled) {
+    transform: translateY(1px);
+}
+
+.submit:disabled {
+    background-color: var(--form-border);
+    border-color: var(--form-border);
+    color: var(--form-placeholder);
+    cursor: not-allowed;
+}
+
+.error {
+    padding: var(--size-space-2) var(--size-space-3);
+    border-radius: var(--form-radius);
+    background: var(--form-danger-muted);
+    color: var(--form-danger);
+    font-size: var(--font-size-sm);
+    margin: 0;
+}
+
+.success {
+    padding: var(--size-space-2) var(--size-space-3);
+    border-radius: var(--form-radius);
+    background: var(--color-success-bg);
+    color: var(--color-success);
+    font-size: var(--font-size-sm);
+    margin: 0;
+}
+
+.divider {
+    border: none;
+    border-top: 1px solid var(--color-border);
+    margin: var(--size-space-2) 0;
+}
+
+/* ========================================================= Detail / Definition List ========================================================= */
+.details {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    border: 1px solid var(--color-border);
+    border-radius: var(--form-radius);
+    overflow: hidden;
+}
+
+.detailRow {
+    display: grid;
+    grid-template-columns: minmax(160px, 0.35fr) minmax(0, 1fr);
+    align-items: center;
+    gap: var(--size-space-4);
+    padding: var(--size-space-3) var(--size-space-4);
+    margin: 0;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.detailRow:last-child {
+    border-bottom: none;
+}
+
+.detailRow:hover {
+    background: var(--form-surface);
+}
+
+.detailLabel {
+    margin: 0;
+    color: var(--color-text-muted);
+    font-size: var(--font-size-xs);
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.detailValue {
+    min-width: 0;
+    margin: 0;
+    color: var(--color-text-primary);
+    font-size: var(--font-size-sm);
+    overflow-wrap: anywhere;
+}
+
+/* Optional muted value */
+.detailValueMuted {
+    color: var(--color-text-muted);
+}
+
+/* Optional emphasis for important values */
+.detailValueStrong {
+    font-weight: 600;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-space-6);
+}
+
+.section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-space-2);
+}
+
+.sectionTitle {
+    font-size: var(--font-size-lg);
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin: 0;
+}
+
+.sectionSubtitle {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+    margin: 0 0 var(--size-space-2) 0;
+}
+
+/* ========================================================= Forms ========================================================= */
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-space-4);
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-space-2);
+}
+
+.row {
+    display: flex;
+    gap: var(--size-space-4);
+    flex-wrap: wrap;
+}
+
+.row > .field {
+    flex: 1 1 220px;
+}
+
+.label {
+    font-size: var(--font-size-xs);
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    color: var(--form-label);
+}
+
+.input {
+    width: 100%;
+    padding: var(--size-space-3) var(--size-space-3);
+    background-color: var(--form-background);
+    border: 1px solid var(--form-border);
+    border-radius: var(--form-radius);
+    color: var(--form-text);
+    font-size: var(--font-size-md);
+    transition: border-color var(--form-transition), box-shadow var(--form-transition);
+}
+
+.input:hover {
+    border-color: var(--form-border-hover);
+}
+
+.input:focus {
+    outline: none;
+    border-color: var(--form-accent);
+    box-shadow: var(--form-shadow-focus);
+}
+
+.input::placeholder {
+    color: var(--form-placeholder);
+}
+
+.input:disabled {
+    background-color: var(--form-surface);
+    color: var(--form-placeholder);
+    border-color: var(--form-border);
+    cursor: not-allowed;
+    opacity: 0.75;
+}
+
+.actions {
+    display: flex;
+    align-items: center;
+    gap: var(--size-space-3);
+    margin-top: var(--size-space-1);
+}
+
+.submit {
+    padding: var(--size-space-3) var(--size-space-5);
+    border: 1px solid var(--form-accent);
+    background-color: var(--form-accent);
+    color: var(--color-action-primary-text);
+    font-weight: 600;
+    font-size: var(--font-size-sm);
+    border-radius: var(--form-radius);
+    cursor: pointer;
+    transition: background-color var(--form-transition), border-color var(--form-transition), transform var(--form-transition);
+    white-space: nowrap;
+}
+
+.submit:hover:not(:disabled) {
+    background-color: var(--form-accent-hover);
+    border-color: var(--form-accent-hover);
+}
+
+.submit:active:not(:disabled) {
+    transform: translateY(1px);
+}
+
+.submit:disabled {
+    background-color: var(--form-border);
+    border-color: var(--form-border);
+    color: var(--form-placeholder);
+    cursor: not-allowed;
+}
+
+.error {
+    padding: var(--size-space-2) var(--size-space-3);
+    border-radius: var(--form-radius);
+    background: var(--form-danger-muted);
+    color: var(--form-danger);
+    font-size: var(--font-size-sm);
+    margin: 0;
+}
+
+.success {
+    padding: var(--size-space-2) var(--size-space-3);
+    border-radius: var(--form-radius);
+    background: var(--color-success-bg);
+    color: var(--color-success);
+    font-size: var(--font-size-sm);
+    margin: 0;
+}
+
+.divider {
+    border: none;
+    border-top: 1px solid var(--color-border);
+    margin: var(--size-space-2) 0;
+}
+
+/* ========================================================= Tables ========================================================= */
+.tableWrapper {
+    width: 100%;
+    overflow-x: auto;
+    border: 1px solid var(--color-border);
+    border-radius: var(--form-radius);
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    color: var(--color-text-primary);
+    font-size: var(--font-size-sm);
+}
+
+/* Header */
+.table thead {
+    background: var(--form-surface);
+}
+
+.table th {
+    padding: var(--size-space-3) var(--size-space-4);
+    border-bottom: 1px solid var(--color-border);
+    color: var(--color-text-muted);
+    font-size: var(--font-size-xs);
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-align: left;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+/* Cells */
+.table td {
+    padding: var(--size-space-3) var(--size-space-4);
+    border-bottom: 1px solid var(--color-border);
+    vertical-align: middle;
+}
+
+/* Rows */
+.table tbody tr {
+    transition: background-color var(--form-transition);
+}
+
+.table tbody tr:hover {
+    background: var(--form-surface);
+}
+
+.table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* Empty state */
+.tableEmpty {
+    padding: var(--size-space-6) var(--size-space-4) !important;
+    color: var(--color-text-muted);
+    text-align: center;
+}
+
+/* Optional column helpers */
+.tableActions {
+    width: 1%;
+    text-align: right !important;
+    white-space: nowrap;
+}
+
+.tableNumeric {
+    text-align: right !important;
+    white-space: nowrap;
+}
+
+/* ========================================================= Table Status / Badges ========================================================= */
+.status {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--size-space-1);
+    padding: var(--size-space-1) var(--size-space-2);
+    border-radius: 999px;
+    font-size: var(--font-size-xs);
+    font-weight: 600;
+    line-height: 1.4;
+    white-space: nowrap;
+}
+
+.statusActive {
+    background: var(--color-success-bg);
+    color: var(--color-success);
+}
+
+.statusBanned {
+    background: var(--form-danger-muted);
+    color: var(--form-danger);
+}
+
+/* Generic badge for values such as roles */
+.badge {
+    display: inline-flex;
+    align-items: center;
+    padding: var(--size-space-1) var(--size-space-2);
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+    background: var(--form-surface);
+    color: var(--color-text-primary);
+    font-size: var(--font-size-xs);
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+/* ========================================================= Icon Buttons ========================================================= */
+.iconActions {
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: var(--size-space-1);
+}
+
+.iconButton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    padding: 0;
+    border: 1px solid transparent;
+    border-radius: var(--form-radius);
+    background: transparent;
+    color: var(--color-text-muted);
+    cursor: pointer;
+    font-size: var(--font-size-md);
+    line-height: 1;
+    text-decoration: none;
+    transition: background-color var(--form-transition), border-color var(--form-transition), color var(--form-transition), transform var(--form-transition);
+}
+
+.iconButton:hover:not(:disabled) {
+    background: var(--form-surface);
+    border-color: var(--color-border);
+    color: var(--color-text-primary);
+}
+
+.iconButton:focus-visible {
+    outline: none;
+    border-color: var(--form-accent);
+    box-shadow: var(--form-shadow-focus);
+}
+
+.iconButton:active:not(:disabled) {
+    transform: translateY(1px);
+}
+
+.iconButton:disabled {
+    color: var(--form-placeholder);
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+/* Destructive action */
+.iconButtonDanger {
+    color: var(--form-danger);
+}
+
+.iconButtonDanger:hover:not(:disabled) {
+    background: var(--form-danger-muted);
+    border-color: var(--form-danger);
+    color: var(--form-danger);
+}
+
+/* Primary / emphasized action */
+.iconButtonPrimary {
+    color: var(--form-accent);
+}
+
+.iconButtonPrimary:hover:not(:disabled) {
+    background: var(--form-surface);
+    border-color: var(--form-accent);
+    color: var(--form-accent);
+}
+
+/* Larger icon button variant */
+.iconButtonLarge {
+    width: 2.5rem;
+    height: 2.5rem;
+    font-size: var(--font-size-lg);
+}
+
+/* ========================================================= Responsive Tables ========================================================= */
+@media (max-width: 640px) {
+    .table th, .table td {
+        padding: var(--size-space-2) var(--size-space-3);
+    }
+
+    .table th {
+        font-size: 0.6875rem;
+    }
+
+    .table td {
+        font-size: var(--font-size-sm);
+    }
+
+    .iconButton {
+        width: 2.25rem;
+        height: 2.25rem;
+    }
+}
+
+/* ========================================================= Detail List — Mobile ========================================================= */
+@media (max-width: 640px) {
+    .detailRow {
+        grid-template-columns: 1fr;
+        gap: var(--size-space-1);
+    }
+
+    .detailLabel {
+        font-size: 0.6875rem;
+    }
+}
+
+/* ========================================================= Modal ========================================================= */
+.modalOverlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--size-space-4);
+    background: rgb(0 0 0 / 0.55);
+}
+
+.modal {
+    width: min(100%, 480px);
+    max-height: calc(100vh - (var(--size-space-8) * 2));
+    overflow-y: auto;
+    padding: var(--size-space-6);
+    border: 1px solid var(--color-border);
+    border-radius: var(--form-radius);
+    background: var(--form-background);
+    color: var(--color-text-primary);
+    box-shadow: 0 12px 40px rgb(0 0 0 / 0.2);
+}
+
+.modalTitle {
+    margin: 0 0 var(--size-space-2);
+    color: var(--color-text-primary);
+    font-size: var(--font-size-lg);
+    font-weight: 700;
+}
+
+.modalDescription {
+    margin: 0 0 var(--size-space-5);
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+    line-height: 1.6;
+}
+
+.modalDescription strong {
+    color: var(--color-text-primary);
+    font-weight: 600;
+}
+
+.modalForm {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-space-4);
+}
+
+.modalField {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-space-2);
+}
+
+.modalLabel {
+    color: var(--form-label);
+    font-size: var(--font-size-xs);
+    font-weight: 600;
+    line-height: 1.5;
+}
+
+.modalLabel strong {
+    color: var(--color-text-primary);
+    font-weight: 700;
+}
+
+.modalInput {
+    width: 100%;
+    box-sizing: border-box;
+    padding: var(--size-space-3);
+    border: 1px solid var(--form-border);
+    border-radius: var(--form-radius);
+    background-color: var(--form-background);
+    color: var(--form-text);
+    font-size: var(--font-size-md);
+    transition: border-color var(--form-transition), box-shadow var(--form-transition);
+}
+
+.modalInput:hover {
+    border-color: var(--form-border-hover);
+}
+
+.modalInput:focus {
+    outline: none;
+    border-color: var(--form-accent);
+    box-shadow: var(--form-shadow-focus);
+}
+
+.modalInput:disabled {
+    background-color: var(--form-surface);
+    color: var(--form-placeholder);
+    cursor: not-allowed;
+    opacity: 0.75;
+}
+
+.modalActions {
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--size-space-3);
+    margin-top: var(--size-space-1);
+}
+
+.modalCancel {
+    padding: var(--size-space-3) var(--size-space-5);
+    border: 1px solid var(--form-border);
+    border-radius: var(--form-radius);
+    background: var(--form-background);
+    color: var(--color-text-primary);
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color var(--form-transition), border-color var(--form-transition);
+}
+
+.modalCancel:hover:not(:disabled) {
+    background: var(--form-surface);
+    border-color: var(--form-border-hover);
+}
+
+.modalCancel:focus-visible, .modalSubmit:focus-visible {
+    outline: none;
+    box-shadow: var(--form-shadow-focus);
+}
+
+.modalCancel:disabled {
+    color: var(--form-placeholder);
+    cursor: not-allowed;
+}
+
+.modalSubmit {
+    padding: var(--size-space-3) var(--size-space-5);
+    border: 1px solid var(--form-danger);
+    border-radius: var(--form-radius);
+    background: var(--form-danger);
+    color: var(--color-action-primary-text);
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background-color var(--form-transition), border-color var(--form-transition), transform var(--form-transition);
+}
+
+.modalSubmit:hover:not(:disabled) {
+    filter: brightness(0.9);
+}
+
+.modalSubmit:active:not(:disabled) {
+    transform: translateY(1px);
+}
+
+.modalSubmit:disabled {
+    background: var(--form-border);
+    border-color: var(--form-border);
+    color: var(--form-placeholder);
+    cursor: not-allowed;
+}
+
+.modalError {
+    margin: 0;
+    padding: var(--size-space-2) var(--size-space-3);
+    border-radius: var(--form-radius);
+    background: var(--form-danger-muted);
+    color: var(--form-danger);
+    font-size: var(--font-size-sm);
+    line-height: 1.5;
+}
+
+@media (max-width: 640px) {
+    .modalOverlay {
+        align-items: flex-end;
+        padding: var(--size-space-2);
+    }
+
+    .modal {
+        width: 100%;
+        max-height: calc(100vh - var(--size-space-4));
+        padding: var(--size-space-5);
+        border-radius: var(--form-radius) var(--form-radius) 0 0;
+    }
+
+    .modalActions {
+        flex-direction: column-reverse;
+    }
+
+    .modalCancel, .modalSubmit {
+        width: 100%;
+    }
+}

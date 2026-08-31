@@ -2,7 +2,9 @@ import {headers} from "next/headers";
 import {notFound, redirect} from "next/navigation";
 import Link from "next/link";
 import {auth} from "@/core/auth";
-import {AppShell} from "@/core/dashboard/components/app-shell";
+import {MainContentPanel} from "@/core/dashboard/components/panels/main-card";
+import {PageHeader} from "@/core/dashboard/components/panels/page-header";
+import styles from "@/shared/styles/form-panel.module.css";
 
 type PageProps = {
     params: Promise<{ userId: string }>;
@@ -85,31 +87,25 @@ export default async function AdminUserDetailsPage({params}: PageProps) {
     ];
 
     return (
-        <AppShell userName={session.user.name}
-                  userEmail={session.user.email}
-                  userRole={session.user.role}>
-            <div>
-                <header>
-                    <Link href="/admin"> ← Back to Admin Panel </Link>
-                    <h1>{user.name || user.email}</h1>
-                    <p>User details</p>
-                </header>
+        <div className={styles.wrapper}>
+            <PageHeader eyebrow={"Viewing Profile Details For..."}
+                        title={user.name || user.email}
+                        subtitle={"User details"}/>
 
-                <section>
-                    <dl>
-                        {details.map((item) => (
-                            <div key={item.label}>
-                                <dt>{item.label}</dt>
-                                <dd>{item.value}</dd>
-                            </div>
-                        ))}
-                    </dl>
+            <MainContentPanel title={"User Details"}>
+                <section className={styles.section}>
+                    <dl className={styles.details}> {details.map((item) => (
+                        <div key={item.label} className={styles.detailRow}>
+                            <dt className={styles.detailLabel}> {item.label} </dt>
+                            <dd className={styles.detailValue}> {item.value} </dd>
+                        </div>))} </dl>
                 </section>
+            </MainContentPanel>
 
-                <div>
-                    <Link href={`/admin/${user.id}/edit`}> ✏️ Edit user </Link>
-                </div>
-            </div>
-        </AppShell>
+            <MainContentPanel title={"Admin Actions"}>
+                <div className={styles.actions}><Link href={`/admin/${user.id}/edit`} className={styles.submit}> ✏️ Edit
+                    user </Link></div>
+            </MainContentPanel>
+        </div>
     );
 }

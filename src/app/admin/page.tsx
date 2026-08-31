@@ -1,8 +1,9 @@
 import {headers} from "next/headers";
 import {redirect} from "next/navigation";
 import {auth} from "@/core/auth";
-import {AppShell} from "@/core/dashboard/components/app-shell";
 import {AdminUserTable} from "@/core/admin/components/admin-user-table";
+import {PageHeader} from "@/core/dashboard/components/panels/page-header";
+import styles from "@/shared/styles/form-panel.module.css";
 
 export default async function AdminPage() {
     const requestHeaders = await headers();
@@ -25,29 +26,19 @@ export default async function AdminPage() {
         headers: requestHeaders
     });
 
+    const registeredUsers = total + " registered " + ((total == 1) ? "user" : "users");
+
     return (
-        <AppShell
-            userName={session.user.name}
-            userEmail={session.user.email}
-            userRole={session.user.role}>
-
-            <div>
-                <header>
-                    <h1>Admin Panel</h1>
-                    <p>
-                        {total} registered {total == 1 ? "user" : "users"}
-                    </p>
-                </header>
-
-                <AdminUserTable
-                    users={users.map((user) => ({
-                        id: user.id,
-                        name: user.name ?? "",
-                        email: user.email,
-                        role: user.role ?? "user",
-                        banned: Boolean(user.banned)
-                    }))} currentUserId={session.user.id}/>
-            </div>
-        </AppShell>
+        <div className={styles.wrapper}>
+            <PageHeader eyebrow={"Administration"} title={"Admin Panel"} subtitle={registeredUsers}/>
+            <AdminUserTable
+                users={users.map((user) => ({
+                    id: user.id,
+                    name: user.name ?? "",
+                    email: user.email,
+                    role: user.role ?? "user",
+                    banned: Boolean(user.banned)
+                }))} currentUserId={session.user.id}/>
+        </div>
     );
 }
