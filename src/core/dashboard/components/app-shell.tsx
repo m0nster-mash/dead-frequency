@@ -6,9 +6,9 @@ import Header from "./header";
 
 type AppShellProps = {
     children: ReactNode;
-    userName ? : string | null;
-    userEmail ? : string | null;
-    userRole ? : string | null;
+    userName?: string | null;
+    userEmail?: string | null;
+    userRole?: string | null;
 };
 
 export function AppShell({children, userName, userEmail, userRole}: AppShellProps) {

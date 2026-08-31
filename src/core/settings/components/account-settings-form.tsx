@@ -235,8 +235,7 @@ export function AccountSettingsForm({
                             </div>
                         </div>
                         {passwordState.error ? <p className={styles.error}>{passwordState.error}</p> : null}
-                        {passwordState.success ? (
-                            <p className={styles.success}>{passwordState.success}</p>) : null}
+                        {passwordState.success ? (<p className={styles.success}>{passwordState.success}</p>) : null}
                         <div className={styles.actions}>
                             <button type="submit" className={styles.submit} disabled={passwordState.loading}>
                                 {passwordState.loading ? "Saving..." : "Update password"}

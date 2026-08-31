@@ -1,7 +1,7 @@
 "use client";
 
-import type { CSSProperties, ReactNode } from "react";
-import { useSidebar } from "@/app/dashboard/components/sidebar-context";
+import type {CSSProperties, ReactNode} from "react";
+import {useSidebar} from "@/app/dashboard/components/sidebar-context";
 import styles from "@shared/styles/dashboard.module.css";
 
 type AppShellFrameProps = {
@@ -10,8 +10,8 @@ type AppShellFrameProps = {
     children: ReactNode;
 };
 
-export default function AppShellFrame({ sidebar, header, children }: AppShellFrameProps) {
-    const { collapsed } = useSidebar();
+export default function AppShellFrame({sidebar, header, children}: AppShellFrameProps) {
+    const {collapsed} = useSidebar();
 
     const shellStyle = {
         "--current-sidebar-width": collapsed
