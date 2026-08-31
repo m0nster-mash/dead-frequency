@@ -383,3 +383,10 @@
     overflow-y: auto;
     overscroll-behavior: contain;
 }
+
+/* =========================================================
+   SIGN OUT BUTTON
+   ========================================================= */
+.buttonSignOut {
+    width: 100%;
+}

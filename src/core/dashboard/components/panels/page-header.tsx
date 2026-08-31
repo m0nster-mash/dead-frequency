@@ -12,12 +12,10 @@ type PageHeaderProps = {
     eyebrow: string;
     title: string;
     subtitle: string;
-    actionLabel?: string;
-    onAction?: () => void;
     items?: TableOfContentsItem[];
 };
 
-export function PageHeader({eyebrow, title, subtitle, actionLabel, onAction, items = [],}: PageHeaderProps) {
+export function PageHeader({eyebrow, title, subtitle, items = []}: PageHeaderProps) {
 
     const [isTocOpen, setIsTocOpen] = useState(false);
 
@@ -29,11 +27,6 @@ export function PageHeader({eyebrow, title, subtitle, actionLabel, onAction, ite
                     <h1>{title}</h1>
                     <p className={styles.subtitle}>{subtitle}</p>
                 </div>
-                {actionLabel && (
-                    <button type="button" className={styles.primaryButton} onClick={onAction}>
-                        <span>+</span> {actionLabel}
-                    </button>
-                )}
             </div>
             {items.length > 0 && (
                 <>

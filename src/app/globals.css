@@ -258,6 +258,10 @@
     box-sizing: border-box;
 }
 
+html {
+    scroll-padding-top: 80px;
+}
+
 html,
 body {
     width: 100%;
@@ -308,7 +312,9 @@ button {
  * ========================================================================== */
 
 form {
-    /*max-width: 480px;*/
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-space-4);
 }
 
 fieldset {
@@ -329,11 +335,10 @@ legend {
 
 label {
     display: block;
-    font-size: 0.85rem;
+    font-size: var(--font-size-xs);
     font-weight: 600;
-    color: var(--form-label);
-    /*margin-bottom: 0.4rem;*/
     letter-spacing: 0.05em;
+    color: var(--form-label);
 }
 
 /* ==========================================================================
@@ -355,7 +360,7 @@ input[type="week"],
 textarea,
 select {
     width: 100%;
-    padding: 0.6rem 0.75rem;
+    padding: var(--size-space-3) var(--size-space-3);
     background-color: var(--form-background);
     border: 1px solid var(--form-border);
     border-radius: var(--form-radius);
@@ -632,10 +637,6 @@ input[type="reset"]:disabled {
     cursor: not-allowed;
 }
 
-.button-sign-out {
-    width: 100%;
-}
-
 /* ==========================================================================
  * Reduced motion
  * ========================================================================== */
@@ -650,109 +651,8 @@ input[type="reset"]:disabled {
 /* =========================================================
    APP STRUCTURE
    ========================================================= */
-
 .app {
     width: 100%;
     height: 100vh;
     overflow: hidden;
-}
-
-
-/* =========================================================
-   BUTTONS
-   ========================================================= */
-.primary-button {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    height: 40px;
-    padding: 0 15px;
-    border: 0;
-    border-radius: var(--radius-sm);
-    color: var(--color-action-primary-text);
-    background: var(--color-action-primary);
-    font-size: var(--font-size-sm);
-    font-weight: 600;
-    white-space: nowrap;
-    transition: background var(--transition-fast);
-}
-
-.primary-button:hover {
-    background: var(--color-action-primary-hover);
-}
-
-.primary-button span {
-    font-size: 18px;
-    line-height: 1;
-}
-
-.text-button {
-    padding: 0;
-    border: 0;
-    background: transparent;
-    color: var(--color-text-secondary);
-    font-size: var(--font-size-sm);
-    font-weight: 600;
-}
-
-.text-button:hover {
-    color: var(--color-text-primary);
-}
-
-/* =========================================================
-   RESPONSIVE
-   ========================================================= */
-
-@media (max-width: 760px) {
-    :root {
-        --sidebar-width: 250px;
-    }
-
-    .sidebar {
-        transform: translateX(-100%);
-    }
-
-    .sidebar.mobile-open {
-        transform: translateX(0);
-    }
-
-    .main-shell,
-    .app.sidebar-collapsed .main-shell {
-        margin-left: 0;
-    }
-
-    .topbar,
-    .app.sidebar-collapsed .topbar {
-        left: 0;
-    }
-
-    .mobile-menu-button {
-        display: grid;
-    }
-
-    .sidebar-toggle {
-        display: none;
-    }
-
-    .sidebar-overlay {
-        position: fixed;
-        z-index: 95;
-        inset: 0;
-        background: var(--color-overlay);
-        backdrop-filter: blur(2px);
-    }
-
-    .sidebar-overlay.visible {
-        display: block;
-    }
-
-    .content {
-        padding-right: 18px;
-        padding-left: 18px;
-    }
-
-    .content-header {
-        align-items: flex-start;
-        flex-direction: column;
-    }
 }

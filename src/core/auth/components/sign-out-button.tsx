@@ -2,6 +2,7 @@
 
 import {useRouter} from "next/navigation";
 import {authClient} from "@/core/auth/lib/auth-client";
+import styles from "@/shared/styles/dashboard.module.css";
 
 export function SignOutButton() {
     const router = useRouter();
@@ -13,7 +14,7 @@ export function SignOutButton() {
     }
 
     return (
-        <button className="button-sign-out" type="button" onClick={handleSignOut}>
+        <button className={styles.buttonSignOut} type="button" onClick={handleSignOut}>
             Sign out
         </button>
     );
