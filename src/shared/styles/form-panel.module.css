@@ -23,12 +23,6 @@
     margin: 0 0 var(--size-space-2) 0;
 }
 
-.form {
-    display: flex;
-    flex-direction: column;
-    gap: var(--size-space-4);
-}
-
 .field {
     display: flex;
     flex-direction: column;
@@ -45,65 +39,11 @@
     flex: 1 1 220px;
 }
 
-.label {
-    font-size: var(--font-size-xs);
-    font-weight: 600;
-    letter-spacing: 0.05em;
-    color: var(--form-label);
-}
-
-.input {
-    width: 100%;
-    padding: var(--size-space-3) var(--size-space-3);
-    background-color: var(--form-background);
-    border: 1px solid var(--form-border);
-    border-radius: var(--form-radius);
-    color: var(--form-text);
-    font-size: var(--font-size-md);
-    transition: border-color var(--form-transition), box-shadow var(--form-transition);
-}
-
-.input:hover {
-    border-color: var(--form-border-hover);
-}
-
-.input:focus {
-    outline: none;
-    border-color: var(--form-accent);
-    box-shadow: var(--form-shadow-focus);
-}
-
-.input::placeholder {
-    color: var(--form-placeholder);
-}
-
-.input:disabled {
-    background-color: var(--form-surface);
-    color: var(--form-placeholder);
-    border-color: var(--form-border);
-    cursor: not-allowed;
-    opacity: 0.75;
-}
-
 .actions {
     display: flex;
     align-items: center;
     gap: var(--size-space-3);
     margin-top: var(--size-space-1);
-}
-
-.submit {
-    padding: var(--size-space-3) var(--size-space-5);
-    border: 1px solid var(--form-accent);
-    background-color: var(--form-accent);
-    color: var(--color-action-primary-text);
-    font-weight: 600;
-    font-size: var(--font-size-sm);
-    border-radius: var(--form-radius);
-    cursor: pointer;
-    transition: background-color var(--form-transition), border-color var(--form-transition),
-    transform var(--form-transition);
-    white-space: nowrap;
 }
 
 .submit:hover:not(:disabled) {
@@ -146,7 +86,9 @@
     margin: var(--size-space-2) 0;
 }
 
-/* ========================================================= Detail / Definition List ========================================================= */
+/* =========================================================
+   Detail / Definition List
+   ========================================================= */
 .details {
     display: flex;
     flex-direction: column;
@@ -226,7 +168,9 @@
     margin: 0 0 var(--size-space-2) 0;
 }
 
-/* ========================================================= Forms ========================================================= */
+/* =========================================================
+   Forms
+   ========================================================= */
 .form {
     display: flex;
     flex-direction: column;
@@ -349,7 +293,9 @@
     margin: var(--size-space-2) 0;
 }
 
-/* ========================================================= Tables ========================================================= */
+/* =========================================================
+   Tables
+   ========================================================= */
 .tableWrapper {
     width: 100%;
     overflow-x: auto;
@@ -420,7 +366,9 @@
     white-space: nowrap;
 }
 
-/* ========================================================= Table Status / Badges ========================================================= */
+/* =========================================================
+   Table Status / Badges
+   ========================================================= */
 .status {
     display: inline-flex;
     align-items: center;
@@ -457,7 +405,9 @@
     white-space: nowrap;
 }
 
-/* ========================================================= Icon Buttons ========================================================= */
+/* =========================================================
+   Icon Buttons
+   ========================================================= */
 .iconActions {
     display: inline-flex;
     align-items: center;
@@ -534,7 +484,9 @@
     font-size: var(--font-size-lg);
 }
 
-/* ========================================================= Responsive Tables ========================================================= */
+/* =========================================================
+   Responsive Tables
+   ========================================================= */
 @media (max-width: 640px) {
     .table th, .table td {
         padding: var(--size-space-2) var(--size-space-3);
@@ -554,7 +506,9 @@
     }
 }
 
-/* ========================================================= Detail List — Mobile ========================================================= */
+/* =========================================================
+   Detail List — Mobile
+   ========================================================= */
 @media (max-width: 640px) {
     .detailRow {
         grid-template-columns: 1fr;
@@ -566,7 +520,9 @@
     }
 }
 
-/* ========================================================= Modal ========================================================= */
+/* =========================================================
+   Modal
+   ========================================================= */
 .modalOverlay {
     position: fixed;
     inset: 0;
@@ -580,7 +536,7 @@
 
 .modal {
     width: min(100%, 480px);
-    max-height: calc(100vh - (var(--size-space-8) * 2));
+    max-height: calc(100vh - (var(--size-space-6) * 2));
     overflow-y: auto;
     padding: var(--size-space-6);
     border: 1px solid var(--color-border);

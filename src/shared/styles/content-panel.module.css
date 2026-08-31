@@ -45,109 +45,6 @@
 }
 
 /* =========================================================
-   Primary Action
-   ========================================================= */
-.primaryButton {
-    display: inline-flex;
-    flex: 0 0 auto;
-    align-items: center;
-    justify-content: center;
-    gap: var(--size-space-2);
-    padding: var(--size-space-3) var(--size-space-5);
-    border: 1px solid var(--form-accent);
-    border-radius: var(--form-radius);
-    background: var(--form-accent);
-    color: var(--color-action-primary-text);
-    font-size: var(--font-size-sm);
-    font-weight: 600;
-    line-height: 1;
-    white-space: nowrap;
-    cursor: pointer;
-    transition: background-color var(--form-transition), border-color var(--form-transition), transform var(--form-transition);
-}
-
-.primaryButton span {
-    font-size: var(--font-size-lg);
-    font-weight: 400;
-    line-height: 0.8;
-}
-
-.primaryButton:hover {
-    background: var(--form-accent-hover);
-    border-color: var(--form-accent-hover);
-}
-
-.primaryButton:active {
-    transform: translateY(1px);
-}
-
-.primaryButton:focus-visible {
-    outline: none;
-    box-shadow: var(--form-shadow-focus);
-}
-
-/* =========================================================
-   Page Header — Embedded TOC
-   ========================================================= */
-.contentHeaderToc {
-    display: none;
-    padding: var(--size-space-4);
-    border: 1px solid var(--color-border);
-    border-radius: var(--form-radius);
-    background: var(--color-surface-strong);
-}
-
-.contentHeaderTocOpen {
-    display: block;
-}
-
-.contentHeaderTocTitle {
-    margin: 0 0 var(--size-space-3);
-    color: var(--color-text-primary);
-    font-size: var(--font-size-xs);
-    font-weight: 700;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-}
-
-.contentHeaderTocList {
-    display: flex;
-    flex-direction: column;
-    gap: var(--size-space-1);
-    margin: 0;
-    padding: 0;
-    list-style: none;
-}
-
-.contentHeaderTocItem {
-    margin: 0;
-}
-
-.contentHeaderTocItemLevel3 {
-    padding-left: var(--size-space-4);
-}
-
-.contentHeaderTocItemLevel4 {
-    padding-left: var(--size-space-6);
-}
-
-.contentHeaderTocItem a {
-    display: block;
-    padding: var(--size-space-2) var(--size-space-3);
-    border-radius: var(--form-radius);
-    color: var(--color-text-muted);
-    font-size: var(--font-size-sm);
-    line-height: 1.4;
-    text-decoration: none;
-    transition: background-color var(--form-transition), color var(--form-transition);
-}
-
-.contentHeaderTocItem a:hover {
-    background: var(--form-background);
-    color: var(--color-text-primary);
-}
-
-/* =========================================================
    Main Content Panel
    ========================================================= */
 .mainContentCard {
@@ -320,6 +217,64 @@
     background: var(--form-surface);
     color: var(--color-text-primary);
     font-weight: 600;
+}
+
+.contentHeaderToc {
+    display: none;
+    padding: var(--size-space-4);
+    border: 1px solid var(--color-border);
+    border-radius: var(--form-radius);
+    background: var(--color-surface-strong);
+}
+
+.contentHeaderTocOpen {
+    display: block;
+}
+
+.contentHeaderTocTitle {
+    margin: 0 0 var(--size-space-3);
+    color: var(--color-text-primary);
+    font-size: var(--font-size-xs);
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.contentHeaderTocList {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-space-1);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.contentHeaderTocItem {
+    margin: 0;
+}
+
+.contentHeaderTocItemLevel3 {
+    padding-left: var(--size-space-4);
+}
+
+.contentHeaderTocItemLevel4 {
+    padding-left: var(--size-space-6);
+}
+
+.contentHeaderTocItem a {
+    display: block;
+    padding: var(--size-space-2) var(--size-space-3);
+    border-radius: var(--form-radius);
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+    line-height: 1.4;
+    text-decoration: none;
+    transition: background-color var(--form-transition), color var(--form-transition);
+}
+
+.contentHeaderTocItem a:hover {
+    background: var(--form-background);
+    color: var(--color-text-primary);
 }
 
 /* =========================================================
