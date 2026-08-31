@@ -188,7 +188,8 @@ export function AdminEditUserForm({
                                 <option value="user">User</option>
                                 <option value="admin">Admin</option>
                             </select>
-                            {isCurrentUser && (<p className={styles.sectionSubtitle}>You can&apos;t change your own role.</p>)}
+                            {isCurrentUser && (
+                                <p className={styles.sectionSubtitle}>You can&apos;t change your own role.</p>)}
                         </div>
                         {profileState.error ? <p className={styles.error}>{profileState.error}</p> : null}
                         {profileState.success ? (<p className={styles.success}>{profileState.success}</p>) : null}

@@ -48,7 +48,8 @@ export function DeleteUserModal({
     return (
         <div className={styles.modalOverlay} role="presentation" onClick={onCloseAction}>
             <div className={styles.modal}
-                 role="dialog" aria-modal="true"
+                 role="dialog"
+                 aria-modal="true"
                  aria-labelledby="delete-user-title"
                  onClick={(event) => event.stopPropagation()}>
                 <h2 id="delete-user-title" className={styles.modalTitle}>
@@ -74,7 +75,10 @@ export function DeleteUserModal({
                     </div>
                     {error ? (<p className={styles.modalError}> {error} </p>) : null}
                     <div className={styles.modalActions}>
-                        <button type="button" className={styles.modalCancel} onClick={onCloseAction} disabled={loading}>
+                        <button type="button"
+                                className={styles.modalCancel}
+                                onClick={onCloseAction}
+                                disabled={loading}>
                             Cancel
                         </button>
                         <button type="submit"
