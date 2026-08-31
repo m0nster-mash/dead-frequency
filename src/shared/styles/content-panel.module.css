@@ -1,8 +1,10 @@
-/* ========================================================= Page Header ========================================================= */
+/* =========================================================
+   Page Header
+   ========================================================= */
 .contentHeader {
     display: flex;
     flex-direction: column;
-    gap: var(--size-space-5);
+    gap: var(--size-space-4);
     margin-bottom: var(--size-space-6);
 }
 
@@ -42,7 +44,9 @@
     line-height: 1.5;
 }
 
-/* ========================================================= Page Header — Primary Action ========================================================= */
+/* =========================================================
+   Primary Action
+   ========================================================= */
 .primaryButton {
     display: inline-flex;
     flex: 0 0 auto;
@@ -82,59 +86,15 @@
     box-shadow: var(--form-shadow-focus);
 }
 
-/* ========================================================= Page Header — Table of Contents Toggle ========================================================= */
-.contentHeaderTocToggle {
-    display: none;
-}
-
-.tableOfContentsButton {
-    display: inline-flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--size-space-3);
-    width: 100%;
-    padding: var(--size-space-3) var(--size-space-4);
-    border: 1px solid var(--color-border);
-    border-radius: var(--form-radius);
-    background: var(--form-background);
-    color: var(--color-text-primary);
-    font-size: var(--font-size-sm);
-    font-weight: 600;
-    text-align: left;
-    cursor: pointer;
-    transition: background-color var(--form-transition), border-color var(--form-transition);
-}
-
-.tableOfContentsButton:hover {
-    background: var(--form-surface);
-    border-color: var(--form-border-hover);
-}
-
-.tableOfContentsButton:focus-visible {
-    outline: none;
-    border-color: var(--form-accent);
-    box-shadow: var(--form-shadow-focus);
-}
-
-.tableOfContentsButtonIcon {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-size: var(--font-size-md);
-    transition: transform var(--form-transition);
-}
-
-.tableOfContentsButtonIconOpen {
-    transform: rotate(180deg);
-}
-
-/* ========================================================= Page Header — Embedded TOC ========================================================= */
+/* =========================================================
+   Page Header — Embedded TOC
+   ========================================================= */
 .contentHeaderToc {
     display: none;
     padding: var(--size-space-4);
     border: 1px solid var(--color-border);
     border-radius: var(--form-radius);
-    background: var(--form-surface);
+    background: var(--color-surface-strong);
 }
 
 .contentHeaderTocOpen {
@@ -187,7 +147,9 @@
     color: var(--color-text-primary);
 }
 
-/* ========================================================= Main Content Panel ========================================================= */
+/* =========================================================
+   Main Content Panel
+   ========================================================= */
 .mainContentCard {
     position: relative;
     overflow: hidden;
@@ -201,7 +163,9 @@
     margin-top: var(--size-space-6);
 }
 
-/* ========================================================= Panel Header ========================================================= */
+/* =========================================================
+   Card Header
+   ========================================================= */
 .cardHeader {
     display: flex;
     align-items: flex-start;
@@ -209,6 +173,7 @@
     gap: var(--size-space-4);
     padding: var(--size-space-5) var(--size-space-6);
     border-bottom: 1px solid var(--color-border);
+    background-color: var(--color-surface-strong);
 }
 
 .cardHeader > div {
@@ -230,7 +195,9 @@
     line-height: 1.5;
 }
 
-/* ========================================================= Panel Body ========================================================= */
+/* =========================================================
+   Panel Body
+   ========================================================= */
 .mainContentCardBody {
     padding: var(--size-space-6);
 }
@@ -243,7 +210,56 @@
     margin-bottom: 0;
 }
 
-/* ========================================================= Standalone Table of Contents ========================================================= */
+
+/* =========================================================
+   Table of Contents
+   ========================================================= */
+.contentHeaderTocToggle {
+    display: block;
+    width: 100%;
+}
+
+.tableOfContentsButton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--size-space-3);
+    width: 100%;
+    padding: var(--size-space-3) var(--size-space-4);
+    border: 1px solid var(--color-border);
+    border-radius: var(--form-radius);
+    background: var(--form-background);
+    color: var(--color-text-primary);
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    text-align: left;
+    cursor: pointer;
+    transition: background-color var(--form-transition), border-color var(--form-transition);
+}
+
+.tableOfContentsButton:hover {
+    background: var(--form-surface);
+    border-color: var(--form-border-hover);
+}
+
+.tableOfContentsButton:focus-visible {
+    outline: none;
+    border-color: var(--form-accent);
+    box-shadow: var(--form-shadow-focus);
+}
+
+.tableOfContentsButtonIcon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--font-size-md);
+    transition: transform var(--form-transition);
+}
+
+.tableOfContentsButtonIconOpen {
+    transform: rotate(180deg);
+}
+
 .tableOfContents {
     display: flex;
     flex-direction: column;
@@ -306,7 +322,9 @@
     font-weight: 600;
 }
 
-/* ========================================================= Back To Top ========================================================= */
+/* =========================================================
+   Back To Top
+   ========================================================= */
 .backToTopButton {
     position: absolute;
     right: var(--size-space-4);
@@ -318,7 +336,7 @@
     height: 2rem;
     border: 1px solid var(--color-border);
     border-radius: var(--form-radius);
-    background: var(--form-background);
+    background: var(--color-surface-strong);
     color: var(--color-text-muted);
     font-size: var(--font-size-md);
     line-height: 1;
@@ -342,7 +360,9 @@
     box-shadow: var(--form-shadow-focus);
 }
 
-/* ========================================================= Responsive ========================================================= */
+/* =========================================================
+   Responsive
+   ========================================================= */
 @media (max-width: 768px) {
     .contentHeaderMain {
         flex-direction: column;
@@ -371,6 +391,15 @@
 
     .mainContentCardBody {
         padding: var(--size-space-5);
+    }
+
+    .contentHeaderMain {
+        flex-direction: column;
+        gap: var(--size-space-4);
+    }
+
+    .primaryButton {
+        width: 100%;
     }
 }
 
@@ -404,191 +433,7 @@
         right: var(--size-space-3);
         bottom: var(--size-space-3);
     }
-}
 
-
-.contentHeader {
-    display: flex;
-    flex-direction: column;
-    gap: var(--size-space-4);
-    margin-bottom: var(--size-space-6);
-}
-
-.contentHeaderMain {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: var(--size-space-6);
-}
-
-.contentHeaderMain > div {
-    min-width: 0;
-}
-
-.eyebrow {
-    margin: 0 0 var(--size-space-2);
-    color: var(--color-text-muted);
-    font-size: var(--font-size-xs);
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    line-height: 1.4;
-    text-transform: uppercase;
-}
-
-.contentHeaderMain h1 {
-    margin: 0;
-    color: var(--color-text-primary);
-    font-size: var(--font-size-xl);
-    font-weight: 700;
-    line-height: 1.2;
-}
-
-.subtitle {
-    margin: var(--size-space-2) 0 0;
-    color: var(--color-text-muted);
-    font-size: var(--font-size-md);
-    line-height: 1.5;
-}
-
-/* ========================================================= Primary Action ========================================================= */
-.primaryButton {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: var(--size-space-2);
-    padding: var(--size-space-3) var(--size-space-5);
-    border: 1px solid var(--form-accent);
-    border-radius: var(--form-radius);
-    background: var(--form-accent);
-    color: var(--color-action-primary-text);
-    font-size: var(--font-size-sm);
-    font-weight: 600;
-    line-height: 1;
-    white-space: nowrap;
-    cursor: pointer;
-}
-
-.primaryButton:hover {
-    background: var(--form-accent-hover);
-    border-color: var(--form-accent-hover);
-}
-
-.primaryButton:focus-visible {
-    outline: none;
-    box-shadow: var(--form-shadow-focus);
-}
-
-/* ========================================================= Table of Contents Toggle ========================================================= */
-.contentHeaderTocToggle {
-    display: block;
-    width: 100%;
-}
-
-.tableOfContentsButton {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    padding: var(--size-space-3) var(--size-space-4);
-    border: 1px solid var(--color-border);
-    border-radius: var(--form-radius);
-    background: var(--form-background);
-    color: var(--color-text-primary);
-    font-size: var(--font-size-sm);
-    font-weight: 600;
-    text-align: left;
-    cursor: pointer;
-}
-
-.tableOfContentsButton:hover {
-    background: var(--form-surface);
-    border-color: var(--form-border-hover);
-}
-
-.tableOfContentsButton:focus-visible {
-    outline: none;
-    border-color: var(--form-accent);
-    box-shadow: var(--form-shadow-focus);
-}
-
-.tableOfContentsButtonIcon {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-size: var(--font-size-md);
-    line-height: 1;
-    transition: transform var(--form-transition);
-}
-
-.tableOfContentsButtonIconOpen {
-    transform: rotate(180deg);
-}
-
-/* ========================================================= Table of Contents Panel ========================================================= */
-.contentHeaderToc {
-    display: none;
-    width: 100%;
-    box-sizing: border-box;
-    padding: var(--size-space-4);
-    border: 1px solid var(--color-border);
-    border-radius: var(--form-radius);
-    background: var(--form-surface);
-}
-
-.contentHeaderTocOpen {
-    display: block;
-}
-
-.contentHeaderTocTitle {
-    margin: 0 0 var(--size-space-3);
-    color: var(--color-text-primary);
-    font-size: var(--font-size-xs);
-    font-weight: 700;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-}
-
-.contentHeaderTocList {
-    display: flex;
-    flex-direction: column;
-    gap: var(--size-space-1);
-    margin: 0;
-    padding: 0;
-    list-style: none;
-}
-
-.contentHeaderTocItem {
-    margin: 0;
-}
-
-.contentHeaderTocItem a {
-    display: block;
-    padding: var(--size-space-2) var(--size-space-3);
-    border-radius: var(--form-radius);
-    color: var(--color-text-muted);
-    font-size: var(--font-size-sm);
-    line-height: 1.4;
-    text-decoration: none;
-}
-
-.contentHeaderTocItem a:hover {
-    background: var(--form-background);
-    color: var(--color-text-primary);
-}
-
-/* ========================================================= Responsive ========================================================= */
-@media (max-width: 768px) {
-    .contentHeaderMain {
-        flex-direction: column;
-        gap: var(--size-space-4);
-    }
-
-    .primaryButton {
-        width: 100%;
-    }
-}
-
-@media (max-width: 480px) {
     .contentHeader {
         gap: var(--size-space-3);
         margin-bottom: var(--size-space-5);

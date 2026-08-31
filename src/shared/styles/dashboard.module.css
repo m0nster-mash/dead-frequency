@@ -67,19 +67,7 @@
     align-items: center;
     gap: 10px;
     min-width: 0;
-}
-
-.brand-mark {
-    display: grid;
-    place-items: center;
-    flex: 0 0 34px;
-    width: 34px;
-    height: 34px;
-    border-radius: 9px;
-    background: var(--color-action-primary);
-    color: var(--color-action-primary-text);
-    font-size: 15px;
-    font-weight: 700;
+    text-decoration: none;
 }
 
 .brandName {
@@ -87,12 +75,8 @@
     font-weight: 700;
     letter-spacing: 0.15em;
     white-space: nowrap;
-}
-
-.go-away {
-    display: flex;
-    float: right;
-    letter-spacing: 0.15em;
+    font-variant: small-caps;
+    color: var(--color-text-secondary);
 }
 
 .iconButton {
@@ -101,11 +85,10 @@
     width: 36px;
     height: 36px;
     padding: 0;
-    border: 0;
     border-radius: var(--radius-sm);
     color: var(--color-icon-default);
-    background: transparent;
-    transition: background var(--transition-fast), color var(--transition-fast);
+    background: var(--color-surface-strong);
+    border: 1px solid var(--color-border-secondary);
 }
 
 .iconButton:hover {
