@@ -1,15 +1,9 @@
-
-section.test-section {
-    padding: 2rem;
-}
-
 .component-row > .component-tag {
     display: block;
     font-family: monospace;
     color: var(--color-text-primary);
     margin-bottom: 1rem;
-    margin-top: 2rem;
-    padding: 8px;
+    margin-top: 1rem;
     font-size: var(--font-size-md);
     border-bottom: 2px solid var(--color-border-secondary);
     font-weight: bold;

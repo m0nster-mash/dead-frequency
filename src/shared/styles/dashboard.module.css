@@ -1,0 +1,385 @@
+/* =========================================================
+   BREAD CRUMBS
+   ========================================================= */
+.breadcrumbs {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.home,
+.link {
+    color: var(--color-text-secondary);
+    text-decoration: none;
+}
+
+.home:hover,
+.link:hover {
+    color: #111;
+    text-decoration: underline;
+}
+
+.item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.separator {
+    color: var(--color-text-secondary);
+}
+
+.current {
+    color: var(--color-text-secondary);
+    font-weight: 600;
+}
+
+/* =========================================================
+   SIDEBAR
+   ========================================================= */
+.sidebar {
+    position: fixed;
+    z-index: 100;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    width: var(--sidebar-width);
+    height: 100vh;
+    background: var(--color-sidebar-bg);
+    border-right: 1px solid var(--color-border);
+    transition: width var(--transition-normal), transform var(--transition-normal);
+}
+
+.sidebarHeader {
+    display: flex;
+    align-items: center;
+    height: var(--topbar-height);
+    padding: 0 16px 0 20px;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+    text-decoration: none;
+}
+
+.brandName {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    white-space: nowrap;
+    font-variant: small-caps;
+    color: var(--color-text-secondary);
+}
+
+.iconButton {
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    border-radius: var(--radius-sm);
+    color: var(--color-icon-default);
+    background: var(--color-surface-strong);
+    border: 1px solid var(--color-border-secondary);
+}
+
+.iconButton:hover {
+    color: var(--color-text-primary);
+    background: var(--color-surface-muted);
+}
+
+.sidebarToggle svg {
+    transition: transform var(--transition-normal);
+}
+
+.sidebarNav {
+    flex: 1;
+    padding: 22px 12px;
+    overflow-y: auto;
+}
+
+.nav-label-spaced {
+    margin-top: 28px;
+}
+
+.navItem {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    gap: 12px;
+    min-height: 42px;
+    margin-bottom: 3px;
+    padding: 0 10px;
+    border-radius: var(--radius-sm);
+    color: var(--color-sidebar-text);
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    transition: background var(--transition-fast), color var(--transition-fast);
+}
+
+.navItem:hover {
+    color: var(--color-sidebar-text-active);
+    background: var(--color-sidebar-item-hover);
+}
+
+.navItem.active {
+    color: var(--color-sidebar-text-active);
+    background: var(--color-sidebar-item-active);
+    font-weight: 600;
+}
+
+.navItem svg {
+    flex: 0 0 19px;
+    width: 19px;
+    height: 19px;
+}
+
+.sidebarFooter {
+    padding: 14px;
+    border-top: 1px solid var(--color-border);
+}
+
+.userCard {
+    padding: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.avatar,
+.topbar-avatar {
+    display: grid;
+    place-items: center;
+    flex: 0 0 36px;
+    width: 36px;
+    height: 36px;
+    border-radius: 25px;
+    background: var(--color-avatar-default);
+    color: var(--color-text-primary);
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.userInfo {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    flex: 1;
+}
+
+.userInfo strong {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 12px;
+}
+
+.userInfo span {
+    margin-top: 2px;
+    color: var(--color-text-user);
+    font-size: 11px;
+}
+
+.moreButton {
+    border: 0;
+    background: transparent;
+    color: var(--color-icon-default);
+}
+
+.moreButton:hover {
+    border: 0;
+    background: var(--color-action-secondary-hover);
+}
+
+
+/* =========================================================
+   COLLAPSED SIDEBAR
+   ========================================================= */
+.app.sidebar-collapsed .sidebar {
+    width: var(--sidebar-collapsed-width);
+}
+
+.app.sidebar-collapsed .brandName,
+.app.sidebar-collapsed .nav-label,
+.app.sidebar-collapsed .navItem span,
+.app.sidebar-collapsed .userInfo,
+.app.sidebar-collapsed .moreButton {
+    display: none;
+}
+
+.app.sidebar-collapsed .sidebarHeader {
+    justify-content: center;
+    padding: 0;
+}
+
+.app.sidebar-collapsed .sidebarToggle {
+    position: absolute;
+    right: -18px;
+    width: 36px;
+    height: 36px;
+    border: 1px solid var(--color-border);
+    background: var(--color-surface);
+    box-shadow: var(--shadow-sm);
+}
+
+.app.sidebar-collapsed .sidebarToggle svg {
+    transform: rotate(180deg);
+}
+
+.app.sidebar-collapsed .brand {
+    margin: 0 auto;
+}
+
+.app.sidebar-collapsed .sidebarNav {
+    padding-left: 12px;
+    padding-right: 12px;
+}
+
+.app.sidebar-collapsed .navItem {
+    justify-content: center;
+    padding: 0;
+}
+
+.app.sidebar-collapsed .userCard {
+    justify-content: center;
+}
+
+
+/* =========================================================
+   MAIN SHELL
+   ========================================================= */
+.mainShell {
+    height: 100vh;
+    margin-left: var(--sidebar-width);
+    transition: margin-left var(--transition-normal);
+}
+
+.app.sidebar-collapsed .mainShell {
+    margin-left: var(--sidebar-collapsed-width);
+}
+
+
+/* =========================================================
+   TOP BAR
+   ========================================================= */
+.topbar {
+    position: fixed;
+    z-index: 90;
+    top: 0;
+    right: 0;
+    left: var(--sidebar-width);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: var(--topbar-height);
+    padding: 0 28px;
+    background: var(--color-surface);
+    border-bottom: 1px solid var(--color-border);
+    backdrop-filter: blur(10px);
+    transition: left var(--transition-normal);
+}
+
+.app.sidebar-collapsed .topbar {
+    left: var(--sidebar-collapsed-width);
+}
+
+.topbarLeft,
+.topbarRight {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.notificationButton {
+    position: relative;
+}
+
+.notificationDot {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 6px;
+    height: 6px;
+    border: 1px solid var(--color-surface);
+    border-radius: 50%;
+    background: var(--color-danger-bg);
+}
+
+.mobile-menu-button {
+    display: none;
+}
+
+.sidebar--collapsed .brandName,
+.sidebar--collapsed .nav-label,
+.sidebar--collapsed .navItem span,
+.sidebar--collapsed .userInfo,
+.sidebar--collapsed .moreButton {
+    display: none !important;
+}
+
+.sidebar--collapsed .sidebarHeader {
+    justify-content: center;
+    padding: 0;
+}
+
+.sidebar--collapsed .sidebarToggle {
+    position: absolute;
+    right: -18px;
+    width: 36px;
+    height: 36px;
+}
+
+.sidebar--collapsed .sidebarToggle svg {
+    transform: rotate(180deg);
+}
+
+.sidebar--collapsed .brand {
+    margin: 0 auto;
+}
+
+.sidebar--collapsed .sidebarNav {
+    padding-left: 12px;
+    padding-right: 12px;
+}
+
+.sidebar--collapsed .navItem {
+    justify-content: center;
+    padding: 0;
+}
+
+.sidebar--collapsed .userCard {
+    justify-content: center;
+}
+
+.sidebar--collapsed ~ .mainShell {
+    margin-left: var(--sidebar-collapsed-width) !important;
+}
+
+.mainShell {
+    margin-left: var(--current-sidebar-width);
+}
+
+.topbar {
+    left: var(--current-sidebar-width);
+}
+
+
+/* =========================================================
+   CONTENT
+   ========================================================= */
+.appContent {
+    height: 100vh;
+    padding: calc(var(--topbar-height) + 34px) 32px 48px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+}

@@ -2,6 +2,7 @@
 
 import type { CSSProperties, ReactNode } from "react";
 import { useSidebar } from "@/app/dashboard/components/sidebar-context";
+import styles from "@shared/styles/dashboard.module.css";
 
 type AppShellFrameProps = {
     sidebar: ReactNode;
@@ -21,9 +22,9 @@ export default function AppShellFrame({ sidebar, header, children }: AppShellFra
     return (
         <div className="app" style={shellStyle}>
             {sidebar}
-            <div className="main-shell">
+            <div className={styles.mainShell}>
                 {header}
-                <main className="app-content">{children}</main>
+                <main className={styles.appContent}>{children}</main>
             </div>
         </div>
     );
