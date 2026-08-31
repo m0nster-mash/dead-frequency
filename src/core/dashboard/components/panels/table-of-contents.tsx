@@ -1,6 +1,7 @@
 "use client";
 
 import {useEffect, useState} from "react";
+import styles from "@/shared/styles/content-panel.module.css";
 
 export type TableOfContentsItem = {
     id: string;
@@ -105,24 +106,18 @@ export function TableOfContents({
     if (!headings.length) return null;
 
     return (
-        <nav aria-label={title}
-             className={`table-of-contents ${className}`}>
-            <p className="table-of-contents__title">{title}</p>
-
-            <ol className="table-of-contents__list">
-                {headings.map((item) => (
-                    <li key={item.id}
-                        className={`table-of-contents__item table-of-contents__item--level-${item.level ?? 2}`}>
-                        <a href={`#${item.id}`}
-                           aria-current={activeId === item.id ? "location" : undefined}
-                           className={
-                               activeId === item.id
-                                   ? "table-of-contents__link table-of-contents__link--active"
-                                   : "table-of-contents__link"}>
-                            {item.label}
-                        </a>
-                    </li>
-                ))}
+        <nav aria-label={title} className={`${styles.tableOfContents} ${className}`}>
+            <p className={styles.tableOfContentsTitle}> {title} </p>
+            <ol className={styles.tableOfContentsList}> {headings.map((item) => (
+                <li key={item.id}
+                    className={`${styles.tableOfContentsItem} ${styles[`tableOfContentsItemLevel${item.level ?? 2}`]}`}>
+                    <a href={`#${item.id}`}
+                       aria-current={activeId === item.id ? "location" : undefined}
+                       className={activeId === item.id
+                           ? `${styles.tableOfContentsLink} ${styles.tableOfContentsLinkActive}`
+                           : styles.tableOfContentsLink}> {item.label} </a>
+                </li>
+            ))}
             </ol>
         </nav>
     );
