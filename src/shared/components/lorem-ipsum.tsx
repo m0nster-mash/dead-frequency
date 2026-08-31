@@ -33,7 +33,7 @@ export default function LoremIpsum({length, regular,}: LoremIpsumProps) {
         : Array.from({length: count}, () => generateParagraph(30, 100));
 
     return (
-        <div className="lorem-ipsum">
+        <div>
             {paragraphs.map((paragraph, index) => (
                 <p key={index}>{paragraph}</p>
             ))}

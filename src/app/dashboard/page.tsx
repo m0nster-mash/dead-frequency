@@ -1,12 +1,9 @@
 import {auth} from "@/core/auth";
 import {headers} from "next/headers";
-import {SignOutButton} from "@/core/auth/components/sign-out-button";
 import {redirect} from "next/navigation";
 import {PageHeader} from "@/core/dashboard/components/panels/page-header";
-import {StatsGrid} from "@/core/dashboard/components/panels/stat-card";
-import {ChartPanel} from "@/core/dashboard/components/panels/card-panel";
-import {ActivityPanel} from "@/core/dashboard/components/panels/activity-panel";
 import {MainContentPanel} from "@/core/dashboard/components/panels/main-card";
+import LoremIpsum from "@shared/components/lorem-ipsum";
 
 export default async function DashboardPage() {
     const session = await auth.api.getSession({
@@ -17,23 +14,38 @@ export default async function DashboardPage() {
         redirect("/login");
     }
 
+    const username = session.user.name;
+
     return (
         <>
-            <PageHeader
-                eyebrow="Overview"
-                title="Good morning, <user>."
-                subtitle="Here's what's happening across your workspace today."
+            <PageHeader eyebrow={"Example: Page Header"}
+                        title={"Welcome back, " + username}
+                        subtitle={"Here's what you've missed..."}
+                        items={[
+                            {
+                                id: "main-content-panel",
+                                label: "Main Content Panel Example",
+                                level: 2,
+                            },
+                            {
+                                id: "split-content-panel",
+                                label: "Split Content Panel Example",
+                                level: 2,
+                            }]}
             />
-            <StatsGrid stats={[/* ... */]} />
-            <section className="dashboard-grid">
-                <ChartPanel
-                    yAxisLabels={["$60k", "$45k", "$30k", "$15k", "$0"]}
-                    xAxisLabels={["Sep", "Oct", "Nov", "Dec", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug"]}
-                    points="0,210 70,190 140,205 210,155 280,175 350,120 420,140 490,100 560,115 630,65 700,80 800,35"
-                />
-                <ActivityPanel items={[/* ... */]} />
-            </section>
-
+            <MainContentPanel title={"Example: Main Content Panel"} id={"main-content-panel"}>
+                <p>
+                    This panel contains a title, a simple content area for any amount or kind of content, and a "return
+                    to home" arrow button at the bottom.
+                </p>
+                <p>
+                    Now, here's some filler text to pad the area:
+                </p>
+                <hr/>
+                <p>
+                    <LoremIpsum length={3} regular={true}/>
+                </p>
+            </MainContentPanel>
         </>
     );
 }

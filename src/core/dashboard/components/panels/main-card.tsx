@@ -1,6 +1,7 @@
 "use client";
 
 import {ReactNode} from "react";
+import styles from "@/shared/styles/content-panel.module.css";
 
 type MainContentPanelProps = {
     title: string;
@@ -21,27 +22,18 @@ export function MainContentPanel({
                                  }: MainContentPanelProps) {
 
     const sectionId = id ?? slugify(title);
-
     return (
-        <section className={`card main-content-card ${className}`}>
-            <div className="card-header">
+        <section className={`${styles.card} ${styles.mainContentCard} ${className}`}>
+            <div className={styles.cardHeader}>
                 <div>
                     <h2 id={sectionId}>{title}</h2>
                     {description && (<p>{description}</p>)}
                 </div>
             </div>
-
-            <div className="main-content-card__body">
-                {children}
-            </div>
-
+            <div className={styles.mainContentCardBody}> {children} </div>
             {showBackToTop && (
-                <a href="#top"
-                   className="back-to-top-button"
-                   aria-label="Back to top of page"> ↑ </a>
-            )}
-        </section>
-    );
+                <a href="#top" className={styles.backToTopButton} aria-label="Back to top of page"> ↑ </a>)}
+        </section>);
 }
 
 function slugify(text: string) {

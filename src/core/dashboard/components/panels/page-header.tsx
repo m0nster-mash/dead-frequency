@@ -1,5 +1,6 @@
 "use client";
 import {useState} from "react";
+import styles from "@/shared/styles/content-panel.module.css";
 
 type TableOfContentsItem = {
     id: string;
@@ -20,58 +21,30 @@ export function PageHeader({eyebrow, title, subtitle, actionLabel, onAction, ite
 
     const [isTocOpen, setIsTocOpen] = useState(false);
 
-    return (
-        <header className="content-header">
-            <div className="content-header__main">
-                <div>
-                    <p className="eyebrow">{eyebrow}</p>
-                    <h1>{title}</h1>
-                    <p className="subtitle">{subtitle}</p>
-                </div>
-
-                {actionLabel && (
-                    <button type="button"
-                            className="primary-button"
-                            onClick={onAction}>
-                        <span>+</span> {actionLabel}
-                    </button>)}
+    return (<header className={styles.contentHeader}>
+        <div className={styles.contentHeaderMain}>
+            <div><p className={styles.eyebrow}>{eyebrow}</p> <h1>{title}</h1> <p
+                className={styles.subtitle}>{subtitle}</p></div>
+            {actionLabel && (
+                <button type="button" className={styles.primaryButton} onClick={onAction}><span>+</span> {actionLabel}
+                </button>)} </div>
+        {items.length > 0 && (<>
+            <div className={styles.contentHeaderTocToggle}>
+                <button type="button" className={styles.tableOfContentsButton}
+                        onClick={() => setIsTocOpen((open) => !open)} aria-expanded={isTocOpen}
+                        aria-controls="page-table-of-contents"><span>Table of Contents</span> <span
+                    className={`${styles.tableOfContentsButtonIcon} ${isTocOpen ? styles.tableOfContentsButtonIconOpen : ""}`}
+                    aria-hidden="true"> ↓ </span></button>
             </div>
-            {items.length > 0 && (
-                <>
-                    <div className="content-header__toc-toggle">
-                        <button type="button"
-                                className="table-of-contents-button"
-                                onClick={() => setIsTocOpen((open) => !open)}
-                                aria-expanded={isTocOpen}
-                                aria-controls="page-table-of-contents">
-                            <span>Table of Contents</span>
-                            <span
-                                className={
-                                    `table-of-contents-button__icon 
-                                    ${isTocOpen ? "table-of-contents-button__icon--open" : ""}`}
-                                aria-hidden="true"> ↓ </span>
-                        </button>
-                    </div>
-
-                    <div id="page-table-of-contents"
-                         className={
-                             `content-header__toc 
-                             ${isTocOpen ? "content-header__toc--open" : ""}`}>
-                        <nav aria-label="Table of contents">
-                            <p className="content-header__toc-title"> On this page </p>
-                            <ol className="content-header__toc-list">
-                                {items.map((item) => (
-                                    <li key={item.id}
-                                        className={`content-header__toc-item content-header__toc-item--level-${item.level ?? 2}`}>
-                                        <a href={`#${item.id}`} tabIndex={isTocOpen ? 0 : -1}
-                                           onClick={() => setIsTocOpen(false)}> {item.label} </a>
-                                    </li>
-                                ))}
-                            </ol>
-                        </nav>
-                    </div>
-                </>
-            )}
-        </header>
-    );
+            <div id="page-table-of-contents"
+                 className={isTocOpen ? `${styles.contentHeaderToc} ${styles.contentHeaderTocOpen}` : styles.contentHeaderToc}>
+                <nav aria-label="Table of contents"><p className={styles.contentHeaderTocTitle}> On this page </p>
+                    <ol className={styles.contentHeaderTocList}> {items.map((item) => (
+                        <li key={item.id} className={styles.contentHeaderTocItem}><a href={`#${item.id}`}
+                                                                                     tabIndex={isTocOpen ? 0 : -1}
+                                                                                     onClick={() => setIsTocOpen(false)}> {item.label} </a>
+                        </li>))} </ol>
+                </nav>
+            </div>
+        </>)} </header>);
 }

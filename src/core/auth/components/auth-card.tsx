@@ -3,7 +3,7 @@
 import {SubmitEvent, useState} from "react";
 import {useRouter} from "next/navigation";
 import {authClient} from "@/core/auth/lib/auth-client";
-import styles from "@shared/styles/auth-card.module.css";
+import styles from "@/shared/styles/auth-card.module.css";
 
 type Mode = "login" | "register";
 type AuthCardProps = { initialMode?: Mode; };
