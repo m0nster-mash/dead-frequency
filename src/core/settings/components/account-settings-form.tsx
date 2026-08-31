@@ -4,7 +4,7 @@ import {SubmitEvent, useState} from "react";
 import {useRouter} from "next/navigation";
 import {authClient} from "@/core/auth/lib/auth-client";
 import {MainContentPanel} from "@/core/dashboard/components/panels/main-card";
-import styles from "./settings.module.css";
+import styles from "@/shared/styles/form-panel.module.css";
 
 type AccountSettingsFormProps = {
     currentName: string;
@@ -138,7 +138,7 @@ export function AccountSettingsForm({
     }
 
     return (
-        <div>
+        <div className={styles.wrapper}>
             <MainContentPanel title={"Update Username"}>
                 <div className={styles.section}>
                     <p className={styles.sectionSubtitle}>

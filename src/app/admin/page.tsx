@@ -3,6 +3,7 @@ import {redirect} from "next/navigation";
 import {auth} from "@/core/auth";
 import {AdminUserTable} from "@/core/admin/components/admin-user-table";
 import {PageHeader} from "@/core/dashboard/components/panels/page-header";
+import styles from "@/shared/styles/form-panel.module.css";
 
 export default async function AdminPage() {
     const requestHeaders = await headers();
@@ -28,7 +29,7 @@ export default async function AdminPage() {
     const registeredUsers = total + " registered " + ((total == 1) ? "user" : "users");
 
     return (
-        <div>
+        <div className={styles.wrapper}>
             <PageHeader eyebrow={"Administration"} title={"Admin Panel"} subtitle={registeredUsers}/>
             <AdminUserTable
                 users={users.map((user) => ({

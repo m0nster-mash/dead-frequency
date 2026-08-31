@@ -1,10 +1,9 @@
 import {headers} from "next/headers";
 import {notFound, redirect} from "next/navigation";
-import Link from "next/link";
 import {auth} from "@/core/auth";
-import {AppShell} from "@/core/dashboard/components/app-shell";
 import {AdminEditUserForm} from "@/core/admin/components/admin-edit-user-form";
 import {PageHeader} from "@/core/dashboard/components/panels/page-header";
+import styles from "@/shared/styles/form-panel.module.css";
 
 type PageProps = {
     params: Promise<{ userId: string }>;
@@ -40,10 +39,10 @@ export default async function AdminEditUserPage({params}: PageProps) {
     }
 
     return (
-        <div>
+        <div className={styles.wrapper}>
             <PageHeader eyebrow={"Viewing Profile Details For..."}
                         title={user.name + " (" + user.email + ")"}
-                        subtitle={"Update this user&apos;s account details."}/>
+                        subtitle={"Update this user's account details."}/>
 
             <AdminEditUserForm userId={user.id}
                                currentName={user.name ?? ""}
