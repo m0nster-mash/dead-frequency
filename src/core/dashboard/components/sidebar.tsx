@@ -7,6 +7,7 @@ import PageIcon from "@/shared/svg/page-icon.svg";
 import SquareIcon from "@/shared/svg/four-squares-icon.svg";
 import GearIcon from "@/shared/svg/bootstrap-gear-icon.svg";
 import DotIcon from "@/shared/svg/bootstrap-three-dot-icon.svg"
+import AdminIcon from "@/shared/svg/bootstrap-settings.svg";
 import styles from "@shared/styles/dashboard.module.css";
 
 export async function Sidebar() {
@@ -62,7 +63,7 @@ export async function Sidebar() {
                     <span>
                         <h5>Management</h5>
                         <a href="/admin" className={styles.navItem}>
-                            <GearIcon/>
+                            <AdminIcon/>
                             <span>Admin Panel</span>
                         </a>
                     </span>
