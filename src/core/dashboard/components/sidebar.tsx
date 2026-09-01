@@ -26,6 +26,7 @@ export async function Sidebar() {
             items: [
                 {href: "/", label: "Dashboard", icon: <SquareIcon/>},
                 {href: "/style-test", label: "Style Test", icon: <PageIcon/>},
+                {href: "/avatar-test", label: "Avatar Test", icon: <PageIcon/>},
                 ...(session
                     ? [{href: "/settings", label: "Settings", icon: <GearIcon/>}]
                     : []),
