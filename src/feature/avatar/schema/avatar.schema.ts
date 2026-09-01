@@ -1,7 +1,7 @@
 import {relations} from "drizzle-orm";
 import {jsonb, pgTable, text, timestamp} from "drizzle-orm/pg-core";
 import {user} from "@/core/auth/schema/auth.schema";
-import {AvatarConfig} from "@/core/avatar/lib/types";
+import {AvatarConfig} from "@/feature/avatar/lib/types";
 
 export const avatarConfig =
     pgTable("avatar_config", {
