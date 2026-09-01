@@ -1,42 +1,4 @@
 /* =========================================================
-   BREAD CRUMBS
-   ========================================================= */
-.breadcrumbs {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    font-size: 0.9rem;
-}
-
-.home,
-.link {
-    color: var(--color-text-secondary);
-    text-decoration: none;
-}
-
-.home:hover,
-.link:hover {
-    color: #111;
-    text-decoration: underline;
-}
-
-.item {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.separator {
-    color: var(--color-text-secondary);
-}
-
-.current {
-    color: var(--color-text-secondary);
-    font-weight: 600;
-}
-
-/* =========================================================
    SIDEBAR
    ========================================================= */
 .sidebar {
@@ -55,6 +17,7 @@
 }
 
 .sidebarHeader {
+    position: relative;
     display: flex;
     align-items: center;
     height: var(--topbar-height);
@@ -82,6 +45,7 @@
 .iconButton {
     display: grid;
     place-items: center;
+    flex: 0 0 36px;
     width: 36px;
     height: 36px;
     padding: 0;
@@ -96,6 +60,10 @@
     background: var(--color-surface-muted);
 }
 
+.sidebarToggle {
+    margin-left: auto;
+}
+
 .sidebarToggle svg {
     transition: transform var(--transition-normal);
 }
@@ -104,6 +72,7 @@
     flex: 1;
     padding: 22px 12px;
     overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .nav-label-spaced {
@@ -201,57 +170,37 @@
     background: var(--color-action-secondary-hover);
 }
 
+[data-collapsed="true"] ~ * .hideOnCollapse,
+[data-collapsed="true"] .hideOnCollapse {
+    display: none !important;
+}
 
-/* =========================================================
-   COLLAPSED SIDEBAR
-   ========================================================= */
-.app.sidebar-collapsed .sidebar {
+.sidebar[data-collapsed="true"] {
     width: var(--sidebar-collapsed-width);
 }
 
-.app.sidebar-collapsed .brandName,
-.app.sidebar-collapsed .nav-label,
-.app.sidebar-collapsed .navItem span,
-.app.sidebar-collapsed .userInfo,
-.app.sidebar-collapsed .moreButton {
-    display: none;
-}
-
-.app.sidebar-collapsed .sidebarHeader {
+.sidebar[data-collapsed="true"] .sidebarHeader {
     justify-content: center;
     padding: 0;
 }
 
-.app.sidebar-collapsed .sidebarToggle {
-    position: absolute;
-    right: -18px;
-    width: 36px;
-    height: 36px;
-    border: 1px solid var(--color-border);
-    background: var(--color-surface);
-    box-shadow: var(--shadow-sm);
+.sidebar[data-collapsed="true"] .sidebarToggle {
+    margin-left: 0;
 }
 
-.app.sidebar-collapsed .sidebarToggle svg {
-    transform: rotate(180deg);
+.sidebar[data-collapsed="true"] .navItem {
+    justify-content: center;
+    padding: 0;
 }
 
-.app.sidebar-collapsed .brand {
-    margin: 0 auto;
+.sidebar[data-collapsed="true"] .userCard {
+    justify-content: center;
+    padding: 14px 8px;
 }
 
-.app.sidebar-collapsed .sidebarNav {
+.sidebar[data-collapsed="true"] .sidebarNav {
     padding-left: 12px;
     padding-right: 12px;
-}
-
-.app.sidebar-collapsed .navItem {
-    justify-content: center;
-    padding: 0;
-}
-
-.app.sidebar-collapsed .userCard {
-    justify-content: center;
 }
 
 
@@ -260,12 +209,8 @@
    ========================================================= */
 .mainShell {
     height: 100vh;
-    margin-left: var(--sidebar-width);
+    margin-left: var(--current-sidebar-width);
     transition: margin-left var(--transition-normal);
-}
-
-.app.sidebar-collapsed .mainShell {
-    margin-left: var(--sidebar-collapsed-width);
 }
 
 
@@ -277,7 +222,7 @@
     z-index: 90;
     top: 0;
     right: 0;
-    left: var(--sidebar-width);
+    left: var(--current-sidebar-width);
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -287,10 +232,6 @@
     border-bottom: 1px solid var(--color-border);
     backdrop-filter: blur(10px);
     transition: left var(--transition-normal);
-}
-
-.app.sidebar-collapsed .topbar {
-    left: var(--sidebar-collapsed-width);
 }
 
 .topbarLeft,
@@ -319,60 +260,6 @@
     display: none;
 }
 
-.sidebar--collapsed .brandName,
-.sidebar--collapsed .nav-label,
-.sidebar--collapsed .navItem span,
-.sidebar--collapsed .userInfo,
-.sidebar--collapsed .moreButton {
-    display: none !important;
-}
-
-.sidebar--collapsed .sidebarHeader {
-    justify-content: center;
-    padding: 0;
-}
-
-.sidebar--collapsed .sidebarToggle {
-    position: absolute;
-    right: -18px;
-    width: 36px;
-    height: 36px;
-}
-
-.sidebar--collapsed .sidebarToggle svg {
-    transform: rotate(180deg);
-}
-
-.sidebar--collapsed .brand {
-    margin: 0 auto;
-}
-
-.sidebar--collapsed .sidebarNav {
-    padding-left: 12px;
-    padding-right: 12px;
-}
-
-.sidebar--collapsed .navItem {
-    justify-content: center;
-    padding: 0;
-}
-
-.sidebar--collapsed .userCard {
-    justify-content: center;
-}
-
-.sidebar--collapsed ~ .mainShell {
-    margin-left: var(--sidebar-collapsed-width) !important;
-}
-
-.mainShell {
-    margin-left: var(--current-sidebar-width);
-}
-
-.topbar {
-    left: var(--current-sidebar-width);
-}
-
 
 /* =========================================================
    CONTENT
@@ -389,4 +276,14 @@
    ========================================================= */
 .buttonSignOut {
     width: 100%;
+}
+
+.buttonSignOutCollapsed {
+    height: 36px;
+    padding: 0;
+    display: grid;
+    place-items: center;
+    width: 100%;
+    stroke-width: 1;
+    stroke: currentColor;
 }

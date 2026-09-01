@@ -5,13 +5,9 @@ import Image from 'next/image'
 import './style-test.css'
 import {PageHeader} from "@/core/dashboard/components/panels/page-header";
 import {MainContentPanel} from "@/core/dashboard/components/panels/main-card";
-import {TableOfContents} from "@/core/dashboard/components/panels/table-of-contents";
 
 function StyleTestPage() {
-    const [checked, setChecked] = useState(true);
-    const [selected, setSelected] = useState("static");
-    const [range, setRange] = useState(65);
-    const [toggle, setToggle] = useState(true);
+    const [value, setValue] = useState("50");
 
     return (
         <div>
@@ -418,7 +414,7 @@ function StyleTestPage() {
                                 <span className="component-tag">&lt;input type="checkbox"&gt;</span>
                                 <input type="checkbox" id="chk1" name="chk1"/>
                                 <label htmlFor="chk1">Checkbox option one</label><br/>
-                                <input type="checkbox" id="chk2" name="chk2" checked/>
+                                <input type="checkbox" id="chk2" name="chk2" defaultChecked/>
                                 <label htmlFor="chk2">Checkbox option two (checked)</label>
                             </div>
 
@@ -426,7 +422,7 @@ function StyleTestPage() {
                                 <span className="component-tag">&lt;input type="radio"&gt;</span>
                                 <input type="radio" id="radio1" name="radio-group" value="a"/>
                                 <label htmlFor="radio1">Radio option A</label><br/>
-                                <input type="radio" id="radio2" name="radio-group" value="b" checked readOnly/>
+                                <input type="radio" id="radio2" name="radio-group" value="b" defaultChecked/>
                                 <label htmlFor="radio2">Radio option B (checked)</label>
                             </div>
 
@@ -473,7 +469,13 @@ function StyleTestPage() {
                             <div className="component-row">
                                 <span className="component-tag">&lt;input type="range"&gt;</span>
                                 <label htmlFor="range-input">Range</label><br/>
-                                <input type="range" id="range-input" name="range-input" min="0" max="100" value="50"/>
+                                <input type="range"
+                                       id="range-input"
+                                       name="range-input"
+                                       min="0"
+                                       max="100"
+                                       value={value}
+                                       onChange={(e) => setValue(e.target.value)}/>
                             </div>
 
                             <div className="component-row">
@@ -485,7 +487,11 @@ function StyleTestPage() {
                             <div className="component-row">
                                 <span className="component-tag">&lt;input type="color"&gt;</span>
                                 <label htmlFor="color-input">Color</label><br/>
-                                <input type="color" id="color-input" name="color-input" value="#3366ff"/>
+                                <input type="color"
+                                       id="color-input"
+                                       name="color-input"
+                                       value="#3366ff"
+                                       onChange={(e) => setValue(e.target.value)}/>
                             </div>
                         </fieldset>
 

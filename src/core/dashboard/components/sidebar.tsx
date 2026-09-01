@@ -1,4 +1,5 @@
 import {headers} from "next/headers";
+import Link from "next/link";
 import {auth} from "@core/auth";
 import SidebarFrame from "./sidebar-frame";
 import SidebarToggleButton from "./sidebar-toggle-button";
@@ -24,48 +25,48 @@ export async function Sidebar() {
                 {session ? (
                     <div className={styles.userCard}>
                         <div className={styles.avatar}>SK</div>
-                        <div className={styles.userInfo}>
+                        <div className={`${styles.userInfo} ${styles.hideOnCollapse}`}>
                             <strong>{userName}</strong>
                             <span>{userRole}</span>
                         </div>
-                        <button className={styles.moreButton} aria-label="More options">
+                        <button className={`${styles.moreButton} ${styles.hideOnCollapse}`} aria-label="More options">
                             <DotIcon/>
                         </button>
                     </div>
                 ) : (<span></span>)}
             </div>
             <nav className={styles.sidebarNav}>
-                <h5>Workspace</h5>
-                <a href="/" className={`${styles.navItem} ${styles.active}`}>
+                <h5 className={styles.hideOnCollapse}>Workspace</h5>
+                <Link href="/" className={`${styles.navItem} ${styles.active}`}>
                     <SquareIcon/>
-                    <span>Dashboard</span>
-                </a>
-                <a href="/style-test" className={styles.navItem}>
+                    <span className={styles.hideOnCollapse}>Dashboard</span>
+                </Link>
+                <Link href="/style-test" className={styles.navItem}>
                     <PageIcon/>
-                    <span>Style Test</span>
-                </a>
+                    <span className={styles.hideOnCollapse}>Style Test</span>
+                </Link>
                 {session ? (
-                    <a href="/settings" className={styles.navItem}>
+                    <Link href="/settings" className={styles.navItem}>
                         <GearIcon/>
-                        <span>Settings</span>
-                    </a>
+                        <span className={styles.hideOnCollapse}>Settings</span>
+                    </Link>
                 ) : (<span></span>)}
-                <h5>Other Menu</h5>
-                <a href="/" className={styles.navItem}>
+                <h5 className={styles.hideOnCollapse}>Other Menu</h5>
+                <Link href="/" className={styles.navItem}>
                     <SquareIcon/>
-                    <span>Whatever</span>
-                </a>
-                <a href="/style-test" className={styles.navItem}>
+                    <span className={styles.hideOnCollapse}>Whatever</span>
+                </Link>
+                <Link href="/style-test" className={styles.navItem}>
                     <PageIcon/>
-                    <span>Something Else</span>
-                </a>
+                    <span className={styles.hideOnCollapse}>Something Else</span>
+                </Link>
                 {isAdmin ? (
                     <span>
-                        <h5>Management</h5>
-                        <a href="/admin" className={styles.navItem}>
+                        <h5 className={styles.hideOnCollapse}>Management</h5>
+                        <Link href="/admin" className={styles.navItem}>
                             <AdminIcon/>
-                            <span>Admin Panel</span>
-                        </a>
+                            <span className={styles.hideOnCollapse}>Admin Panel</span>
+                        </Link>
                     </span>
                 ) : (<span></span>)}
 
@@ -76,10 +77,10 @@ export async function Sidebar() {
                 </div>
             ) : (
                 <div>
-                    <a href="/login" className={styles.navItem}>
+                    <Link href="/login" className={styles.navItem}>
                         <GearIcon/>
-                        <span>Login / Register</span>
-                    </a>
+                        <span className={styles.hideOnCollapse}>Login / Register</span>
+                    </Link>
                 </div>
             )}
         </SidebarFrame>

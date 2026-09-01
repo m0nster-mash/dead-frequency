@@ -22,7 +22,7 @@ export default function Breadcrumbs() {
                 return (
                     <span className={styles.item} key={segment}>
                     <span className={styles.separator} aria-hidden="true">
-                        /
+                        {" "} / {" "}
                     </span>
                         {isLast ? (
                             <span
