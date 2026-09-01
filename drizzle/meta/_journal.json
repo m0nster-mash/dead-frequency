@@ -36,6 +36,13 @@
       "when": 1787607143020,
       "tag": "0004_mute_the_liberteens",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1788304416100,
+      "tag": "0005_wise_squadron_sinister",
+      "breakpoints": true
     }
   ]
 }
