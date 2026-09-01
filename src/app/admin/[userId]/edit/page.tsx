@@ -3,6 +3,7 @@ import {notFound, redirect} from "next/navigation";
 import {auth} from "@/core/auth";
 import {AdminEditUserForm} from "@/core/admin/components/admin-edit-user-form";
 import {PageHeader} from "@/core/dashboard/components/panels/page-header";
+import {BreadcrumbLabel} from "@/shared/components/breadcrumb-label";
 import styles from "@/shared/styles/form-panel.module.css";
 
 type PageProps = {
@@ -40,6 +41,8 @@ export default async function AdminEditUserPage({params}: PageProps) {
 
     return (
         <div className={styles.wrapper}>
+            <BreadcrumbLabel segment={userId} label={user.name ?? undefined}/>
+
             <PageHeader eyebrow={"Viewing Profile Details For..."}
                         title={user.name + " (" + user.email + ")"}
                         subtitle={"Update this user's account details."}/>

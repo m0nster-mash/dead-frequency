@@ -41,7 +41,7 @@ export function AdminUserTable({users, currentUserId,}: AdminUserTableProps) {
                             <th className={styles.tableActions}> Actions</th>
                         </tr>
                         </thead>
-                        <tbody> {users.map((user) => (
+                        <tbody>{users.map((user) => (
                             <tr key={user.id}>
                                 <td>{user.name || "—"}</td>
                                 <td>{user.email}</td>

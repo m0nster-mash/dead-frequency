@@ -7,6 +7,8 @@ import {PageHeader} from "@/core/dashboard/components/panels/page-header";
 import styles from "@/shared/styles/form-panel.module.css";
 import EditIcon from "@/shared/svg/bootstrap-edit-icon.svg";
 
+import {BreadcrumbLabel} from "@/shared/components/breadcrumb-label";
+
 type PageProps = {
     params: Promise<{ userId: string }>;
 };
@@ -89,6 +91,7 @@ export default async function AdminUserDetailsPage({params}: PageProps) {
 
     return (
         <div className={styles.wrapper}>
+            <BreadcrumbLabel segment={userId} label={user.name ?? undefined}/>
             <PageHeader eyebrow={"Viewing Profile Details For..."}
                         title={user.name || user.email}
                         subtitle={"User details"}/>
