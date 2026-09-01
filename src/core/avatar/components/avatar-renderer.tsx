@@ -48,7 +48,7 @@ export function AvatarRenderer({config, size = 96, className}: AvatarRendererPro
         <svg
             width={size}
             height={size}
-            viewBox="0 0 100 100"
+            viewBox="0 0 240 240"
             role="img"
             aria-label="User avatar"
             className={className}>
