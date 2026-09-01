@@ -5,6 +5,7 @@ import {auth} from "@/core/auth";
 import {MainContentPanel} from "@/core/dashboard/components/panels/main-card";
 import {PageHeader} from "@/core/dashboard/components/panels/page-header";
 import styles from "@/shared/styles/form-panel.module.css";
+import EditIcon from "@/shared/svg/bootstrap-edit-icon.svg";
 
 type PageProps = {
     params: Promise<{ userId: string }>;
@@ -103,8 +104,11 @@ export default async function AdminUserDetailsPage({params}: PageProps) {
             </MainContentPanel>
 
             <MainContentPanel title={"Admin Actions"}>
-                <div className={styles.actions}><Link href={`/admin/${user.id}/edit`} className={styles.submit}> ✏️ Edit
-                    user </Link></div>
+                <div className={styles.actions}>
+                    <Link href={`/admin/${user.id}/edit`} className={styles.submit}>
+                        <EditIcon/> Edit user
+                    </Link>
+                </div>
             </MainContentPanel>
         </div>
     );

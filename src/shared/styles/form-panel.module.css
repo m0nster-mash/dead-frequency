@@ -242,7 +242,6 @@
 
 .submit {
     padding: var(--size-space-3) var(--size-space-5);
-    border: 1px solid var(--form-accent);
     background-color: var(--form-accent);
     color: var(--color-action-primary-text);
     font-weight: 600;
@@ -251,6 +250,7 @@
     cursor: pointer;
     transition: background-color var(--form-transition), border-color var(--form-transition), transform var(--form-transition);
     white-space: nowrap;
+    text-decoration: none;
 }
 
 .submit:hover:not(:disabled) {

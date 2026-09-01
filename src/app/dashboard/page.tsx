@@ -42,9 +42,7 @@ export default async function DashboardPage() {
                     Now, here's some filler text to pad the area:
                 </p>
                 <hr/>
-                <p>
-                    <LoremIpsum length={3} regular={true}/>
-                </p>
+                <LoremIpsum length={3} regular={true}/>
             </MainContentPanel>
         </>
     );
