@@ -33,15 +33,15 @@ export async function Sidebar() {
                         <div className={styles.hideOnCollapse}>
                             <DropdownMenu
                                 trigger={<DotIcon/>}
-                                align="end"
+                                align="start"
                                 items={[
-                                    {type: "header", label: userName ?? "Account"},
+                                    // {type: "header", label: userName ?? "Account"},
                                     {type: "link", label: "Settings", href: "/settings"},
                                     {type: "divider"},
                                     {
                                         type: "action",
                                         label: "Sign out",
-                                        danger: true,
+                                        danger: false,
                                         action: async () => {
                                             "use server";
                                             await auth.api.signOut({headers: await headers()});

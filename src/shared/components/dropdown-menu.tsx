@@ -35,6 +35,10 @@ export function DropdownMenu({trigger, items, align = "end"}: DropdownMenuProps)
     const [open, setOpen] = useState(false);
     const containerRef = useRef<HTMLDivElement>(null);
 
+    const menuClassName = align === "start"
+        ? `${styles.dropdownMenu} ${styles.dropdownMenuStart}`
+        : `${styles.dropdownMenu} ${styles.dropdownMenuEnd}`;
+
     useEffect(() => {
         if (!open) return;
 
@@ -59,7 +63,7 @@ export function DropdownMenu({trigger, items, align = "end"}: DropdownMenuProps)
     return (
         <div className={styles.dropdown} ref={containerRef}>
             <button type="button"
-                    className={styles.dropdownToggle}
+                    className={styles.dropdownToggleButton}
                     aria-haspopup="menu"
                     aria-expanded={open}
                     onClick={() => setOpen((prev) => !prev)}>
@@ -67,10 +71,7 @@ export function DropdownMenu({trigger, items, align = "end"}: DropdownMenuProps)
             </button>
 
             {open && (
-                <ul role="menu"
-                    className={`${styles.dropdownMenu} ${align === "start"
-                        ? styles.dropdownMenuStart
-                        : styles.dropdownMenuEnd}`}>
+                <ul role="menu" className={menuClassName}>
 
                     {items.map((item, index) => {
                         if (item.type === "divider") {
