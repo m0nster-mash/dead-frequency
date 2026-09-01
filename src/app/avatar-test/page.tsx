@@ -1,6 +1,6 @@
 import {MainContentPanel} from "@/core/dashboard/components/panels/main-card";
-import {AvatarRenderer} from "@/core/avatar";
-import {BACKGROUND_OPTIONS, EYES_OPTIONS, MOUTH_OPTIONS, HAIR_OPTIONS} from "@/core/avatar/lib/options";
+import {AvatarRenderer} from "@/feature/avatar";
+import {BACKGROUND_OPTIONS, EYES_OPTIONS, MOUTH_OPTIONS, HAIR_OPTIONS} from "@/feature/avatar/lib/options";
 
 export default async function AvatarTestPage() {
 

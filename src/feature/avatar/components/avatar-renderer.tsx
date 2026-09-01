@@ -1,15 +1,15 @@
 
-import HeadBase from "@/core/avatar/assets/base/base_1.svg";
-import Eyes01 from "@/core/avatar/assets/eyes/eyes_1.svg";
-import Eyes02 from "@/core/avatar/assets/eyes/eyes_2.svg";
-import Mouth01 from "@/core/avatar/assets/mouth/mouth_1.svg";
-import Mouth02 from "@/core/avatar/assets/mouth/mouth_2.svg";
-import Background01 from "@/core/avatar/assets/background/background_1.svg";
-import Background02 from "@/core/avatar/assets/background/background_2.svg";
-import Hair01 from "@/core/avatar/assets/hair/hair_1.svg";
-import Hair02 from "@/core/avatar/assets/hair/hair_2.svg";
+import HeadBase from "@/feature/avatar/assets/base/base_1.svg";
+import Eyes01 from "@/feature/avatar/assets/eyes/eyes_1.svg";
+import Eyes02 from "@/feature/avatar/assets/eyes/eyes_2.svg";
+import Mouth01 from "@/feature/avatar/assets/mouth/mouth_1.svg";
+import Mouth02 from "@/feature/avatar/assets/mouth/mouth_2.svg";
+import Background01 from "@/feature/avatar/assets/background/background_1.svg";
+import Background02 from "@/feature/avatar/assets/background/background_2.svg";
+import Hair01 from "@/feature/avatar/assets/hair/hair_1.svg";
+import Hair02 from "@/feature/avatar/assets/hair/hair_2.svg";
 
-import {AvatarConfig} from "@/core/avatar/lib/types";
+import {AvatarConfig} from "@/feature/avatar/lib/types";
 import {ComponentType} from "react";
 
 const EYES_MAP: Record<string, ComponentType> = {
