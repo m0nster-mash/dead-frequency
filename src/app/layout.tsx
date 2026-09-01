@@ -2,6 +2,7 @@ import type {Metadata} from "next";
 import "./globals.css";
 import {AppShell} from "@/core/dashboard/components/app-shell";
 import {ThemeProvider} from "@/app/components/theme-provider"
+import {BreadcrumbsProvider} from "@/shared/components/breadcrumbs-context";
 import React, {ReactNode} from "react";
 
 export const metadata: Metadata = {
@@ -13,7 +14,9 @@ export default function RootLayout({children}: { children: ReactNode }) {
         <html lang="en" suppressHydrationWarning>
         <body>
         <ThemeProvider>
-            <AppShell>{children}</AppShell>
+            <BreadcrumbsProvider>
+                <AppShell>{children}</AppShell>
+            </BreadcrumbsProvider>
         </ThemeProvider>
         </body>
         </html>
