@@ -24,7 +24,9 @@ export default function AppShellFrame({sidebar, header, children}: AppShellFrame
             {sidebar}
             <div className={styles.mainShell}>
                 {header}
-                <main className={styles.appContent}>{children}</main>
+                <main className={styles.appContent}>
+                    <div id="top">{children}</div>
+                </main>
             </div>
         </div>
     );
