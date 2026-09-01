@@ -277,16 +277,6 @@ body {
     -webkit-font-smoothing: antialiased;
 }
 
-svg {
-    width: 20px;
-    height: 20px;
-    fill: none;
-    stroke: currentColor;
-    stroke-width: 1.8;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-}
-
 /* ==========================================================================
  * Base resets scoped to form controls
  * ========================================================================== */

@@ -5,6 +5,9 @@ import Link from "next/link";
 import {DeleteUserModal} from "@/core/admin/components/delete-user-modal";
 import {MainContentPanel} from "@/core/dashboard/components/panels/main-card";
 import styles from "@/shared/styles/form-panel.module.css";
+import EditIcon from "@/shared/svg/bootstrap-edit-icon.svg";
+import SearchIcon from "@shared/svg/bootstrap-search-icon.svg";
+import TrashIcon from "@shared/svg/bootstrap-trash-icon.svg";
 
 type AdminUser = {
     id: string;
@@ -52,17 +55,22 @@ export function AdminUserTable({users, currentUserId,}: AdminUserTableProps) {
                                         <Link href={`/admin/${user.id}`}
                                               className={styles.iconButton}
                                               title="View details"
-                                              aria-label={`View details for ${user.email}`}> 🔍 </Link>
+                                              aria-label={`View details for ${user.email}`}>
+                                            <SearchIcon/>
+                                        </Link>
                                         <Link href={`/admin/${user.id}/edit`}
                                               className={styles.iconButton}
                                               title="Edit user"
-                                              aria-label={`Edit ${user.email}`}> ✏️ </Link>
+                                              aria-label={`Edit ${user.email}`}>
+                                            <EditIcon/>
+                                        </Link>
                                         <button type="button"
                                                 className={`${styles.iconButton} ${styles.iconButtonDanger}`}
                                                 title="Delete user"
                                                 aria-label={`Delete ${user.email}`}
                                                 disabled={user.id === currentUserId}
-                                                onClick={() => setUserPendingDelete(user)}> 🗑️
+                                                onClick={() => setUserPendingDelete(user)}>
+                                            <TrashIcon/>
                                         </button>
                                     </div>
                                 </td>

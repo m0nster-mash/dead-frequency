@@ -1,6 +1,6 @@
 import {headers} from "next/headers";
 import {auth} from "@core/auth";
-import BellIcon from "@/shared/svg/bell-icon.svg";
+import BellIcon from "@/shared/svg/bootstrap-bell-icon.svg";
 import {ThemeToggle} from "@/app/components/theme-toggle"
 import Breadcrumbs from "@/core/dashboard/components/breadcrumbs";
 import styles from "@shared/styles/dashboard.module.css";
