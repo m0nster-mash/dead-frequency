@@ -10,6 +10,7 @@ import GearIcon from "@/shared/svg/bootstrap-gear-icon.svg";
 import DotIcon from "@/shared/svg/bootstrap-three-dot-icon.svg"
 import AdminIcon from "@/shared/svg/bootstrap-settings.svg";
 import styles from "@shared/styles/dashboard.module.css";
+import {DropdownMenu} from "@shared/components/dropdown-menu";
 
 export async function Sidebar() {
     const requestHeaders = await headers();
@@ -29,9 +30,26 @@ export async function Sidebar() {
                             <strong>{userName}</strong>
                             <span>{userRole}</span>
                         </div>
-                        <button className={`${styles.moreButton} ${styles.hideOnCollapse}`} aria-label="More options">
-                            <DotIcon/>
-                        </button>
+                        <div className={styles.hideOnCollapse}>
+                            <DropdownMenu
+                                trigger={<DotIcon/>}
+                                align="end"
+                                items={[
+                                    {type: "header", label: userName ?? "Account"},
+                                    {type: "link", label: "Settings", href: "/settings"},
+                                    {type: "divider"},
+                                    {
+                                        type: "action",
+                                        label: "Sign out",
+                                        danger: true,
+                                        action: async () => {
+                                            "use server";
+                                            await auth.api.signOut({headers: await headers()});
+                                        },
+                                    },
+                                ]}
+                            />
+                        </div>
                     </div>
                 ) : (<span></span>)}
             </div>
