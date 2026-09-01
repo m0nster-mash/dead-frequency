@@ -1,16 +1,16 @@
-import {headers} from "next/headers";
 import Link from "next/link";
-import {auth} from "@core/auth";
+import {auth, SignOutButton} from "@core/auth";
+import {headers} from "next/headers";
+import {DropdownMenu} from "@shared/components/dropdown-menu";
+import {NavSection, SidebarNav} from "@/app/dashboard/components/sidebar-nav";
 import SidebarFrame from "./sidebar-frame";
 import SidebarToggleButton from "./sidebar-toggle-button";
-import {SignOutButton} from "@core/auth";
+import AdminIcon from "@/shared/svg/bootstrap-settings.svg";
+import DotIcon from "@/shared/svg/bootstrap-three-dot-icon.svg"
+import GearIcon from "@/shared/svg/bootstrap-gear-icon.svg";
 import PageIcon from "@/shared/svg/page-icon.svg";
 import SquareIcon from "@/shared/svg/four-squares-icon.svg";
-import GearIcon from "@/shared/svg/bootstrap-gear-icon.svg";
-import DotIcon from "@/shared/svg/bootstrap-three-dot-icon.svg"
-import AdminIcon from "@/shared/svg/bootstrap-settings.svg";
 import styles from "@shared/styles/dashboard.module.css";
-import {DropdownMenu} from "@shared/components/dropdown-menu";
 
 export async function Sidebar() {
     const requestHeaders = await headers();
@@ -19,6 +19,25 @@ export async function Sidebar() {
     const userName = session ? session.user.name : null;
     const userRole = session ? session.user.role : null;
     const isAdmin = userRole === "admin";
+
+    const sections: NavSection[] = [
+        {
+            title: "Workspace",
+            items: [
+                {href: "/", label: "Dashboard", icon: <SquareIcon/>},
+                {href: "/style-test", label: "Style Test", icon: <PageIcon/>},
+                ...(session
+                    ? [{href: "/settings", label: "Settings", icon: <GearIcon/>}]
+                    : []),
+            ],
+        },
+        ...(isAdmin
+            ? [{
+                title: "Management",
+                items: [{href: "/admin", label: "Admin Panel", icon: <AdminIcon/>}],
+            }]
+            : []),
+    ];
 
     return (
         <SidebarFrame toggleButton={<SidebarToggleButton/>}>
@@ -35,7 +54,6 @@ export async function Sidebar() {
                                 trigger={<DotIcon/>}
                                 align="start"
                                 items={[
-                                    // {type: "header", label: userName ?? "Account"},
                                     {type: "link", label: "Settings", href: "/settings"},
                                     {type: "divider"},
                                     {
@@ -53,42 +71,9 @@ export async function Sidebar() {
                     </div>
                 ) : (<span></span>)}
             </div>
-            <nav className={styles.sidebarNav}>
-                <h5 className={styles.hideOnCollapse}>Workspace</h5>
-                <Link href="/" className={`${styles.navItem} ${styles.active}`}>
-                    <SquareIcon/>
-                    <span className={styles.hideOnCollapse}>Dashboard</span>
-                </Link>
-                <Link href="/style-test" className={styles.navItem}>
-                    <PageIcon/>
-                    <span className={styles.hideOnCollapse}>Style Test</span>
-                </Link>
-                {session ? (
-                    <Link href="/settings" className={styles.navItem}>
-                        <GearIcon/>
-                        <span className={styles.hideOnCollapse}>Settings</span>
-                    </Link>
-                ) : (<span></span>)}
-                <h5 className={styles.hideOnCollapse}>Other Menu</h5>
-                <Link href="/" className={styles.navItem}>
-                    <SquareIcon/>
-                    <span className={styles.hideOnCollapse}>Whatever</span>
-                </Link>
-                <Link href="/style-test" className={styles.navItem}>
-                    <PageIcon/>
-                    <span className={styles.hideOnCollapse}>Something Else</span>
-                </Link>
-                {isAdmin ? (
-                    <span>
-                        <h5 className={styles.hideOnCollapse}>Management</h5>
-                        <Link href="/admin" className={styles.navItem}>
-                            <AdminIcon/>
-                            <span className={styles.hideOnCollapse}>Admin Panel</span>
-                        </Link>
-                    </span>
-                ) : (<span></span>)}
 
-            </nav>
+            <SidebarNav sections={sections}/>
+
             {session ? (
                 <div className={styles.sidebarFooter}>
                     <SignOutButton/>
