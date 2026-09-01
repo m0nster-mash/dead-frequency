@@ -1,4 +1,4 @@
-export type AvatarPartCategory = "eyes" | "mouth" | "background";
+export type AvatarPartCategory = "eyes" | "mouth" | "background" | "hair";
 
 export type AvatarOption = {
     id: string;
@@ -20,10 +20,16 @@ export const BACKGROUND_OPTIONS: AvatarOption[] = [
     {id: "background-02", label: "Space"}
 ];
 
+export const HAIR_OPTIONS: AvatarOption[] = [
+    {id: "hair-01", label: "Brown"},
+    {id: "hair-02", label: "Black"}
+];
+
 export const AVATAR_OPTIONS: Record<AvatarPartCategory, AvatarOption[]> = {
     eyes: EYES_OPTIONS,
     mouth: MOUTH_OPTIONS,
     background: BACKGROUND_OPTIONS,
+    hair: HAIR_OPTIONS
 };
 
 export function isValidAvatarPart(category: AvatarPartCategory, id: string): boolean {
@@ -35,4 +41,5 @@ export const DEFAULT_AVATAR_CONFIG = {
     eyes: EYES_OPTIONS[0].id,
     mouth: MOUTH_OPTIONS[0].id,
     background: BACKGROUND_OPTIONS[0].id,
+    hair: HAIR_OPTIONS[0].id
 };

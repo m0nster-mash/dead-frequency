@@ -5,4 +5,5 @@ export type AvatarConfig = {
     eyes: string;
     mouth: string;
     background: string;
+    hair: string;
 };
