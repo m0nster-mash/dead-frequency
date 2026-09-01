@@ -2,7 +2,8 @@
 
 import {useSidebar} from "@/app/dashboard/components/sidebar-context";
 import styles from "@/shared/styles/dashboard.module.css";
-import ArrowSquare from "@/shared/svg/bootstrap-left-square-icon.svg";
+import LeftArrowSquare from "@/shared/svg/bootstrap-left-square-icon.svg";
+import RightArrowSquare from "@/shared/svg/bootstrap-right-square-icon.svg";
 
 export default function SidebarToggleButton() {
     const {collapsed, toggle} = useSidebar();
@@ -13,7 +14,7 @@ export default function SidebarToggleButton() {
                 aria-label="Toggle sidebar"
                 aria-expanded={!collapsed}
                 onClick={toggle}>
-            <ArrowSquare/>
+            {collapsed ? <RightArrowSquare/> : <LeftArrowSquare/>}
         </button>
     );
 }

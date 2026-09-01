@@ -90,6 +90,7 @@
     --color-surface: var(--theme-white);
     --color-surface-raised: var(--theme-grey-002);
     --color-surface-muted: var(--theme-grey-003);
+    --color-surface-strong: var(--theme-grey-004);
     --color-surface-overlay: rgb(255 255 255 / 94%);
     --color-overlay: rgb(29 30 32 / 25%);
 
@@ -138,7 +139,6 @@
     --color-icon-default: var(--theme-slate-005);
     --color-avatar-default: var(--theme-blue-101);
     --color-text-user: var(--theme-slate-005);
-    --color-surface-strong: var(--theme-slate-tonal-003);
 
     /* ============================================================
        LAYOUT / TYPOGRAPHY / MOTION
@@ -212,6 +212,7 @@
     --color-surface: var(--theme-slate-003);
     --color-surface-raised: var(--theme-slate-004);
     --color-surface-muted: var(--theme-slate-005);
+    --color-surface-strong: var(--theme-slate-tonal-003);
     --color-surface-overlay: rgb(34 38 51 / 94%);
     --color-overlay: rgb(0 0 0 / 45%);
 
