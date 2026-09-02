@@ -11,3 +11,5 @@ export * from "@/shared/communication/notifications/schema/notifications.schema"
 export * from "@/shared/communication/permissions/schema/permissions.schema";
 export * from "@/shared/communication/interactions/schema/interactions.schema";
 export * from "@/shared/communication/social/schema/blocks.schema";
+
+export * from "@/feature/forum/schema/forum.schema";
