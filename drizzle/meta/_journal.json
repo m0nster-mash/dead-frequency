@@ -43,6 +43,13 @@
       "when": 1788304416100,
       "tag": "0005_wise_squadron_sinister",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1788374471195,
+      "tag": "0006_tranquil_ego",
+      "breakpoints": true
     }
   ]
 }

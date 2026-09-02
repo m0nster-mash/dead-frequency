@@ -1,5 +1,5 @@
-import {relations} from "drizzle-orm";
-import {pgTable, primaryKey, text, timestamp} from "drizzle-orm/pg-core";
+import {relations, sql} from "drizzle-orm";
+import {pgTable, text, timestamp, uniqueIndex} from "drizzle-orm/pg-core";
 import {user} from "@/core/auth/schema/auth.schema";
 
 // Roles are site-wide OR scoped to a module/context (e.g. "forum moderator").
@@ -7,26 +7,25 @@ import {user} from "@/core/auth/schema/auth.schema";
 // or forum board id) once that granularity is needed.
 export const role = pgTable(
     "role", {
-        id: text("id").primaryKey(), // e.g. "admin", "moderator", "trusted"
+        id: text("id").primaryKey(),
         label: text("label").notNull(),
         createdAt: timestamp("created_at").defaultNow().notNull(),
     });
 
 export const userRole = pgTable(
     "user_role", {
-        userId: text("user_id")
-            .notNull()
-            .references(() => user.id, {onDelete: "cascade"}),
-        roleId: text("role_id")
-            .notNull()
-            .references(() => role.id, {onDelete: "cascade"}),
+        id: text("id").primaryKey(), // generate uuid on insert
+        userId: text("user_id").notNull().references(() => user.id, {onDelete: "cascade"}),
+        roleId: text("role_id").notNull().references(() => role.id, {onDelete: "cascade"}),
         contextId: text("context_id"), // null = global; guild/board id later
-        createdAt: timestamp("created_at")
-            .defaultNow()
-            .notNull(),
+        createdAt: timestamp("created_at").defaultNow().notNull(),
     },
     (table) => [
-        primaryKey({columns: [table.userId, table.roleId, table.contextId]}),
+        uniqueIndex("user_role_unique_idx").on(
+            table.userId,
+            table.roleId,
+            sql`COALESCE(${table.contextId}, '')`,
+        ),
     ],
 );
 

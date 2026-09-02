@@ -131,6 +131,34 @@ export const subscription = pgTable(
     ],
 );
 
+export const reportRelations = relations(report, ({one}) => ({
+    reporter: one(user, {
+        fields: [report.reporterId],
+        references: [user.id],
+    }),
+}));
+
+export const reactionRelations = relations(reaction, ({one}) => ({
+    user: one(user, {
+        fields: [reaction.userId],
+        references: [user.id],
+    }),
+}));
+
 export const commentRelations = relations(comment, ({one}) => ({
     user: one(user, {fields: [comment.userId], references: [user.id]}),
+}));
+
+export const activityEventRelations = relations(activityEvent, ({one}) => ({
+    actor: one(user, {
+        fields: [activityEvent.actorId],
+        references: [user.id],
+    }),
+}));
+
+export const subscriptionRelations = relations(subscription, ({one}) => ({
+    subscriber: one(user, {
+        fields: [subscription.subscriberId],
+        references: [user.id],
+    }),
 }));
