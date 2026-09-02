@@ -37,6 +37,7 @@ export default async function AdminPage() {
                 <ul>
                     <li><Link href={"/admin/audit-log"}>Audit-Log</Link></li>
                     <li><Link href={"/admin/reports"}>Reports</Link></li>
+                    <li><Link href={"/admin/forum"}>Forum Management</Link></li>
                 </ul>
 
             </MainContentPanel>
