@@ -1,6 +1,10 @@
 import {relations} from "drizzle-orm";
-import {pgTable, text, timestamp, boolean, index, uniqueIndex} from "drizzle-orm/pg-core";
+import {boolean, index, pgTable, text, timestamp, uniqueIndex} from "drizzle-orm/pg-core";
 
+/**
+ * Core relational table representation storing persistent user metrics and status profiles.
+ * Adapts to BetterAuth specifications while extending columns to handle administrative fields and guest states.
+ */
 export const user = pgTable("user", {
     id: text("id")
         .primaryKey(),
@@ -16,19 +20,30 @@ export const user = pgTable("user", {
     createdAt: timestamp("created_at")
         .defaultNow()
         .notNull(),
+    /*
+       Dynamic Lifecycle Hook: Automatically intercepts database save updates
+       to overwrite timestamps with fresh client execution periods.
+    */
     updatedAt: timestamp("updated_at")
         .defaultNow()
         .$onUpdate(() => /* @__PURE__ */ new Date())
         .notNull(),
+
+    // Administrative & Security Extensibility Columns
     role: text("role"),
     banned: boolean("banned")
         .default(false),
     banReason: text("ban_reason"),
     banExpires: timestamp("ban_expires"),
+
+    // Guest/Anonymous Plugin State tracking flag
     isAnonymous: boolean("is_anonymous")
         .default(false),
 });
 
+/**
+ * Tracking grid container managing continuous device interactions and session lifecycles.
+ */
 export const session = pgTable(
     "session", {
         id: text("id")
@@ -46,14 +61,23 @@ export const session = pgTable(
             .notNull(),
         ipAddress: text("ip_address"),
         userAgent: text("user_agent"),
+        /*
+           Relational Connection: Binds active session states directly down to users.
+           Cascade Configuration: Purging user profiles triggers an automatic cascading delete
+           sweeping corresponding data records out of database tables.
+        */
         userId: text("user_id")
             .notNull()
             .references(() => user.id, {onDelete: "cascade"}),
         impersonatedBy: text("impersonated_by"),
     },
+    // Index Mapping Array: Optimizes session evaluation lookups across relational joins
     (table) => [index("session_userId_idx").on(table.userId)],
 );
 
+/**
+ * Storage dictionary capturing external credential maps and multi-provider token metrics.
+ */
 export const account = pgTable(
     "account", {
         id: text("id")
@@ -82,6 +106,10 @@ export const account = pgTable(
             .notNull(),
     },
     (table) => [
+        /*
+           Composite Key Guard: Enforces absolute data boundaries blocking overlapping rows
+           containing identical platform issuer types and internal identifiers.
+        */
         uniqueIndex("account_issuer_accountId_uidx").on(
             table.issuer,
             table.accountId,
@@ -90,6 +118,9 @@ export const account = pgTable(
     ],
 );
 
+/**
+ * Verification token map managing secure password reset trajectories or double email verification handshakes.
+ */
 export const verification = pgTable(
     "verification", {
         id: text("id")
@@ -111,11 +142,19 @@ export const verification = pgTable(
     (table) => [index("verification_identifier_idx").on(table.identifier)],
 );
 
+/**
+ * Drizzle ORM Relational Mapping: User Definition Scope.
+ * Explains structural 1-to-many lookup trees for hydration tasks.
+ */
 export const userRelations = relations(user, ({many}) => ({
     sessions: many(session),
     accounts: many(account),
 }));
 
+/**
+ * Drizzle ORM Relational Mapping: Session Definition Scope.
+ * Links individual transient connection traces directly to their parent User model structure.
+ */
 export const sessionRelations = relations(session, ({one}) => ({
     user: one(user, {
         fields: [session.userId],
@@ -123,6 +162,10 @@ export const sessionRelations = relations(session, ({one}) => ({
     }),
 }));
 
+/**
+ * Drizzle ORM Relational Mapping: Account Definition Scope.
+ * Maps individual integration keys up to a primary single user anchor entity.
+ */
 export const accountRelations = relations(account, ({one}) => ({
     user: one(user, {
         fields: [account.userId],
