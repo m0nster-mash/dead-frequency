@@ -8,6 +8,8 @@ import styles from "@/shared/styles/form-panel.module.css";
 import EditIcon from "@/shared/svg/bootstrap-edit-icon.svg";
 
 import {BreadcrumbLabel} from "@/shared/components/breadcrumb-label";
+import {AdminPostingStatusForm} from "@/core/admin/components/admin-posting-status-form";
+import {applyPostingStatusAction} from "@/core/admin/lib/actions";
 
 type PageProps = {
     params: Promise<{ userId: string }>;
@@ -113,6 +115,8 @@ export default async function AdminUserDetailsPage({params}: PageProps) {
                     </Link>
                 </div>
             </MainContentPanel>
+
+            <AdminPostingStatusForm userId={user.id} onSubmitAction={applyPostingStatusAction}/>
         </div>
     );
 }
