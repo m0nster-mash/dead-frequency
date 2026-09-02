@@ -18,7 +18,6 @@ type AvatarBuilderProps = {
 const CATEGORIES: {key: AvatarPartCategory; label: string}[] = [
     {key: "eyes", label: "Eyes"},
     {key: "mouth", label: "Mouth"},
-    {key: "background", label: "Background"},
     {key: "hair", label: "Hair"},
 ];
 
