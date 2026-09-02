@@ -4,8 +4,6 @@ import Eyes01 from "@/feature/avatar/assets/eyes/eyes_1.svg";
 import Eyes02 from "@/feature/avatar/assets/eyes/eyes_2.svg";
 import Mouth01 from "@/feature/avatar/assets/mouth/mouth_1.svg";
 import Mouth02 from "@/feature/avatar/assets/mouth/mouth_2.svg";
-import Background01 from "@/feature/avatar/assets/background/background_1.svg";
-import Background02 from "@/feature/avatar/assets/background/background_2.svg";
 import Hair01 from "@/feature/avatar/assets/hair/hair_1.svg";
 import Hair02 from "@/feature/avatar/assets/hair/hair_2.svg";
 
@@ -22,11 +20,6 @@ const MOUTH_MAP: Record<string, ComponentType> = {
     "mouth-02": Mouth02
 };
 
-const BACKGROUND_MAP: Record<string, ComponentType> = {
-    "background-01": Background01,
-    "background-02": Background02
-};
-
 const HAIR_MAP: Record<string, ComponentType> = {
     "hair-01": Hair01,
     "hair-02": Hair02
@@ -39,7 +32,6 @@ type AvatarRendererProps = {
 };
 
 export function AvatarRenderer({config, size = 96, className}: AvatarRendererProps) {
-    const Background = BACKGROUND_MAP[config.background];
     const Eyes = EYES_MAP[config.eyes];
     const Mouth = MOUTH_MAP[config.mouth];
     const Hair = HAIR_MAP[config.hair];
@@ -52,7 +44,6 @@ export function AvatarRenderer({config, size = 96, className}: AvatarRendererPro
             role="img"
             aria-label="User avatar"
             className={className}>
-            {Background ? <Background/> : null}
             <HeadBase/>
             {Eyes ? <Eyes/> : null}
             {Mouth ? <Mouth/> : null}

@@ -11,6 +11,9 @@ import GearIcon from "@/shared/svg/bootstrap-gear-icon.svg";
 import PageIcon from "@/shared/svg/page-icon.svg";
 import SquareIcon from "@/shared/svg/four-squares-icon.svg";
 import styles from "@shared/styles/dashboard.module.css";
+import {AvatarRenderer} from "@/feature/avatar/components/avatar-renderer";
+import {getAvatarConfigForUser} from "@/feature/avatar/lib/actions";
+import {DEFAULT_AVATAR_CONFIG} from "@/feature/avatar/lib/options";
 
 export async function Sidebar() {
     const requestHeaders = await headers();
@@ -20,16 +23,31 @@ export async function Sidebar() {
     const userRole = session ? session.user.role : null;
     const isAdmin = userRole === "admin";
 
+    const initials = session?.user?.name
+        ? session.user.name
+            .split(" ")
+            .map((part) => part[0])
+            .join("")
+            .slice(0, 2)
+            .toUpperCase()
+        : ":)";
+
+    const avatarConfig = session
+        ? (await getAvatarConfigForUser(session.user.id)) ?? DEFAULT_AVATAR_CONFIG
+        : null;
+
     const sections: NavSection[] = [
         {
-            title: "Workspace",
+            title: "Test Pages",
             items: [
-                {href: "/", label: "Dashboard", icon: <SquareIcon/>},
                 {href: "/style-test", label: "Style Test", icon: <PageIcon/>},
-                {href: "/avatar-test", label: "Avatar Test", icon: <PageIcon/>},
-                ...(session
-                    ? [{href: "/settings", label: "Settings", icon: <GearIcon/>}]
-                    : []),
+                {href: "/avatar-test", label: "Avatar Test", icon: <PageIcon/>}
+            ],
+        },
+        {
+            title: "Features",
+            items: [
+                {href: "/avatar", label: "Avatar System", icon: <PageIcon/>},
             ],
         },
         ...(isAdmin
@@ -45,7 +63,13 @@ export async function Sidebar() {
             <div>
                 {session ? (
                     <div className={styles.userCard}>
-                        <div className={styles.avatar}>SK</div>
+                        <div className={styles.avatar}>
+                            {avatarConfig ? (
+                                <AvatarRenderer config={avatarConfig} size={36}/>
+                            ) : (
+                                <span>{initials}</span>
+                            )}
+                        </div>
                         <div className={`${styles.userInfo} ${styles.hideOnCollapse}`}>
                             <strong>{userName}</strong>
                             <span>{userRole}</span>
@@ -55,7 +79,8 @@ export async function Sidebar() {
                                 trigger={<DotIcon/>}
                                 align="start"
                                 items={[
-                                    {type: "link", label: "Settings", href: "/settings"},
+                                    {type: "link", label: "Update Avatar", href: "/avatar"},
+                                    {type: "link", label: "Account Settings", href: "/settings"},
                                     {type: "divider"},
                                     {
                                         type: "action",

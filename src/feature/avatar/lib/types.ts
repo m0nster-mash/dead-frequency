@@ -4,6 +4,5 @@ export type AvatarConfig = {
     version: typeof AVATAR_CONFIG_VERSION;
     eyes: string;
     mouth: string;
-    background: string;
     hair: string;
 };

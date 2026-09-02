@@ -5,7 +5,7 @@ export type AvatarConfigValidationResult =
     | { valid: true; config: AvatarConfig }
     | { valid: false; error: string };
 
-const PART_CATEGORIES: AvatarPartCategory[] = ["eyes", "mouth", "background", "hair"];
+const PART_CATEGORIES: AvatarPartCategory[] = ["eyes", "mouth", "hair"];
 
 /**
  * Validates untrusted input (e.g. from a client request body) against the
@@ -44,7 +44,6 @@ export function validateAvatarConfig(input: unknown): AvatarConfigValidationResu
             version: AVATAR_CONFIG_VERSION,
             eyes: candidate.eyes as string,
             mouth: candidate.mouth as string,
-            background: candidate.background as string,
             hair: candidate.hair as string,
         },
     };
