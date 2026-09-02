@@ -13,6 +13,7 @@ export const moduleEnum = pgEnum(
         "avatar_elements",
         "blog",
         "comment",
+        "site"
     ]);
 
 export const modActionEnum = pgEnum(

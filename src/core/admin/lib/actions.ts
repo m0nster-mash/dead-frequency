@@ -3,6 +3,7 @@
 import {headers} from "next/headers";
 import {auth} from "@/core/auth";
 import {setPostingStatus} from "@shared/communication/status/lib/status";
+import {moduleEnum} from "@shared/communication/moderation/schema/moderation.schema";
 
 export async function applyPostingStatusAction(formData: FormData) {
     const requestHeaders = await headers();
@@ -16,7 +17,7 @@ export async function applyPostingStatusAction(formData: FormData) {
 
     await setPostingStatus({
         userId,
-        module: moduleValue ? (moduleValue as any) : null,
+        module: moduleValue ? (moduleValue as (typeof moduleEnum.enumValues)[number] | null) : null,
         status,
         moderatorId: session.user.id,
         reason,

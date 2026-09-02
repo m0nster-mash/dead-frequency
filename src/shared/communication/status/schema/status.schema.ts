@@ -1,4 +1,4 @@
-import {relations} from "drizzle-orm";
+import {relations, sql} from "drizzle-orm";
 import {index, integer, pgEnum, pgTable, text, timestamp, uniqueIndex} from "drizzle-orm/pg-core";
 import {user} from "@/core/auth/schema/auth.schema";
 import {moduleEnum} from "@shared/communication/moderation/schema/moderation.schema";
@@ -39,6 +39,7 @@ export const userStatus = pgTable(
         uniqueIndex("user_status_unique_idx").on(
             table.userId,
             table.module,
+            sql`COALESCE(${table.module}, '')`,
         ),
         index("user_status_user_idx").on(table.userId),
     ],
