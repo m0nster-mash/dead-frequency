@@ -1,22 +1,33 @@
-import Link from "next/link";
-import {headers} from "next/headers";
-import {redirect} from "next/navigation";
 import {auth} from "@/core/auth";
 import {MainContentPanel} from "@/core/dashboard/components/panels/main-card";
 import {PageHeader} from "@/core/dashboard/components/panels/page-header";
-import styles from "@/shared/styles/form-panel.module.css";
 import {getForumHierarchy} from "@/feature/forum/lib/queries";
+import styles from "@/shared/styles/form-panel.module.css";
+import {headers} from "next/headers";
+import Link from "next/link";
+import {redirect} from "next/navigation";
+import {JSX} from "react";
 
-export default async function ForumIndexPage() {
+/**
+ * An asynchronous Next.js Server Page component serving as the central forum catalog directory landing view.
+ *
+ * @returns {Promise<JSX.Element>} A promise resolving to the primary systemic forum catalog dashboard directory UI
+ */
+export default async function ForumIndexPage(): Promise<JSX.Element> {
     const requestHeaders = await headers();
     const session = await auth.api.getSession({headers: requestHeaders});
-    if (!session?.user) redirect("/login");
+
+    if (!session?.user) {
+        redirect("/login");
+    }
 
     const categories = await getForumHierarchy();
 
     return (
         <div className={styles.wrapper}>
-            <PageHeader eyebrow={"Communication"} title={"Forum"} subtitle={"Browse categories and boards"}/>
+            <PageHeader eyebrow={"Communication"}
+                        title={"Forum"}
+                        subtitle={"Browse categories and boards"}/>
 
             {categories.map((category) => (
                 <MainContentPanel key={category.id} title={category.label}>

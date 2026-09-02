@@ -1,35 +1,66 @@
-import {headers} from "next/headers";
-import {notFound, redirect} from "next/navigation";
 import {auth} from "@/core/auth";
 import {MainContentPanel} from "@/core/dashboard/components/panels/main-card";
 import {PageHeader} from "@/core/dashboard/components/panels/page-header";
-import {BreadcrumbLabel} from "@/shared/components/breadcrumb-label";
-import styles from "@/shared/styles/form-panel.module.css";
 import {replyToThreadAction} from "@/feature/forum/lib/actions";
 import {getThreadWithPosts} from "@/feature/forum/lib/queries";
+import {BreadcrumbLabel} from "@/shared/components/breadcrumb-label";
+import styles from "@/shared/styles/form-panel.module.css";
+import {headers} from "next/headers";
+import {notFound, redirect} from "next/navigation";
+import {JSX} from "react";
 
+/**
+ * Properties for the ForumThreadPage component.
+ *
+ * @property {Promise<{ catId: string; boardId: string; threadId: string }>} params - A promise resolving to the
+ * nested dynamic route parameters.
+ */
 type PageProps = {
-    params: Promise<{ catId: string; boardId: string; threadId: string }>;
+    params: Promise<{
+        catId: string;
+        boardId: string;
+        threadId: string
+    }>;
 };
 
-export default async function ForumThreadPage({params}: PageProps) {
+/**
+ * A page that presents a forum thread discussion tree and an inline composition form.
+ *
+ * @param {PageProps} props - The component properties
+ * @param {Promise<{ catId: string; boardId: string; threadId: string }>} props.params - Route parameters containing
+ * the dynamic path hierarchy identifiers
+ *
+ * @returns {Promise<JSX.Element>} A promise resolving to the unified forum thread and post management layout UI
+ */
+export default async function ForumThreadPage({params}: PageProps): Promise<JSX.Element> {
     const {catId, boardId, threadId} = await params;
     const requestHeaders = await headers();
     const session = await auth.api.getSession({headers: requestHeaders});
-    if (!session?.user) redirect("/login");
+
+    if (!session?.user) {
+        redirect("/login");
+    }
 
     const data = await getThreadWithPosts(threadId);
-    if (!data) notFound();
-    if (data.thread.boardId !== boardId) notFound();
+
+    // Data Validation Guard: Throw a 404 response layout if the target discussion record does not exist
+    if (!data) {
+        notFound();
+    }
+
+    // Structural Integrity Guard: Verify that the thread resides inside the requested board segment to
+    // shield path boundaries
+    if (data.thread.boardId !== boardId) {
+        notFound();
+    }
 
     return (
         <div className={styles.wrapper}>
             <BreadcrumbLabel segment={threadId} label={data.thread.title}/>
-            <PageHeader
-                eyebrow={"Forum"}
-                title={data.thread.title}
-                subtitle={`Started by ${data.thread.authorName || data.thread.authorEmail || "Unknown"}`}
-            />
+
+            <PageHeader eyebrow={"Forum"}
+                        title={data.thread.title}
+                        subtitle={`Started by ${data.thread.authorName || data.thread.authorEmail || "Unknown"}`}/>
 
             <MainContentPanel title={"Reply"}>
                 <form
@@ -41,8 +72,7 @@ export default async function ForumThreadPage({params}: PageProps) {
                             body: String(formData.get("body") || ""),
                             replyToUserId: String(formData.get("replyToUserId") || "") || undefined,
                         });
-                    }}
-                >
+                    }}>
                     <div className={styles.field}>
                         <label className={styles.label}>Body</label>
                         <textarea name="body" className={styles.input} rows={6} required/>
@@ -85,4 +115,3 @@ export default async function ForumThreadPage({params}: PageProps) {
         </div>
     );
 }
-
