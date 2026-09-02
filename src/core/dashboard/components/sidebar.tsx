@@ -9,7 +9,6 @@ import AdminIcon from "@/shared/svg/bootstrap-settings.svg";
 import DotIcon from "@/shared/svg/bootstrap-three-dot-icon.svg"
 import GearIcon from "@/shared/svg/bootstrap-gear-icon.svg";
 import PageIcon from "@/shared/svg/page-icon.svg";
-import SquareIcon from "@/shared/svg/four-squares-icon.svg";
 import styles from "@shared/styles/dashboard.module.css";
 import {AvatarRenderer} from "@/feature/avatar/components/avatar-renderer";
 import {getAvatarConfigForUser} from "@/feature/avatar/lib/actions";
@@ -48,6 +47,7 @@ export async function Sidebar() {
             title: "Features",
             items: [
                 {href: "/avatar", label: "Avatar System", icon: <PageIcon/>},
+                {href: "/forum", label: "Forum", icon: <PageIcon/>},
             ],
         },
         ...(isAdmin
@@ -71,7 +71,9 @@ export async function Sidebar() {
                             )}
                         </div>
                         <div className={`${styles.userInfo} ${styles.hideOnCollapse}`}>
-                            <strong>{userName}</strong>
+                            <strong>
+                                <Link href={`/user/${session.user.id}`}>{userName}</Link>
+                            </strong>
                             <span>{userRole}</span>
                         </div>
                         <div className={styles.hideOnCollapse}>

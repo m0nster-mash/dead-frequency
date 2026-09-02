@@ -4,6 +4,8 @@ import {auth} from "@/core/auth";
 import {AdminUserTable} from "@/core/admin/components/admin-user-table";
 import {PageHeader} from "@/core/dashboard/components/panels/page-header";
 import styles from "@/shared/styles/form-panel.module.css";
+import {MainContentPanel} from "@/core/dashboard/components/panels/main-card";
+import Link from "next/link";
 
 export default async function AdminPage() {
     const requestHeaders = await headers();
@@ -31,6 +33,15 @@ export default async function AdminPage() {
     return (
         <div className={styles.wrapper}>
             <PageHeader eyebrow={"Administration"} title={"Admin Panel"} subtitle={registeredUsers}/>
+            <MainContentPanel title={"Admin Tools"}>
+                <ul>
+                    <li><Link href={"/admin/audit-log"}>Audit-Log</Link></li>
+                    <li><Link href={"/admin/reports"}>Reports</Link></li>
+                    <li><Link href={"/admin/forum"}>Forum Management</Link></li>
+                </ul>
+
+            </MainContentPanel>
+
             <AdminUserTable
                 users={users.map((user) => ({
                     id: user.id,
