@@ -21,7 +21,6 @@ export async function Sidebar() {
     const userName = session ? session.user.name : null;
     const userRole = session ? session.user.role : null;
     const isAdmin = userRole === "admin";
-    const userProfileLink = session ? "/settings/" + session.user.id : "/";
 
     const initials = session?.user?.name
         ? session.user.name
@@ -72,7 +71,9 @@ export async function Sidebar() {
                             )}
                         </div>
                         <div className={`${styles.userInfo} ${styles.hideOnCollapse}`}>
-                            <strong>{userName}</strong>
+                            <strong>
+                                <Link href={`/user/${session.user.id}`}>{userName}</Link>
+                            </strong>
                             <span>{userRole}</span>
                         </div>
                         <div className={styles.hideOnCollapse}>
@@ -81,7 +82,6 @@ export async function Sidebar() {
                                 align="start"
                                 items={[
                                     {type: "link", label: "Update Avatar", href: "/avatar"},
-                                    // {type: "link", label: "View Profile", href: {userProfileLink}},
                                     {type: "link", label: "Account Settings", href: "/settings"},
                                     {type: "divider"},
                                     {
