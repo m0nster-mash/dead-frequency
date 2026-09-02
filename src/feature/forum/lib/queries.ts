@@ -1,9 +1,8 @@
-import {asc, eq} from "drizzle-orm";
+import {asc, desc, eq} from "drizzle-orm";
 import {db} from "@shared/db/client";
 import {user} from "@/core/auth/schema/auth.schema";
 import {forumBoard, forumCategory, forumPost, forumThread} from "@/feature/forum/schema/forum.schema";
 
-/** All categories with their boards, ordered for the /forum index page. */
 export async function getForumHierarchy() {
     const categories = await db
         .select()
@@ -51,27 +50,42 @@ export async function getBoardWithThreads(boardId: string) {
     const threads = await db
         .select({
             id: forumThread.id,
+            boardId: forumThread.boardId,
             title: forumThread.title,
             pinned: forumThread.pinned,
             locked: forumThread.locked,
             postCount: forumThread.postCount,
             lastPostAt: forumThread.lastPostAt,
             createdAt: forumThread.createdAt,
+            userId: forumThread.userId,
             authorName: user.name,
             authorEmail: user.email,
         })
         .from(forumThread)
         .leftJoin(user, eq(forumThread.userId, user.id))
         .where(eq(forumThread.boardId, boardId))
-        .orderBy(asc(forumThread.lastPostAt));
+        .orderBy(desc(forumThread.pinned), desc(forumThread.lastPostAt));
 
     return {...board, threads};
 }
 
 export async function getThreadWithPosts(threadId: string) {
     const [thread] = await db
-        .select()
+        .select({
+            id: forumThread.id,
+            boardId: forumThread.boardId,
+            title: forumThread.title,
+            pinned: forumThread.pinned,
+            locked: forumThread.locked,
+            postCount: forumThread.postCount,
+            lastPostAt: forumThread.lastPostAt,
+            createdAt: forumThread.createdAt,
+            userId: forumThread.userId,
+            authorName: user.name,
+            authorEmail: user.email,
+        })
         .from(forumThread)
+        .leftJoin(user, eq(forumThread.userId, user.id))
         .where(eq(forumThread.id, threadId))
         .limit(1);
 
@@ -80,6 +94,8 @@ export async function getThreadWithPosts(threadId: string) {
     const posts = await db
         .select({
             id: forumPost.id,
+            threadId: forumPost.threadId,
+            userId: forumPost.userId,
             body: forumPost.body,
             createdAt: forumPost.createdAt,
             updatedAt: forumPost.updatedAt,

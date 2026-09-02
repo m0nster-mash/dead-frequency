@@ -5,7 +5,7 @@ import {auth} from "@/core/auth";
 import {MainContentPanel} from "@/core/dashboard/components/panels/main-card";
 import {PageHeader} from "@/core/dashboard/components/panels/page-header";
 import styles from "@/shared/styles/form-panel.module.css";
-import {getForumHierarchy} from "@/feature/feature/forum/lib/queries";
+import {getForumHierarchy} from "@/feature/forum/lib/queries";
 
 export default async function ForumIndexPage() {
     const requestHeaders = await headers();

@@ -4,7 +4,7 @@ import {auth} from "@/core/auth";
 import {PageHeader} from "@/core/dashboard/components/panels/page-header";
 import styles from "@/shared/styles/form-panel.module.css";
 import {AdminForumManagementPanel} from "@/core/admin/components/admin-forum-management-panel";
-import {getForumHierarchy} from "@/feature/feature/forum/lib/queries";
+import {getForumHierarchy} from "@/feature/forum/lib/queries";
 import {
     createForumCategoryAction,
     updateForumCategoryAction,

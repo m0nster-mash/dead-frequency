@@ -6,7 +6,7 @@ import {MainContentPanel} from "@/core/dashboard/components/panels/main-card";
 import {PageHeader} from "@/core/dashboard/components/panels/page-header";
 import {BreadcrumbLabel} from "@/shared/components/breadcrumb-label";
 import styles from "@/shared/styles/form-panel.module.css";
-import {getCategoryWithBoards} from "@/feature/feature/forum/lib/queries";
+import {getCategoryWithBoards} from "@/feature/forum/lib/queries";
 
 type PageProps = {
     params: Promise<{ catId: string }>;

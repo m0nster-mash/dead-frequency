@@ -1,3 +1,4 @@
+import Link from "next/link";
 import {headers} from "next/headers";
 import {notFound, redirect} from "next/navigation";
 import {auth} from "@/core/auth";
@@ -5,7 +6,8 @@ import {MainContentPanel} from "@/core/dashboard/components/panels/main-card";
 import {PageHeader} from "@/core/dashboard/components/panels/page-header";
 import {BreadcrumbLabel} from "@/shared/components/breadcrumb-label";
 import styles from "@/shared/styles/form-panel.module.css";
-import {getBoardWithThreads} from "@/feature/feature/forum/lib/queries";
+import {createThreadAction} from "@/feature/forum/lib/actions";
+import {getBoardWithThreads} from "@/feature/forum/lib/queries";
 
 type PageProps = {
     params: Promise<{ catId: string; boardId: string }>;
@@ -25,6 +27,30 @@ export default async function ForumBoardPage({params}: PageProps) {
             <BreadcrumbLabel segment={boardId} label={board.label}/>
             <PageHeader eyebrow={"Forum"} title={board.label} subtitle={board.description || "Threads in this board"}/>
 
+            <MainContentPanel title={"Create Thread"}>
+                <form
+                    className={styles.form}
+                    action={async (formData) => {
+                        "use server";
+                        await createThreadAction({
+                            boardId,
+                            title: String(formData.get("title") || ""),
+                            body: String(formData.get("body") || ""),
+                        });
+                    }}
+                >
+                    <div className={styles.field}>
+                        <label className={styles.label}>Title</label>
+                        <input name="title" className={styles.input} required/>
+                    </div>
+                    <div className={styles.field}>
+                        <label className={styles.label}>Body</label>
+                        <textarea name="body" className={styles.input} rows={6} required/>
+                    </div>
+                    <button type="submit" className={styles.submit}>Post Thread</button>
+                </form>
+            </MainContentPanel>
+
             <MainContentPanel title={"Threads"}>
                 <div className={styles.tableWrapper}>
                     <table className={styles.table}>
@@ -41,11 +67,10 @@ export default async function ForumBoardPage({params}: PageProps) {
                             <tr key={thread.id}>
                                 <td>
                                     {thread.pinned && <span className={styles.badge}>Pinned</span>}{" "}
-                                    {/* thread detail route is a follow-up; posts render inline here for now */}
-                                    {thread.title}
+                                    <Link href={`/forum/${catId}/${boardId}/thread/${thread.id}`}>{thread.title}</Link>
                                 </td>
                                 <td>{thread.authorName || thread.authorEmail || "—"}</td>
-                                <td className={styles.tableNumeric}>{thread.postCount}</td>
+                                <td className={styles.tableNumeric}>{Math.max(0, thread.postCount - 1)}</td>
                                 <td>{new Date(thread.lastPostAt).toLocaleString()}</td>
                             </tr>
                         ))}
