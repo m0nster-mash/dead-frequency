@@ -5,7 +5,7 @@ import {moduleEnum} from "@shared/communication/moderation/schema/moderation.sch
 
 // Posting-privilege state, separate from better-auth's account-level `banned`.
 // null module = site-wide; non-null = scoped to one module (mirrors the
-// permissions module's contextId pattern from Task 1).
+// permissions module's contextId pattern).
 export const postingStatusEnum = pgEnum("posting_status", [
     "active",
     "muted",
@@ -21,10 +21,14 @@ export const userStatus = pgTable(
             .notNull()
             .references(() => user.id, {onDelete: "cascade"}),
         module: moduleEnum("module"), // null = site-wide
-        status: postingStatusEnum("status").notNull().default("active"),
+        status: postingStatusEnum("status")
+            .notNull()
+            .default("active"),
         reason: text("reason"),
         expiresAt: timestamp("expires_at"), // null = indefinite
-        createdAt: timestamp("created_at").defaultNow().notNull(),
+        createdAt: timestamp("created_at")
+            .defaultNow()
+            .notNull(),
         updatedAt: timestamp("updated_at")
             .defaultNow()
             .$onUpdate(() => new Date())
@@ -40,14 +44,14 @@ export const userStatus = pgTable(
     ],
 );
 
-// Trust level is separate from posting status: status is something a mod
-// imposes, trust is something the user earns/loses automatically.
+// Trust level is separate from posting status: status is something a mod imposes,
+// trust is something the user earns/loses automatically.
 export const trustLevelEnum = pgEnum("trust_level", [
     "new",
     "basic",
     "trusted",
     "veteran",
-    "restricted", // demoted — mirrors the "frequently blocked/reported" idea
+    "restricted", // demoted; the "frequently blocked/reported" concept
 ]);
 
 export const userTrust = pgTable(
@@ -56,12 +60,18 @@ export const userTrust = pgTable(
         userId: text("user_id")
             .primaryKey()
             .references(() => user.id, {onDelete: "cascade"}),
-        trustLevel: trustLevelEnum("trust_level").notNull().default("new"),
-        postCount: integer("post_count").notNull().default(0),
+        trustLevel: trustLevelEnum("trust_level")
+            .notNull()
+            .default("new"),
+        postCount: integer("post_count")
+            .notNull()
+            .default(0),
         // How many times this user has been reported/blocked/muted — feeds
         // the "ranking" idea from the issue, folded into this same table
         // instead of a separate system.
-        negativeSignalCount: integer("negative_signal_count").notNull().default(0),
+        negativeSignalCount: integer("negative_signal_count")
+            .notNull()
+            .default(0),
         cooldownUntil: timestamp("cooldown_until"), // simple posting-rate cooldown
         updatedAt: timestamp("updated_at")
             .defaultNow()

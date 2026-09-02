@@ -21,9 +21,7 @@ export function AdminPostingStatusForm({userId, onSubmitAction}: Props) {
                 <input type="hidden" name="userId" value={userId}/>
                 <div className={styles.field}>
                     <label className={styles.label}>Scope</label>
-                    <select name="module"
-                            className={styles.input}
-                            value={module}
+                    <select name="module" className={styles.input} value={module}
                             onChange={(e) => setModule(e.target.value)}>
                         <option value="">Site-wide</option>
                         {MODULES.map((m) => <option key={m} value={m}>{m}</option>)}

@@ -57,6 +57,13 @@
       "when": 1788375706235,
       "tag": "0007_new_selene",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1788378121743,
+      "tag": "0008_silly_dagger",
+      "breakpoints": true
     }
   ]
 }

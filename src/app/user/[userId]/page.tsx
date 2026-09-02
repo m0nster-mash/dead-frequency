@@ -25,19 +25,17 @@ export default async function PublicProfilePage({params}: PageProps) {
     }
     if (!user) notFound();
 
-    const roles =
-        await db
-            .select({label: role.label})
-            .from(userRole)
-            .innerJoin(role, eq(userRole.roleId, role.id))
-            .where(eq(userRole.userId, userId));
+    const roles = await db
+        .select({label: role.label})
+        .from(userRole)
+        .innerJoin(role, eq(userRole.roleId, role.id))
+        .where(eq(userRole.userId, userId));
 
-    const [trust] =
-        await db
-            .select()
-            .from(userTrust)
-            .where(eq(userTrust.userId, userId))
-            .limit(1);
+    const [trust] = await db
+        .select()
+        .from(userTrust)
+        .where(eq(userTrust.userId, userId))
+        .limit(1);
 
     return (
         <div className={styles.wrapper}>

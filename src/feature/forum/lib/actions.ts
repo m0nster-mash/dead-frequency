@@ -5,9 +5,10 @@ import {headers} from "next/headers";
 import {eq} from "drizzle-orm";
 import {auth} from "@/core/auth";
 import {db} from "@shared/db/client";
-import {forumThread, forumPost} from "../schema/forum.schema";
+import {forumPost, forumThread} from "../schema/forum.schema";
 import {sanitizeContent} from "@shared/communication/sanitize/lib/sanitize";
-import {canPost, getPostingStatus, recordPost} from "@shared/communication/status/lib/status";
+import {getPostingStatus} from "@shared/communication/status/lib/status";
+import {canPost, recordPost} from "@shared/communication/status/lib/trust";
 import {logModAction} from "@shared/communication/moderation/lib/audit-log";
 import {notify} from "@shared/communication/notifications/lib/notify";
 import {canInteract} from "@shared/communication/social/lib/can-interact";
@@ -20,7 +21,7 @@ async function requireUser() {
 
 /** Every module's create-content path follows this same shape:
  *  status check -> trust/rate-limit check -> sanitize -> insert -> side effects. */
-export async function createThreadAction(input: {boardId: string; title: string; body: string}) {
+export async function createThreadAction(input: { boardId: string; title: string; body: string }) {
     const user = await requireUser();
 
     const status = await getPostingStatus(user.id, "forum");
@@ -53,7 +54,7 @@ export async function createThreadAction(input: {boardId: string; title: string;
     return {threadId};
 }
 
-export async function replyToThreadAction(input: {threadId: string; body: string; replyToUserId?: string}) {
+export async function replyToThreadAction(input: { threadId: string; body: string; replyToUserId?: string }) {
     const user = await requireUser();
 
     const status = await getPostingStatus(user.id, "forum");
