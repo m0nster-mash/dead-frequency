@@ -1,8 +1,11 @@
-import {relations} from "drizzle-orm";
-import {boolean, index, integer, pgTable, text, timestamp} from "drizzle-orm/pg-core";
 import {user} from "@/core/auth/schema/auth.schema";
 import {authorColumns} from "@shared/communication/author/lib/author";
+import {relations} from "drizzle-orm";
+import {boolean, index, integer, pgTable, text, timestamp} from "drizzle-orm/pg-core";
 
+/**
+ * Top-level organizational grouping table separating forum topics by logical categories.
+ */
 export const forumCategory = pgTable("forum_category", {
     id: text("id").primaryKey(),
     label: text("label").notNull(),
@@ -10,25 +13,40 @@ export const forumCategory = pgTable("forum_category", {
     createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
+/**
+ * Forum board container layout table managing targeted content feeds.
+ * Includes future-proofing structures for modular group/guild routing rules.
+ */
 export const forumBoard = pgTable(
     "forum_board",
     {
         id: text("id").primaryKey(),
+        /*
+           Relational Parent Binding: Connects boards directly down to distinct categories.
+           Cascade Configuration: Purging categories cleanly sweeps all sub-boards out of the database.
+        */
         categoryId: text("category_id")
             .notNull()
             .references(() => forumCategory.id, {onDelete: "cascade"}),
         label: text("label").notNull(),
         description: text("description"),
         sortOrder: integer("sort_order").notNull().default(0),
-        // null = site-wide board; non-null = guild-scoped (Task 9 future-proofing,
-        // per the issue's "keep a nullable context_id" guidance).
+        /*
+           Task 9 Future-Proofing Parameter:
+           null = site-wide global board.
+           non-null = guild-scoped or contextual sandbox isolation keys per design rules.
+        */
         contextId: text("context_id"),
         allowsCharacterPosting: boolean("allows_character_posting").notNull().default(false),
         createdAt: timestamp("created_at").defaultNow().notNull(),
     },
+    // Index Matrix Array: Speeds up dashboard catalog aggregations filtering by category keys
     (table) => [index("forum_board_category_idx").on(table.categoryId)],
 );
 
+/**
+ * Topic structural metadata table managing specific conversation branches.
+ */
 export const forumThread = pgTable(
     "forum_thread",
     {
@@ -36,6 +54,11 @@ export const forumThread = pgTable(
         boardId: text("board_id")
             .notNull()
             .references(() => forumBoard.id, {onDelete: "cascade"}),
+
+        /*
+           Shared Identity Object Extension:
+           Unpacks consistent metadata schema columns tracking originators (e.g. userId, authorName).
+        */
         ...authorColumns,
         title: text("title").notNull(),
         pinned: boolean("pinned").notNull().default(false),
@@ -43,14 +66,21 @@ export const forumThread = pgTable(
         postCount: integer("post_count").notNull().default(0),
         lastPostAt: timestamp("last_post_at").defaultNow().notNull(),
         createdAt: timestamp("created_at").defaultNow().notNull(),
-        deletedAt: timestamp("deleted_at"), // soft delete keeps it auditable, matches comment table pattern
+        deletedAt: timestamp("deleted_at"), // Soft delete timestamp allows content auditing while removing visibility
     },
     (table) => [
         index("forum_thread_board_idx").on(table.boardId),
+        /*
+           Compound Index Optimization:
+           Accelerates chronological catalog indexing, sorting sticky or active topics within structural boards.
+        */
         index("forum_thread_last_post_idx").on(table.boardId, table.lastPostAt),
     ],
 );
 
+/**
+ * Content storage table containing granular conversation entries and user comments.
+ */
 export const forumPost = pgTable(
     "forum_post",
     {
@@ -60,9 +90,17 @@ export const forumPost = pgTable(
             .references(() => forumThread.id, {onDelete: "cascade"}),
         ...authorColumns,
         body: text("body").notNull(),
-        // Lightweight "replying to @user" reference — not true nesting.
+        /*
+           Lightweight Interaction Reference:
+           Maps conversational targets to model simple quote references without full tree nesting parameters.
+           Set Null Strategy: Evicts reference linkages cleanly if the destination profile is permanently purged.
+        */
         replyToUserId: text("reply_to_user_id").references(() => user.id, {onDelete: "set null"}),
         createdAt: timestamp("created_at").defaultNow().notNull(),
+        /*
+           Dynamic Lifecycle Hook: Automatically logs updated modification intervals
+           on data manipulation queries.
+        */
         updatedAt: timestamp("updated_at")
             .defaultNow()
             .$onUpdate(() => new Date())
@@ -72,17 +110,26 @@ export const forumPost = pgTable(
     (table) => [index("forum_post_thread_idx").on(table.threadId)],
 );
 
+/**
+ * Drizzle ORM Relational Mapping: forumBoard Scope.
+ */
 export const forumBoardRelations = relations(forumBoard, ({one, many}) => ({
     category: one(forumCategory, {fields: [forumBoard.categoryId], references: [forumCategory.id]}),
     threads: many(forumThread),
 }));
 
+/**
+ * Drizzle ORM Relational Mapping: forumThread Scope.
+ */
 export const forumThreadRelations = relations(forumThread, ({one, many}) => ({
     board: one(forumBoard, {fields: [forumThread.boardId], references: [forumBoard.id]}),
     author: one(user, {fields: [forumThread.userId], references: [user.id]}),
     posts: many(forumPost),
 }));
 
+/**
+ * Drizzle ORM Relational Mapping: forumPost Scope.
+ */
 export const forumPostRelations = relations(forumPost, ({one}) => ({
     thread: one(forumThread, {fields: [forumPost.threadId], references: [forumThread.id]}),
     author: one(user, {fields: [forumPost.userId], references: [user.id]}),
