@@ -1,15 +1,16 @@
 import styles from "@/feature/forum/styles/forum.module.css";
+import {ReactNode} from "react";
 
 export type ForumStat = {
     label: string;
-    value: string | number;
+    value: ReactNode;
 };
 
 export type ForumLatestActivity = {
     label?: string;
-    title: string;
-    user: string;
-    time: string;
+    title: ReactNode;
+    user: ReactNode;
+    time: ReactNode;
 };
 
 type ForumStatsPanelProps = {
@@ -20,11 +21,11 @@ type ForumStatsPanelProps = {
 };
 
 export function ForumStatsPanel({
-    eyebrow = "Forum overview",
-    title = "Community activity",
-    stats,
-    latestActivity,
-}: ForumStatsPanelProps) {
+                                    eyebrow = "Forum overview",
+                                    title = "Community activity",
+                                    stats,
+                                    latestActivity,
+                                }: ForumStatsPanelProps) {
     return (
         <section className={styles.forumSummary}>
             <div className={styles.summaryHeader}>
@@ -41,10 +42,8 @@ export function ForumStatsPanel({
 
             <div className={styles.summaryGrid}>
                 {stats.map((stat) => (
-                    <div
-                        key={stat.label}
-                        className={styles.summaryStat}
-                    >
+                    <div key={stat.label}
+                         className={styles.summaryStat}>
                         <span className={styles.summaryValue}>
                             {stat.value}
                         </span>

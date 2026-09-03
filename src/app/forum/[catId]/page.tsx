@@ -6,6 +6,7 @@ import {ForumStatsPanel} from "@/feature/forum/components/forum-stats-panel";
 import {getCategoryWithBoards} from "@/feature/forum/lib/queries";
 import styles from "@/feature/forum/styles/forum.module.css";
 import {BreadcrumbLabel} from "@/shared/components/breadcrumb-label";
+import Placeholder from "@shared/components/placeholder";
 import {notFound} from "next/navigation";
 import {JSX} from "react";
 
@@ -63,17 +64,17 @@ export default async function ForumCategoryPage({params}: PageProps): Promise<JS
                 stats={[
                     {
                         label: "Total boards",
-                        value: "[BOARD_TOTAL]",
+                        value: <Placeholder text={"BOARD_TOTAL"}/>,
                     },
                     {
                         label: "Total threads",
-                        value: "[THREAD_TOTAL]",
+                        value: <Placeholder text={"THREAD_TOTAL"}/>,
                     },
                 ]}
                 latestActivity={{
-                    title: "[THREAD_NAME]",
-                    user: "[LAST_USER_NAME]",
-                    time: "[POST_TIME]",
+                    title: <Placeholder text={"THREAD_NAME"}/>,
+                    user: <Placeholder text={"LAST_USER_NAME"}/>,
+                    time: <Placeholder text={"POST_TIME"}/>,
                 }}/>
         </div>
     );

@@ -5,6 +5,7 @@ import {BoardDisplay} from "@/feature/forum/components/board-display";
 import {ForumStatsPanel} from "@/feature/forum/components/forum-stats-panel";
 import {getForumHierarchy} from "@/feature/forum/lib/queries";
 import styles from "@/feature/forum/styles/forum.module.css";
+import Placeholder from "@shared/components/placeholder";
 import {JSX} from "react";
 
 /**
@@ -44,15 +45,15 @@ export default async function ForumIndexPage(): Promise<JSX.Element> {
             <ForumStatsPanel
                 stats={[{
                     label: "Total threads",
-                    value: "[THREAD_TOTAL]",
+                    value: <Placeholder text={"THREAD_TOTAL"}/>,
                 }, {
                     label: "Total posts",
-                    value: "[POST_TOTAL]",
+                    value: <Placeholder text={"POST_TOTAL"}/>,
                 },]}
                 latestActivity={{
-                    title: "[THREAD_NAME]",
-                    user: "[LAST_USER_NAME]",
-                    time: "[POST_TIME]",
+                    title: <Placeholder text={"THREAD_NAME"}/>,
+                    user: <Placeholder text={"LAST_USER_NAME"}/>,
+                    time: <Placeholder text={"POST_TIME"}/>,
                 }}/>
         </div>
     );

@@ -1,6 +1,7 @@
 "use client";
 
 import styles from "@/feature/forum/styles/forum.module.css";
+import Placeholder from "@shared/components/placeholder";
 
 type AdminThreadControlsProps = {
     threadId?: string;
@@ -19,7 +20,7 @@ export function AdminThreadControls({
                 </span>
 
                 <span className={styles.adminResourceName}>
-                    {threadTitle || "[THREAD_NAME]"}
+                    {threadTitle || <Placeholder text={"THREAD_NAME"}/>}
                 </span>
             </div>
 
@@ -31,12 +32,12 @@ export function AdminThreadControls({
                 <div className={styles.adminControlGrid}>
                     <button type="button"
                             className={styles.adminControlButton}>
-                        [LOCK_THREAD]
+                        <Placeholder text={"LOCK_THREAD"}/>
                     </button>
 
                     <button type="button"
                             className={styles.adminControlButton}>
-                        [UNLOCK_THREAD]
+                        <Placeholder text={"UNLOCK_THREAD"}/>
                     </button>
                 </div>
             </div>
@@ -49,17 +50,17 @@ export function AdminThreadControls({
                 <div className={styles.adminControlGrid}>
                     <button type="button"
                             className={styles.adminControlButton}>
-                        [MOVE_THREAD]
+                        <Placeholder text={"MOVE_THREAD"}/>
                     </button>
 
                     <button type="button"
                             className={styles.adminControlButton}>
-                        [PIN_THREAD]
+                        <Placeholder text={"PIN_THREAD"}/>
                     </button>
 
                     <button type="button"
                             className={styles.adminControlButton}>
-                        [UNPIN_THREAD]
+                        <Placeholder text={"UNPIN_THREAD"}/>
                     </button>
                 </div>
             </div>
@@ -72,19 +73,19 @@ export function AdminThreadControls({
                 <div className={styles.adminControlGrid}>
                     <button type="button"
                             className={styles.adminControlButton}>
-                        [EDIT_THREAD]
+                        <Placeholder text={"EDIT_THREAD"}/>
                     </button>
 
                     <button type="button"
                             className={`${styles.adminControlButton} ${styles.adminControlButtonDanger}`}>
-                        [DELETE_THREAD]
+                        <Placeholder text={"DELETE_THREAD"}/>
                     </button>
                 </div>
             </div>
 
             <div className={styles.adminControlFooter}>
                 <span className={styles.adminPlaceholderNote}>
-                    [ADDITIONAL_THREAD_MODERATION_TOOLS]
+                   <Placeholder text={"ADDITIONAL_THREAD_MODERATION_TOOLS"}/>
                 </span>
             </div>
         </div>

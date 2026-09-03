@@ -5,6 +5,7 @@ import {replyToThreadAction} from "@/feature/forum/lib/actions";
 import {getThreadWithPosts} from "@/feature/forum/lib/queries";
 import styles from "@/feature/forum/styles/forum.module.css";
 import {BreadcrumbLabel} from "@/shared/components/breadcrumb-label";
+import Placeholder from "@shared/components/placeholder";
 import {notFound} from "next/navigation";
 import {JSX} from "react";
 
@@ -63,7 +64,7 @@ export default async function ForumThreadPage({params}: PageProps): Promise<JSX.
                                  className={styles.post}>
                             <aside className={styles.postSidebar}>
                                 <div className={styles.avatarPlaceholder}>
-                                    [AVATAR]
+                                    <Placeholder text={"avatar"}/>
                                 </div>
 
                                 <div className={styles.postAuthor}>
@@ -71,12 +72,12 @@ export default async function ForumThreadPage({params}: PageProps): Promise<JSX.
                                 </div>
 
                                 <div className={styles.postRank}>
-                                    [USER_RANK]
+                                    <Placeholder text={"USER_RANK"}/>
                                 </div>
 
                                 <div className={styles.postStats}>
-                                    <span>Posts: [POST_COUNT]</span>
-                                    <span>Joined: [JOIN_DATE]</span>
+                                    <span>Posts: <Placeholder text={"POST_COUNT"}/></span>
+                                    <span>Joined: <Placeholder text={"join_date"}/></span>
                                 </div>
                             </aside>
 
@@ -97,12 +98,12 @@ export default async function ForumThreadPage({params}: PageProps): Promise<JSX.
                                     <div className={styles.postActions}>
                                         <button type="button"
                                                 className={styles.postAction}>
-                                            [QUOTE]
+                                            <Placeholder text={"quote"}/>
                                         </button>
 
                                         <button type="button"
                                                 className={styles.postAction}>
-                                            [REPORT]
+                                            <Placeholder text={"report"}/>
                                         </button>
                                     </div>
                                 </header>
@@ -118,8 +119,8 @@ export default async function ForumThreadPage({params}: PageProps): Promise<JSX.
                                 </div>
 
                                 <footer className={styles.postFooter}>
-                                    <span>[PERMALINK]</span>
-                                    <span>[EDIT]</span>
+                                    <span><Placeholder text={"permalink"}/></span>
+                                    <span><Placeholder text={"edit"}/></span>
                                 </footer>
                             </div>
                         </article>

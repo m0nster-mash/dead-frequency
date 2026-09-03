@@ -1,4 +1,5 @@
 import styles from "@/feature/forum/styles/forum.module.css";
+import Placeholder from "@shared/components/placeholder";
 
 type PostContentAreaProps = {
     name?: string;
@@ -22,8 +23,8 @@ export function PostContentArea({
         <div className={styles.postContentArea}>
             <div className={styles.editorToolbar}>
                 <div className={styles.editorToolbarPlaceholder}>
-                    {/* Future Markdown / WYSIWYG controls */}
-                    [FORMATTING_CONTROLS]
+                    {/* TODO: Future Markdown / WYSIWYG controls */}
+                    <Placeholder text={"FORMATTING_CONTROLS"}/>
                 </div>
             </div>
 
@@ -37,15 +38,15 @@ export function PostContentArea({
 
             <div className={styles.editorFooter}>
                 <span className={styles.editorFooterPlaceholder}>
-                    [MARKDOWN_CONTROLS]
+                    <Placeholder text={"MARKDOWN_CONTROLS"}/>
                 </span>
 
                 <span className={styles.editorFooterPlaceholder}>
-                    [ATTACHMENTS]
+                    <Placeholder text={"ATTACHMENTS"}/>
                 </span>
 
                 <span className={styles.editorFooterPlaceholder}>
-                    [PREVIEW]
+                    <Placeholder text={"PREVIEW"}/>
                 </span>
             </div>
         </div>

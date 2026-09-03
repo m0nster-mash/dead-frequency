@@ -1,5 +1,6 @@
-import Link from "next/link";
 import styles from "@/feature/forum/styles/forum.module.css";
+import Placeholder from "@shared/components/placeholder";
+import Link from "next/link";
 
 export type BoardDisplayItem = {
     id: string;
@@ -22,9 +23,9 @@ type BoardDisplayProps = {
 };
 
 export function BoardDisplay({
-    boards,
-    emptyMessage = "No boards yet.",
-}: BoardDisplayProps) {
+                                 boards,
+                                 emptyMessage = "No boards yet.",
+                             }: BoardDisplayProps) {
     if (boards.length === 0) {
         return (
             <div className={styles.empty}>
@@ -36,15 +37,11 @@ export function BoardDisplay({
     return (
         <div className={styles.boardList}>
             {boards.map((board) => (
-                <article
-                    key={board.id}
-                    className={styles.board}
-                >
+                <article key={board.id}
+                         className={styles.board}>
                     <div className={styles.boardMain}>
-                        <Link
-                            href={board.href}
-                            className={styles.boardName}
-                        >
+                        <Link href={board.href}
+                              className={styles.boardName}>
                             {board.name}
                         </Link>
 
@@ -60,19 +57,19 @@ export function BoardDisplay({
                             </span>
 
                             <span className={styles.threadName}>
-                                {board.latestThread?.name || "[THREAD_NAME]"}
+                                {board.latestThread?.name || <Placeholder text={"thread_name"}/>}
                             </span>
 
                             <span className={styles.threadAuthor}>
                                 by{" "}
-                                {board.latestThread?.author || "[AUTHOR_NAME]"}
+                                {board.latestThread?.author || <Placeholder text={"author_name"}/>}
                             </span>
                         </div>
 
                         <div className={styles.boardStats}>
                             <div className={styles.stat}>
                                 <span className={styles.statValue}>
-                                    {board.threadTotal ?? "[THREAD_TOTAL]"}
+                                    {board.threadTotal ?? <Placeholder text={"thread_total"}/>}
                                 </span>
 
                                 <span className={styles.statLabel}>
@@ -82,7 +79,7 @@ export function BoardDisplay({
 
                             <div className={styles.stat}>
                                 <span className={styles.statValue}>
-                                    {board.postTotal ?? "[POST_TOTAL]"}
+                                    {board.postTotal ?? <Placeholder text={"post_total"}/>}
                                 </span>
 
                                 <span className={styles.statLabel}>
