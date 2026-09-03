@@ -1,12 +1,12 @@
-import {auth} from "@/core/auth";
-import {MainContentPanel} from "@/core/dashboard/components/panels/main-card";
+import {requireSession} from "@/core/auth/lib/require-session";
 import {PageHeader} from "@/core/dashboard/components/panels/page-header";
+import {CreateReplyPanel} from "@/feature/forum/components/create-reply-panel";
 import {replyToThreadAction} from "@/feature/forum/lib/actions";
 import {getThreadWithPosts} from "@/feature/forum/lib/queries";
+import styles from "@/feature/forum/styles/forum.module.css";
 import {BreadcrumbLabel} from "@/shared/components/breadcrumb-label";
-import styles from "@/shared/styles/form-panel.module.css";
-import {headers} from "next/headers";
-import {notFound, redirect} from "next/navigation";
+import Placeholder from "@shared/components/placeholder";
+import {notFound} from "next/navigation";
 import {JSX} from "react";
 
 /**
@@ -19,7 +19,7 @@ type PageProps = {
     params: Promise<{
         catId: string;
         boardId: string;
-        threadId: string
+        threadId: string;
     }>;
 };
 
@@ -34,84 +34,123 @@ type PageProps = {
  */
 export default async function ForumThreadPage({params}: PageProps): Promise<JSX.Element> {
     const {catId, boardId, threadId} = await params;
-    const requestHeaders = await headers();
-    const session = await auth.api.getSession({headers: requestHeaders});
-
-    if (!session?.user) {
-        redirect("/login");
-    }
-
+    await requireSession();
     const data = await getThreadWithPosts(threadId);
 
-    // throw a 404 response layout if the target discussion record does not exist
-    if (!data) {
+    if (!data || data.thread.boardId !== boardId) {
         notFound();
     }
 
-    // verify that the thread resides inside the requested board segment to shield path boundaries
-    if (data.thread.boardId !== boardId) {
-        notFound();
-    }
+    const threadAuthor =
+        data.thread.authorName ||
+        data.thread.authorEmail ||
+        "Unknown";
 
     return (
         <div className={styles.wrapper}>
             <BreadcrumbLabel segment={threadId}
                              label={data.thread.title}/>
 
-            <PageHeader eyebrow={"Forum"}
+            <PageHeader eyebrow="Forum"
                         title={data.thread.title}
-                        subtitle={`Started by ${data.thread.authorName || data.thread.authorEmail || "Unknown"}`}/>
+                        subtitle={`Started by ${threadAuthor}`}/>
 
-            <MainContentPanel title={"Reply"}>
-                <form
-                    className={styles.form}
-                    action={async (formData) => {
-                        "use server";
-                        await replyToThreadAction({
-                            threadId,
-                            body: String(formData.get("body") || ""),
-                            replyToUserId: String(formData.get("replyToUserId") || "") || undefined,
-                        });
-                    }}>
-                    <div className={styles.field}>
-                        <label className={styles.label}>Body</label>
-                        <textarea name="body" className={styles.input} rows={6} required/>
-                    </div>
-                    <div className={styles.field}>
-                        <label className={styles.label}>Reply to user ID (optional)</label>
-                        <input name="replyToUserId" className={styles.input}/>
-                    </div>
-                    <button type="submit" className={styles.submit}>Post Reply</button>
-                </form>
-            </MainContentPanel>
+            <section className={styles.threadDiscussion}>
+                {data.posts.map((post, index) => {
+                    const author = post.authorName || post.authorEmail || "Unknown";
 
-            <MainContentPanel title={"Posts"}>
-                <div className={styles.tableWrapper}>
-                    <table className={styles.table}>
-                        <thead>
-                        <tr>
-                            <th>Author</th>
-                            <th>Message</th>
-                            <th>Posted</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {data.posts.map((post) => (
-                            <tr key={post.id}>
-                                <td>{post.authorName || post.authorEmail || "—"}</td>
-                                <td>{post.deletedAt ? <em>Deleted</em> : post.body}</td>
-                                <td>{new Date(post.createdAt).toLocaleString()}</td>
-                            </tr>
-                        ))}
-                        {data.posts.length === 0 && (
-                            <tr>
-                                <td colSpan={3} className={styles.tableEmpty}>No posts in this thread yet.</td>
-                            </tr>
-                        )}
-                        </tbody>
-                    </table>
-                </div>
-            </MainContentPanel>
+                    return (
+                        <article key={post.id}
+                                 className={styles.post}>
+                            <aside className={styles.postSidebar}>
+                                <div className={styles.avatarPlaceholder}>
+                                    <Placeholder text={"avatar"}/>
+                                </div>
+
+                                <div className={styles.postAuthor}>
+                                    {author}
+                                </div>
+
+                                <div className={styles.postRank}>
+                                    <Placeholder text={"USER_RANK"}/>
+                                </div>
+
+                                <div className={styles.postStats}>
+                                    <span>Posts: <Placeholder text={"POST_COUNT"}/></span>
+                                    <span>Joined: <Placeholder text={"join_date"}/></span>
+                                </div>
+                            </aside>
+
+                            <div className={styles.postContent}>
+                                <header className={styles.postHeader}>
+                                    <div className={styles.postHeaderMeta}>
+                                        <span className={styles.postNumber}>
+                                            #{index + 2}
+                                        </span>
+
+                                        <time className={styles.postDate}>
+                                            {new Date(
+                                                post.createdAt
+                                            ).toLocaleString()}
+                                        </time>
+                                    </div>
+
+                                    <div className={styles.postActions}>
+                                        <button type="button"
+                                                className={styles.postAction}>
+                                            <Placeholder text={"quote"}/>
+                                        </button>
+
+                                        <button type="button"
+                                                className={styles.postAction}>
+                                            <Placeholder text={"report"}/>
+                                        </button>
+                                    </div>
+                                </header>
+
+                                <div className={styles.postBody}>
+                                    {post.deletedAt ? (
+                                        <em className={styles.deletedPost}>
+                                            This post has been deleted.
+                                        </em>
+                                    ) : (
+                                        post.body
+                                    )}
+                                </div>
+
+                                <footer className={styles.postFooter}>
+                                    <span><Placeholder text={"permalink"}/></span>
+                                    <span><Placeholder text={"edit"}/></span>
+                                </footer>
+                            </div>
+                        </article>
+                    );
+                })}
+
+                {data.posts.length === 0 && (
+                    <div className={styles.empty}>
+                        No replies yet.
+                    </div>
+                )}
+            </section>
+
+            {/* Reply composer belongs after the discussion */}
+            <CreateReplyPanel
+                title="Post Reply"
+                submitLabel="Post Reply"
+                action={async (formData) => {
+                    "use server";
+
+                    await replyToThreadAction({
+                        threadId,
+                        body: String(formData.get("body") || ""),
+                        replyToUserId:
+                            String(
+                                formData.get("replyToUserId") || ""
+                            ) || undefined,
+                    });
+                }}
+            />
         </div>
     );
 }

@@ -150,5 +150,8 @@ export async function getThreadWithPosts(threadId: string) {
         .where(eq(forumPost.threadId, threadId))
         .orderBy(asc(forumPost.createdAt)); // orders responses ascending to maintain linear discussion continuity
 
-    return {thread, posts};
+    // Extract the body content of the very first post (OP)
+    const opBody = posts.length > 0 ? posts[0].body : null;
+
+    return { thread, posts, opBody };
 }

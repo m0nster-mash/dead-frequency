@@ -279,7 +279,7 @@
 }
 
 .buttonSignOutCollapsed {
-    height: 36px;
+    height: var(--size-icon-sm);
     padding: 0;
     display: grid;
     place-items: center;

@@ -1,10 +1,12 @@
 import {requireSession} from "@/core/auth/lib/require-session";
 import {MainContentPanel} from "@/core/dashboard/components/panels/main-card";
 import {PageHeader} from "@/core/dashboard/components/panels/page-header";
+import {BoardDisplay} from "@/feature/forum/components/board-display";
+import {ForumStatsPanel} from "@/feature/forum/components/forum-stats-panel";
 import {getCategoryWithBoards} from "@/feature/forum/lib/queries";
+import styles from "@/feature/forum/styles/forum.module.css";
 import {BreadcrumbLabel} from "@/shared/components/breadcrumb-label";
-import styles from "@/shared/styles/form-panel.module.css";
-import Link from "next/link";
+import Placeholder from "@shared/components/placeholder";
 import {notFound} from "next/navigation";
 import {JSX} from "react";
 
@@ -35,44 +37,45 @@ export default async function ForumCategoryPage({params}: PageProps): Promise<JS
         notFound();
     }
 
+    const boards = category.boards.map((board) => ({
+        id: board.id,
+        name: board.label,
+        description: board.description,
+        href: `/forum/${category.id}/${board.id}`,
+    }));
+
     return (
         <div className={styles.wrapper}>
             <BreadcrumbLabel segment={catId}
                              label={category.label}/>
 
-            <PageHeader eyebrow={"Forum"}
+            <PageHeader eyebrow="Forum"
                         title={category.label}
-                        subtitle={"Boards in this category"}/>
+                        subtitle="Boards in this category"/>
 
-            <MainContentPanel title={"Boards"}>
-                <div className={styles.tableWrapper}>
-                    <table className={styles.table}>
-                        <thead>
-                        <tr>
-                            <th>Board</th>
-                            <th>Description</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {category.boards.map((board) => (
-                            <tr key={board.id}>
-                                <td>
-                                    <Link href={`/forum/${category.id}/${board.id}`}>
-                                        {board.label}
-                                    </Link>
-                                </td>
-                                <td>{board.description || "—"}</td>
-                            </tr>
-                        ))}
-                        {category.boards.length === 0 && (
-                            <tr>
-                                <td colSpan={2} className={styles.tableEmpty}>No boards in this category yet.</td>
-                            </tr>
-                        )}
-                        </tbody>
-                    </table>
-                </div>
+            <MainContentPanel title="Boards">
+                <BoardDisplay boards={boards}
+                              emptyMessage="No boards in this category yet."/>
             </MainContentPanel>
+
+            <ForumStatsPanel
+                eyebrow="Category overview"
+                title={`${category.label} activity`}
+                stats={[
+                    {
+                        label: "Total boards",
+                        value: <Placeholder text={"BOARD_TOTAL"}/>,
+                    },
+                    {
+                        label: "Total threads",
+                        value: <Placeholder text={"THREAD_TOTAL"}/>,
+                    },
+                ]}
+                latestActivity={{
+                    title: <Placeholder text={"THREAD_NAME"}/>,
+                    user: <Placeholder text={"LAST_USER_NAME"}/>,
+                    time: <Placeholder text={"POST_TIME"}/>,
+                }}/>
         </div>
     );
 }
