@@ -100,8 +100,6 @@
     font-weight: 500;
     transition: background var(--transition-fast), color var(--transition-fast);
     border: none;
-    background: transparent;
-    cursor: pointer;
 }
 
 .navItem:hover {
@@ -116,6 +114,48 @@
 }
 
 .navItem svg {
+    flex: 0 0 19px;
+    width: 19px;
+    height: 19px;
+}
+
+/**
+ * Styling for expandable navigation menu buttons.
+ *
+ * Applies a distinct background color to differentiate expandable items from
+ * regular navigation links. Uses the button display type for proper pointer
+ * events and click handling. Remains centered when the sidebar collapses.
+ */
+.expandableNavButton {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 42px;
+    width: 100%;
+    margin-bottom: 3px;
+    padding: 0 10px;
+    border-radius: var(--radius-sm);
+    border: none;
+    background: var(--color-surface-strong);
+    color: var(--color-sidebar-text);
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    cursor: pointer;
+    transition: background var(--transition-fast), color var(--transition-fast);
+}
+
+.expandableNavButton:hover {
+    color: var(--color-sidebar-text-active);
+    background: var(--color-sidebar-item-hover);
+}
+
+.expandableNavButton.active {
+    color: var(--color-sidebar-text-active);
+    background: var(--color-sidebar-item-active);
+    font-weight: 600;
+}
+
+.expandableNavButton svg {
     flex: 0 0 19px;
     width: 19px;
     height: 19px;
@@ -199,6 +239,11 @@
 }
 
 .sidebar[data-collapsed="true"] .navItem {
+    justify-content: center;
+    padding: 0;
+}
+
+.sidebar[data-collapsed="true"] .expandableNavButton {
     justify-content: center;
     padding: 0;
 }
@@ -321,6 +366,42 @@
 }
 
 .subNavItem {
-    padding-left: 1.5rem;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    gap: 12px;
+    min-height: 42px;
+    margin-bottom: 3px;
+    padding: 0 10px 0 1.5rem;
+    width: 100%;
+    border-radius: var(--radius-sm);
+    color: var(--color-sidebar-text);
     font-size: 0.9em;
+    font-weight: 500;
+    background: var(--color-surface-raised);
+    transition: background var(--transition-fast), color var(--transition-fast);
+    border: none;
+}
+
+.subNavItem:hover {
+    color: var(--color-sidebar-text-active);
+    background: var(--color-sidebar-item-hover);
+}
+
+.subNavItem.active {
+    color: var(--color-sidebar-text-active);
+    background: var(--color-sidebar-item-active);
+    font-weight: 600;
+}
+
+.subNavItem svg {
+    flex: 0 0 19px;
+    width: 19px;
+    height: 19px;
+}
+
+.expandableMenuButtonContent {
+    display: flex;
+    align-items: center;
+    /*gap: 12px;*/
 }

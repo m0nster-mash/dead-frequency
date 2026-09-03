@@ -107,12 +107,6 @@ function isExpandableItemActive(pathname: string, item: ExpandableNavItem): bool
 /**
  * Reusable expandable sidebar menu item component.
  *
- * Renders a collapsible button that toggles visibility of nested navigation links.
- * Automatically opens when one of its child routes is active.
- *
- * @param {ExpandableNavItem} item - Configuration for the expandable menu.
- * @param {string} pathname - Current active pathname for route comparison.
- *
  * @returns {JSX.Element} The expandable menu UI element.
  */
 function ExpandableMenuItem({item, pathname}: {
@@ -140,7 +134,8 @@ function ExpandableMenuItem({item, pathname}: {
             <button type="button"
                     onClick={() => setIsOpen((open) => !open)}
                     aria-expanded={isOpen}
-                    className={`${styles.navItem}${hasActiveChild ? ` ${styles.active}` : ""}`}>
+                    title={item.label}
+                    className={`${styles.expandableNavButton}${hasActiveChild ? ` ${styles.active}` : ""}`}>
                 {item.icon}
 
                 <span className={styles.hideOnCollapse}>
@@ -166,7 +161,8 @@ function ExpandableMenuItem({item, pathname}: {
                         return (
                             <Link key={link.href}
                                   href={link.href}
-                                  className={`${styles.navItem} ${styles.subNavItem}${
+                                  title={link.label}
+                                  className={`${styles.subNavItem}${
                                       active ? ` ${styles.active}` : ""
                                   }`}>
                                 {link.icon}
@@ -225,6 +221,7 @@ export function SidebarNav({sections}: SidebarNavProps): JSX.Element {
                         return (
                             <Link key={item.href}
                                   href={item.href}
+                                  title={item.label}
                                   className={`${styles.navItem}${
                                       active ? ` ${styles.active}` : ""
                                   }`}>
