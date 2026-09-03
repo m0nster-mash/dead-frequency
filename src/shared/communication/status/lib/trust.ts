@@ -1,8 +1,8 @@
 "use server";
 
 import {db} from "@shared/db/client";
-import {userTrust} from "../schema/status.schema";
 import {eq, sql} from "drizzle-orm";
+import {userTrust} from "../schema/status.schema";
 
 /**
  * Static dictionary defining post count thresholds required to trigger automated account tier advancements.
@@ -14,25 +14,28 @@ const PROMOTION_THRESHOLDS = {
 } as const;
 
 /**
- * Anti-Spam Strategy: Rate-limiting interval delays enforced between submission events.
+ * Anti-spam strategy: rate-limiting interval delays enforced between submission events.
  */
 const COOLDOWN_MS = {
     new: 60_000,   // Mandatory 1 post per minute cooling curve for unverified newcomers
-    basic: 15_000,  // Reduced 15 second delay tracking window for promoted active members
+    basic: 15_000,  // Reduced 15-second delay tracking window for promoted active members
 } as const;
 
 /**
- * Evaluates a user account's engagement history and rate-limiting cooldown boundaries to allow or block content submission.
- * This cheap, low-overhead anti-spam barrier should be called immediately before parsing request payloads.
+ * Evaluates a user account's engagement history and rate-limiting cooldown boundaries to allow or block content
+ * submission. This cheap low-overhead anti-spam barrier should be called immediately before parsing request payloads.
  *
  * Technical verification flow:
  * 1. Checks the `userTrust` table matching targeted user identities.
- * 2. Unregistered Fallback: Permits passage if the profile has zero recorded entries, deferring initialization to creation steps.
+ * 2. Unregistered Fallback: Permits passage if the profile has zero recorded entries, deferring initialization to
+ *    creation steps.
  * 3. Restriction Check: Drops execution immediately if accounts carry a hard `"restricted"` type standing signature.
- * 4. Cooldown Validation: Measures current server times against preserved windows to block rapid multi-click submissions.
+ * 4. Cooldown Validation: Measures current server times against preserved windows to block rapid multi-click
+ *    submissions.
  *
  * @param {string} userId - The unique user identification primary key string matching the active submission author.
- * @returns {Promise<{ allowed: boolean; reason?: string }>} An operation result dictionary confirming access permissions.
+ * @returns {Promise<{ allowed: boolean; reason?: string }>} An operation result dictionary confirming access
+ *                                                           permissions.
  */
 export async function canPost(userId: string): Promise<{ allowed: boolean; reason?: string }> {
     const [row] = await db
@@ -41,19 +44,18 @@ export async function canPost(userId: string): Promise<{ allowed: boolean; reaso
         .where(eq(userTrust.userId, userId))
         .limit(1);
 
-    // Unregistered Account Guard: Permits first-time posts cleanly, offloading initialization metrics to downstream recording methods
+    // Permits first-time posts cleanly, offloading initialization metrics to downstream recording methods
     if (!row) return {allowed: true};
 
-    // Restriction Status Guard: Denies pipeline access if system integrity workflows have quarantined the account
+    // Denies pipeline access if system integrity workflows have quarantined the account
     if (row.trustLevel === "restricted") {
         return {allowed: false, reason: "Account posting privileges are restricted."};
     }
 
-    /*
-       Rate-Limiting Cooldown Evaluation:
-       Compares the active high-precision machine clock against stored cooldown timers
-       to throttle rapid automated spam bots or scripts.
-    */
+    /**
+     * Rate-Limiting cooldown evaluation compares the active high-precision machine clock against stored cooldown
+     * timers to throttle rapid automated spambots or scripts.
+     */
     if (row.cooldownUntil && row.cooldownUntil > new Date()) {
         return {allowed: false, reason: "You're posting too quickly. Please wait a moment."};
     }
@@ -62,16 +64,16 @@ export async function canPost(userId: string): Promise<{ allowed: boolean; reaso
 }
 
 /**
- * Logs a successful submission event, updates rate-limiting parameters, and runs rank check criteria.
- * Enforces an upsert model ensuring data structure presence on first execution loops.
+ * Logs a successful submission event, updates rate-limiting parameters, and runs rank check criteria. Enforces an
+ * upsert model ensuring data structure presence on first execution loops.
  *
  * @param {string} userId - The unique identification primary key of the author who committed a content post.
  * @returns {Promise<void>} A promise resolving once structural updates are committed and rank re-evaluations pass.
  */
 export async function recordPost(userId: string): Promise<void> {
-    const cooldownMs = COOLDOWN_MS.new; // Operational Note: Can refine per-level dynamically after parsing active row signatures
+    const cooldownMs = COOLDOWN_MS.new; // Operational Note: can refine per-level dynamically after parsing active row signatures
 
-    // Database Upsert Task: Increments interaction weights using clean PostgreSQL update macros via Drizzle ORM
+    // Increments interaction weights using clean PostgreSQL update macros via Drizzle ORM
     await db
         .insert(userTrust)
         .values({
@@ -80,17 +82,18 @@ export async function recordPost(userId: string): Promise<void> {
             cooldownUntil: new Date(Date.now() + cooldownMs),
         })
         .onConflictDoUpdate({
-            // Target Unique Key: Checks the primary tracking constraint
+            // checks the primary tracking constraint
             target: userTrust.userId,
             set: {
                 // Uses inline atomic queries to safeguard tracking integers from cross-thread race conditions
-                postCount: sql`${userTrust.postCount} + 1`,
+                postCount: sql`${userTrust.postCount}
+                + 1`,
                 cooldownUntil: new Date(Date.now() + cooldownMs),
                 updatedAt: new Date(),
             },
         });
 
-    // Cascade Trigger: Recalculates platform trust rankings post-insertion
+    // recalculates platform trust rankings post-insertion
     await recalculateTrustLevel(userId);
 }
 
@@ -104,7 +107,7 @@ export async function recordPost(userId: string): Promise<void> {
 async function recalculateTrustLevel(userId: string): Promise<void> {
     const [row] = await db.select().from(userTrust).where(eq(userTrust.userId, userId)).limit(1);
 
-    // Safety Isolation Guard: Lock classification updates if records are blank or systematically restricted
+    // Lock classification updates if records are blank or systematically restricted
     if (!row || row.trustLevel === "restricted") return;
 
     // Evaluates ranking tiers chronologically by matching step milestones
@@ -113,7 +116,7 @@ async function recalculateTrustLevel(userId: string): Promise<void> {
             row.postCount >= PROMOTION_THRESHOLDS.trusted ? "trusted" :
                 row.postCount >= PROMOTION_THRESHOLDS.basic ? "basic" : "new";
 
-    // Allocation Step: Dispatches mutation query loops if target ranks differ from old stored parameters
+    // Dispatches mutation query loops if target ranks differ from old stored parameters
     if (level !== row.trustLevel) {
         await db.update(userTrust).set({trustLevel: level}).where(eq(userTrust.userId, userId));
     }
@@ -127,24 +130,24 @@ async function recalculateTrustLevel(userId: string): Promise<void> {
  * @returns {Promise<void>} A promise resolving once data changes persist and quarantine limits are calculated.
  */
 export async function recordNegativeSignal(userId: string): Promise<void> {
-    // Database Upsert Task: Registers incoming flag indicators safely inside row fields
+    // Registers incoming flag indicators safely inside row fields
     await db
         .insert(userTrust)
         .values({userId, negativeSignalCount: 1})
         .onConflictDoUpdate({
             target: userTrust.userId,
             set: {
-                negativeSignalCount: sql`${userTrust.negativeSignalCount} + 1`
+                negativeSignalCount: sql`${userTrust.negativeSignalCount}
+                + 1`
             },
         });
 
     const [row] = await db.select().from(userTrust).where(eq(userTrust.userId, userId)).limit(1);
 
-    /*
-       Automated Quarantine Guard:
-       Flags and demotes accounts automatically to an immutable "restricted" state
-       if cumulative user-driven negative feedback markers scale to 10 or greater.
-    */
+    /**
+     * Flags and demotes accounts automatically to an immutable "restricted" state if cumulative user-driven negative
+     * feedback markers scale to 10 or greater.
+     */
     if (row && row.negativeSignalCount >= 10 && row.trustLevel !== "restricted") {
         await db.update(userTrust).set({trustLevel: "restricted"}).where(eq(userTrust.userId, userId));
     }

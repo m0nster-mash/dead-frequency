@@ -61,18 +61,25 @@ export async function getPostingStatus(userId: string, module: Module): Promise<
  * Automatically synchronizes changes out to the centralized compliance ledger via standard audit logger utilities.
  *
  * Secure processing flow:
- * 1. Executes an atomic PostgreSQL upsert mutation (`onConflictDoUpdate`) on compound target constraints (`userId` + `module`).
+ * 1. Executes an atomic PostgreSQL upsert mutation (`onConflictDoUpdate`) on compound target constraints
+ *   (`userId` + `module`).
  * 2. Resets parameter rows, fallback-mapping empty optional parameters down to clean database null fields.
- * 3. References a static action key translation dictionary to convert current target statuses into historical action verbs.
- * 4. Dispatches logging parameters down into the centralized `logModAction` audit timeline loop to meet tracking criteria.
+ * 3. References a static action key translation dictionary to convert current target statuses into historical action
+ *    verbs.
+ * 4. Dispatches logging parameters down into the centralized `logModAction` audit timeline loop to meet tracking
+ *    criteria.
  *
- * Feature code paths must always route modification states through this action method instead of writing directly to logs.
+ * Feature code paths must always route modification states through this action method instead of writing directly to
+ * logs.
  *
  * @param {Object} input - Structural payload arguments tracking the adjustment operation.
  * @param {string} input.userId - The unique destination target user profile receiving the posture adjustment.
- * @param {Module | null} input.module - Target feature system scope being restricted. Pass `null` to configure a site-wide block.
- * @param {"active" | "muted" | "shadowbanned" | "banned"} input.status - The strict enforcement clearance level state being assigned.
- * @param {string} input.moderatorId - The unique user identification key tracking the supervisor running the action script.
+ * @param {Module | null} input.module - Target feature system scope being restricted. Pass `null` to configure a
+ *                                       site-wide block.
+ * @param {"active" | "muted" | "shadowbanned" | "banned"} input.status - The strict enforcement clearance level state
+ *                                                                        being assigned.
+ * @param {string} input.moderatorId - The unique user identification key tracking the supervisor running the action
+ *                                     script.
  * @param {string} [input.reason] - Optional description copy justifying the administrative standing change.
  * @param {Date | null} [input.expiresAt] - Optional timestamp defining the expiration boundary of the penalty window.
  * @returns {Promise<void>} A promise resolving once data mutations commit and audit tasks successfully complete.
@@ -108,7 +115,7 @@ export async function setPostingStatus(input: {
             },
         });
 
-    // Translation Matrix Map: Standardizes status tags down into historical audit log descriptive verbs
+    // Standardizes status tags down into historical audit log descriptive verbs
     const actionMap = {
         active: "unmute",
         muted: "mute",
@@ -116,12 +123,12 @@ export async function setPostingStatus(input: {
         banned: "ban",
     } as const;
 
-    // Side-Effect Compliance Task: Registers details to global panel dashboards automatically
+    // Registers details to global panel dashboards automatically
     await logModAction({
-        /*
-           Selects target module signatures. If true site-wide metrics are running, fallbacks to "forum"
-           or balances paths out utilizing alternative shared enum labels like "site".
-        */
+        /**
+         * Selects target module signatures. If true site-wide metrics are running, fallbacks to "forum" or balances
+         * paths out utilizing alternative shared enum labels like "site".
+         */
         module: input.module ?? "site",
         recordId: input.userId,
         action: actionMap[input.status],

@@ -1,11 +1,12 @@
 "use client";
-import React from "react";
+import React, {JSX} from "react";
 
 /**
  * Properties for the LoremIpsum component.
- * @typedef {Object} LoremIpsumProps
+ *
  * @property {number} length - The number of standalone text paragraphs to output.
- * @property {boolean} regular - Enforces exact standard filler copy text if true; outputs variable randomized word counts if false.
+ * @property {boolean} regular - Enforces exact standard filler copy text if true; outputs variable randomized word
+ *                               counts if false.
  */
 type LoremIpsumProps = {
     length: number;
@@ -22,17 +23,18 @@ const STANDARD_PARAGRAPH = "Lorem ipsum dolor sit amet, consectetur adipiscing e
     "officia deserunt mollit anim id est laborum.";
 
 /**
- * Normalized lookup array containing clean individual punctuation-free text blocks.
- * Formatted dynamically by stripping special boundary markers to simplify array modular math operations.
+ * Normalized lookup array containing clean individual punctuation-free text blocks. Formatted dynamically by
+ * stripping special boundary markers to simplify array modular math operations.
  */
 const LOREM_WORDS = STANDARD_PARAGRAPH.replace(/[.,]/g, "").split(/\s+/);
 
 /**
- * Utility string generator script that builds a single randomized sentence paragraph layer.
- * Caps ranges and auto-capitalizes the initial character trace to emulate realistic presentation layouts.
+ * Utility string generator script that builds a single randomized sentence paragraph layer. Caps ranges and
+ * auto-capitalizes the initial character trace to emulate realistic presentation layouts.
  *
  * @param {number} minWords - Minimum length boundary parameter defining word lengths.
  * @param {number} maxWords - Maximum length boundary parameter defining word lengths.
+ *
  * @returns {string} The fully compiled randomized dummy paragraph copy text.
  */
 function generateParagraph(minWords: number, maxWords: number): string {
@@ -47,30 +49,27 @@ function generateParagraph(minWords: number, maxWords: number): string {
 }
 
 /**
- * A Client Component placeholder utility that generates variable lengths of text copy paragraphs.
- * Primarily deployed within grid layout shells during early developmental phases to assess padding,
- * line heights, and typography balance constraints.
+ * A Client Component placeholder utility that generates variable lengths of text copy paragraphs. Primarily deployed
+ * within grid layout shells during early developmental phases to assess padding, line heights, and typography balance
+ * constraints.
  *
  * @param {LoremIpsumProps} props - The component properties.
- * @returns {JSX.Element | null} The visual paragraph block array, or null if the length parameter resolves underneath zero.
+ * @returns {JSX.Element | null} The visual paragraph block array, or null if the length parameter resolves
+ *                               underneath zero.
  */
-export default function LoremIpsum({length, regular}: LoremIpsumProps) {
-    // Math Check Guard: Floors numbers and enforces a strict zero threshold floor boundary
+export default function LoremIpsum({length, regular}: LoremIpsumProps): JSX.Element | null {
     const count = Math.max(0, Math.floor(length));
 
-    // Structural Early Exit: Prevents template allocation overheads if counts pass as empty metrics
     if (count === 0) {
         return null;
     }
 
-    // Dynamic Allocation: Branches arrays between standardized string copies or newly compiled lines
     const paragraphs = regular
         ? Array.from({length: count}, () => STANDARD_PARAGRAPH)
         : Array.from({length: count}, () => generateParagraph(30, 100));
 
     return (
         <div>
-            {/* Iterates through compiled paragraph structures mapping semantic markup text elements */}
             {paragraphs.map((paragraph, index) => (
                 <p key={index}>{paragraph}</p>
             ))}

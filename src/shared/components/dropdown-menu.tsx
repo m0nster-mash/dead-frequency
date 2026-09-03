@@ -1,15 +1,12 @@
 "use client";
 
-import {useEffect, useRef, useState} from "react";
-import type {ReactNode} from "react";
-import Link from "next/link";
 import styles from "@/shared/styles/dropdown-menu.module.css";
+import Link from "next/link";
+import {JSX, ReactNode, useEffect, useRef, useState} from "react";
 
 /**
- * Union configuration options defining a single render item inside the dropdown matrix.
- * Supports hyperlinks, action dispatcher triggers, text headers, and visual line dividers.
- *
- * @typedef {Object} DropdownMenuItem
+ * Union configuration options defining a single render item inside the dropdown matrix. Supports hyperlinks,
+ * action dispatcher triggers, text headers, and visual line dividers.
  */
 export type DropdownMenuItem = | {
     type: "link";
@@ -34,7 +31,7 @@ export type DropdownMenuItem = | {
 
 /**
  * Properties for the DropdownMenu component.
- * @typedef {Object} DropdownMenuProps
+ *
  * @property {ReactNode} trigger - Visual node structure acting as the interactive toggle button (ex. icons, avatars).
  * @property {DropdownMenuItem[]} items - Collection list tracking structural menu layer definitions.
  * @property {"start" | "end"} [align="end"] - Spatial positioning parameter governing side panel attachment margins.
@@ -50,9 +47,10 @@ type DropdownMenuProps = {
  * Implements defensive event capture listeners to automate click-away dismissals and keyboard shortcuts.
  *
  * @param {DropdownMenuProps} props - The component properties.
+ *
  * @returns {JSX.Element} The visual collapsible context operations dropdown wrapper.
  */
-export function DropdownMenu({trigger, items, align = "end"}: DropdownMenuProps) {
+export function DropdownMenu({trigger, items, align = "end"}: DropdownMenuProps): JSX.Element {
     const [open, setOpen] = useState(false);
     const containerRef = useRef<HTMLDivElement>(null);
 
@@ -61,14 +59,14 @@ export function DropdownMenu({trigger, items, align = "end"}: DropdownMenuProps)
         ? `${styles.dropdownMenu} ${styles.dropdownMenuStart}`
         : `${styles.dropdownMenu} ${styles.dropdownMenuEnd}`;
 
-    // Context Side-Effect: Manages dynamic window close traps following interface presentation states
+    // Manages dynamic window close traps following interface presentation states
     useEffect(() => {
         // Skip attaching window listeners if the contextual element rests hidden
         if (!open) return;
 
         /**
-         * Intercepts clicks throughout the screen viewport window.
-         * Auto-collapses the menu container if pointers crash outside the bounding reference container box.
+         * Intercepts clicks throughout the screen viewport window. Auto-collapses the menu container if pointers
+         * crash outside the bounding reference container box.
          */
         function handleClickOutside(event: MouseEvent) {
             if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
@@ -86,7 +84,7 @@ export function DropdownMenu({trigger, items, align = "end"}: DropdownMenuProps)
         document.addEventListener("mousedown", handleClickOutside);
         document.addEventListener("keydown", handleEscape);
 
-        // Memory Cleanup Lifecycle Hook: Securely detaches listener hooks once state changes trigger collapse structures
+        // Securely detaches listener hooks once state changes trigger collapse structures
         return () => {
             document.removeEventListener("mousedown", handleClickOutside);
             document.removeEventListener("keydown", handleEscape);
@@ -94,12 +92,7 @@ export function DropdownMenu({trigger, items, align = "end"}: DropdownMenuProps)
     }, [open]);
 
     return (
-        /* Top-level wrapping landmark boundary mapping DOM metrics references onto hook traps */
         <div className={styles.dropdown} ref={containerRef}>
-            {/*
-               Accessible Trigger Button Element:
-               Binds aria-attributes to clearly advertise layout overlay relationship states to assistive agents.
-            */}
             <button type="button"
                     className={styles.dropdownToggleButton}
                     aria-haspopup="menu"
@@ -108,22 +101,17 @@ export function DropdownMenu({trigger, items, align = "end"}: DropdownMenuProps)
                 {trigger}
             </button>
 
-            {/* Collapsible Action Sub-Menu Overlay Stack */}
             {open && (
                 <ul role="menu" className={menuClassName}>
-                    {/* Iterates through nested type layers compiling matching structural elements */}
                     {items.map((item, index) => {
-                        // Structural Branch 1: Visual section separation line rows
                         if (item.type === "divider") {
                             return <li key={index} role="separator" className={styles.dropdownDivider}/>;
                         }
 
-                        // Structural Branch 2: Informational category label rows
                         if (item.type === "header") {
                             return <li key={index} className={styles.dropdownHeader}>{item.label}</li>;
                         }
 
-                        // Compiles baseline modification style utilities tracking error states or loading parameters
                         const itemClass = `${styles.dropdownItem} ${item.danger
                             ? styles.dropdownItemDanger
                             : ""} ${item.disabled ? styles.dropdownItemDisabled : ""}`;
@@ -131,7 +119,6 @@ export function DropdownMenu({trigger, items, align = "end"}: DropdownMenuProps)
                         return (
                             <li key={index}>
                                 {item.type === "link" ? (
-                                    /* Interactive Route Target 1: Next-js routing hyperlink pathways */
                                     <Link href={item.href}
                                           role="menuitem"
                                           className={itemClass}
@@ -141,14 +128,13 @@ export function DropdownMenu({trigger, items, align = "end"}: DropdownMenuProps)
                                         <span>{item.label}</span>
                                     </Link>
                                 ) : (
-                                    /* Interactive Route Target 2: Standard client event execution dispatch triggers */
                                     <button type="button"
                                             role="menuitem"
                                             className={itemClass}
                                             disabled={item.disabled}
                                             onClick={() => {
-                                                void item.action(); // Dispatches associated callback routine asynchronously
-                                                setOpen(false);      // Cleanly dismisses the overlay card view
+                                                void item.action();
+                                                setOpen(false);
                                             }}>
                                         {item.icon}
                                         <span>{item.label}</span>
