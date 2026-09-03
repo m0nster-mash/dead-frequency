@@ -13,7 +13,7 @@ import {JSX, SubmitEvent, useState} from "react";
  * @property {string} userId - The unique identifier of the user account being modified
  * @property {string} currentName - The existing display username of the target account
  * @property {string} currentEmail - The existing primary email address of the target account
- * @property {string} currentRole - The current security group authorization role (e.g., "user", "admin")
+ * @property {string} currentRole - The current security group authorization role (ex. "user", "admin")
  * @property {boolean} isCurrentUser - Flag verifying if the logged-in administrator is modifying their own record
  */
 type AdminEditUserFormProps = {

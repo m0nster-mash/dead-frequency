@@ -14,7 +14,7 @@ export type AvatarConfigValidationResult =
 const PART_CATEGORIES: AvatarPartCategory[] = ["eyes", "mouth", "hair"];
 
 /**
- * Validates untrusted input (e.g. from a client request body) against the
+ * Validates untrusted input (ex. from a client request body) against the
  * AvatarConfig shape. Rejects unknown part IDs and enforces the version field.
  * This keeps writes decoupled from raw client input per issue #64.
  *

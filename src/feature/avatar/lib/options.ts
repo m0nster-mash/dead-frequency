@@ -54,7 +54,7 @@ export const AVATAR_OPTIONS: Record<AvatarPartCategory, AvatarOption[]> = {
  * Defensive query verification helper that determines if a specific asset id exists within the legal bounds of its
  * requested design category. Used by schema validators to shield database inputs from foreign string injections.
  *
- * @param {AvatarPartCategory} category - The design feature scope to cross-check (e.g., "eyes").
+ * @param {AvatarPartCategory} category - The design feature scope to cross-check (ex. "eyes").
  * @param {string} id - The untrusted asset variant identifier being tested.
  *
  * @returns {boolean} True if the item identity matches an entry in the legal option matrix.

@@ -7,7 +7,7 @@ import {JSX, ReactNode} from "react";
 /**
  * Properties for the SidebarFrame component.
  *
- * @property {ReactNode} toggleButton - Interactive trigger node (e.g., hamburger switch) to adjust panel widths.
+ * @property {ReactNode} toggleButton - Interactive trigger node (ex. hamburger switch) to adjust panel widths.
  * @property {ReactNode} children - Core contextual navigation lists or panel menus rendered within the panel body.
  */
 type SidebarFrameProps = {

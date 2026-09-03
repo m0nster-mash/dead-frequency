@@ -15,7 +15,7 @@ import {JSX, useState} from "react";
  * @property {string} id - Unique operational identifier for the account
  * @property {string} name - Display username signature, fallback to an empty string if unset
  * @property {string} email - Primary communication and credential identity address
- * @property {string} role - Security permission level tag (e.g., "user", "admin")
+ * @property {string} role - Security permission level tag (ex. "user", "admin")
  * @property {boolean} banned - Boolean flag marking systemic access restrictions
  */
 type AdminUser = {

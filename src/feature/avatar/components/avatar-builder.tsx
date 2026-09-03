@@ -44,7 +44,7 @@ export function AvatarBuilder({initialConfig}: AvatarBuilderProps): JSX.Element 
      * Swaps out an asset component block index parameter matching targeted customization scopes.
      * Alters local visual properties instantaneously to enable interactive studio feedback.
      *
-     * @param {AvatarPartCategory} category - The design scope identifier being swapped (e.g., "eyes", "mouth").
+     * @param {AvatarPartCategory} category - The design scope identifier being swapped (ex. "eyes", "mouth").
      * @param {string} id - The specific vector item part identity string map selected by the member.
      */
     function updatePart(category: AvatarPartCategory, id: string) {

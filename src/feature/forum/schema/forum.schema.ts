@@ -57,7 +57,7 @@ export const forumThread = pgTable(
 
         /*
            Shared Identity Object Extension:
-           Unpacks consistent metadata schema columns tracking originators (e.g. userId, authorName).
+           Unpacks consistent metadata schema columns tracking originators (ex. userId, authorName).
         */
         ...authorColumns,
         title: text("title").notNull(),
