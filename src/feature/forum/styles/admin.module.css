@@ -1,0 +1,651 @@
+.container {
+    width: 100%;
+}
+
+.categorySelector {
+    max-width: 32rem;
+    margin-bottom: 1.5rem;
+}
+
+.categoryEditor {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.editorSection {
+    padding: 1.5rem 0;
+    border-top: 1px solid var(--color-border, #d4d4d4);
+}
+
+.editorSection:first-child {
+    padding-top: 0;
+    border-top: 0;
+}
+
+.sectionHeader {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+}
+
+.sectionTitle {
+    margin: 0;
+    color: var(--color-text-primary, #171717);
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.sectionDescription {
+    margin: 0.3rem 0 0;
+    color: var(--color-text-muted, #737373);
+    font-size: 0.85rem;
+    line-height: 1.45;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.formGrid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+}
+
+.label {
+    color: var(--color-text-primary, #171717);
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.input {
+    width: 100%;
+    min-height: 2.5rem;
+    box-sizing: border-box;
+    padding: 0.6rem 0.75rem;
+    border: 1px solid var(--color-border, #d4d4d4);
+    border-radius: 0.4rem;
+    background: var(--color-surface, #ffffff);
+    color: var(--color-text-primary, #171717);
+    font: inherit;
+}
+
+.input:focus {
+    outline: 2px solid var(--color-focus-ring, #737373);
+    outline-offset: 1px;
+}
+
+.formActions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 0.25rem;
+}
+
+.primaryButton,
+.dangerButton,
+.orderButton {
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.primaryButton {
+    min-height: 2.4rem;
+    padding: 0.55rem 0.9rem;
+    border: 1px solid var(--color-border, #171717);
+    border-radius: 0.4rem;
+    background: var(--color-surface-raised, #171717);
+    color: var(--color-text-muted, #ffffff);
+}
+
+.primaryButton:hover {
+    opacity: 0.88;
+}
+
+/*
+ * Destructive actions deliberately use the application's danger tokens.
+ */
+.dangerButton {
+    min-height: 2.4rem;
+    padding: 0.55rem 0.9rem;
+    border: 1px solid var(--color-danger, #b42318);
+    border-radius: 0.4rem;
+    background: var(--color-danger-bg, #fef3f2);
+    color: var(--color-danger, #b42318);
+}
+
+.dangerButton:hover {
+    background: var(--color-danger-bg, #b42318);
+    color: var(--color-danger, #fef3f2);
+}
+
+.deleteCategoryForm {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: -2.4rem;
+    padding-right: 6.5rem;
+}
+
+/* --------------------------------------------------
+   Board table
+-------------------------------------------------- */
+
+.boardTableWrapper {
+    width: 100%;
+    overflow-x: auto;
+    border: 1px solid var(--color-border, #d4d4d4);
+    border-radius: 0.5rem;
+}
+
+.boardTable {
+    width: 100%;
+    min-width: 900px;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+.boardTable th,
+.boardTable td {
+    padding: 0.75rem;
+    border-bottom: 1px solid var(--color-border, #e5e5e5);
+    text-align: left;
+    vertical-align: middle;
+}
+
+.boardTable th {
+    background: var(--color-surface-muted, #fafafa);
+    color: var(--color-text-muted, #525252);
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.035em;
+}
+
+.boardTable tbody tr {
+    transition: background-color 120ms ease;
+}
+
+.boardTable tbody tr:hover {
+    background: var(--color-action-secondary-hover, #fafafa);
+}
+
+.boardTable tbody tr:last-child td {
+    border-bottom: 0;
+}
+
+.orderColumn {
+    width: 8rem;
+}
+
+.actionColumn {
+    width: 6.5rem;
+}
+
+.removeColumn {
+    width: 9.5rem;
+}
+
+.orderCell {
+    white-space: nowrap;
+}
+
+.orderControls {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.orderNumber {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 1.5rem;
+    color: var(--color-text-muted, #737373);
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+.orderButtons {
+    display: flex;
+    gap: 0.25rem;
+}
+
+.orderButton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    padding: 0;
+    border: 1px solid var(--color-border, #d4d4d4);
+    border-radius: 0.35rem;
+    background: var(--color-surface, #ffffff);
+    color: var(--color-text-primary, #171717);
+    line-height: 1;
+}
+
+.orderButton:hover:not(:disabled) {
+    background: var(--form-accent-hover, #f5f5f5);
+}
+
+.orderButton:disabled {
+    cursor: not-allowed;
+    opacity: 0.3;
+}
+
+.boardFieldForm {
+    display: contents;
+}
+
+.boardDescription {
+    color: var(--color-text-muted, #737373);
+    font-size: 0.85rem;
+    line-height: 1.4;
+}
+
+.actionCell {
+    white-space: nowrap;
+}
+
+.actionCell form {
+    margin: 0;
+}
+
+.reorderForm {
+    display: flex;
+    flex-direction: column;
+    margin-top: 1rem;
+}
+
+.reorderFooter {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.emptyState {
+    padding: 1.5rem;
+    border: 1px dashed var(--color-border, #d4d4d4);
+    border-radius: 0.4rem;
+    color: var(--color-text-muted, #737373);
+    text-align: center;
+}
+
+.emptyState p {
+    margin: 0;
+}
+
+@media (max-width: 900px) {
+    .formGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .deleteCategoryForm {
+        margin-top: 1rem;
+        padding-right: 0;
+    }
+}
+
+/* --------------------------------------------------
+   Forum hierarchy table
+-------------------------------------------------- */
+
+.forumTableContainer {
+    width: 100%;
+    overflow-x: auto;
+    border: 1px solid var(--color-border);
+    border-radius: 0.65rem;
+    background: var(--color-surface);
+}
+
+.forumTable {
+    width: 100%;
+    min-width: 900px;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.forumTable th {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--color-border);
+    background: var(--color-surface-raised);
+    color: var(--color-text-muted);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.045em;
+    line-height: 1.2;
+    text-align: left;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.forumTable td {
+    padding: 0.85rem 1rem;
+    border-bottom: 1px solid var(--color-border);
+    color: var(--color-text-primary);
+    font-size: 0.85rem;
+    line-height: 1.4;
+    text-align: left;
+    vertical-align: middle;
+}
+
+.forumTable tbody tr:last-child td {
+    border-bottom: 0;
+}
+
+/*
+ * Column sizing.
+ *
+ * The name and description columns receive the majority of the available
+ * space, while statistics and actions remain compact.
+ */
+.forumOrderColumn {
+    width: 7rem;
+}
+
+.forumNameColumn {
+    width: 18%;
+}
+
+.forumDescriptionColumn {
+    width: auto;
+}
+
+.forumStatisticColumn {
+    width: 8.5rem;
+}
+
+.forumActionsColumn {
+    width: 6rem;
+    text-align: right !important;
+}
+
+/* --------------------------------------------------
+   Category rows
+-------------------------------------------------- */
+
+.forumCategoryRow {
+    background: var(--color-surface-strong);
+}
+
+.forumCategoryRow:hover {
+    background: var(--color-surface-raised);
+}
+
+.forumCategoryRow td {
+    border-bottom-color: var(--color-border);
+}
+
+.forumCategoryRow td:first-child {
+    border-left: 3px solid var(--color-border);
+    padding-left: calc(1rem - 3px);
+}
+
+.forumCategoryName {
+    color: var(--color-text-primary);
+    font-size: 0.9rem;
+    font-weight: 700;
+}
+
+.forumCategoryDescription {
+    color: var(--color-text-muted);
+    font-size: 0.82rem;
+}
+
+/* --------------------------------------------------
+   Board rows
+-------------------------------------------------- */
+
+.forumBoardRow {
+    background: var(--color-surface);
+}
+
+.forumBoardRow:hover {
+    background: var(--color-surface-raised);
+}
+
+.forumBoardName {
+    position: relative;
+    padding-left: 1.35rem;
+    color: var(--color-text-primary);
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.forumBoardName::before {
+    position: absolute;
+    top: 50%;
+    left: 0.35rem;
+    width: 0.4rem;
+    height: 0.4rem;
+    border-right: 1px solid var(--color-text-muted);
+    border-bottom: 1px solid var(--color-text-muted);
+    content: "";
+    transform: translateY(-65%) rotate(-45deg);
+}
+
+.forumBoardDescription {
+    color: var(--color-text-muted);
+    font-size: 0.82rem;
+}
+
+/* --------------------------------------------------
+   Shared cells
+-------------------------------------------------- */
+
+.forumOrderCell {
+    color: var(--color-text-muted) !important;
+    font-size: 0.78rem !important;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+}
+
+.forumStatisticCell {
+    color: var(--color-text-muted) !important;
+    font-size: 0.8rem !important;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+}
+
+.forumActionCell {
+    width: 6rem;
+    text-align: right !important;
+    white-space: nowrap;
+}
+
+.forumEditButton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 4rem;
+    min-height: 2.15rem;
+    padding: 0.4rem 0.75rem;
+    border: 1px solid var(--color-border);
+    border-radius: 0.4rem;
+    background: var(--color-surface);
+    color: var(--color-text-primary);
+    font: inherit;
+    font-size: 0.78rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.forumEditButton:hover {
+    border-color: var(--color-border);
+    background: var(--color-surface);
+    color: var(--color-text-muted);
+}
+
+.forumEmptyCell {
+    padding: 2rem 1rem !important;
+    color: var(--color-text-muted) !important;
+    text-align: center !important;
+}
+
+/* --------------------------------------------------
+   Responsive
+-------------------------------------------------- */
+
+@media (max-width: 700px) {
+    .forumTable {
+        min-width: 800px;
+    }
+}
+
+/* --------------------------------------------------
+   Forum viewer
+-------------------------------------------------- */
+
+.forumViewer {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+/* --------------------------------------------------
+   Board editor
+-------------------------------------------------- */
+
+.boardEditor {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.adminStatsGrid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.75rem;
+}
+
+.adminStat {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    min-width: 0;
+    padding: 0.9rem;
+    border: 1px solid var(--color-border);
+    border-radius: 0.5rem;
+    background: var(--color-surface-strong);
+}
+
+.adminStatLabel {
+    color: var(--color-text-muted);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.035em;
+    text-transform: uppercase;
+}
+
+/* --------------------------------------------------
+   Unassigned boards
+-------------------------------------------------- */
+
+.unassignedIntro {
+    margin-bottom: 1rem;
+}
+
+.unassignedIntro p {
+    margin: 0;
+    color: var(--color-text-muted);
+    font-size: 0.85rem;
+    line-height: 1.45;
+}
+
+.unassignedTable {
+    width: 100%;
+    min-width: 850px;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.unassignedTable th {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--color-border);
+    background: var(--color-surface-strong);
+    color: var(--color-text-muted);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.045em;
+    text-align: left;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.unassignedTable td {
+    padding: 0.85rem 1rem;
+    border-bottom: 1px solid var(--color-border);
+    vertical-align: middle;
+}
+
+.unassignedTable tbody tr:last-child td {
+    border-bottom: 0;
+}
+
+.unassignedBoardRow {
+    background: var(--color-surface);
+    transition: background-color 120ms ease;
+}
+
+.unassignedBoardRow:hover {
+    background: var(--color-surface-strong);
+}
+
+.unassignedBoardName {
+    color: var(--color-text-primary);
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.unassignedBoardDescription {
+    color: var(--color-text-muted);
+    font-size: 0.82rem;
+    line-height: 1.4;
+}
+
+.assignColumn {
+    width: 17rem;
+}
+
+.assignCategoryForm {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.assignCategoryForm .adminInput {
+    min-width: 0;
+    flex: 1;
+}
+
+.assignCategoryForm .adminPrimaryButton {
+    flex-shrink: 0;
+    white-space: nowrap;
+}
+
+@media (max-width: 900px) {
+    .adminStatsGrid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 600px) {
+    .adminStatsGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .assignCategoryForm {
+        align-items: stretch;
+        flex-direction: column;
+    }
+}

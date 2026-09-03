@@ -79,14 +79,14 @@ export function AdminUserTable({users, currentUserId}: AdminUserTableProps): JSX
                                 </td>
                                 <td className={styles.tableActions}>
                                     <div className={styles.iconActions}>
-                                        <Link href={`/admin/${user.id}`}
+                                        <Link href={`/admin/users/${user.id}`}
                                               className={styles.iconButton}
                                               title="View details"
                                               aria-label={`View details for ${user.email}`}>
                                             <SearchIcon/>
                                         </Link>
 
-                                        <Link href={`/admin/${user.id}/edit`}
+                                        <Link href={`/admin/users/${user.id}/edit`}
                                               className={styles.iconButton}
                                               title="Edit user"
                                               aria-label={`Edit ${user.email}`}>
