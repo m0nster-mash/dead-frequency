@@ -1,16 +1,32 @@
 "use client";
 
-import type {ReactNode} from "react";
-import Link from "next/link";
 import {useSidebar} from "@/app/dashboard/components/sidebar-context";
 import styles from "@shared/styles/dashboard.module.css";
+import Link from "next/link";
+import {JSX, ReactNode} from "react";
 
+/**
+ * Properties for the SidebarFrame component.
+ *
+ * @property {ReactNode} toggleButton - Interactive trigger element (an icon button) to toggle layout width.
+ * @property {ReactNode} children - Navigation links or panel elements rendered within the body of the sidebar.
+ */
 type SidebarFrameProps = {
     toggleButton: ReactNode;
     children: ReactNode;
 };
 
-export default function SidebarFrame({toggleButton, children}: SidebarFrameProps) {
+/**
+ * A client component that structuralizes the outer layout frame of the dashboard navigation column.
+ *
+ * @param {SidebarFrameProps} props - The component properties.
+ * @param {ReactNode} props.toggleButton - Renderable node containing layout triggers.
+ * @param {ReactNode} props.children - Context child anchors to project down inside navigation list tracks.
+ *
+ * @returns {JSX.Element} The visual side drawer component layer wrapper.
+ */
+export default function SidebarFrame({toggleButton, children}: SidebarFrameProps): JSX.Element {
+    // collects current layout metadata flags from context handlers
     const {collapsed} = useSidebar();
 
     return (

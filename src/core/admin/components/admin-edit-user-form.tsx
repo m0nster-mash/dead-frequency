@@ -1,12 +1,21 @@
 "use client";
 
-import {SubmitEvent, useState} from "react";
-import {useRouter} from "next/navigation";
-import {authClient} from "@/core/auth/lib/auth-client";
 import {DeleteUserModal} from "@/core/admin/components/delete-user-modal";
+import {authClient} from "@/core/auth/lib/auth-client";
 import {MainContentPanel} from "@/core/dashboard/components/panels/main-card";
 import styles from "@/shared/styles/form-panel.module.css";
+import {useRouter} from "next/navigation";
+import {JSX, SubmitEvent, useState} from "react";
 
+/**
+ * Properties for the AdminEditUserForm component.
+ *
+ * @property {string} userId - The unique identifier of the user account being modified.
+ * @property {string} currentName - The existing display username of the target account.
+ * @property {string} currentEmail - The existing primary email address of the target account.
+ * @property {string} currentRole - The current security group authorization role (ex. "user", "admin").
+ * @property {boolean} isCurrentUser - Flag verifying if the logged-in administrator is modifying their own record.
+ */
 type AdminEditUserFormProps = {
     userId: string;
     currentName: string;
@@ -15,31 +24,55 @@ type AdminEditUserFormProps = {
     isCurrentUser: boolean;
 };
 
+/**
+ * Standardized status tracking template for form operation tracking loops.
+ *
+ * @property {boolean} loading - Indicates whether an active async transaction is pending.
+ * @property {string | null} error - Response message captured during a broken execution pipeline.
+ * @property {string | null} success - User-facing confirmation text for successful database mutations.
+ */
 type SectionState = {
     loading: boolean;
     error: string | null;
     success: string | null;
 };
 
+/**
+ * Default clean state initialization constant for form transaction cycles.
+ */
 const idleState: SectionState = {
     loading: false,
     error: null,
     success: null
 };
 
+/**
+ * An interactive dashboard form allowing administrators to alter user metrics, change credentials, or terminate
+ * platform user accounts.
+ *
+ * @param {AdminEditUserFormProps} props - The component properties.
+ *
+ * @returns {JSX.Element} The visual multisection account editing dashboard layout interface.
+ */
 export function AdminEditUserForm({
                                       userId,
                                       currentName,
                                       currentEmail,
                                       currentRole,
                                       isCurrentUser,
-                                  }: AdminEditUserFormProps) {
+                                  }: AdminEditUserFormProps): JSX.Element {
 
     const router = useRouter();
     const [profileState, setProfileState] = useState<SectionState>(idleState);
     const [passwordState, setPasswordState] = useState<SectionState>(idleState);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
 
+    /**
+     * Intercepts and processes the profile modification form lifecycle. Evaluates text modifications and updates
+     * profile signatures or authorization roles via the SDK client.
+     *
+     * @param {SubmitEvent<HTMLFormElement>} event - Standard client submission event.
+     */
     async function handleProfileSubmit(event: SubmitEvent<HTMLFormElement>) {
         event.preventDefault();
         setProfileState({
@@ -63,10 +96,11 @@ export function AdminEditUserForm({
         }
 
         try {
-            const updateResult = await authClient.admin.updateUser({
-                userId,
-                data: {name, email},
-            });
+            const updateResult =
+                await authClient.admin.updateUser({
+                    userId,
+                    data: {name, email},
+                });
 
             if (updateResult.error) {
                 console.error("[admin-edit-form] updateUser error:", updateResult.error);
@@ -79,10 +113,11 @@ export function AdminEditUserForm({
             }
 
             if (!isCurrentUser && role !== currentRole) {
-                const roleResult = await authClient.admin.setRole({
-                    userId,
-                    role: role as "user" | "admin",
-                });
+                const roleResult =
+                    await authClient.admin.setRole({
+                        userId,
+                        role: role as "user" | "admin",
+                    });
 
                 if (roleResult.error) {
                     console.error("[admin-edit-form] setRole error:", roleResult.error);
@@ -94,7 +129,11 @@ export function AdminEditUserForm({
                     return;
                 }
             }
-            setProfileState({loading: false, error: null, success: "User updated"});
+            setProfileState({
+                loading: false,
+                error: null,
+                success: "User updated"
+            });
             router.refresh();
         } catch (error) {
             console.error("[admin-edit-form] unexpected error:", error);
@@ -106,6 +145,12 @@ export function AdminEditUserForm({
         }
     }
 
+    /**
+     * Intercepts and processes the password update lifecycle. Evaluates password syntax and dispatches changes to
+     * overwrite target user credentials.
+     *
+     * @param {SubmitEvent<HTMLFormElement>} event - Standard client submission event.
+     */
     async function handlePasswordSubmit(event: SubmitEvent<HTMLFormElement>) {
         event.preventDefault();
         setPasswordState({
@@ -128,7 +173,11 @@ export function AdminEditUserForm({
         }
 
         if (newPassword !== confirmPassword) {
-            setPasswordState({loading: false, error: "Passwords do not match", success: null});
+            setPasswordState({
+                loading: false,
+                error: "Passwords do not match",
+                success: null
+            });
             return;
         }
 
@@ -144,7 +193,11 @@ export function AdminEditUserForm({
                 });
                 return;
             }
-            setPasswordState({loading: false, error: null, success: "Password updated"});
+            setPasswordState({
+                loading: false,
+                error: null,
+                success: "Password updated"
+            });
             event.currentTarget.reset();
         } catch (error) {
             console.error("[admin-edit-form] unexpected error:", error);
@@ -189,7 +242,8 @@ export function AdminEditUserForm({
                                 <option value="admin">Admin</option>
                             </select>
                             {isCurrentUser && (
-                                <p className={styles.sectionSubtitle}>You can&apos;t change your own role.</p>)}
+                                <p className={styles.sectionSubtitle}>You can&apos;t change your own role.</p>
+                            )}
                         </div>
                         {profileState.error ? <p className={styles.error}>{profileState.error}</p> : null}
                         {profileState.success ? (<p className={styles.success}>{profileState.success}</p>) : null}

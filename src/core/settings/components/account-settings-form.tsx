@@ -1,43 +1,79 @@
 "use client";
 
-import {SubmitEvent, useState} from "react";
-import {useRouter} from "next/navigation";
 import {authClient} from "@/core/auth/lib/auth-client";
 import {MainContentPanel} from "@/core/dashboard/components/panels/main-card";
 import styles from "@/shared/styles/form-panel.module.css";
+import {useRouter} from "next/navigation";
+import {JSX, SubmitEvent, useState} from "react";
 
+/**
+ * Properties for the AccountSettingsForm component.
+ *
+ * @property {string} currentName - The user's existing display username.
+ * @property {string} currentEmail - The user's existing primary email address.
+ */
 type AccountSettingsFormProps = {
     currentName: string;
     currentEmail: string;
 };
 
+/**
+ * Standardized status tracking template for form operation tracking loops.
+ *
+ * @property {boolean} loading - Indicates whether an active async transaction is pending.
+ * @property {string | null} error - Response message captured during a broken execution pipeline.
+ * @property {string | null} success - User-facing confirmation text for successful mutations.
+ */
 type SectionState = {
     loading: boolean;
     error: string | null;
     success: string | null;
 };
 
+/**
+ * Default clean state initialization constant for form transaction cycles.
+ */
 const idleState: SectionState = {loading: false, error: null, success: null};
 
+/**
+ * An interactive Client Component dashboard form allowing self-service account configurations. Users can
+ * independently update their display identity name, primary email address, or security credentials.
+ *
+ * @param {AccountSettingsFormProps} props - The component properties.
+ *
+ * @returns {JSX.Element} The visual multisection account configurations dashboard layout interface.
+ */
 export function AccountSettingsForm({
                                         currentName,
                                         currentEmail,
-                                    }: AccountSettingsFormProps) {
+                                    }: AccountSettingsFormProps): JSX.Element {
     const router = useRouter();
-
     const [profileState, setProfileState] = useState<SectionState>(idleState);
     const [emailState, setEmailState] = useState<SectionState>(idleState);
     const [passwordState, setPasswordState] = useState<SectionState>(idleState);
 
+    /**
+     * Intercepts and processes the username modification lifecycle.
+     *
+     * @param {SubmitEvent<HTMLFormElement>} event - Standard client submission event.
+     */
     async function handleProfileSubmit(event: SubmitEvent<HTMLFormElement>) {
         event.preventDefault();
-        setProfileState({loading: true, error: null, success: null});
+        setProfileState({
+            loading: true,
+            error: null,
+            success: null
+        });
 
         const formData = new FormData(event.currentTarget);
         const name = String(formData.get("name") || "").trim();
 
         if (!name) {
-            setProfileState({loading: false, error: "Username is required", success: null});
+            setProfileState({
+                loading: false,
+                error: "Username is required",
+                success: null
+            });
             return;
         }
 
@@ -52,24 +88,45 @@ export function AccountSettingsForm({
             return;
         }
 
-        setProfileState({loading: false, error: null, success: "Username updated"});
+        setProfileState({
+            loading: false,
+            error: null,
+            success: "Username updated"
+        });
         router.refresh();
     }
 
+    /**
+     * Intercepts and processes the primary email modification lifecycle.
+     *
+     * @param {SubmitEvent<HTMLFormElement>} event - Standard client submission event.
+     */
     async function handleEmailSubmit(event: SubmitEvent<HTMLFormElement>) {
         event.preventDefault();
-        setEmailState({loading: true, error: null, success: null});
+        setEmailState({
+            loading: true,
+            error: null,
+            success: null
+        });
 
         const formData = new FormData(event.currentTarget);
         const newEmail = String(formData.get("email") || "").trim();
 
         if (!newEmail) {
-            setEmailState({loading: false, error: "Email is required", success: null});
+            setEmailState({
+                loading: false,
+                error: "Email is required",
+                success: null
+            });
             return;
         }
 
         if (newEmail === currentEmail) {
-            setEmailState({loading: false, error: "That is already your email", success: null});
+            setEmailState({
+                loading: false,
+                error: "That is already your email",
+                success: null
+            });
             return;
         }
 
@@ -95,20 +152,36 @@ export function AccountSettingsForm({
         router.refresh();
     }
 
+    /**
+     * Intercepts and processes the secure credential alteration lifecycle.
+     * Enforces input confirmation alignments and kicks other active browser vaults off the platform.
+     *
+     * @param {SubmitEvent<HTMLFormElement>} event - Standard client submission event.
+     */
     async function handlePasswordSubmit(event: SubmitEvent<HTMLFormElement>) {
         event.preventDefault();
-        setPasswordState({loading: true, error: null, success: null});
+        setPasswordState({
+            loading: true,
+            error: null,
+            success: null
+        });
 
         const formData = new FormData(event.currentTarget);
         const currentPassword = String(formData.get("currentPassword") || "");
         const newPassword = String(formData.get("newPassword") || "");
         const confirmPassword = String(formData.get("confirmPassword") || "");
 
+        // ensure the matching checks pass correctly
         if (newPassword !== confirmPassword) {
-            setPasswordState({loading: false, error: "New passwords do not match", success: null});
+            setPasswordState({
+                loading: false,
+                error: "New passwords do not match",
+                success: null
+            });
             return;
         }
 
+        // enforce strict minimum length thresholds
         if (newPassword.length < 8) {
             setPasswordState({
                 loading: false,
@@ -121,7 +194,7 @@ export function AccountSettingsForm({
         const result = await authClient.changePassword({
             currentPassword,
             newPassword,
-            revokeOtherSessions: true,
+            revokeOtherSessions: true, // Forcibly de-authenticates secondary locations to maintain high session hygiene
         });
 
         if (result.error) {
@@ -133,8 +206,13 @@ export function AccountSettingsForm({
             return;
         }
 
-        setPasswordState({loading: false, error: null, success: "Password updated"});
-        event.currentTarget.reset();
+        setPasswordState({
+            loading: false,
+            error: null,
+            success: "Password updated"
+        });
+
+        event.currentTarget.reset(); // erases input credentials fields safely out of view elements
     }
 
     return (

@@ -1,42 +1,67 @@
 "use client";
 
-import {useState} from "react";
-import {useRouter} from "next/navigation";
 import {AvatarRenderer} from "@/feature/avatar/components/avatar-renderer";
-import {
-    AVATAR_OPTIONS,
-    AvatarPartCategory,
-} from "@/feature/avatar/lib/options";
-import {AvatarConfig, AVATAR_CONFIG_VERSION} from "@/feature/avatar/lib/types";
 import {saveAvatarConfig} from "@/feature/avatar/lib/actions";
+import {AVATAR_OPTIONS, AvatarPartCategory,} from "@/feature/avatar/lib/options";
+import {AvatarConfig} from "@/feature/avatar/lib/types";
 import styles from "@/shared/styles/form-panel.module.css";
+import {useRouter} from "next/navigation";
+import {JSX, useState} from "react";
 
+/**
+ * Properties for the AvatarBuilder component.
+ *
+ * @property {AvatarConfig} initialConfig - The initial visual layout parameters of the user's avatar character.
+ */
 type AvatarBuilderProps = {
     initialConfig: AvatarConfig;
 };
 
-const CATEGORIES: {key: AvatarPartCategory; label: string}[] = [
+/**
+ * Static schema collection mapping out vector part categories with human-readable menu labels.
+ */
+const CATEGORIES: { key: AvatarPartCategory; label: string }[] = [
     {key: "eyes", label: "Eyes"},
     {key: "mouth", label: "Mouth"},
     {key: "hair", label: "Hair"},
 ];
 
-export function AvatarBuilder({initialConfig}: AvatarBuilderProps) {
+/**
+ * An interactive Client Component studio interface allowing members to customize their vector avatar character
+ * profiles. Displays real-time asset modifications via a decoupled layout layer and saves configs via server action.
+ *
+ * @param {AvatarBuilderProps} props - The component properties.
+ *
+ * @returns {JSX.Element} The visual vector asset assembly studio dashboard workspace.
+ */
+export function AvatarBuilder({initialConfig}: AvatarBuilderProps): JSX.Element {
     const router = useRouter();
     const [config, setConfig] = useState<AvatarConfig>(initialConfig);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [success, setSuccess] = useState<string | null>(null);
 
+    /**
+     * Swaps out an asset component block index parameter matching targeted customization scopes.
+     * Alters local visual properties instantaneously to enable interactive studio feedback.
+     *
+     * @param {AvatarPartCategory} category - The design scope identifier being swapped (ex. "eyes", "mouth").
+     * @param {string} id - The specific vector item part identity string map selected by the member.
+     */
     function updatePart(category: AvatarPartCategory, id: string) {
         setConfig((prev) => ({...prev, [category]: id}));
     }
 
+    /**
+     * Dispatches current structural design configurations to persistent storage handlers. Manages operation loading
+     * flags and validates response records.
+     */
     async function handleSave() {
         setLoading(true);
         setError(null);
-        setSuccess(null);
+        setSuccess(null); // Resets legacy confirmation notices before firing new mutation requests
 
+        // Invokes the corresponding server data layer handler to persist configuration structures
         const result = await saveAvatarConfig(config);
 
         if (!result.success) {
@@ -47,7 +72,7 @@ export function AvatarBuilder({initialConfig}: AvatarBuilderProps) {
 
         setSuccess("Avatar updated");
         setLoading(false);
-        router.refresh();
+        router.refresh(); // Signals layout trees to flush client state caches, fetching updated graphical layers
     }
 
     return (

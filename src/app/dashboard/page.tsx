@@ -1,19 +1,16 @@
-import {auth} from "@/core/auth";
-import {headers} from "next/headers";
-import {redirect} from "next/navigation";
-import {PageHeader} from "@/core/dashboard/components/panels/page-header";
+import {requireSession} from "@/core/auth/lib/require-session";
 import {MainContentPanel} from "@/core/dashboard/components/panels/main-card";
+import {PageHeader} from "@/core/dashboard/components/panels/page-header";
 import LoremIpsum from "@shared/components/lorem-ipsum";
+import {JSX} from "react";
 
-export default async function DashboardPage() {
-    const session = await auth.api.getSession({
-        headers: await headers()
-    });
-
-    if (!session) {
-        redirect("/login");
-    }
-
+/**
+ * A page that serves as the root landing viewport for the dashboard.
+ *
+ * @returns {Promise<JSX.Element>} A promise resolving to the user workspace dashboard landing viewport.
+ */
+export default async function DashboardPage(): Promise<JSX.Element> {
+    const session = await requireSession();
     const username = session.user.name;
 
     return (
@@ -25,15 +22,16 @@ export default async function DashboardPage() {
                             {
                                 id: "main-content-panel",
                                 label: "Main Content Panel Example",
-                                level: 2,
+                                level: 2
                             },
                             {
                                 id: "split-content-panel",
                                 label: "Split Content Panel Example",
-                                level: 2,
-                            }]}
-            />
-            <MainContentPanel title={"Example: Main Content Panel"} id={"main-content-panel"}>
+                                level: 2
+                            }]}/>
+
+            <MainContentPanel title={"Example: Main Content Panel"}
+                              id={"main-content-panel"}>
                 <p>
                     This panel contains a title, a simple content area for any amount or kind of content, and a "return
                     to home" arrow button at the bottom.
