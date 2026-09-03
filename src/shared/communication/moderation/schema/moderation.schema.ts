@@ -1,11 +1,11 @@
+import {user} from "@/core/auth/schema/auth.schema";
 import {relations} from "drizzle-orm";
 import {index, pgEnum, pgTable, text, timestamp} from "drizzle-orm/pg-core";
-import {user} from "@/core/auth/schema/auth.schema";
 
 /**
- * System-wide central enum registry enumerating every active feature module on the platform.
- * Centralizing this dictionary blocks disparate feature columns or micro-services from experiencing
- * type definition drift during modular extensions.
+ * System-wide central enum registry enumerating every active feature module on the platform. Centralizing this
+ * dictionary blocks disparate feature columns or microservices from experiencing type definition drift during
+ * modular extensions.
  */
 export const moduleEnum = pgEnum(
     "module_name", [
@@ -20,8 +20,8 @@ export const moduleEnum = pgEnum(
     ]);
 
 /**
- * Operational action type enum dictionary mapping out legal structural mutations
- * that administrators or logging tools can commit against system targets.
+ * Operational action type enum dictionary mapping out legal structural mutations that administrators or logging tools
+ * can commit against system targets.
  */
 export const modActionEnum = pgEnum(
     "mod_action", [
@@ -37,37 +37,40 @@ export const modActionEnum = pgEnum(
     ]);
 
 /**
- * High-security systemic audit log persistence table.
- * Records continuous regulatory metrics tracking enforcement modifications or security overrides.
+ * High-security systemic audit log persistence table. Records continuous regulatory metrics tracking enforcement
+ * modifications or security overrides.
  */
 export const auditLog = pgTable(
-    "audit_log",
-    {
-        id: text("id").primaryKey(),
-        module: moduleEnum("module").notNull(),   // Target sub-system pointer context (ex. "forum")
-        recordId: text("record_id").notNull(),   // Source index identifier tracking the underlying item mutation
-        action: modActionEnum("action").notNull(), // The explicit action class logged by administrative modules
+    "audit_log", {
+        id: text("id")
+            .primaryKey(),
+        module: moduleEnum("module") // Target sub-system pointer context (ex. "forum")
+            .notNull(),
+        recordId: text("record_id") // Source index identifier tracking the underlying item mutation
+            .notNull(),
+        action: modActionEnum("action") // The explicit action class logged by administrative modules
+            .notNull(),
 
-        /*
-           Enforcing Identity References:
-           Binds row parameters directly to the checking moderator's user entry ID.
-           Set Null Policy Rule: Overwrites target identifiers with clean null markers if
-           moderator profiles drop off the platform to maintain system compliance logs.
-        */
+        /**
+         * Binds row parameters directly to the checking moderator's user entry ID. Overwrites target identifiers with
+         * clean null markers if moderator profiles drop off the platform to maintain system compliance logs.
+         */
         moderatorId: text("moderator_id")
             .notNull()
-            .references(() => user.id, { onDelete: "set null" }),
+            .references(() => user.id, {onDelete: "set null"}),
 
-        /*
-           Target User Alignment Reference:
-           Maps the recipient profile receiving structural corrections or standing restrictions.
-           Differs from content authors (ex. clearing a thread that targets a third-party account profile).
-        */
-        targetUserId: text("target_user_id").references(() => user.id, {
-            onDelete: "set null",
-        }),
+        /**
+         * Maps the recipient profile receiving structural corrections or standing restrictions. Differs from content
+         * authors (ex. clearing a thread that targets a third-party account profile).
+         */
+        targetUserId: text("target_user_id")
+            .references(() => user.id, {
+                onDelete: "set null",
+            }),
         reason: text("reason"),
-        createdAt: timestamp("created_at").defaultNow().notNull(),
+        createdAt: timestamp("created_at")
+            .defaultNow()
+            .notNull(),
     },
     (table) => [
         // Index Map 1: Accelerates data lookups inside specialized historical review panel logs
@@ -82,10 +85,8 @@ export const auditLog = pgTable(
 );
 
 /**
- * TODO:: implement function or delete
- *
- * Drizzle ORM Relational Mapping: auditLog Scope.
- * Facilitates safe single-step queries resolving user object parameters from data storage.
+ * Drizzle ORM Relational Mapping: auditLog Scope.  Facilitates safe single-step queries resolving user object
+ * parameters from data storage.
  */
 export const auditLogRelations = relations(auditLog, ({one}) => ({
     // Relational route extracting display descriptors for the supervisor who ran the script action

@@ -8,11 +8,11 @@ import {JSX, SubmitEvent, useState} from "react";
 /**
  * Properties for the DeleteUserModal component.
  *
- * @property {() => void} onCloseAction - Callback invoked to dismiss or close the modal view overlay
- * @property {() => void} [onDeletedAction] - Optional secondary handler executed following successful record deletion
+ * @property {() => void} onCloseAction - Callback invoked to dismiss or close the modal view overlay.
+ * @property {() => void} [onDeletedAction] - Optional secondary handler executed following successful record deletion.
  * @property {string} userEmail - The email address of the account targeted for deletion, used to enforce string
- * verification
- * @property {string} userId - The unique identifier of the user record targeted for removal
+ *                                verification.
+ * @property {string} userId - The unique identifier of the user record targeted for removal.
  */
 type DeleteUserModalProps = {
     onCloseAction: () => void;
@@ -22,12 +22,12 @@ type DeleteUserModalProps = {
 };
 
 /**
- * An interactive Client Component overlay portal that enforces a high-security manual confirmation flow
- * before executing permanent account deletion.
+ * An interactive Client Component overlay portal that enforces a high-security manual confirmation flow before
+ * executing permanent account deletion.
  *
- * @param {DeleteUserModalProps} props - The component properties
+ * @param {DeleteUserModalProps} props - The component properties.
  *
- * @returns {JSX.Element} The visual overlay confirmation modal viewport dialog layer
+ * @returns {JSX.Element} The visual overlay confirmation modal viewport dialog layer.
  */
 export function DeleteUserModal({
                                     userId, userEmail, onCloseAction, onDeletedAction,
@@ -37,19 +37,19 @@ export function DeleteUserModal({
     const [error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState(false);
 
-    // Form Verification Guard: Ensures submission button remains locked until string patterns line up perfectly
+    // ensures submission button remains locked until string patterns line up perfectly
     const isConfirmed = confirmation.trim().toLowerCase() === userEmail.toLowerCase();
 
     /**
-     * Intercepts and processes the final deletion submit request sequence.
-     * Evaluates verification values and passes execution instructions down to the administrative SDK handler.
+     * Intercepts and processes the final deletion submit request sequence. Evaluates verification values and passes
+     * execution instructions down to the administrative SDK handler.
      *
-     * @param {SubmitEvent<HTMLFormElement>} event - Standard client submission event context
+     * @param {SubmitEvent<HTMLFormElement>} event - Standard client submission event context.
      */
     async function handleSubmit(event: SubmitEvent<HTMLFormElement>) {
         event.preventDefault();
 
-        // Safety Fallback Guard: Block background execution hacks if the check flag is falsy
+        // block background execution hacks if the check flag is falsy
         if (!isConfirmed) {
             return;
         }
@@ -58,7 +58,7 @@ export function DeleteUserModal({
         setError(null);
 
         try {
-            // Dispatches deletion transaction request through the secure auth client
+            // dispatches deletion transaction request through the secure auth client
             const result = await authClient.admin.removeUser({userId});
 
             if (result.error) {
@@ -68,9 +68,9 @@ export function DeleteUserModal({
             }
 
             setLoading(false);
-            onDeletedAction?.(); // Run post-deletion pipelines if attached by parent grids
-            onCloseAction();     // Dismounts the modal interface layout view node safely
-            router.refresh();    // Invalidates active layouts, forcing server updates to fetch fresh inventory streams
+            onDeletedAction?.(); // run post-deletion pipelines if attached by parent grids
+            onCloseAction();     // dismounts the modal interface layout view node safely
+            router.refresh();    // invalidates active layouts, forcing server updates to fetch fresh inventory streams
         } catch (err) {
             console.error("[delete-user-modal] execution error:", err);
             setError("An unexpected system exception occurred during the deletion request.");

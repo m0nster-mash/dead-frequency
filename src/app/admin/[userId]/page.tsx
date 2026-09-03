@@ -1,6 +1,8 @@
 import {AdminPostingStatusForm} from "@/core/admin/components/admin-posting-status-form";
 import {applyPostingStatusAction} from "@/core/admin/lib/actions";
 import {auth} from "@/core/auth";
+import {requireSession} from "@/core/auth/lib/require-session";
+import {requireUser} from "@/core/auth/lib/require-user";
 import {MainContentPanel} from "@/core/dashboard/components/panels/main-card";
 import {PageHeader} from "@/core/dashboard/components/panels/page-header";
 import {BreadcrumbLabel} from "@/shared/components/breadcrumb-label";
@@ -8,7 +10,6 @@ import styles from "@/shared/styles/form-panel.module.css";
 import EditIcon from "@/shared/svg/bootstrap-edit-icon.svg";
 import {headers} from "next/headers";
 import Link from "next/link";
-import {notFound, redirect} from "next/navigation";
 import {JSX} from "react";
 
 /**
@@ -35,51 +36,27 @@ function formatDate(value: string | Date | null | undefined): string {
 /**
  * A page that renders detailed profile, activity, and configuration options for a single user account.
  *
- * Secure processing flow:
- * 1. Resolves dynamic route parameters and request headers.
- * 2. Authenticates the ongoing user session, forcing a `/login` redirect if missing.
- * 3. Restricts page presentation exclusively to accounts with the `"admin"` role.
- * 4. Fetches the designated user profile data (returns 404 if data lookup drops or breaks).
- * 5. Pulls historical session records, computing the most recent active session timestamp.
- *
  * @param {PageProps} props - The component properties
- * @param {Promise<{ userId: string }>} props.params - Route parameter promise containing the ID of the user being viewed
+ * @param {Promise<{ userId: string }>} props.params - Route parameter promise containing the ID of the user being
+ *                                                     viewed.
  *
- * @returns {Promise<JSX.Element>} A promise resolving to the admin user management profile viewport
+ * @returns {Promise<JSX.Element>} A promise resolving to the admin user management profile viewport.
  */
 export default async function AdminUserDetailsPage({params}: PageProps): Promise<JSX.Element> {
     const {userId} = await params;
     const requestHeaders = await headers();
-    const session = await auth.api.getSession({headers: requestHeaders});
-
-    // TODO:: replace with centralized mechanism
-    if (!session?.user) {
-        redirect("/login");
-    }
-    if (session.user.role !== "admin") {
-        redirect("/");
-    }
+    await requireSession({role: "admin"});
 
     let user;
     let sessions: Array<{
         createdAt: string | Date;
-        updatedAt?: string | Date | null }> = [];
+        updatedAt?: string | Date | null
+    }> = [];
 
-    // Fetch account details for the target user ID
-    try {
-        user = await auth.api.getUser({
-            query: {id: userId},
-            headers: requestHeaders,
-        });
-    } catch (error) {
-        console.error("[admin/details] getUser threw:", error);
-        notFound();
-    }
-
-    // Enforce 404 layout if the target user profile cannot be located
-    if (!user) {
-        notFound();
-    }
+    user = await requireUser(userId, {
+        headers: requestHeaders,
+        context: "admin/details",
+    });
 
     // Fetch active session history for tracking administrative details
     try {

@@ -14,14 +14,13 @@ export type AvatarConfigValidationResult =
 const PART_CATEGORIES: AvatarPartCategory[] = ["eyes", "mouth", "hair"];
 
 /**
- * Validates untrusted input (ex. from a client request body) against the
- * AvatarConfig shape. Rejects unknown part IDs and enforces the version field.
- * This keeps writes decoupled from raw client input per issue #64.
+ * Validates untrusted input (ex. from a client request body) against the AvatarConfig shape. Rejects unknown part
+ * IDs and enforces the version field.
  *
  * @param {unknown} input - Raw untrusted data payload captured from client components or API endpoints.
  *
  * @returns {AvatarConfigValidationResult} A structured validation result dictating correctness or descriptive error
- * states.
+ *                                         states.
  */
 export function validateAvatarConfig(input: unknown): AvatarConfigValidationResult {
     // Step 1: Base Shape Verification
@@ -44,12 +43,12 @@ export function validateAvatarConfig(input: unknown): AvatarConfigValidationResu
     for (const category of PART_CATEGORIES) {
         const value = candidate[category];
 
-        // Datatype Enforcement: Drop validation tokens if fields hold boolean arrays or numerical properties
+        // Drop validation tokens if fields hold boolean arrays or numerical properties
         if (typeof value !== "string") {
             return {valid: false, error: `Missing or invalid "${category}" field.`};
         }
 
-        // Integrity Boundary Scan: Confirm codes map to actual verified vector options records
+        // Confirm codes map to actual verified vector options records
         if (!isValidAvatarPart(category, value)) {
             return {valid: false, error: `Unknown ${category} part id: "${value}".`};
         }

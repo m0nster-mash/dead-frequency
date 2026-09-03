@@ -5,8 +5,8 @@ import {createContext, JSX, type ReactNode, useContext, useEffect, useState} fro
 /**
  * Value shape exposed by the SidebarContext.
  *
- * @property {boolean} collapsed - Indicates whether the sidebar interface is minimized
- * @property {() => void} toggle - State modifier function that flips the collapse flag
+ * @property {boolean} collapsed - Indicates whether the sidebar interface is minimized.
+ * @property {() => void} toggle - State modifier function that flips the collapse flag.
  */
 type SidebarContextValue = {
     collapsed: boolean;
@@ -28,7 +28,7 @@ const STORAGE_KEY = "dead-frequency:sidebar-collapsed";
  * Reads the persistence layer from the browser's storage window to determine initial state configurations.
  * Safe for SSR environments; defaults to false if window objects do not exist or threw errors.
  *
- * @returns {boolean} True if the layout context was previously saved as collapsed
+ * @returns {boolean} True if the layout context was previously saved as collapsed.
  */
 function readStoredCollapsed(): boolean {
     if (typeof window === "undefined") {
@@ -42,13 +42,7 @@ function readStoredCollapsed(): boolean {
 }
 
 /**
- * A Client Component context provider that facilitates responsive sidebar scaling across layouts.
- *
- * Technical feature flow:
- * 1. Lazy-initializes the state flag by checking local browser cookies/storage rules first.
- * 2. Side effect persistence: Syncs state adjustments back down to localStorage whenever state changes.
- * 3. Cross-tab sync: Automatically updates state variables if the user flips preferences inside secondary open browser
- * tabs.
+ * A client context provider that facilitates responsive sidebar scaling across layouts.
  *
  * @param {Object} props - The component properties
  * @param {ReactNode} props.children - Child UI layers nested inside the sidebar structural toggle loop
@@ -58,7 +52,7 @@ function readStoredCollapsed(): boolean {
 export function SidebarProvider({children}: { children: ReactNode }): JSX.Element {
     const [collapsed, setCollapsed] = useState<boolean>(readStoredCollapsed);
 
-    // Synchronizes localized memory changes down to the browser storage mechanism
+    // synchronizes localized memory changes down to the browser storage mechanism
     useEffect(() => {
         try {
             window.localStorage.setItem(STORAGE_KEY, String(collapsed));
@@ -67,7 +61,7 @@ export function SidebarProvider({children}: { children: ReactNode }): JSX.Elemen
         }
     }, [collapsed]);
 
-    // Cross-Tab Listener: Ensures multiple open instances sync layout states in real-time
+    // cross-tab listener; ensures multiple open instances sync layout states in real-time
     useEffect(() => {
         function handleStorage(event: StorageEvent) {
             if (event.key === STORAGE_KEY && event.newValue !== null) {
@@ -79,7 +73,7 @@ export function SidebarProvider({children}: { children: ReactNode }): JSX.Elemen
         return () => window.removeEventListener("storage", handleStorage);
     }, []);
 
-    // Encapsulated state modifier dispatch handle
+    // encapsulated state modifier dispatch handle
     const toggle = () => setCollapsed((v) => !v);
 
     return (
@@ -93,9 +87,9 @@ export function SidebarProvider({children}: { children: ReactNode }): JSX.Elemen
  * Custom React hook that hooks into active sidebar control dimensions. Includes strict validation checks to catch
  * runtime reference errors during layout assembly phases.
  *
- * @throws {Error} If called outside an active structural `SidebarProvider` hierarchy loop
+ * @throws {Error} If called outside an active structural `SidebarProvider` hierarchy loop.
  *
- * @returns {SidebarContextValue} Active context flags containing current layout properties and state utilities
+ * @returns {SidebarContextValue} Active context flags containing current layout properties and state utilities.
  */
 export function useSidebar(): SidebarContextValue {
     const ctx = useContext(SidebarContext);

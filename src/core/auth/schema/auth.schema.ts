@@ -2,8 +2,8 @@ import {relations} from "drizzle-orm";
 import {boolean, index, pgTable, text, timestamp, uniqueIndex} from "drizzle-orm/pg-core";
 
 /**
- * Core relational table representation storing persistent user metrics and status profiles.
- * Adapts to BetterAuth specifications while extending columns to handle administrative fields and guest states.
+ * Core relational table representation storing persistent user metrics and status profiles. Adapts to BetterAuth
+ * specifications while extending columns to handle administrative fields and guest states.
  */
 export const user = pgTable("user", {
     id: text("id")
@@ -20,23 +20,21 @@ export const user = pgTable("user", {
     createdAt: timestamp("created_at")
         .defaultNow()
         .notNull(),
-    /*
-       Dynamic Lifecycle Hook: Automatically intercepts database save updates
-       to overwrite timestamps with fresh client execution periods.
-    */
+
+    // automatically intercepts database save updates to overwrite timestamps with fresh client execution periods.
     updatedAt: timestamp("updated_at")
         .defaultNow()
         .$onUpdate(() => /* @__PURE__ */ new Date())
         .notNull(),
 
-    // Administrative & Security Extensibility Columns
+    // Administrative and security columns
     role: text("role"),
     banned: boolean("banned")
         .default(false),
     banReason: text("ban_reason"),
     banExpires: timestamp("ban_expires"),
 
-    // Guest/Anonymous Plugin State tracking flag
+    // guest/anonymous plugin State tracking flag
     isAnonymous: boolean("is_anonymous")
         .default(false),
 });
@@ -61,17 +59,15 @@ export const session = pgTable(
             .notNull(),
         ipAddress: text("ip_address"),
         userAgent: text("user_agent"),
-        /*
-           Relational Connection: Binds active session states directly down to users.
-           Cascade Configuration: Purging user profiles triggers an automatic cascading delete
-           sweeping corresponding data records out of database tables.
-        */
+
+        // Binds active session states directly down to users. Purging user profiles triggers an automatic cascading
+        // delete sweeping corresponding data records out of database tables.
         userId: text("user_id")
             .notNull()
             .references(() => user.id, {onDelete: "cascade"}),
         impersonatedBy: text("impersonated_by"),
     },
-    // Index Mapping Array: Optimizes session evaluation lookups across relational joins
+    // Optimizes session evaluation lookups across relational joins
     (table) => [index("session_userId_idx").on(table.userId)],
 );
 
@@ -106,10 +102,9 @@ export const account = pgTable(
             .notNull(),
     },
     (table) => [
-        /*
-           Composite Key Guard: Enforces absolute data boundaries blocking overlapping rows
-           containing identical platform issuer types and internal identifiers.
-        */
+
+        // Enforces absolute data boundaries blocking overlapping rows containing identical platform issuer types and
+        // internal identifiers.
         uniqueIndex("account_issuer_accountId_uidx").on(
             table.issuer,
             table.accountId,
@@ -143,8 +138,10 @@ export const verification = pgTable(
 );
 
 /**
- * Drizzle ORM Relational Mapping: User Definition Scope.
- * Explains structural 1-to-many lookup trees for hydration tasks.
+ * TODO:: determine if this is still going to be used or else delete
+ *
+ * Drizzle ORM Relational Mapping: User Definition Scope. Explains structural 1-to-many lookup trees for hydration
+ * tasks.
  */
 export const userRelations = relations(user, ({many}) => ({
     sessions: many(session),
@@ -152,8 +149,10 @@ export const userRelations = relations(user, ({many}) => ({
 }));
 
 /**
- * Drizzle ORM Relational Mapping: Session Definition Scope.
- * Links individual transient connection traces directly to their parent User model structure.
+ * TODO:: determine if this is still going to be used or else delete
+ *
+ * Drizzle ORM Relational Mapping: Session Definition Scope. Links individual transient connection traces directly to
+ * their parent User model structure.
  */
 export const sessionRelations = relations(session, ({one}) => ({
     user: one(user, {
@@ -163,8 +162,10 @@ export const sessionRelations = relations(session, ({one}) => ({
 }));
 
 /**
- * Drizzle ORM Relational Mapping: Account Definition Scope.
- * Maps individual integration keys up to a primary single user anchor entity.
+ * TODO:: determine if this is still going to be used or else delete
+ *
+ * Drizzle ORM Relational Mapping: Account Definition Scope. Maps individual integration keys up to a primary single
+ * user anchor entity.
  */
 export const accountRelations = relations(account, ({one}) => ({
     user: one(user, {

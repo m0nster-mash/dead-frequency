@@ -10,11 +10,11 @@ import {JSX, SubmitEvent, useState} from "react";
 /**
  * Properties for the AdminEditUserForm component.
  *
- * @property {string} userId - The unique identifier of the user account being modified
- * @property {string} currentName - The existing display username of the target account
- * @property {string} currentEmail - The existing primary email address of the target account
- * @property {string} currentRole - The current security group authorization role (ex. "user", "admin")
- * @property {boolean} isCurrentUser - Flag verifying if the logged-in administrator is modifying their own record
+ * @property {string} userId - The unique identifier of the user account being modified.
+ * @property {string} currentName - The existing display username of the target account.
+ * @property {string} currentEmail - The existing primary email address of the target account.
+ * @property {string} currentRole - The current security group authorization role (ex. "user", "admin").
+ * @property {boolean} isCurrentUser - Flag verifying if the logged-in administrator is modifying their own record.
  */
 type AdminEditUserFormProps = {
     userId: string;
@@ -27,9 +27,9 @@ type AdminEditUserFormProps = {
 /**
  * Standardized status tracking template for form operation tracking loops.
  *
- * @property {boolean} loading - Indicates whether an active async transaction is pending
- * @property {string | null} error - Response message captured during a broken execution pipeline
- * @property {string | null} success - User-facing confirmation text for successful database mutations
+ * @property {boolean} loading - Indicates whether an active async transaction is pending.
+ * @property {string | null} error - Response message captured during a broken execution pipeline.
+ * @property {string | null} success - User-facing confirmation text for successful database mutations.
  */
 type SectionState = {
     loading: boolean;
@@ -47,12 +47,12 @@ const idleState: SectionState = {
 };
 
 /**
- * An interactive Client Component dashboard form allowing administrators to alter user metrics,
- * change credentials, or terminate platform user accounts.
+ * An interactive dashboard form allowing administrators to alter user metrics, change credentials, or terminate
+ * platform user accounts.
  *
- * @param {AdminEditUserFormProps} props - The component properties
+ * @param {AdminEditUserFormProps} props - The component properties.
  *
- * @returns {JSX.Element} The visual multisection account editing dashboard layout interface
+ * @returns {JSX.Element} The visual multisection account editing dashboard layout interface.
  */
 export function AdminEditUserForm({
                                       userId,
@@ -68,8 +68,8 @@ export function AdminEditUserForm({
     const [showDeleteModal, setShowDeleteModal] = useState(false);
 
     /**
-     * Intercepts and processes the profile modification form lifecycle.
-     * Evaluates text modifications and updates profile signatures or authorization roles via the SDK client.
+     * Intercepts and processes the profile modification form lifecycle. Evaluates text modifications and updates
+     * profile signatures or authorization roles via the SDK client.
      *
      * @param {SubmitEvent<HTMLFormElement>} event - Standard client submission event.
      */
@@ -96,10 +96,11 @@ export function AdminEditUserForm({
         }
 
         try {
-            const updateResult = await authClient.admin.updateUser({
-                userId,
-                data: {name, email},
-            });
+            const updateResult =
+                await authClient.admin.updateUser({
+                    userId,
+                    data: {name, email},
+                });
 
             if (updateResult.error) {
                 console.error("[admin-edit-form] updateUser error:", updateResult.error);
@@ -145,10 +146,10 @@ export function AdminEditUserForm({
     }
 
     /**
-     * Intercepts and processes the password update lifecycle.
-     * Evaluates password syntax and dispatches changes to overwrite target user credentials.
+     * Intercepts and processes the password update lifecycle. Evaluates password syntax and dispatches changes to
+     * overwrite target user credentials.
      *
-     * @param {SubmitEvent<HTMLFormElement>} event - Standard client submission event
+     * @param {SubmitEvent<HTMLFormElement>} event - Standard client submission event.
      */
     async function handlePasswordSubmit(event: SubmitEvent<HTMLFormElement>) {
         event.preventDefault();
@@ -172,7 +173,11 @@ export function AdminEditUserForm({
         }
 
         if (newPassword !== confirmPassword) {
-            setPasswordState({loading: false, error: "Passwords do not match", success: null});
+            setPasswordState({
+                loading: false,
+                error: "Passwords do not match",
+                success: null
+            });
             return;
         }
 

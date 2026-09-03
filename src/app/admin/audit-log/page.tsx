@@ -1,4 +1,4 @@
-import {auth} from "@/core/auth";
+import {requireSession} from "@/core/auth/lib/require-session";
 import {user} from "@/core/auth/schema/auth.schema";
 import {MainContentPanel} from "@/core/dashboard/components/panels/main-card";
 import {PageHeader} from "@/core/dashboard/components/panels/page-header";
@@ -6,34 +6,24 @@ import styles from "@/shared/styles/form-panel.module.css";
 import {auditLog} from "@shared/communication/moderation/schema/moderation.schema";
 import {db} from "@shared/db/client";
 import {desc, eq} from "drizzle-orm";
-import {headers} from "next/headers";
-import {redirect} from "next/navigation";
 import {JSX} from "react";
 
 /**
- * A page that fetches and renders a system audit log.
+ * The system audit log.
  *
  * @returns {Promise<JSX.Element>} A promise resolving to the administrative system-wide audit history dashboard UI
  */
 export default async function AdminAuditLogPage(): Promise<JSX.Element> {
-    const requestHeaders = await headers();
-    const session = await auth.api.getSession({headers: requestHeaders});
-
-    // TODO:: replace with centralized mechanism
-    if (!session?.user) {
-        redirect("/login");
-    }
-    if (session.user.role !== "admin") {
-        redirect("/");
-    }
+    await requireSession({role: "admin"});
 
     // Projection reference block mapping relational structural bindings from schema imports
     const moderator = {
         id: user.id,
         name: user.name,
-        email: user.email};
+        email: user.email
+    };
 
-    // DB Query Execution: Pulls tracking entries, joining user meta fields via Drizzle ORM
+    // Pulls tracking entries, joining user meta fields via Drizzle ORM
     const entries = await db
         .select({
             id: auditLog.id,
@@ -52,7 +42,8 @@ export default async function AdminAuditLogPage(): Promise<JSX.Element> {
 
     return (
         <div className={styles.wrapper}>
-            <PageHeader eyebrow={"Administration"} title={"Audit Log"}
+            <PageHeader eyebrow={"Administration"}
+                        title={"Audit Log"}
                         subtitle={"Unified moderation history across every module"}/>
 
             <MainContentPanel title={"Recent mod actions"}>

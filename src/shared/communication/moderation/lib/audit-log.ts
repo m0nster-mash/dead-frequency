@@ -1,17 +1,22 @@
+import {db} from "@shared/db/client";
 import {randomUUID} from "crypto";
 import {auditLog} from "../schema/moderation.schema";
-import {db} from "@shared/db/client";
 
 /**
  * Structural payload contract mapping properties required to register a moderation event. Extracts legal string value
  * configurations dynamically straight from the underlying schema definition arrays.
  *
- * @property {(typeof auditLog.module.enumValues)[number]} module - The sub-system target where the action occurred (ex. "forum", "chatbox").
- * @property {string} recordId - Unique key identification identifier matching the modified or deleted source record document.
- * @property {(typeof auditLog.action.enumValues)[number]} action - The operational mutation class performed (ex. "ban", "delete", "mute").
- * @property {string} moderatorId - The unique user identification primary key of the administrator enforcing the action.
- * @property {string | null} [targetUserId] - Optional reference identifier mapping the account receiving the standing correction.
- * @property {string | null} [reason] - Optional textual rationale detailing systemic or administrative justifications for the action log.
+ * @property {(typeof auditLog.module.enumValues)[number]} module - The sub-system target where the action occurred
+ *                                                                  (ex. "forum", "chatbox").
+ * @property {string} recordId - Unique key identification identifier matching the modified or deleted source record
+ *                               document.
+ * @property {(typeof auditLog.action.enumValues)[number]} action - The operational mutation class performed
+ *                                                                  (ex. "ban", "delete", "mute").
+ * @property {string} moderatorId - Unique user identification primary key of the administrator enforcing the action.
+ * @property {string | null} [targetUserId] - Optional reference identifier mapping the account receiving the standing
+ *                                            correction.
+ * @property {string | null} [reason] - Optional textual rationale detailing systemic or administrative justifications
+ *                                      for the action log.
  */
 type LogModActionInput = {
     module: (typeof auditLog.module.enumValues)[number];
@@ -23,11 +28,11 @@ type LogModActionInput = {
 };
 
 /**
- * The single entry point every module's admin action must call.
- * Never write directly to auditLog from feature code — always route
- * through here so the shape can't drift between modules.
+ * The single entry point every module's admin action must call. Never write directly to auditLog from feature code,
+ * always route through here so the shape can't drift between modules.
  *
  * @param {LogModActionInput} input - Structured action parameters submitted by administrative code paths.
+ *
  * @returns {Promise<void>} A promise resolving once the transaction log records successfully to storage.
  */
 export async function logModAction(input: LogModActionInput): Promise<void> {

@@ -1,10 +1,10 @@
+import {user} from "@/core/auth/schema/auth.schema";
 import {relations, sql} from "drizzle-orm";
 import {pgTable, text, timestamp, uniqueIndex} from "drizzle-orm/pg-core";
-import {user} from "@/core/auth/schema/auth.schema";
 
 /**
- * Structural master role definition dictionary table.
- * Maintains system-wide permission tier string constants and human-readable metadata labels.
+ * Structural master role definition dictionary table. Maintains system-wide permission tier string constants and
+ * human-readable metadata labels.
  */
 export const role = pgTable(
     "role", {
@@ -14,45 +14,43 @@ export const role = pgTable(
     });
 
 /**
- * Relational join mapping table assigning structural permission roles to specific user accounts.
- * Flexibly configures privileges to span global boundaries or lock down to isolated modules.
+ * Relational join mapping table assigning structural permission roles to specific user accounts. Flexibly configures
+ * privileges to span global boundaries or lock down to isolated modules.
  */
 export const userRole = pgTable(
     "user_role", {
         id: text("id").primaryKey(), // Generated UUID primary key token string assigned on record insert
 
-        /*
-           Relational User Binding: Links permissions directly down to a matching profile.
-           Cascade Configuration: Purging user profiles triggers an automatic cascading delete
-           sweeping corresponding data records out of this table.
-        */
+        /**
+         * Links permissions directly down to a matching profile. Purging user profiles triggers an automatic
+         * cascading delete sweeping corresponding data records out of this table.
+         */
         userId: text("user_id").notNull().references(() => user.id, {onDelete: "cascade"}),
 
-        /*
-           Relational Role Binding: Links rows to verified mastery permission groups.
-           Cascade Configuration: Deleting master roles purges corresponding assignments.
-        */
+        // links rows to verified mastery permission groups. Deleting master roles purges corresponding assignments.
         roleId: text("role_id").notNull().references(() => role.id, {onDelete: "cascade"}),
 
-        /*
-           Context Scoping Parameter:
-           - null = Assigned permissions apply globally site-wide.
-           - non-null = Scoped to a specific module sandbox instance (ex. guild ID or forum board ID).
-        */
+        /**
+         * Context Scoping Parameter:
+         * - null = Assigned permissions apply globally site-wide.
+         * - non-null = Scoped to a specific module sandbox instance (ex. guild ID or forum board ID).
+         */
         contextId: text("context_id"),
         createdAt: timestamp("created_at").defaultNow().notNull(),
     },
     (table) => [
-        /*
-           Composite Unique Index Constraint Guard:
-           Prevents redundant overlapping data mappings for identical users, roles, and contexts.
-           Uses sql`COALESCE(...)` macros since standard SQL specifications allow multiple null values
-           to bypass standard uniqueness checks, ensuring strict unique compliance across null contexts.
-        */
+        /**
+         * Prevents redundant overlapping data mappings for identical users, roles, and contexts.
+         * Uses sql`COALESCE(...)` macros since standard SQL specifications allow multiple null values to bypass
+         * standard uniqueness checks, ensuring strict unique compliance across null contexts.
+         */
         uniqueIndex("user_role_unique_idx").on(
             table.userId,
             table.roleId,
-            sql`COALESCE(${table.contextId}, '')`,
+            sql`COALESCE(
+            ${table.contextId},
+            ''
+            )`,
         ),
     ],
 );

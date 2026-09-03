@@ -6,11 +6,11 @@ import {text} from "drizzle-orm/pg-core";
  *
  * Design Architecture Rules:
  * - `userId`: Mandatory foreign key matching active primary profiles.
- * - `characterId`: Kept intentionally nullable to support progressive feature-proofing guidelines.
- *   It serves as a reserved column slot to avoid widespread structural migrations once the Character System goes live.
+ * - `characterId`: Kept intentionally nullable to support progressive feature-proofing guidelines. It serves as a
+ *                  reserved column slot to avoid widespread structural migrations once the Character System goes live.
  *
- * @type {Object}
- * @property {text} userId - Non-nullable foreign key anchor linking content back to a primary account row with cascading deletions.
+ * @property {text} userId - Non-nullable foreign key anchor linking content back to a primary account row with
+ *                           cascading deletions.
  * @property {text} characterId - Reserved nullable text column tracking active roleplay or visual alias profiles.
  *
  * @example
@@ -43,7 +43,7 @@ export type Author = {
 };
 
 /**
- * TODO:: implement function or delete
+ * TODO:: implement character system
  *
  * Resolves the true "acting" identity parameters for a specific piece of platform content.
  *

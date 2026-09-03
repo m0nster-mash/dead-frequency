@@ -1,30 +1,19 @@
-import {auth} from "@/core/auth";
+import {requireSession} from "@/core/auth/lib/require-session";
 import {MainContentPanel} from "@/core/dashboard/components/panels/main-card";
 import {PageHeader} from "@/core/dashboard/components/panels/page-header";
 import styles from "@/shared/styles/form-panel.module.css";
 import {report} from "@shared/communication/interactions/schema/interactions.schema";
 import {db} from "@shared/db/client";
 import {desc, eq} from "drizzle-orm";
-import {headers} from "next/headers";
-import {redirect} from "next/navigation";
 import {JSX} from "react";
 
 /**
- * A page that renders the central moderation reports queue.
+ * Tthe central moderation reports queue.
  *
- * @returns {Promise<JSX.Element>} A promise resolving to the administrative user reports moderation viewport
+ * @returns {Promise<JSX.Element>} A promise resolving to the administrative user reports moderation viewport.
  */
 export default async function AdminReportsPage(): Promise<JSX.Element> {
-    const requestHeaders = await headers();
-    const session = await auth.api.getSession({headers: requestHeaders});
-
-    // TODO:: replace with centralized mechanism
-    if (!session?.user) {
-        redirect("/login");
-    }
-    if (session.user.role !== "admin") {
-        redirect("/");
-    }
+    await requireSession({role: "admin"});
 
     // DB Query Execution: Pulls open tickets matching status codes via Drizzle ORM
     const openReports =
@@ -37,7 +26,8 @@ export default async function AdminReportsPage(): Promise<JSX.Element> {
 
     return (
         <div className={styles.wrapper}>
-            <PageHeader eyebrow={"Administration"} title={"Reports Queue"}
+            <PageHeader eyebrow={"Administration"}
+                        title={"Reports Queue"}
                         subtitle={`${openReports.length} open reports`}/>
 
             <MainContentPanel title={"Open reports"}>

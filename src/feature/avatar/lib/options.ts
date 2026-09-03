@@ -39,8 +39,8 @@ export const HAIR_OPTIONS: AvatarOption[] = [
 ];
 
 /**
- * Central dictionary aggregating all operational feature category asset menus.
- * Drives validation layers and interactive studio selection loop arrays.
+ * Central dictionary aggregating all operational feature category asset menus. Drives validation layers and
+ * interactive studio selection loop arrays.
  *
  * @type {Record<AvatarPartCategory, AvatarOption[]>}
  */
@@ -64,8 +64,8 @@ export function isValidAvatarPart(category: AvatarPartCategory, id: string): boo
 }
 
 /**
- * Baseline visual initialization model used to configure new platform accounts on their first paint cycle.
- * Locks defaults to use the first recorded index entry of each standalone options array pool.
+ * Baseline visual initialization model used to configure new platform accounts on their first paint cycle. Locks
+ * defaults to use the first recorded index entry of each standalone options array pool.
  */
 export const DEFAULT_AVATAR_CONFIG = {
     version: 1 as const, // Constant version signature ensuring backward compatibility for asset migrations

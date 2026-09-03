@@ -20,12 +20,12 @@ export type SaveAvatarConfigResult =
  * @param {unknown} input - Raw untrusted data payload captured from client components or form inputs.
  *
  * @returns {Promise<SaveAvatarConfigResult>} A structured operation outcome dictionary carrying updated configurations
- * or strings.
+ *                                            or strings.
  */
 export async function saveAvatarConfig(input: unknown): Promise<SaveAvatarConfigResult> {
     const session = await auth.api.getSession({headers: await headers()});
 
-    // Authentication Guard: Deflect unauthenticated callers safely without throwing critical runtime errors
+    // deflect unauthenticated callers safely without throwing critical runtime errors
     if (!session?.user) {
         return {
             success: false,
@@ -33,7 +33,7 @@ export async function saveAvatarConfig(input: unknown): Promise<SaveAvatarConfig
         };
     }
 
-    // Defensive Verification: Evaluates asset properties against type restrictions
+    // Evaluates asset properties against type restrictions
     const result = validateAvatarConfig(input);
 
     if (!result.valid) {
@@ -59,12 +59,13 @@ export async function saveAvatarConfig(input: unknown): Promise<SaveAvatarConfig
  * @param {string} userId - The unique user identification primary key string matching targeted accounts.
  *
  * @returns {Promise<AvatarConfig | null>} A promise resolving to the saved configuration parameters, or null if
- * custom fields are missing.
+ *                                         custom fields are missing.
  */
 export async function getAvatarConfigForUser(userId: string): Promise<AvatarConfig | null> {
 
     const row = await db.query.avatarConfig.findFirst({
-        where: (table, {eq}) => eq(table.userId, userId),
+        where: (table, {eq}) =>
+            eq(table.userId, userId),
     });
 
     // Fallback parsing engine returns null descriptors if users have not custom-built characters yet

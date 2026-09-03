@@ -1,12 +1,11 @@
-import {auth} from "@/core/auth";
+import {requireSession} from "@/core/auth/lib/require-session";
 import {MainContentPanel} from "@/core/dashboard/components/panels/main-card";
 import {PageHeader} from "@/core/dashboard/components/panels/page-header";
 import {getCategoryWithBoards} from "@/feature/forum/lib/queries";
 import {BreadcrumbLabel} from "@/shared/components/breadcrumb-label";
 import styles from "@/shared/styles/form-panel.module.css";
-import {headers} from "next/headers";
 import Link from "next/link";
-import {notFound, redirect} from "next/navigation";
+import {notFound} from "next/navigation";
 import {JSX} from "react";
 
 /**
@@ -15,9 +14,7 @@ import {JSX} from "react";
  * @property {Promise<{ catId: string }>} params - A promise resolving to the dynamic path parameters.
  */
 type PageProps = {
-    params: Promise<{
-        catId: string
-    }>;
+    params: Promise<{ catId: string }>;
 };
 
 /**
@@ -29,16 +26,11 @@ type PageProps = {
  * @returns {Promise<JSX.Element>} A promise resolving to the sub-forum board registry directory layout
  */
 export default async function ForumCategoryPage({params}: PageProps): Promise<JSX.Element> {
+    await requireSession();
     const {catId} = await params;
-    const requestHeaders = await headers();
-    const session = await auth.api.getSession({headers: requestHeaders});
-    if (!session?.user) {
-        redirect("/login");
-    }
-
     const category = await getCategoryWithBoards(catId);
 
-    // Data Validation Guard: Throw a 404 response layout if the target category record cannot be located
+    // throw a 404 response layout if the target category record cannot be located
     if (!category) {
         notFound();
     }

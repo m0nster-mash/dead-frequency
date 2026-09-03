@@ -27,11 +27,10 @@ type AppShellFrameProps = {
 export default function AppShellFrame({sidebar, header, children}: AppShellFrameProps): JSX.Element {
     const {collapsed} = useSidebar();
 
-    /*
-       Dynamic Style Block:
-       Translates reactive layout parameters straight into global token definitions.
-       This avoids constant inline re-renders by letting standard CSS variables manage column resizing.
-    */
+    /**
+     * Translates reactive layout parameters straight into global token definitions. This avoids constant inline
+     * re-renders by letting standard CSS variables manage column resizing.
+     */
     const shellStyle = {
         "--current-sidebar-width": collapsed
             ? "var(--sidebar-collapsed-width)"

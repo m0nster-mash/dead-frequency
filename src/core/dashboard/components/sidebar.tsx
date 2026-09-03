@@ -16,7 +16,7 @@ import SidebarFrame from "./sidebar-frame";
 import SidebarToggleButton from "./sidebar-toggle-button";
 
 /**
- * An asynchronous Next.js Server Page subcomponent that aggregates profile context and menu configurations.
+ * The left-side bar.
  *
  * @returns {Promise<JSX.Element>} A promise resolving to the fully hydrated navigation column cluster.
  */

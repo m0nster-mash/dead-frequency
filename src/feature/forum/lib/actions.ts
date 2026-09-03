@@ -14,8 +14,8 @@ import {revalidatePath} from "next/cache";
 import {headers} from "next/headers";
 
 /**
- * High-security inline validation utility checking server-side session authentication tokens.
- * Extracts account metadata if valid, blocking anonymous requests out of mutation pathways.
+ * High-security inline validation utility checking server-side session authentication tokens. Extracts account
+ * metadata if valid, blocking anonymous requests out of mutation pathways.
  *
  * @throws {Error} Throws an explicit `"Not authenticated"` error if the session context is missing.
  */
@@ -26,8 +26,8 @@ async function requireUser() {
 }
 
 /**
- * An asynchronous Next.js Server Action that instantiates a new discussion topic thread
- * along with its initial root content post record.
+ * An asynchronous Next.js Server Action that instantiates a new discussion topic thread along with its initial root
+ * content post record.
  *
  * @param {Object} input - Structural payload arguments.
  * @param {string} input.boardId - Unique identifier of the target discussion board hosting the topic.
@@ -36,7 +36,8 @@ async function requireUser() {
  *
  * @throws {Error} Throws validation exceptions if inputs resolve as empty strings or if security guards block access.
  *
- * @returns {Promise<{threadId: string}>} A promise resolving to an operational payload containing the generated thread identity key.
+ * @returns {Promise<{threadId: string}>} A promise resolving to an operational payload containing the generated
+ *                                        thread identity key.
  */
 export async function createThreadAction(input: {
     boardId: string;
@@ -45,17 +46,17 @@ export async function createThreadAction(input: {
 }): Promise<{ threadId: string; }> {
     const user = await requireUser();
 
-    // Moderation Status Check: Prevents restricted accounts from inserting system rows
+    // prevents restricted accounts from inserting system rows
     const status = await getPostingStatus(user.id, "forum");
     if (status === "banned" || status === "muted") {
         throw new Error(`Posting not allowed: ${status}`);
     }
 
-    // Engagement Matrix Validation: Verifies systemic trust clearance indexes
+    // Verifies systemic trust clearance indexes
     const trust = await canPost(user.id);
     if (!trust.allowed) throw new Error(trust.reason);
 
-    // Defensive Sanitization: Runs textual parsing arrays to isolate safe values
+    // Runs textual parsing arrays to isolate safe values
     const cleanTitle = sanitizeContent(input.title).clean.trim();
     const cleanBody = sanitizeContent(input.body).clean.trim();
 
@@ -104,7 +105,8 @@ export async function createThreadAction(input: {
  * @param {Object} input - Structural payload arguments.
  * @param {string} input.threadId - Unique operational identifier mapping onto the target topic row container.
  * @param {string} input.body - Raw message body text submitted by the client component.
- * @param {string} [input.replyToUserId] - Optional target user identification reference to structure direct quote references.
+ * @param {string} [input.replyToUserId] - Optional target user identification reference to structure direct quote
+ *                                         references.
  *
  * @throws {Error} Throws exceptions if text sanitization leaves fields empty or if validation barriers drop tokens.
  *
@@ -124,7 +126,7 @@ export async function replyToThreadAction(
         throw new Error(`Posting not allowed: ${status}`);
     }
 
-    // Interpersonal Guard: Validates that blocklists or privacy parameters do not cross path limits
+    // Validates that blocklists or privacy parameters do not cross path limits
     if (input.replyToUserId) {
         const ok = await canInteract(user.id, input.replyToUserId);
         if (!ok) {

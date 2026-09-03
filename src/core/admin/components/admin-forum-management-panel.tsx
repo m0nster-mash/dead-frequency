@@ -7,13 +7,13 @@ import {JSX, useMemo} from "react";
 /**
  * Structural definition of a forum board configuration record.
  *
- * @property {string} id - Unique identifier for the board
- * @property {string} categoryId - Parent category reference identifier
- * @property {string} label - Display name of the discussion board
- * @property {string | null} description - Secondary sub-text explaining board scope
- * @property {number} sortOrder - Numeric index specifying render weights
- * @property {string | null} contextId - Associated system or scenario runtime context
- * @property {boolean} allowsCharacterPosting - Configuration permitting profile alias deployment
+ * @property {string} id - Unique identifier for the board.
+ * @property {string} categoryId - Parent category reference identifier.
+ * @property {string} label - Display name of the discussion board.
+ * @property {string | null} description - Secondary sub-text explaining board scope.
+ * @property {number} sortOrder - Numeric index specifying render weights.
+ * @property {string | null} contextId - Associated system or scenario runtime context.
+ * @property {boolean} allowsCharacterPosting - Configuration permitting profile alias deployment.
  */
 type Board = {
     id: string;
@@ -28,10 +28,10 @@ type Board = {
 /**
  * Structural nesting grouping containing child configuration arrays.
  *
- * @property {string} id - Unique identifier for the category
- * @property {string} label - Section header text
- * @property {number} sortOrder - Numeric sorting index
- * @property {Board[]} boards - Array list containing corresponding child boards
+ * @property {string} id - Unique identifier for the category.
+ * @property {string} label - Section header text.
+ * @property {number} sortOrder - Numeric sorting index.
+ * @property {Board[]} boards - Array list containing corresponding child boards.
  */
 type Category = {
     id: string;
@@ -43,17 +43,17 @@ type Category = {
 /**
  * Properties for the AdminForumManagementPanel component.
  *
- * @property {Category[]} categories - Unsorted raw collection arrays pulled from server endpoints
- * @property {(formData: FormData) => Promise<void>} createCategoryAction - Appends a category entry
- * @property {(formData: FormData) => Promise<void>} updateCategoryAction - Modifies category data fields
- * @property {(formData: FormData) => Promise<void>} deleteCategoryAction - Destroys a category container
- * @property {(formData: FormData) => Promise<void>} reorderCategoriesAction - Saves global category sequences
- * @property {(formData: FormData) => Promise<void>} createBoardAction - Appends a board into a target category
- * @property {(formData: FormData) => Promise<void>} updateBoardAction - Alter board text fields and order rules
- * @property {(formData: FormData) => Promise<void>} deleteBoardAction - Purges board rows from storage
- * @property {(formData: FormData) => Promise<void>} moveBoardAction - Reassigns parent relationships
- * @property {(formData: FormData) => Promise<void>} reorderBoardsAction - Dictates inline order parameters
- * @property {(formData: FormData) => Promise<void>} removeBoardFromCategoryAction - Soft-detaches category relations
+ * @property {Category[]} categories - Unsorted raw collection arrays pulled from server endpoints.
+ * @property {(formData: FormData) => Promise<void>} createCategoryAction - Appends a category entry.
+ * @property {(formData: FormData) => Promise<void>} updateCategoryAction - Modifies category data fields.
+ * @property {(formData: FormData) => Promise<void>} deleteCategoryAction - Destroys a category container.
+ * @property {(formData: FormData) => Promise<void>} reorderCategoriesAction - Saves global category sequences.
+ * @property {(formData: FormData) => Promise<void>} createBoardAction - Appends a board into a target category.
+ * @property {(formData: FormData) => Promise<void>} updateBoardAction - Alter board text fields and order rules.
+ * @property {(formData: FormData) => Promise<void>} deleteBoardAction - Purges board rows from storage.
+ * @property {(formData: FormData) => Promise<void>} moveBoardAction - Reassigns parent relationships.
+ * @property {(formData: FormData) => Promise<void>} reorderBoardsAction - Dictates inline order parameters.
+ * @property {(formData: FormData) => Promise<void>} removeBoardFromCategoryAction - Soft-detaches category relations.
  */
 type Props = {
     categories: Category[];
@@ -70,15 +70,15 @@ type Props = {
 };
 
 /**
- * An interactive Client Component providing complete CRUD administration configurations for forum trees.
- * Renders multiple compact isolated forms wired directly to native Next.js Server Actions.
+ * Provides complete CRUD administration configurations for forum trees. Renders multiple compact isolated forms
+ * wired directly to native Next.js Server Actions.
  *
- * @param {Props} props - The component properties
+ * @param {Props} props - The component properties.
  *
- * @returns {JSX.Element} The visual schema management tool interface grid
+ * @returns {JSX.Element} The visual schema management tool interface grid.
  */
 export function AdminForumManagementPanel(props: Props): JSX.Element {
-    // Computes client-side sorting tracking variations safely without causing structural mutation state drops
+    // computes client-side sorting tracking variations safely without causing structural mutation state drops
     const allCategories = useMemo(
         () => [...props.categories].sort((a, b) => a.sortOrder - b.sortOrder),
         [props.categories],

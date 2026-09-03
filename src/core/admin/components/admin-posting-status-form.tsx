@@ -7,9 +7,9 @@ import {JSX, useState} from "react";
 /**
  * Properties for the AdminPostingStatusForm component.
  *
- * @property {string} userId - The unique identifier of the target user whose status is being modified
+ * @property {string} userId - The unique identifier of the target user whose status is being modified.
  * @property {(formData: FormData) => Promise<void>} onSubmitAction - Server Action function triggered to commit
- * updates to the platform
+ *                                                                    updates to the platform.
  */
 type Props = {
     userId: string;
@@ -27,13 +27,12 @@ const MODULES = ["forum", "chatbox", "chatroom", "dm"] as const;
 const STATUSES = ["active", "muted", "shadowbanned", "banned"] as const;
 
 /**
- * An interactive Client Component providing granular account standing and restriction controls.
- * Allows administrators to assign localized moderation parameters against standalone sub-systems,
- * or globally override access clearances across the entire site ecosystem.
+ * Provides granular account standing and restriction controls. Allows administrators to assign localized moderation
+ * parameters against standalone sub-systems, or globally override access clearances across the entire site ecosystem.
  *
- * @param {Props} props - The component properties
+ * @param {Props} props - The component properties.
  *
- * @returns {JSX.Element} The visual moderator adjustment control layout panel
+ * @returns {JSX.Element} The visual moderator adjustment control layout panel.
  */
 export function AdminPostingStatusForm({userId, onSubmitAction}: Props): JSX.Element {
     const [module, setModule] = useState<string>("");

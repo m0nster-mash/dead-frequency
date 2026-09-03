@@ -8,9 +8,9 @@ import {JSX, ReactNode} from "react";
 /**
  * Structural definition for an individual navigation item anchor link.
  *
- * @property {string} href - Target URL or route pathname to navigate to
- * @property {string} label - Display text for the item link
- * @property {ReactNode} icon - SVG or layout component representing the item icon
+ * @property {string} href - Target URL or route pathname to navigate to.
+ * @property {string} label - Display text for the item link.
+ * @property {ReactNode} icon - SVG or layout component representing the item icon.
  */
 export type NavLinkItem = {
     href: string;
@@ -21,8 +21,8 @@ export type NavLinkItem = {
 /**
  * Structural layout grouping configuration block for the sidebar menu segments.
  *
- * @property {string} [title] - Optional label header text rendered above item subsets
- * @property {NavLinkItem[]} items - List collection of internal navigation link configurations
+ * @property {string} [title] - Optional label header text rendered above item subsets.
+ * @property {NavLinkItem[]} items - List collection of internal navigation link configurations.
  */
 export type NavSection = {
     title?: string;
@@ -39,13 +39,13 @@ type SidebarNavProps = {
 };
 
 /**
- * Helper evaluation utility determining if a navigation link matches the current window location.
- * Uses path segment validation rules to correctly flag sub-routes or child views as active under parent sections.
+ * Helper evaluation utility determining if a navigation link matches the current window location. Uses path segment
+ * validation rules to correctly flag sub-routes or child views as active under parent sections.
  *
- * @param {string} pathname - Current active client path resolved from router hooks
- * @param {string} href - Destination configuration link property
+ * @param {string} pathname - Current active client path resolved from router hooks.
+ * @param {string} href - Destination configuration link property.
  *
- * @returns {boolean} True if the route configuration string maps into or encompasses current pathname depths
+ * @returns {boolean} True if the route configuration string maps into or encompasses current pathname depths.
  */
 function isNavItemActive(pathname: string, href: string): boolean {
     // Explicit baseline catch to prevent root-level matching strings from matching sub-paths
@@ -57,15 +57,14 @@ function isNavItemActive(pathname: string, href: string): boolean {
 }
 
 /**
- * A Client Component that constructs the structured subsections and navigation link hierarchies.
+ * Constructs the structured subsections and navigation link hierarchies.
  *
- * @param {SidebarNavProps} props - The component properties
- * @param {NavSection[]} props.sections - Structural list arrays containing categorical menu details
+ * @param {SidebarNavProps} props - The component properties.
+ * @param {NavSection[]} props.sections - Structural list arrays containing categorical menu details.
  *
- * @returns {JSX.Element} The visual side-panel interactive route matrix list block
+ * @returns {JSX.Element} The visual side-panel interactive route matrix list block.
  */
 export function SidebarNav({sections}: SidebarNavProps): JSX.Element {
-    // Hooks into active Next.js window router trajectories to pull matching data segments
     const pathname = usePathname();
 
     return (

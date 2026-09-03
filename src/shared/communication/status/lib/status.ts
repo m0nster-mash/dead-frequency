@@ -1,11 +1,11 @@
 "use server";
 
+import {logModAction} from "@shared/communication/moderation/lib/audit-log";
+import {moduleEnum} from "@shared/communication/moderation/schema/moderation.schema";
+import {db} from "@shared/db/client";
 import {randomUUID} from "crypto";
 import {and, eq, isNull, or} from "drizzle-orm";
-import {db} from "@shared/db/client";
 import {userStatus} from "../schema/status.schema";
-import {moduleEnum} from "@shared/communication/moderation/schema/moderation.schema";
-import {logModAction} from "@shared/communication/moderation/lib/audit-log";
 
 /**
  * Extracts and maps standard string classification names from the centralized system module enum.
@@ -13,8 +13,8 @@ import {logModAction} from "@shared/communication/moderation/lib/audit-log";
 type Module = (typeof moduleEnum.enumValues)[number];
 
 /**
- * The single query entry point every content-bearing module must call before accepting an entry or post.
- * Evaluates active security restrictions pinned against accounts, fallback-merging site-wide parameters.
+ * The single query entry point every content-bearing module must call before accepting an entry or post. Evaluates
+ * active security restrictions pinned against accounts, fallback-merging site-wide parameters.
  *
  * Technical filtering logic:
  * 1. Pulls restriction rows filtering by strict equality checks matching `userId`.
@@ -24,10 +24,12 @@ type Module = (typeof moduleEnum.enumValues)[number];
  *
  * @param {string} userId - The unique account identification key string matching the active submission session.
  * @param {Module} module - The specific sub-system feature scope requesting the status verification check (ex. "forum").
- * @returns {Promise<"active" | "muted" | "shadowbanned" | "banned">} A promise resolving to the dominant restrictive enforcement state.
+ *
+ * @returns {Promise<"active" | "muted" | "shadowbanned" | "banned">} A promise resolving to the dominant restrictive
+ *                                                                    enforcement state.
  */
 export async function getPostingStatus(userId: string, module: Module): Promise<"active" | "muted" | "shadowbanned" | "banned"> {
-    // Database Lookup Query: Extracts matching systemic constraints and blocks from the status data layer
+    // Extracts matching systemic constraints and blocks from the status data layer
     const rows = await db
         .select()
         .from(userStatus)
@@ -42,16 +44,15 @@ export async function getPostingStatus(userId: string, module: Module): Promise<
 
     // Process matching restriction data blocks
     const active = rows
-        // Expiration Safeguard Loop: Discards restrictions if their saved validity time boundaries have passed
+        // Discards restrictions if their saved validity time boundaries have passed
         .filter((row) => !row.expiresAt || row.expiresAt > now)
-        /*
-           Granular Scope Override Win Sorting:
-           Arranges array tracks so that localized module rows (`a.module` is true) sit ahead
-           of global records, guaranteeing specific block parameters win if conflicting configurations exist.
-        */
+        /**
+         * Arranges array tracks so that localized module rows (`a.module` is true) sit ahead of global records,
+         * guaranteeing specific block parameters win if conflicting configurations exist.
+         */
         .sort((a) => (a.module ? -1 : 1));
 
-    // Fallback Parameter Guard: Defaults to standard uninhibited "active" system clearance if no rows pass rules
+    // Fallback parameter guard: defaults to standard uninhibited "active" system clearance if no rows pass rules
     return (active[0]?.status as "active" | "muted" | "shadowbanned" | "banned") ?? "active";
 }
 
@@ -85,7 +86,7 @@ export async function setPostingStatus(input: {
     expiresAt?: Date | null;
 }): Promise<void> {
 
-    // Database Upsert Task: Persists standing states cleanly across modular conflict indices via Drizzle ORM
+    // Persists standing states cleanly across modular conflict indices via Drizzle ORM
     await db
         .insert(userStatus)
         .values({
@@ -97,7 +98,7 @@ export async function setPostingStatus(input: {
             expiresAt: input.expiresAt ?? null,
         })
         .onConflictDoUpdate({
-            // Target Key Index Boundary: Locks checks against unique compound column coordinates
+            // Locks checks against unique compound column coordinates
             target: [userStatus.userId, userStatus.module],
             set: {
                 status: input.status,

@@ -1,6 +1,6 @@
-import {and, eq, isNull, or} from "drizzle-orm";
 import {db} from "@shared/db/client";
-import { userRole } from "../schema/permissions.schema";
+import {and, eq, isNull, or} from "drizzle-orm";
+import {userRole} from "../schema/permissions.schema";
 
 /**
  * Centrally evaluates authorization rules by querying if a user possesses a specific role assignment.
@@ -8,7 +8,8 @@ import { userRole } from "../schema/permissions.schema";
  * Secure processing flow:
  * 1. Queries the central `userRole` table using strict equality matching targets (`userId` + `roleId`).
  * 2. Contextual Resolution Rules:
- *    - If a `contextId` is supplied (ex. guild-scoped clearances), it looks for entries assigned explicitly to that context OR a global entry (`contextId` is null). This provides automatic inheritance.
+ *    - If a `contextId` is supplied (ex. guild-scoped clearances), it looks for entries assigned explicitly to that
+ *      context OR a global entry (`contextId` is null). This provides automatic inheritance.
  *    - If no `contextId` is supplied, it strictly limits the match query scope to global-tier entries.
  * 3. Clamps performance footprints by applying query limit boundaries.
  *
@@ -17,6 +18,7 @@ import { userRole } from "../schema/permissions.schema";
  * @param {string} userId - The unique user identification primary key string of the targeted account.
  * @param {string} roleId - The exact security clearance identifier string being evaluated (ex. "admin", "moderator").
  * @param {string | null} [contextId] - Optional sub-system sandbox or modular boundary tracking tag.
+ *
  * @returns {Promise<boolean>} A promise resolving to true if a valid role row assignment exists in database storage.
  */
 export async function hasRole(
@@ -31,11 +33,10 @@ export async function hasRole(
             and(
                 eq(userRole.userId, userId),
                 eq(userRole.roleId, roleId),
-                /*
-                   Context Fallback Guard Evaluation:
-                   Ensures that global administrative privileges override localized contextual scopes,
-                   while preventing contextual access rights from bleeding back out into global frameworks.
-                */
+                /**
+                 * Ensures that global administrative privileges override localized contextual scopes, while preventing
+                 * contextual access rights from bleeding back out into global frameworks.
+                 */
                 contextId
                     ? or(isNull(userRole.contextId), eq(userRole.contextId, contextId))
                     : isNull(userRole.contextId),
@@ -47,11 +48,12 @@ export async function hasRole(
 }
 
 /**
- * High-performance shortcut wrapper evaluating elevated system privileges.
- * Automatically permits passage if the subject exhibits either absolute administrator or situational moderator rights.
+ * High-performance shortcut wrapper evaluating elevated system privileges. Automatically permits passage if the
+ * subject exhibits either absolute administrator or situational moderator rights.
  *
  * @param {string} userId - The unique account identification key string matching the active caller session.
  * @param {string | null} [contextId] - Optional sub-system boundary tracking tag to pass along to evaluation steps.
+ *
  * @returns {Promise<boolean>} A promise resolving to true if the account holds verified managerial clearances.
  */
 export async function isModerator(userId: string, contextId?: string | null): Promise<boolean> {

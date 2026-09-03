@@ -35,19 +35,17 @@ export const auth = betterAuth({
 
     // Pluggable logic blocks extending the capabilities of the core library engine
     plugins: [
-        /*
-           Administrative Plugin:
-           Sets basic role names and groups used globally across server layouts.
-           Locks default access thresholds down to baseline "user" clearance blocks.
-        */
+        /**
+         *  Sets basic role names and groups used globally across server layouts. Locks default access thresholds down
+         *  to baseline "user" clearance blocks.
+         */
         admin({
             defaultRole: "user",
             adminRoles: ["admin"]
         }),
-        /*
-           Anonymous Guest Plugin:
-           Maintains short-term guest identity states before permanent account generation.
-        */
+        /**
+         *  Maintains short-term guest identity states before permanent account generation.
+         */
         anonymous()
     ]
 });

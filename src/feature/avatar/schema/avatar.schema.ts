@@ -1,11 +1,11 @@
-import {relations} from "drizzle-orm";
-import {jsonb, pgTable, text, timestamp} from "drizzle-orm/pg-core";
 import {user} from "@/core/auth/schema/auth.schema";
 import {AvatarConfig} from "@/feature/avatar/lib/types";
+import {relations} from "drizzle-orm";
+import {jsonb, pgTable, text, timestamp} from "drizzle-orm/pg-core";
 
 /**
- * Core relational table representation storing custom user avatar configurations.
- * Connects directly to the central authentication model via a strict one-to-one mapping relationship.
+ * Core relational table representation storing custom user avatar configurations. Connects directly to the central
+ * authentication model via a strict one-to-one mapping relationship.
  */
 export const avatarConfig =
     pgTable("avatar_config", {
@@ -15,12 +15,12 @@ export const avatarConfig =
          */
         userId: text("user_id")
             .primaryKey()
-            .references(() => user.id, { onDelete: "cascade" }),
+            .references(() => user.id, {onDelete: "cascade"}),
 
         /**
-         * Type-Safe JSONB Parameter Object - leverages PostgreSQL jsonb column formatting for rapid parsing. Utilizes
-         * Drizzle's `.$type<Type>()` macro to compile strict schema checks ensuring inner properties map perfectly to
-         * the AvatarConfig interface.
+         * Type-Safe JSONB Parameter Object
+         * Leverages PostgreSQL jsonb column formatting for rapid parsing. Utilizes Drizzle's `.$type<Type>()` macro
+         * to compile strict schema checks ensuring inner properties map perfectly to the AvatarConfig interface.
          */
         config: jsonb("config")
             .$type<AvatarConfig>(),

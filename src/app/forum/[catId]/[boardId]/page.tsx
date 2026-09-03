@@ -23,14 +23,13 @@ type PageProps = {
 };
 
 /**
- * An asynchronous Next.js Server Page component that presents a list of discussion threads inside a specific board
- * along with a thread composition utility.
+ * Presents a list of discussion threads inside a specific board along with a thread composition utility.
  *
  * @param {PageProps} props - The component properties
  * @param {Promise<{ catId: string; boardId: string }>} props.params - Route parameter promise containing structural
- * hierarchy IDs
+ *                                                                     hierarchy IDs
  *
- * @returns {Promise<JSX.Element>} A promise resolving to the forum board portal and thread directory UI
+ * @returns {Promise<JSX.Element>} A promise resolving to the forum board portal and thread directory UI.
  */
 export default async function ForumBoardPage({params}: PageProps): Promise<JSX.Element> {
     const {catId, boardId} = await params;

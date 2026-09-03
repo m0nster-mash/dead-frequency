@@ -11,11 +11,10 @@ export const authClient = createAuthClient({
 
     // Pluggable client logic blocks mimicking capabilities configured inside backend auth engines
     plugins: [
-        /*
-           Administrative Client Plugin:
-           Exposes secure methods like `authClient.admin.updateUser` and `authClient.admin.setRole`
-           to form layers and dashboard management grids.
-        */
+        /**
+         *  Exposes secure methods like `authClient.admin.updateUser` and `authClient.admin.setRole` to form layers
+         *  and dashboard management grids.
+         */
         adminClient()
     ]
 });

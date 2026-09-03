@@ -43,20 +43,20 @@ export default async function ForumThreadPage({params}: PageProps): Promise<JSX.
 
     const data = await getThreadWithPosts(threadId);
 
-    // Data Validation Guard: Throw a 404 response layout if the target discussion record does not exist
+    // throw a 404 response layout if the target discussion record does not exist
     if (!data) {
         notFound();
     }
 
-    // Structural Integrity Guard: Verify that the thread resides inside the requested board segment to
-    // shield path boundaries
+    // verify that the thread resides inside the requested board segment to shield path boundaries
     if (data.thread.boardId !== boardId) {
         notFound();
     }
 
     return (
         <div className={styles.wrapper}>
-            <BreadcrumbLabel segment={threadId} label={data.thread.title}/>
+            <BreadcrumbLabel segment={threadId}
+                             label={data.thread.title}/>
 
             <PageHeader eyebrow={"Forum"}
                         title={data.thread.title}

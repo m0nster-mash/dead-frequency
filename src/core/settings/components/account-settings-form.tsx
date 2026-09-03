@@ -171,7 +171,7 @@ export function AccountSettingsForm({
         const newPassword = String(formData.get("newPassword") || "");
         const confirmPassword = String(formData.get("confirmPassword") || "");
 
-        // Validation Guard: Ensure the matching checks pass correctly
+        // ensure the matching checks pass correctly
         if (newPassword !== confirmPassword) {
             setPasswordState({
                 loading: false,
@@ -181,7 +181,7 @@ export function AccountSettingsForm({
             return;
         }
 
-        // Complexity Safeguard Guard: Enforce strict minimum length thresholds
+        // enforce strict minimum length thresholds
         if (newPassword.length < 8) {
             setPasswordState({
                 loading: false,
@@ -212,7 +212,7 @@ export function AccountSettingsForm({
             success: "Password updated"
         });
 
-        event.currentTarget.reset(); // Erases input credentials fields safely out of view elements
+        event.currentTarget.reset(); // erases input credentials fields safely out of view elements
     }
 
     return (

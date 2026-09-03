@@ -22,10 +22,10 @@ export default function Breadcrumbs(): JSX.Element {
             <Link className={styles.home} href="/"> Home </Link>
 
             {segments.map((segment, index) => {
-                // Slices the original segment sequence up to the active depth index to build the valid pathway target
+                // Cuts the original segment sequence up to the active depth index to build the valid pathway target
                 const href = "/" + segments.slice(0, index + 1).join("/");
 
-                // Fallback Lookup: Merges contextual string maps, fallback-parsing uri text strings if missing
+                // Fallback - merges contextual string maps, fallback-parsing uri text strings if missing
                 const label = labels[segment] ?? decodeURIComponent(segment);
 
                 // Evaluates if the current step indicates the actual page terminal destination block

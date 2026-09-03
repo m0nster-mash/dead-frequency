@@ -1,9 +1,7 @@
-import {auth} from "@/core/auth";
+import {requireSession} from "@/core/auth/lib/require-session";
 import {MainContentPanel} from "@/core/dashboard/components/panels/main-card";
 import {PageHeader} from "@/core/dashboard/components/panels/page-header";
 import LoremIpsum from "@shared/components/lorem-ipsum";
-import {headers} from "next/headers";
-import {redirect} from "next/navigation";
 import {JSX} from "react";
 
 /**
@@ -12,16 +10,7 @@ import {JSX} from "react";
  * @returns {Promise<JSX.Element>} A promise resolving to the user workspace dashboard landing viewport.
  */
 export default async function DashboardPage(): Promise<JSX.Element> {
-    // Collects current request headers to authenticate and authorize security context
-    const session = await auth.api.getSession({
-        headers: await headers()
-    });
-
-    if (!session) {
-        redirect("/login");
-    }
-
-    // Resolves current member identifier details for customized onboarding layouts
+    const session = await requireSession();
     const username = session.user.name;
 
     return (
@@ -33,15 +22,16 @@ export default async function DashboardPage(): Promise<JSX.Element> {
                             {
                                 id: "main-content-panel",
                                 label: "Main Content Panel Example",
-                                level: 2,
+                                level: 2
                             },
                             {
                                 id: "split-content-panel",
                                 label: "Split Content Panel Example",
-                                level: 2,
+                                level: 2
                             }]}/>
 
-            <MainContentPanel title={"Example: Main Content Panel"} id={"main-content-panel"}>
+            <MainContentPanel title={"Example: Main Content Panel"}
+                              id={"main-content-panel"}>
                 <p>
                     This panel contains a title, a simple content area for any amount or kind of content, and a "return
                     to home" arrow button at the bottom.

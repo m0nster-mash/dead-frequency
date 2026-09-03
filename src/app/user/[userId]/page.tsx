@@ -14,7 +14,7 @@ import {JSX} from "react";
  * Properties for the PublicProfilePage component.
  *
  * @property {Promise<{ userId: string }>} params - A promise resolving to the route parameters containing the
- * targeted user ID
+ *                                                  targeted user ID.
  */
 type PageProps = {
     params: Promise<{ userId: string }>;
@@ -23,17 +23,17 @@ type PageProps = {
 /**
  * Publicly accessible member profile page.
  *
- * @param {PageProps} props - The component properties
- * @param {Promise<{ userId: string }>} props.params - Route parameter promise containing the user unique identifier
+ * @param {PageProps} props - The component properties.
+ * @param {Promise<{ userId: string }>} props.params - Route parameter promise containing the user unique identifier.
  *
- * @returns {Promise<JSX.Element>} A promise resolving to the public member profile directory viewport
+ * @returns {Promise<JSX.Element>} A promise resolving to the public member profile directory viewport.
  */
 export default async function PublicProfilePage({params}: PageProps): Promise<JSX.Element> {
     const {userId} = await params;
     const requestHeaders = await headers();
     let user;
 
-    // Core profile lookup loop matching targeted URL parameters
+    // core profile lookup loop matching targeted URL parameters
     try {
         user = await auth.api.getUser({
             query: {id: userId},
@@ -43,12 +43,12 @@ export default async function PublicProfilePage({params}: PageProps): Promise<JS
         notFound();
     }
 
-    // Data Validation Guard: Throw a 404 response layout if the target account does not exist
+    // throw a 404 response layout if the target account does not exist
     if (!user) {
         notFound();
     }
 
-    // Relational Query: resolves specific text labels for assigned user roles via an inner join
+    // resolves specific text labels for assigned user roles via an inner join
     const roles =
         await db
             .select({label: role.label})
@@ -56,7 +56,7 @@ export default async function PublicProfilePage({params}: PageProps): Promise<JS
             .innerJoin(role, eq(userRole.roleId, role.id))
             .where(eq(userRole.userId, userId));
 
-    // Status Lookup: extracts structural engagement tracking metrics for the target account
+    // extracts structural engagement tracking metrics for the target account
     const [trust] =
         await db
             .select()

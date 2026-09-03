@@ -12,11 +12,11 @@ import {JSX, useState} from "react";
 /**
  * Structural definition of a platform user record for administration context.
  *
- * @property {string} id - Unique operational identifier for the account
- * @property {string} name - Display username signature, fallback to an empty string if unset
- * @property {string} email - Primary communication and credential identity address
- * @property {string} role - Security permission level tag (ex. "user", "admin")
- * @property {boolean} banned - Boolean flag marking systemic access restrictions
+ * @property {string} id - Unique operational identifier for the account.
+ * @property {string} name - Display username signature, fallback to an empty string if unset.
+ * @property {string} email - Primary communication and credential identity address.
+ * @property {string} role - Security permission level tag (ex. "user", "admin").
+ * @property {boolean} banned - Boolean flag marking systemic access restrictions.
  */
 type AdminUser = {
     id: string;
@@ -29,8 +29,8 @@ type AdminUser = {
 /**
  * Properties for the AdminUserTable component.
  *
- * @property {AdminUser[]} users - Collection list of registered platform user records
- * @property {string} currentUserId - Operational ID of the logged-in administrator to manage self-action rules
+ * @property {AdminUser[]} users - Collection list of registered platform user records.
+ * @property {string} currentUserId - Operational ID of the logged-in administrator to manage self-action rules.
  */
 type AdminUserTableProps = {
     users: AdminUser[];
@@ -38,12 +38,12 @@ type AdminUserTableProps = {
 };
 
 /**
- * An interactive Client Component data-grid summarizing active platform membership records.
- * Provides navigational routes to profile details, record editing, and quick action deletion workflows.
+ * An interactive Client Component data-grid summarizing active platform membership records. Provides navigational
+ * routes to profile details, record editing, and quick action deletion workflows.
  *
- * @param {AdminUserTableProps} props - The component properties
+ * @param {AdminUserTableProps} props - The component properties.
  *
- * @returns {JSX.Element} The visual user directory grid component panel
+ * @returns {JSX.Element} The visual user directory grid component panel.
  */
 export function AdminUserTable({users, currentUserId}: AdminUserTableProps): JSX.Element {
     const [userPendingDelete, setUserPendingDelete] = useState<AdminUser | null>(null);

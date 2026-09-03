@@ -13,7 +13,7 @@ type Mode = "login" | "register";
 /**
  * Properties for the AuthCard component.
  *
- * @property {Mode} [initialMode="login"] - The initial visual state mode to render on initial paint
+ * @property {Mode} [initialMode="login"] - The initial visual state mode to render on initial paint.
  */
 type AuthCardProps = {
     initialMode?: Mode;
@@ -22,9 +22,9 @@ type AuthCardProps = {
 /**
  * An interactive Client Component card handling credentials submission, registration parsing, and portal navigation.
  *
- * @param {AuthCardProps} props - The component properties
+ * @param {AuthCardProps} props - The component properties.
  *
- * @returns {JSX.Element} The visual user authentication card dashboard block
+ * @returns {JSX.Element} The visual user authentication card dashboard block.
  */
 export function AuthCard({initialMode = "login"}: AuthCardProps): JSX.Element {
     const router = useRouter();
@@ -35,7 +35,7 @@ export function AuthCard({initialMode = "login"}: AuthCardProps): JSX.Element {
     /**
      * Swaps the visual form visibility mode and flushes legacy error traces out of view buffers.
      *
-     * @param {Mode} next - The target mode configuration state to switch to
+     * @param {Mode} next - The target mode configuration state to switch to.
      */
     function switchMode(next: Mode) {
         if (next === mode) {
@@ -61,7 +61,7 @@ export function AuthCard({initialMode = "login"}: AuthCardProps): JSX.Element {
         const password = String(formData.get("password") || "");
         const name = String(formData.get("name") || "");
 
-        // Selects matching endpoint strategy signatures mapping user view states
+        // selects matching endpoint strategy signatures mapping user view states
         const result =
             mode === "register" ?
                 await authClient.signUp.email({name, email, password, callbackURL: "/dashboard"}) :
@@ -73,9 +73,9 @@ export function AuthCard({initialMode = "login"}: AuthCardProps): JSX.Element {
             return;
         }
 
-        // Relocates current visitor path tracking pointers inside workspace modules
+        // relocates current visitor path tracking pointers inside workspace modules
         router.push("/dashboard");
-        router.refresh(); // Flushes server data caches and updates structural layouts with dynamic session records
+        router.refresh(); // flushes server data caches and updates structural layouts with dynamic session records
     }
 
     return (

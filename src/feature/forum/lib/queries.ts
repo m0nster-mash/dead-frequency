@@ -4,53 +4,50 @@ import {db} from "@shared/db/client";
 import {asc, desc, eq} from "drizzle-orm";
 
 /**
- * Fetches and composites the complete forum schema catalog structure.
- * Queries base collections and constructs multi-tier relational arrays on the application server layer.
- *
- * @returns {Promise<Array<Object>>} A promise resolving to a hierarchical tree of categories containing nested child boards.
+ * Fetches and composites the complete forum schema catalog structure. Queries base collections and constructs
+ * multi-tier relational arrays on the application server layer.
  */
-export async function getForumHierarchy(): Promise<Array<object>> {
-    // Collect categories ordered by their designated layout sequence indices
+export async function getForumHierarchy() {
     const categories = await db
         .select()
         .from(forumCategory)
         .orderBy(asc(forumCategory.sortOrder));
 
-    // Pull down flat list of all boards across the system
+    // pull down flat list of all boards across the system
     const boards = await db
         .select()
         .from(forumBoard)
         .orderBy(asc(forumBoard.sortOrder));
 
-    /*
-       Iterates across category records, matching and sorting corresponding child board arrays
-       locally to avoid complex SQL grouping or redundant network round trips.
-    */
-    return categories.map((category) => ({
-        ...category,
-        boards: boards.filter((board) => board.categoryId === category.id),
-    }));
+    /**
+     * Iterates across category records, matching and sorting corresponding child board arrays locally to avoid
+     * complex SQL grouping or redundant network round trips.
+     */
+    return categories.map(
+        (category) => ({
+            ...category,
+            boards: boards.filter((board) =>
+                board.categoryId === category.id)
+        }));
 }
 
 /**
  * Isolates an individual forum category record along with its nested child discussion boards.
  *
  * @param {string} categoryId - The unique primary identifier of the target category to search for.
- *
- * @returns {Promise<Object | null>} A promise resolving to the composite category block, or null if the record doesn't exist.
  */
-export async function getCategoryWithBoards(categoryId: string): Promise<object | null> {
-    // Query target metadata block, utilizing defensive limit caps to optimize driver scans
+export async function getCategoryWithBoards(categoryId: string) {
+    // query target metadata block, utilizing defensive limit caps to optimize driver scans
     const [category] = await db
         .select()
         .from(forumCategory)
         .where(eq(forumCategory.id, categoryId))
         .limit(1);
 
-    // Validation Guard: Return null safely if the container category row is missing
+    // return null safely if the container category row is missing
     if (!category) return null;
 
-    // Isolate specific sub-boards belonging exclusively to the validated parent key context
+    // isolate specific sub-boards belonging exclusively to the validated parent key context
     const boards = await db
         .select()
         .from(forumBoard)
@@ -64,10 +61,8 @@ export async function getCategoryWithBoards(categoryId: string): Promise<object 
  * Resolves directory listings for a single forum board, assembling its topic threads alongside author descriptors.
  *
  * @param {string} boardId - The unique primary identifier of the target board to scan.
- *
- * @returns {Promise<Object | null>} A promise resolving to the board metadata nested with its topics, or null if missing.
  */
-export async function getBoardWithThreads(boardId: string): Promise<object | null> {
+export async function getBoardWithThreads(boardId: string) {
     const [board] = await db
         .select()
         .from(forumBoard)
@@ -76,10 +71,10 @@ export async function getBoardWithThreads(boardId: string): Promise<object | nul
 
     if (!board) return null;
 
-    /*
-       Performs a left join linking threads to the user schema to extract author identity parameters
-       (`name`, `email`) while protecting rows from dropping if profiles are deleted.
-    */
+    /**
+     * Performs a left join linking threads to the user schema to extract author identity parameters (`name`, `email`)
+     * while protecting rows from dropping if profiles are deleted.
+     */
     const threads = await db
         .select({
             id: forumThread.id,
@@ -97,25 +92,24 @@ export async function getBoardWithThreads(boardId: string): Promise<object | nul
         .from(forumThread)
         .leftJoin(user, eq(forumThread.userId, user.id))
         .where(eq(forumThread.boardId, boardId))
-        /*
-           Compound Sorting Flow:
-           1. Prioritizes sticky topic targets (`pinned` descending) to pin chosen discussions to the top layout.
-           2. Organizes inner sections chronologically (`lastPostAt` descending) to float active threads up the directory tree.
-        */
+        /**
+         *  1. Prioritizes sticky topic targets (`pinned` descending) to pin chosen discussions to the top layout.
+         *  2. Organizes inner sections chronologically (`lastPostAt` descending) to float active threads up the
+         *     directory tree.
+         */
         .orderBy(desc(forumThread.pinned), desc(forumThread.lastPostAt));
 
     return {...board, threads};
 }
 
 /**
- * Hydrates a detailed topic viewport by retrieving target thread metrics alongside its chronological post discussion feed.
+ * Hydrates a detailed topic viewport by retrieving target thread metrics alongside its chronological post discussion
+ * feed.
  *
  * @param {string} threadId - The unique primary identifier of the conversation thread to resolve.
- *
- * @returns {Promise<Object | null>} A promise resolving to a compound object containing thread details and post arrays, or null.
  */
-export async function getThreadWithPosts(threadId: string): Promise<object | null> {
-    // Fetch parent discussion topic properties, stitching user identities via a Left Outer Join
+export async function getThreadWithPosts(threadId: string) {
+    // fetch parent discussion topic properties, stitching user identities via a Left Outer Join
     const [thread] = await db
         .select({
             id: forumThread.id,
@@ -137,7 +131,7 @@ export async function getThreadWithPosts(threadId: string): Promise<object | nul
 
     if (!thread) return null;
 
-    // Fetch the chronological log stream of comment entries linked directly to the parent thread parameter
+    // fetch the chronological log stream of comment entries linked directly to the parent thread parameter
     const posts = await db
         .select({
             id: forumPost.id,
@@ -146,7 +140,7 @@ export async function getThreadWithPosts(threadId: string): Promise<object | nul
             body: forumPost.body,
             createdAt: forumPost.createdAt,
             updatedAt: forumPost.updatedAt,
-            deletedAt: forumPost.deletedAt, // Kept in projection layers to support custom soft-deletion message redacting
+            deletedAt: forumPost.deletedAt, // kept in projection layers to support custom soft-deletion message redacting
             replyToUserId: forumPost.replyToUserId,
             authorName: user.name,
             authorEmail: user.email,
@@ -154,7 +148,7 @@ export async function getThreadWithPosts(threadId: string): Promise<object | nul
         .from(forumPost)
         .leftJoin(user, eq(forumPost.userId, user.id))
         .where(eq(forumPost.threadId, threadId))
-        .orderBy(asc(forumPost.createdAt)); // Orders responses ascending to maintain linear discussion continuity
+        .orderBy(asc(forumPost.createdAt)); // orders responses ascending to maintain linear discussion continuity
 
     return {thread, posts};
 }

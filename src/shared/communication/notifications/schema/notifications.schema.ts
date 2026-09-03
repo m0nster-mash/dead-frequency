@@ -1,47 +1,46 @@
+import {user} from "@/core/auth/schema/auth.schema";
 import {relations} from "drizzle-orm";
 import {boolean, index, jsonb, pgEnum, pgTable, text, timestamp} from "drizzle-orm/pg-core";
-import {user} from "@/core/auth/schema/auth.schema";
 
 /**
- * System-wide enumeration defining acceptable classification categories for notification alerts.
- * Centralizing this index list supports extensible future features without breaking ongoing schema mappings.
+ * System-wide enumeration defining acceptable classification categories for notification alerts. Centralizing this
+ * index list supports extensible future features without breaking ongoing schema mappings.
  */
-export const notificationTypeEnum = pgEnum("notification_type", [
-    "mention",
-    "dm",
-    "mod_action",
-    "reply",
-    "comment",
-    "guild_invite", // Future-proofing: Reserved now to streamline downstream module integrations harmlessly
-]);
+export const notificationTypeEnum = pgEnum(
+    "notification_type", [
+        "mention",
+        "dm",
+        "mod_action",
+        "reply",
+        "comment",
+        "guild_invite", // Future-proofing: reserved now to streamline downstream module integrations harmlessly
+    ]);
 
 /**
- * Relational database table managing transactional alert logs for individual user profiles.
- * Implements a polymorphic, lightweight notification framework tailored for performant list aggregations.
+ * Relational database table managing transactional alert logs for individual user profiles. Implements a polymorphic,
+ * lightweight notification framework tailored for performant list aggregations.
  */
 export const notification = pgTable(
-    "notification",
-    {
+    "notification", {
         id: text("id")
             .primaryKey(),
 
-        /*
-           Target User Alignment Binding: Connects alerts directly down to matching recipient profiles.
-           Cascade Configuration: Purging this account cleanly wipes all corresponding user notifications out of storage.
-        */
+        /**
+         * Connects alerts directly down to matching recipient profiles. Purging this account cleanly wipes all
+         * corresponding user notifications out of storage.
+         */
         userId: text("user_id")
             .notNull()
-            .references(() => user.id, { onDelete: "cascade" }),
+            .references(() => user.id, {onDelete: "cascade"}),
 
         type: notificationTypeEnum("type")
             .notNull(),
 
-        /*
-           Polymorphic Schema Metadata Payload:
-           Leverages PostgreSQL jsonb column parameters for rapid extraction.
-           Stores free-form payload contexts (ex. { module, recordId, fromUserId }) variant on the `type` tag.
-           Keeps this table generic instead of growing a new column per category type addition.
-        */
+        /**
+         * Leverages PostgreSQL jsonb column parameters for rapid extraction. Stores free-form payload contexts
+         * (ex. { module, recordId, fromUserId }) variant on the `type` tag. Keeps this table generic instead of
+         * growing a new column per category type addition.
+         */
         payload: jsonb("payload")
             .$type<Record<string, unknown>>(),
 
@@ -54,11 +53,10 @@ export const notification = pgTable(
             .notNull(),
     },
     (table) => [
-        /*
-           Compound Index Optimization:
-           Accelerates user dashboard listings and navigation counts by organizing indexes
-           directly matching standard toggle parameters (`userId` + `read`).
-        */
+        /**
+         * Accelerates user dashboard listings and navigation counts by organizing indexes directly matching standard
+         * toggle parameters (`userId` + `read`).
+         */
         index("notification_user_read_idx")
             .on(table.userId, table.read),
     ],

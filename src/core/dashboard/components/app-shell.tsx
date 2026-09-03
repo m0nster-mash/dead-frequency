@@ -7,8 +7,8 @@ import Header from "./header";
 /**
  * Properties for the AppShell component.
  *
- * @property {ReactNode} children - Dynamic view page content stream injected inside the main viewport workspace
- * @property {string | null} [userName] - Optional display name of the currently authenticated session user
+ * @property {ReactNode} children - Dynamic view page content stream injected inside the main viewport workspace.
+ * @property {string | null} [userName] - Optional display name of the currently authenticated session user.
  * @property {string | null} [userEmail] - Optional primary email address of the currently authenticated session user.
  * @property {string | null} [userRole] - Optional authorization role or permission flag of the current session user.
  */
@@ -28,10 +28,7 @@ type AppShellProps = {
 export function AppShell({children, userName, userEmail, userRole}: AppShellProps): JSX.Element {
     return (
         <SidebarProvider>
-            {/*
-               Structural Grid Engine Frame:
-               Accepts decoupled visual layouts as explicit properties to clean up complex structural nesting hierarchies.
-            */}
+            {/* Accepts decoupled visual layouts as explicit properties to clean up complex structural nesting hierarchies. */}
             <AppShellFrame sidebar={<Sidebar/>} header={<Header/>}>
                 {children}
             </AppShellFrame>

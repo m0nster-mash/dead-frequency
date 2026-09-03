@@ -58,10 +58,10 @@ export function AvatarRenderer({config, size = 96, className}: AvatarRendererPro
     const Hair = HAIR_MAP[config.hair];
 
     return (
-        /*
-           Constructs the parent SVG graphic boundary window envelope.
-           Uses semantic image role markings and descriptive aria-labels to maintain accessibility visibility parameters.
-        */
+        /**
+         *  Constructs the parent SVG graphic boundary window envelope. Uses semantic image role markings and
+         *  descriptive aria-labels to maintain accessibility visibility parameters.
+         */
         <svg
             width={size}
             height={size}
@@ -70,14 +70,17 @@ export function AvatarRenderer({config, size = 96, className}: AvatarRendererPro
             aria-label="User avatar"
             className={className}>
 
-            {/* Layer 1: baseline underlying head anatomy vector (Always painted first on bottom-most depths) */}
+            {/* LAYER 1:
+                baseline underlying head anatomy vector (Always painted first on bottom-most depths) */}
             <HeadBase/>
 
-            {/* Layer 2: independent facial feature templates sandwiching elements over baseline curves */}
+            {/* LAYER 2:
+                independent facial feature templates sandwiching elements over baseline curves */}
             {Eyes ? <Eyes/> : null}
             {Mouth ? <Mouth/> : null}
 
-            {/* Layer 3: hair geometries overlaid on top of previous visual elements */}
+            {/* LAYER 3:
+                hair geometries overlaid on top of previous visual elements */}
             {Hair ? <Hair/> : null}
         </svg>
     );

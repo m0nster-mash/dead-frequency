@@ -27,10 +27,11 @@ const CATEGORIES: { key: AvatarPartCategory; label: string }[] = [
 ];
 
 /**
- * An interactive Client Component studio interface allowing members to customize their vector avatar character profiles.
- * Displays real-time asset modifications via a decoupled layout layer and saves configs via server action.
+ * An interactive Client Component studio interface allowing members to customize their vector avatar character
+ * profiles. Displays real-time asset modifications via a decoupled layout layer and saves configs via server action.
  *
  * @param {AvatarBuilderProps} props - The component properties.
+ *
  * @returns {JSX.Element} The visual vector asset assembly studio dashboard workspace.
  */
 export function AvatarBuilder({initialConfig}: AvatarBuilderProps): JSX.Element {
@@ -52,8 +53,8 @@ export function AvatarBuilder({initialConfig}: AvatarBuilderProps): JSX.Element 
     }
 
     /**
-     * Dispatches current structural design configurations to persistent storage handlers.
-     * Manages operation loading flags and validates response records.
+     * Dispatches current structural design configurations to persistent storage handlers. Manages operation loading
+     * flags and validates response records.
      */
     async function handleSave() {
         setLoading(true);
@@ -71,7 +72,7 @@ export function AvatarBuilder({initialConfig}: AvatarBuilderProps): JSX.Element 
 
         setSuccess("Avatar updated");
         setLoading(false);
-        router.refresh(); // Signals Next.js layout trees to flush client state caches, fetching updated graphical layers
+        router.refresh(); // Signals layout trees to flush client state caches, fetching updated graphical layers
     }
 
     return (

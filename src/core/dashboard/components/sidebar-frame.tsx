@@ -16,7 +16,7 @@ type SidebarFrameProps = {
 };
 
 /**
- * A Client Component framing the primary side drawer column for the application dashboard layout.
+ * The primary sidebar column for the dashboard layout.
  *
  * @param {SidebarFrameProps} props - The component properties.
  *

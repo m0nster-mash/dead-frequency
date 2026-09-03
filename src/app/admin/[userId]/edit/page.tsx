@@ -1,17 +1,17 @@
 import {AdminEditUserForm} from "@/core/admin/components/admin-edit-user-form";
-import {auth} from "@/core/auth";
+import {requireSession} from "@/core/auth/lib/require-session";
+import {requireUser} from "@/core/auth/lib/require-user";
 import {PageHeader} from "@/core/dashboard/components/panels/page-header";
 import {BreadcrumbLabel} from "@/shared/components/breadcrumb-label";
 import styles from "@/shared/styles/form-panel.module.css";
 import {headers} from "next/headers";
-import {notFound, redirect} from "next/navigation";
 import {JSX} from "react";
 
 /**
  * Properties for the AdminEditUserPage component.
  *
  * @property {Promise<{ userId: string }>} params - A promise that resolves to the route parameters containing the
- * user ID
+ *                                                  user ID.
  */
 type PageProps = {
     params: Promise<{ userId: string }>;
@@ -21,40 +21,19 @@ type PageProps = {
  * A page that allows administrators to edit a user's details.
  *
  * @param {PageProps} props - The component properties
- * @param {Promise<{ userId: string }>} props.params - Route parameter promise containing the ID of the user being edited
+ * @param {Promise<{ userId: string }>} props.params - Route parameter promise containing the ID of the user being
+ *                                                     edited.
  *
- * @returns {Promise<JSX.Element>} A promise that resolves to the admin user edit dashboard UI
+ * @returns {Promise<JSX.Element>} A promise that resolves to the admin user edit dashboard UI.
  */
 export default async function AdminEditUserPage({params}: PageProps): Promise<JSX.Element> {
     const {userId} = await params;
     const requestHeaders = await headers();
-    const session = await auth.api.getSession({headers: requestHeaders});
-
-    // TODO:: replace with centralized mechanism
-    if (!session?.user) {
-        redirect("/login");
-    }
-    if (session.user.role !== "admin") {
-        redirect("/");
-    }
-
-    let user;
-
-    // Fetch target user data from the authentication API
-    try {
-        user = await auth.api.getUser({
-            query: {id: userId},
-            headers: requestHeaders,
-        });
-    } catch (error) {
-        console.error("[admin/edit] getUser threw:", error);
-        notFound();
-    }
-
-    // Data Validation Guard: Throw 404 if the requested user record does not exist
-    if (!user) {
-        notFound();
-    }
+    await requireSession({role: "admin"});
+    const user = await requireUser(userId, {
+        headers: requestHeaders,
+        context: "admin/edit",
+    });
 
     return (
         <div className={styles.wrapper}>
@@ -68,7 +47,7 @@ export default async function AdminEditUserPage({params}: PageProps): Promise<JS
                                currentName={user.name ?? ""}
                                currentEmail={user.email}
                                currentRole={user.role ?? "user"}
-                               isCurrentUser={user.id === session.user.id}/>
+                               isCurrentUser={user.id === userId}/>
         </div>
     );
 }
