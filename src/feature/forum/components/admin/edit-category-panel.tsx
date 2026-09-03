@@ -89,6 +89,7 @@ export function EditCategoryPanel({
 
                                     <input id="edit-category-label"
                                            name="label"
+                                           type="text"
                                            className={styles.adminInput}
                                            defaultValue={selectedCategory.label}
                                            required/>
@@ -183,6 +184,9 @@ export function EditCategoryPanel({
                                     </th>
                                     <th className={styles.forumStatisticColumn}>
                                         Total Posts
+                                    </th>
+                                    <th className={styles.forumStatisticColumn}>
+                                        Actions
                                     </th>
                                 </tr>
                                 </thead>

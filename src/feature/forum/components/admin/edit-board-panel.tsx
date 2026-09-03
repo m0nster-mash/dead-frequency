@@ -34,6 +34,7 @@ export function EditBoardPanel({board, categories, updateBoardAction,}: Props): 
 
                             <input id="edit-board-label"
                                    name="label"
+                                   type="text"
                                    className={styles.adminInput}
                                    defaultValue={board.label}
                                    required/>
@@ -46,6 +47,7 @@ export function EditBoardPanel({board, categories, updateBoardAction,}: Props): 
 
                             <input id="edit-board-description"
                                    name="description"
+                                   type="text"
                                    className={styles.adminInput}
                                    defaultValue={board.description ?? ""}/>
                         </div>
