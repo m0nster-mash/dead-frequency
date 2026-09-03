@@ -258,6 +258,16 @@
     padding-right: 12px;
 }
 
+.sidebar[data-collapsed="true"] .subNav {
+    margin-left: 0;
+    padding-left: 0;
+}
+
+.sidebar[data-collapsed="true"] .subNavItem {
+    justify-content: center;
+    padding: 0;
+}
+
 
 /* =========================================================
    MAIN SHELL
@@ -403,5 +413,5 @@
 .expandableMenuButtonContent {
     display: flex;
     align-items: center;
-    /*gap: 12px;*/
+    gap: 12px;
 }
