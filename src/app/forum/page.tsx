@@ -1,9 +1,10 @@
 import {requireSession} from "@/core/auth/lib/require-session";
 import {MainContentPanel} from "@/core/dashboard/components/panels/main-card";
 import {PageHeader} from "@/core/dashboard/components/panels/page-header";
+import {BoardDisplay} from "@/feature/forum/components/board-display";
+import {ForumStatsPanel} from "@/feature/forum/components/forum-stats-panel";
 import {getForumHierarchy} from "@/feature/forum/lib/queries";
-import styles from "@shared/styles/forum.module.css";
-import Link from "next/link";
+import styles from "@/feature/forum/styles/forum.module.css";
 import {JSX} from "react";
 
 /**
@@ -17,132 +18,42 @@ export default async function ForumIndexPage(): Promise<JSX.Element> {
 
     return (
         <div className={styles.wrapper}>
-            <PageHeader
-                eyebrow="Communication"
-                title="Forum"
-                subtitle="Browse categories and boards"/>
 
-            <div className={styles.categories}>
-                {categories.map((category) => (
-                    <MainContentPanel key={category.id}
-                                      title={category.label}>
-                        <div className={styles.boardList}>
-                            {category.boards.map((board) => (
-                                <article key={board.id}
-                                         className={styles.board}>
-                                    <div className={styles.boardMain}>
-                                        <Link href={`/forum/${category.id}/${board.id}`}
-                                              className={styles.boardName}>
-                                            {board.label}
-                                        </Link>
+            <PageHeader eyebrow="Communication"
+                        title="Forum"
+                        subtitle="Browse categories and boards"/>
 
-                                        <p className={styles.boardDescription}>
-                                            {board.description || "—"}
-                                        </p>
-                                    </div>
+            {categories.map((category) => {
+                const boards = category.boards.map(
+                    (board) => ({
+                        id: board.id,
+                        name: board.label,
+                        description: board.description,
+                        href: `/forum/${category.id}/${board.id}`,
+                    }));
+                return (
+                    <MainContentPanel key={category.id} title={category.label}>
+                        <BoardDisplay boards={boards}/>
+                    </MainContentPanel>);
+            })}
+            {categories.length === 0 && (
+                <MainContentPanel title="No categories yet">
+                    <p>Check back soon.</p>
+                </MainContentPanel>)}
 
-                                    <div className={styles.boardActivity}>
-                                        <div className={styles.latestThread}>
-                                            <span className={styles.label}>
-                                                Latest thread
-                                            </span>
-
-                                            <span className={styles.threadName}>
-                                                [THREAD_NAME]
-                                            </span>
-
-                                            <span className={styles.threadAuthor}>
-                                                by [AUTHOR_NAME]
-                                            </span>
-                                        </div>
-
-                                        <div className={styles.boardStats}>
-                                            <div className={styles.stat}>
-                                                <span className={styles.statValue}>
-                                                    [THREAD_TOTAL]
-                                                </span>
-                                                <span className={styles.statLabel}>
-                                                    Threads
-                                                </span>
-                                            </div>
-
-                                            <div className={styles.stat}>
-                                                <span className={styles.statValue}>
-                                                    [POST_TOTAL]
-                                                </span>
-                                                <span className={styles.statLabel}>
-                                                    Posts
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </article>
-                            ))}
-
-                            {category.boards.length === 0 && (
-                                <div className={styles.empty}>
-                                    No boards yet.
-                                </div>
-                            )}
-                        </div>
-                    </MainContentPanel>
-                ))}
-
-                {categories.length === 0 && (
-                    <MainContentPanel title="No categories yet">
-                        <p className={styles.empty}>
-                            Check back soon.
-                        </p>
-                    </MainContentPanel>
-                )}
-            </div>
-
-            <section className={styles.forumSummary}>
-                <div className={styles.summaryHeader}>
-                    <div>
-                        <span className={styles.summaryEyebrow}>
-                            Forum overview
-                        </span>
-                        <h2 className={styles.summaryTitle}>
-                            Community activity
-                        </h2>
-                    </div>
-                </div>
-
-                <div className={styles.summaryGrid}>
-                    <div className={styles.summaryStat}>
-                        <span className={styles.summaryValue}>
-                            [THREAD_TOTAL]
-                        </span>
-                        <span className={styles.summaryLabel}>
-                            Total threads
-                        </span>
-                    </div>
-
-                    <div className={styles.summaryStat}>
-                        <span className={styles.summaryValue}>
-                            [POST_TOTAL]
-                        </span>
-                        <span className={styles.summaryLabel}>
-                            Total posts
-                        </span>
-                    </div>
-
-                    <div className={styles.summaryRecent}>
-                        <span className={styles.summaryLabel}>
-                            Most recently active
-                        </span>
-
-                        <span className={styles.recentThread}>
-                            [THREAD_NAME]
-                        </span>
-
-                        <span className={styles.recentMeta}>
-                            Last post by [USER_NAME] · [POST_TIME]
-                        </span>
-                    </div>
-                </div>
-            </section>
+            <ForumStatsPanel
+                stats={[{
+                    label: "Total threads",
+                    value: "[THREAD_TOTAL]",
+                }, {
+                    label: "Total posts",
+                    value: "[POST_TOTAL]",
+                },]}
+                latestActivity={{
+                    title: "[THREAD_NAME]",
+                    user: "[LAST_USER_NAME]",
+                    time: "[POST_TIME]",
+                }}/>
         </div>
     );
 }
