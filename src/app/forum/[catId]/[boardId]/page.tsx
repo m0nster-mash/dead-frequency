@@ -3,7 +3,7 @@ import {MainContentPanel} from "@/core/dashboard/components/panels/main-card";
 import {PageHeader} from "@/core/dashboard/components/panels/page-header";
 import {CreatePostPanel} from "@/feature/forum/components/create-post-panel";
 import {ForumStatsPanel} from "@/feature/forum/components/forum-stats-panel";
-import {ThreadAdminButton} from "@/feature/forum/components/thread-admin-button";
+import {ThreadAdminButton} from "@/feature/forum/components/admin/thread-admin-button";
 import {createThreadAction} from "@/feature/forum/lib/actions";
 import {getBoardWithThreads} from "@/feature/forum/lib/queries";
 import styles from "@/feature/forum/styles/forum.module.css";

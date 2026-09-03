@@ -2,6 +2,7 @@
 
 import styles from "@/feature/forum/styles/forum.module.css";
 import React, {ReactNode, useEffect, useRef} from "react";
+import CloseIcon from "@shared/svg/bootstrap-close-icon.svg";
 
 export type AdminForumControlType =
     | "thread"
@@ -74,7 +75,7 @@ export function AdminForumControls({
                             className={styles.adminModalClose}
                             onClick={handleClose}
                             aria-label="Close administration controls">
-                        ×
+                        <CloseIcon />
                     </button>
                 </div>
 

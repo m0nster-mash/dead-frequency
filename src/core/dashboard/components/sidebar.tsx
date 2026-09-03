@@ -54,8 +54,7 @@ export async function Sidebar(): Promise<JSX.Element> {
         {
             title: "Test Pages",
             items: [
-                {href: "/style-test", label: "Style Test", icon: <PageIcon/>},
-                {href: "/avatar-test", label: "Avatar Test", icon: <PageIcon/>}
+                {href: "/style-test", label: "Style Test", icon: <PageIcon/>}
             ],
         },
         {

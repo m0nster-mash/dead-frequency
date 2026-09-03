@@ -1,13 +1,13 @@
 import {AdminPostingStatusForm} from "@/core/admin/components/admin-posting-status-form";
 import {applyPostingStatusAction} from "@/core/admin/lib/actions";
-import {auth} from "@/core/auth";
+import {auth} from "@core/auth";
 import {requireSession} from "@/core/auth/lib/require-session";
 import {requireUser} from "@/core/auth/lib/require-user";
 import {MainContentPanel} from "@/core/dashboard/components/panels/main-card";
 import {PageHeader} from "@/core/dashboard/components/panels/page-header";
-import {BreadcrumbLabel} from "@/shared/components/breadcrumb-label";
-import styles from "@/shared/styles/form-panel.module.css";
-import EditIcon from "@/shared/svg/bootstrap-edit-icon.svg";
+import {BreadcrumbLabel} from "@shared/components/breadcrumb-label";
+import styles from "@shared/styles/form-panel.module.css";
+import EditIcon from "@shared/svg/bootstrap-edit-icon.svg";
 import {headers} from "next/headers";
 import Link from "next/link";
 import {JSX} from "react";
@@ -125,7 +125,7 @@ export default async function AdminUserDetailsPage({params}: PageProps): Promise
 
             <MainContentPanel title={"Admin Actions"}>
                 <div className={styles.actions}>
-                    <Link href={`/admin/${user.id}/edit`} className={styles.submit}>
+                    <Link href={`/admin/users/${user.id}/edit`} className={styles.submit}>
                         <EditIcon/> Edit user
                     </Link>
                 </div>

@@ -1,20 +1,17 @@
 "use client";
 
-import {AdminForumControls} from "@/feature/forum/components/admin-forum-controls";
-import {AdminThreadControls} from "@/feature/forum/components/admin-thread-controls";
+import {AdminForumControls} from "@/feature/forum/components/admin/admin-forum-controls";
+import {AdminThreadControls} from "@/feature/forum/components/admin/admin-thread-controls";
 import styles from "@/feature/forum/styles/forum.module.css";
+import GearIcon from "@shared/svg/bootstrap-gear-icon.svg";
 import {useState} from "react";
-import GearIcon from "@/shared/svg/bootstrap-gear-icon.svg";
 
 type ThreadAdminButtonProps = {
     threadId: string;
     threadTitle: string;
 };
 
-export function ThreadAdminButton({
-                                      threadId,
-                                      threadTitle,
-                                  }: ThreadAdminButtonProps) {
+export function ThreadAdminButton({threadId, threadTitle,}: ThreadAdminButtonProps) {
     const [open, setOpen] = useState(false);
 
     return (

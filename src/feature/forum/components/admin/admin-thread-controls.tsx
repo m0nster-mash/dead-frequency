@@ -8,10 +8,7 @@ type AdminThreadControlsProps = {
     threadTitle?: string;
 };
 
-export function AdminThreadControls({
-                                        threadId,
-                                        threadTitle,
-                                    }: AdminThreadControlsProps) {
+export function AdminThreadControls({threadId, threadTitle,}: AdminThreadControlsProps) {
     return (
         <div className={styles.adminThreadControls}>
             <div className={styles.adminResource}>
