@@ -12,6 +12,7 @@ import {JSX, ReactNode, useEffect, useState} from "react";
  * @property {string} href - Target URL or route pathname to navigate to.
  * @property {string} label - Display text for the item link.
  * @property {ReactNode} icon - SVG or layout component representing the item icon.
+ * @property {string} [type] - Optional type identifier. Defaults to "link" if not specified.
  */
 export type NavLinkItem = {
     type?: "link";
@@ -25,6 +26,12 @@ export type NavLinkItem = {
  *
  * The item itself behaves like a sidebar menu item, but clicking it reveals
  * the nested navigation links beneath it.
+ *
+ * @property {string} type - Discriminator for this item type. Must be "expandable".
+ * @property {string} label - Display text for the expandable menu item.
+ * @property {ReactNode} icon - SVG or layout component representing the item icon.
+ * @property {NavLinkItem[]} links - Collection of child navigation links revealed when expanded.
+ * @property {boolean} [defaultOpen] - Whether the menu should be open by default. Defaults to false.
  */
 export type ExpandableNavItem = {
     type: "expandable";
@@ -35,6 +42,8 @@ export type ExpandableNavItem = {
 };
 
 /**
+ * Union type for navigation menu items.
+ *
  * A sidebar item can either be a normal link or an expandable menu.
  */
 export type NavItem = NavLinkItem | ExpandableNavItem;
@@ -43,7 +52,7 @@ export type NavItem = NavLinkItem | ExpandableNavItem;
  * Structural layout grouping configuration block for the sidebar menu segments.
  *
  * @property {string} [title] - Optional label header text rendered above item subsets.
- * @property {NavLinkItem[]} items - List collection of internal navigation link configurations.
+ * @property {NavItem[]} items - List collection of internal navigation link configurations.
  */
 export type NavSection = {
     title?: string;
@@ -61,6 +70,9 @@ type SidebarNavProps = {
 
 /**
  * Determines if a navigation link matches the current window location.
+ *
+ * Uses path segment validation rules to correctly flag sub-routes or child views
+ * as active under parent sections.
  *
  * @param {string} pathname - Current active client path resolved from router hooks.
  * @param {string} href - Destination configuration link property.
@@ -80,6 +92,11 @@ function isNavItemActive(pathname: string, href: string): boolean {
  *
  * An expandable menu is active whenever one of its child links matches
  * the current pathname.
+ *
+ * @param {string} pathname - Current active client path.
+ * @param {ExpandableNavItem} item - The expandable menu item to evaluate.
+ *
+ * @returns {boolean} True if any child link matches the current pathname.
  */
 function isExpandableItemActive(pathname: string, item: ExpandableNavItem): boolean {
     return item.links.some((link) =>
@@ -88,7 +105,15 @@ function isExpandableItemActive(pathname: string, item: ExpandableNavItem): bool
 }
 
 /**
- * Reusable expandable sidebar menu item.
+ * Reusable expandable sidebar menu item component.
+ *
+ * Renders a collapsible button that toggles visibility of nested navigation links.
+ * Automatically opens when one of its child routes is active.
+ *
+ * @param {ExpandableNavItem} item - Configuration for the expandable menu.
+ * @param {string} pathname - Current active pathname for route comparison.
+ *
+ * @returns {JSX.Element} The expandable menu UI element.
  */
 function ExpandableMenuItem({item, pathname}: {
     item: ExpandableNavItem;
@@ -160,6 +185,15 @@ function ExpandableMenuItem({item, pathname}: {
 
 /**
  * Constructs the structured subsections and navigation link hierarchies.
+ *
+ * Renders sidebar navigation sections with support for both simple links and
+ * expandable menu items. Automatically highlights active routes and their parent
+ * menus.
+ *
+ * @param {SidebarNavProps} props - The component properties.
+ * @param {NavSection[]} props.sections - Structural list arrays containing categorical menu details.
+ *
+ * @returns {JSX.Element} The visual side-panel interactive route matrix list block.
  */
 export function SidebarNav({sections}: SidebarNavProps): JSX.Element {
     const pathname = usePathname();

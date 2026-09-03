@@ -79,6 +79,13 @@
     margin-top: 28px;
 }
 
+/**
+ * Base styling for all sidebar navigation items.
+ *
+ * Provides consistent sizing, spacing, colors, and transitions for both
+ * regular links and expandable menu buttons. Inherits color variables from
+ * the semantic color palette defined in globals.css.
+ */
 .navItem {
     display: flex;
     align-items: center;
@@ -92,6 +99,9 @@
     font-size: var(--font-size-sm);
     font-weight: 500;
     transition: background var(--transition-fast), color var(--transition-fast);
+    border: none;
+    background: transparent;
+    cursor: pointer;
 }
 
 .navItem:hover {
@@ -289,12 +299,16 @@
 }
 
 /* =========================================================
-   Expandable Menu
+   EXPANDABLE MENU
    ========================================================= */
 .expandIcon {
     margin-left: auto;
     font-size: 0.75rem;
-    transition: transform 0.2s ease;
+    transition: transform var(--transition-normal);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: currentColor;
 }
 
 .expandIconOpen {

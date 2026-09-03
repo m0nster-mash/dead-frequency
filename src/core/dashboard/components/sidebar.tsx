@@ -6,6 +6,9 @@ import GearIcon from "@/shared/svg/bootstrap-gear-icon.svg";
 import AdminIcon from "@/shared/svg/bootstrap-settings.svg";
 import DotIcon from "@/shared/svg/bootstrap-three-dot-icon.svg";
 import PageIcon from "@/shared/svg/page-icon.svg";
+import PersonIcon from "@/shared/svg/bootstrap-person-icon.svg";
+import ForumIcon from "@/shared/svg/bootstrap-forum-icon.svg";
+import QuestionIcon from "@/shared/svg/bootstrap-question-icon.svg";
 import {auth, SignOutButton} from "@core/auth";
 import {DropdownMenu} from "@shared/components/dropdown-menu";
 import styles from "@shared/styles/dashboard.module.css";
@@ -41,7 +44,9 @@ export async function Sidebar(): Promise<JSX.Element> {
             .toUpperCase()
         : ":)";
 
-    // Resolves avatar canvas asset arrays, falling back to base models if the user has not designed one
+    /**
+     * Resolves avatar canvas asset arrays, falling back to base models if the user has not designed one.
+     */
     const avatarConfig = session
         ? (await getAvatarConfigForUser(session.user.id)) ?? DEFAULT_AVATAR_CONFIG
         : null;
@@ -57,7 +62,7 @@ export async function Sidebar(): Promise<JSX.Element> {
                 {
                     href: "/style-test",
                     label: "Style Test",
-                    icon: <PageIcon/>,
+                    icon: <QuestionIcon/>,
                 },
             ],
         },
@@ -68,36 +73,13 @@ export async function Sidebar(): Promise<JSX.Element> {
                 {
                     href: "/avatar",
                     label: "Avatar System",
-                    icon: <PageIcon/>,
+                    icon: <PersonIcon/>,
                 },
-
                 {
-                    type: "expandable",
+                    href: "/forum",
                     label: "Forum",
-                    icon: <PageIcon/>,
-                    links: [
-                        {
-                            href: "/forum",
-                            label: "Forum Home",
-                            icon: <PageIcon/>,
-                        },
-                        {
-                            href: "/forum/categories",
-                            label: "Categories",
-                            icon: <PageIcon/>,
-                        },
-                        {
-                            href: "/forum/my-posts",
-                            label: "My Posts",
-                            icon: <PageIcon/>,
-                        },
-                        {
-                            href: "/forum/bookmarks",
-                            label: "Bookmarks",
-                            icon: <PageIcon/>,
-                        },
-                    ],
-                },
+                    icon: <ForumIcon/>,
+                }
             ],
         },
 
@@ -114,12 +96,12 @@ export async function Sidebar(): Promise<JSX.Element> {
                                 {
                                     href: "/admin/users",
                                     label: "Users",
-                                    icon: <PageIcon/>,
+                                    icon: <GearIcon/>,
                                 },
                                 {
                                     href: "/admin/forum",
                                     label: "Forum Management",
-                                    icon: <PageIcon/>,
+                                    icon: <GearIcon/>,
                                 },
                                 {
                                     href: "/admin/audit-log",
