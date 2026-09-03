@@ -54,21 +54,88 @@ export async function Sidebar(): Promise<JSX.Element> {
         {
             title: "Test Pages",
             items: [
-                {href: "/style-test", label: "Style Test", icon: <PageIcon/>}
+                {
+                    href: "/style-test",
+                    label: "Style Test",
+                    icon: <PageIcon/>,
+                },
             ],
         },
+
         {
             title: "Features",
             items: [
-                {href: "/avatar", label: "Avatar System", icon: <PageIcon/>},
-                {href: "/forum", label: "Forum", icon: <PageIcon/>},
+                {
+                    href: "/avatar",
+                    label: "Avatar System",
+                    icon: <PageIcon/>,
+                },
+
+                {
+                    type: "expandable",
+                    label: "Forum",
+                    icon: <PageIcon/>,
+                    links: [
+                        {
+                            href: "/forum",
+                            label: "Forum Home",
+                            icon: <PageIcon/>,
+                        },
+                        {
+                            href: "/forum/categories",
+                            label: "Categories",
+                            icon: <PageIcon/>,
+                        },
+                        {
+                            href: "/forum/my-posts",
+                            label: "My Posts",
+                            icon: <PageIcon/>,
+                        },
+                        {
+                            href: "/forum/bookmarks",
+                            label: "Bookmarks",
+                            icon: <PageIcon/>,
+                        },
+                    ],
+                },
             ],
         },
+
         ...(isAdmin
-            ? [{
-                title: "Management",
-                items: [{href: "/admin", label: "Admin Panel", icon: <AdminIcon/>}],
-            }]
+            ? [
+                {
+                    title: "Management",
+                    items: [
+                        {
+                            type: "expandable" as const,
+                            label: "Administration",
+                            icon: <AdminIcon/>,
+                            links: [
+                                {
+                                    href: "/admin/users",
+                                    label: "Users",
+                                    icon: <PageIcon/>,
+                                },
+                                {
+                                    href: "/admin/forum",
+                                    label: "Forum Management",
+                                    icon: <PageIcon/>,
+                                },
+                                {
+                                    href: "/admin/audit-log",
+                                    label: "Audit Log",
+                                    icon: <GearIcon/>,
+                                },
+                                {
+                                    href: "/admin/reports",
+                                    label: "Reports",
+                                    icon: <GearIcon/>,
+                                }
+                            ],
+                        },
+                    ],
+                },
+            ]
             : []),
     ];
 

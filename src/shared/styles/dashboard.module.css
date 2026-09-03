@@ -287,3 +287,26 @@
     stroke-width: 1;
     stroke: currentColor;
 }
+
+/* =========================================================
+   Expandable Menu
+   ========================================================= */
+.expandIcon {
+    margin-left: auto;
+    font-size: 0.75rem;
+    transition: transform 0.2s ease;
+}
+
+.expandIconOpen {
+    transform: rotate(180deg);
+}
+
+.subNav {
+    margin-left: 1rem;
+    padding-left: 0.5rem;
+}
+
+.subNavItem {
+    padding-left: 1.5rem;
+    font-size: 0.9em;
+}
