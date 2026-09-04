@@ -57,7 +57,7 @@
 
 .iconButton:hover {
     color: var(--color-text-primary);
-    background: var(--color-surface-muted);
+    background: var(--color-surface-hover);
 }
 
 .sidebarToggle {
@@ -113,7 +113,7 @@
 }
 
 /* =========================================================
-   EXPANDABLE BUTTON
+   SIDEBAR — EXPANDABLE NAV ITEMS
    ========================================================= */
 .expandableNavButton {
     display: flex;
@@ -150,6 +150,91 @@
     height: 19px;
 }
 
+.expandableNavButton[aria-expanded="true"] {
+    border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+    border: 1px solid var(--color-border-secondary);
+}
+
+.expandIcon {
+    margin-left: auto;
+    font-size: 0.75rem;
+    transition: transform var(--transition-normal);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: currentColor;
+}
+
+.expandIconOpen {
+    transform: rotate(180deg);
+}
+
+.subNav {
+    overflow: hidden;
+    margin: -3px 0 6px;
+    padding: 0 6px;
+    background: var(--color-surface-raised);
+    border: 1px solid var(--color-border-secondary);
+    border-top: 0;
+    border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+    box-shadow: var(--shadow-md), inset 0 1px 0 rgb(255 255 255 / 0.03);
+    transition: max-height var(--transition-normal), opacity var(--transition-fast), padding var(--transition-normal);
+}
+
+.subNavOpen {
+    max-height: 400px;
+    padding-top: 6px;
+    padding-bottom: 7px;
+    opacity: 1;
+}
+
+.subNavClosed {
+    max-height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    opacity: 0;
+    border-color: transparent;
+    box-shadow: none;
+}
+
+.subNavItem {
+    display: flex;
+    align-items: center;
+    min-height: var(--size-icon-sm);
+    width: 100%;
+    margin: 5px 0;
+    padding-left: 10px;
+    border-radius: calc(var(--radius-sm) - 2px);
+    border: 1px solid var(--color-border-secondary);
+    color: var(--color-sidebar-text);
+    background: var(--color-surface-muted);
+    font-size: 0.9em;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background var(--transition-fast), color var(--transition-fast), padding-left var(--transition-fast);
+}
+
+.subNavItem:hover {
+    color: var(--color-sidebar-text-active);
+    background: var(--color-sidebar-item-hover);
+}
+
+.subNavItem.active {
+    color: var(--color-sidebar-text-active);
+    background: var(--color-sidebar-item-active);
+    font-weight: 600;
+}
+
+.subNavItem svg {
+    flex: 0 0 19px;
+    width: 19px;
+    height: 19px;
+    margin-right: 5px;
+}
+
+/* =========================================================
+   SIDEBAR FOOTER
+   ========================================================= */
 .sidebarFooter {
     padding: 14px;
     border-top: 1px solid var(--color-border);
@@ -171,7 +256,7 @@
     flex: 0 0 36px;
     width: 36px;
     height: 36px;
-    border-radius: 25px;
+    border-radius: 50%;
     background: var(--color-avatar-default);
     color: var(--color-text-primary);
     font-size: 11px;
@@ -194,7 +279,7 @@
 
 .userInfo span {
     margin-top: 2px;
-    color: var(--color-text-user);
+    color: var(--color-text-muted);
     font-size: 11px;
 }
 
@@ -209,6 +294,9 @@
     background: var(--color-action-secondary-hover);
 }
 
+/* =========================================================
+   SIDEBAR — COLLAPSED STATE
+   ========================================================= */
 [data-collapsed="true"] ~ * .hideOnCollapse,
 [data-collapsed="true"] .hideOnCollapse {
     display: none !important;
@@ -239,7 +327,6 @@
     padding: 0;
 }
 
-
 .sidebar[data-collapsed="true"] .userCard {
     justify-content: center;
     padding: 14px 8px;
@@ -259,9 +346,8 @@
     border: 1px solid var(--color-border-secondary);
     border-top: 0;
     border-radius: 0 0 var(--radius-sm) var(--radius-sm);
-    box-shadow: 0 4px 10px rgb(0 0 0 / 0.08);
+    box-shadow: var(--shadow-lg);
 }
-
 
 /* =========================================================
    MAIN SHELL
@@ -271,7 +357,6 @@
     margin-left: var(--current-sidebar-width);
     transition: margin-left var(--transition-normal);
 }
-
 
 /* =========================================================
    TOP BAR
@@ -319,7 +404,6 @@
     display: none;
 }
 
-
 /* =========================================================
    CONTENT
    ========================================================= */
@@ -345,111 +429,4 @@
     width: 100%;
     stroke-width: 1;
     stroke: currentColor;
-}
-
-/* =========================================================
-   EXPANDABLE MENU
-   ========================================================= */
-.expandIcon {
-    margin-left: auto;
-    font-size: 0.75rem;
-    transition: transform var(--transition-normal);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: currentColor;
-}
-
-.expandIconOpen {
-    transform: rotate(180deg);
-}
-
-.subNav {
-    margin: -3px 0 6px;
-    padding: 6px 6px 7px;
-    background: var(--color-surface-raised);
-    border: 1px solid var(--color-border-secondary);
-    border-top: 0;
-    border-radius: 0 0 var(--radius-sm) var(--radius-sm);
-    box-shadow: 0 4px 10px rgb(0 0 0 / 0.08),
-    inset 0 1px 0 rgb(255 255 255 / 0.03);
-}
-
-.expandableNavButton[aria-expanded="true"] {
-    border-radius: var(--radius-sm) var(--radius-sm) 0 0;
-    border: 1px solid var(--color-border-secondary);
-}
-
-.subNavItem {
-    display: flex;
-    align-items: center;
-    min-height: var(--size-icon-sm);
-    width: 100%;
-    margin: 5px 0;
-    padding-left: 10px;
-    border-radius: calc(var(--radius-sm) - 2px);
-    border: 1px solid var(--color-border-secondary);
-    color: var(--color-sidebar-text);
-    background: var(--color-surface-muted);
-    font-size: 0.9em;
-    font-weight: 500;
-    text-decoration: none;
-    transition: background var(--transition-fast), color var(--transition-fast), padding-left var(--transition-fast);
-}
-
-.subNavItem:hover {
-    color: var(--color-sidebar-text-active);
-    background: var(--color-sidebar-item-hover);
-}
-
-.subNavItem.active {
-    color: var(--color-sidebar-text-active);
-    background: var(--color-sidebar-item-active);
-    font-weight: 600;
-}
-
-.subNavItem svg {
-    flex: 0 0 19px;
-    width: 19px;
-    height: 19px;
-    margin-right: 5px;
-}
-
-.subNav {
-    overflow: hidden;
-
-    margin: -3px 0 6px;
-    padding: 0 6px;
-
-    background: var(--color-surface-raised);
-    border: 1px solid var(--color-border-secondary);
-    border-top: 0;
-    border-radius: 0 0 var(--radius-sm) var(--radius-sm);
-
-    box-shadow: 0 4px 10px rgb(0 0 0 / 0.08),
-    inset 0 1px 0 rgb(255 255 255 / 0.03);
-
-    transition: max-height var(--transition-normal),
-    opacity var(--transition-fast),
-    padding var(--transition-normal);
-}
-
-.subNavOpen {
-    max-height: 400px;
-    padding-top: 6px;
-    padding-bottom: 7px;
-    opacity: 1;
-}
-
-.subNavClosed {
-    max-height: 0;
-    padding-top: 0;
-    padding-bottom: 0;
-    opacity: 0;
-    border-color: transparent;
-    box-shadow: none;
-}
-
-.expandableNavButton[aria-expanded="true"] {
-    border-radius: var(--radius-sm) var(--radius-sm) 0 0;
 }

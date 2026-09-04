@@ -1,3 +1,6 @@
+/* =========================================================
+   CARD CONTAINER
+   ========================================================= */
 .wrapper {
     display: flex;
     align-items: center;
@@ -16,6 +19,9 @@
     box-shadow: var(--shadow-md);
 }
 
+/* =========================================================
+   CARD HEADER
+   ========================================================= */
 .header {
     margin-bottom: var(--size-space-6);
     text-align: center;
@@ -34,6 +40,9 @@
     color: var(--color-text-muted);
 }
 
+/* =========================================================
+   TABS
+   ========================================================= */
 .tabs {
     display: flex;
     margin-bottom: var(--size-space-6);
@@ -65,6 +74,9 @@
     box-shadow: var(--shadow-sm);
 }
 
+/* =========================================================
+   FORM
+   ========================================================= */
 .form {
     display: flex;
     flex-direction: column;
@@ -80,7 +92,7 @@
 .label {
     font-size: var(--font-size-xs);
     font-weight: 600;
-    letter-spacing: 0.05em;
+    letter-spacing: var(--tracking-wide);
     color: var(--form-label);
 }
 
@@ -124,29 +136,16 @@
     background-color: var(--form-accent);
     color: var(--color-action-primary-text);
     font-weight: 600;
-    font-size: var(--font-size-md);
+    font-size: var(--font-size-sm);
     border-radius: var(--form-radius);
     cursor: pointer;
     transition: background-color var(--form-transition), border-color var(--form-transition),
     transform var(--form-transition);
 }
 
-.submit:hover {
-    background-color: var(--form-accent-hover);
-    border-color: var(--form-accent-hover);
-}
-
-.submit:active {
-    transform: translateY(1px);
-}
-
-.submit:disabled {
-    background-color: var(--form-border);
-    border-color: var(--form-border);
-    color: var(--form-placeholder);
-    cursor: not-allowed;
-}
-
+/* =========================================================
+   FOOTER
+   ========================================================= */
 .footer {
     margin-top: var(--size-space-6);
     text-align: center;

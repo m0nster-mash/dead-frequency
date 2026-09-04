@@ -1,10 +1,13 @@
+/* =========================================================
+   LAYOUT
+   ========================================================= */
 .container {
     width: 100%;
 }
 
 .categorySelector {
     max-width: 32rem;
-    margin-bottom: 1.5rem;
+    margin-bottom: var(--size-space-6);
 }
 
 .categoryEditor {
@@ -13,9 +16,12 @@
     gap: 0;
 }
 
+/* =========================================================
+   CATEGORY EDITOR
+   ========================================================= */
 .editorSection {
-    padding: 1.5rem 0;
-    border-top: 1px solid var(--color-border, #d4d4d4);
+    padding: var(--size-space-6) 0;
+    border-top: 1px solid var(--color-border);
 }
 
 .editorSection:first-child {
@@ -27,71 +33,82 @@
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
-    gap: 1rem;
-    margin-bottom: 1.25rem;
+    gap: var(--size-space-4);
+    margin-bottom: var(--size-space-5);
 }
 
 .sectionTitle {
     margin: 0;
-    color: var(--color-text-primary, #171717);
-    font-size: 1rem;
+    color: var(--color-text-primary);
+    font-size: var(--font-size-md);
     font-weight: 700;
 }
 
 .sectionDescription {
-    margin: 0.3rem 0 0;
-    color: var(--color-text-muted, #737373);
-    font-size: 0.85rem;
+    margin: var(--size-space-1) 0 0;
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
     line-height: 1.45;
 }
 
+/* =========================================================
+   CATEGORY FORM
+   ========================================================= */
 .form {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: var(--size-space-4);
 }
 
 .formGrid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 1rem;
+    gap: var(--size-space-4);
 }
 
 .field {
     display: flex;
     flex-direction: column;
-    gap: 0.45rem;
+    gap: var(--size-space-2);
 }
 
 .label {
-    color: var(--color-text-primary, #171717);
-    font-size: 0.8rem;
+    font-size: var(--font-size-xs);
     font-weight: 600;
+    letter-spacing: var(--tracking-wide);
+    color: var(--form-label);
 }
 
 .input {
     width: 100%;
-    min-height: 2.5rem;
-    box-sizing: border-box;
-    padding: 0.6rem 0.75rem;
-    border: 1px solid var(--color-border, #d4d4d4);
-    border-radius: 0.4rem;
-    background: var(--color-surface, #ffffff);
-    color: var(--color-text-primary, #171717);
-    font: inherit;
+    min-height: var(--size-control-md);
+    padding: var(--size-space-3) var(--size-space-3);
+    border: 1px solid var(--form-border);
+    border-radius: var(--form-radius);
+    background: var(--form-background);
+    color: var(--form-text);
+    transition: border-color var(--form-transition), box-shadow var(--form-transition);
+}
+
+.input:hover {
+    border-color: var(--form-border-hover);
 }
 
 .input:focus {
-    outline: 2px solid var(--color-focus-ring, #737373);
-    outline-offset: 1px;
+    outline: none;
+    border-color: var(--form-accent);
+    box-shadow: var(--form-shadow-focus);
 }
 
 .formActions {
     display: flex;
     justify-content: flex-end;
-    margin-top: 0.25rem;
+    margin-top: var(--size-space-1);
 }
 
+/* =========================================================
+   ACTION BUTTONS
+   ========================================================= */
 .primaryButton,
 .dangerButton,
 .orderButton {
@@ -101,33 +118,33 @@
 }
 
 .primaryButton {
-    min-height: 2.4rem;
-    padding: 0.55rem 0.9rem;
-    border: 1px solid var(--color-border, #171717);
-    border-radius: 0.4rem;
-    background: var(--color-surface-raised, #171717);
-    color: var(--color-text-muted, #ffffff);
+    padding: var(--size-space-3) var(--size-space-5);
+    border: 1px solid var(--form-accent);
+    border-radius: var(--form-radius);
+    background: var(--form-accent);
+    color: var(--color-action-primary-text);
+    font-size: var(--font-size-sm);
 }
 
 .primaryButton:hover {
-    opacity: 0.88;
+    background-color: var(--form-accent-hover);
+    border-color: var(--form-accent-hover);
 }
 
 /*
  * Destructive actions deliberately use the application's danger tokens.
  */
 .dangerButton {
-    min-height: 2.4rem;
-    padding: 0.55rem 0.9rem;
-    border: 1px solid var(--color-danger, #b42318);
-    border-radius: 0.4rem;
-    background: var(--color-danger-bg, #fef3f2);
-    color: var(--color-danger, #b42318);
+    padding: var(--size-space-3) var(--size-space-5);
+    border: 1px solid var(--form-danger);
+    border-radius: var(--form-radius);
+    background: var(--form-danger-muted);
+    color: var(--form-danger);
+    font-size: var(--font-size-sm);
 }
 
 .dangerButton:hover {
-    background: var(--color-danger-bg, #b42318);
-    color: var(--color-danger, #fef3f2);
+    filter: brightness(0.9);
 }
 
 .deleteCategoryForm {
@@ -137,15 +154,14 @@
     padding-right: 6.5rem;
 }
 
-/* --------------------------------------------------
-   Board table
--------------------------------------------------- */
-
+/* =========================================================
+   BOARD TABLE
+   ========================================================= */
 .boardTableWrapper {
     width: 100%;
     overflow-x: auto;
-    border: 1px solid var(--color-border, #d4d4d4);
-    border-radius: 0.5rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--form-radius);
 }
 
 .boardTable {
@@ -157,27 +173,27 @@
 
 .boardTable th,
 .boardTable td {
-    padding: 0.75rem;
-    border-bottom: 1px solid var(--color-border, #e5e5e5);
+    padding: var(--size-space-3);
+    border-bottom: 1px solid var(--color-border);
     text-align: left;
     vertical-align: middle;
 }
 
 .boardTable th {
-    background: var(--color-surface-muted, #fafafa);
-    color: var(--color-text-muted, #525252);
-    font-size: 0.72rem;
+    background: var(--color-surface-muted);
+    color: var(--color-text-muted);
+    font-size: var(--font-size-xs);
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.035em;
+    letter-spacing: var(--tracking-wide);
 }
 
 .boardTable tbody tr {
-    transition: background-color 120ms ease;
+    transition: background-color var(--form-transition);
 }
 
 .boardTable tbody tr:hover {
-    background: var(--color-action-secondary-hover, #fafafa);
+    background: var(--color-surface-hover);
 }
 
 .boardTable tbody tr:last-child td {
@@ -203,7 +219,7 @@
 .orderControls {
     display: flex;
     align-items: center;
-    gap: 0.6rem;
+    gap: var(--size-space-2);
 }
 
 .orderNumber {
@@ -211,14 +227,14 @@
     align-items: center;
     justify-content: center;
     min-width: 1.5rem;
-    color: var(--color-text-muted, #737373);
-    font-size: 0.8rem;
+    color: var(--color-text-muted);
+    font-size: var(--font-size-xs);
     font-weight: 700;
 }
 
 .orderButtons {
     display: flex;
-    gap: 0.25rem;
+    gap: var(--size-space-1);
 }
 
 .orderButton {
@@ -228,15 +244,16 @@
     width: 2rem;
     height: 2rem;
     padding: 0;
-    border: 1px solid var(--color-border, #d4d4d4);
-    border-radius: 0.35rem;
-    background: var(--color-surface, #ffffff);
-    color: var(--color-text-primary, #171717);
+    border: 1px solid var(--color-border);
+    border-radius: var(--form-radius);
+    background: var(--color-surface);
+    color: var(--color-icon-default);
     line-height: 1;
 }
 
 .orderButton:hover:not(:disabled) {
-    background: var(--form-accent-hover, #f5f5f5);
+    background: var(--color-surface-hover);
+    color: var(--color-text-primary);
 }
 
 .orderButton:disabled {
@@ -249,8 +266,8 @@
 }
 
 .boardDescription {
-    color: var(--color-text-muted, #737373);
-    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
     line-height: 1.4;
 }
 
@@ -262,10 +279,13 @@
     margin: 0;
 }
 
+/* =========================================================
+   REORDER & EMPTY STATES
+   ========================================================= */
 .reorderForm {
     display: flex;
     flex-direction: column;
-    margin-top: 1rem;
+    margin-top: var(--size-space-4);
 }
 
 .reorderFooter {
@@ -274,10 +294,10 @@
 }
 
 .emptyState {
-    padding: 1.5rem;
-    border: 1px dashed var(--color-border, #d4d4d4);
-    border-radius: 0.4rem;
-    color: var(--color-text-muted, #737373);
+    padding: var(--size-space-6);
+    border: 1px dashed var(--color-border);
+    border-radius: var(--form-radius);
+    color: var(--color-text-muted);
     text-align: center;
 }
 
@@ -285,26 +305,14 @@
     margin: 0;
 }
 
-@media (max-width: 900px) {
-    .formGrid {
-        grid-template-columns: 1fr;
-    }
-
-    .deleteCategoryForm {
-        margin-top: 1rem;
-        padding-right: 0;
-    }
-}
-
-/* --------------------------------------------------
-   Forum hierarchy table
--------------------------------------------------- */
-
+/* =========================================================
+   FORUM HIERARCHY TABLE
+   ========================================================= */
 .forumTableContainer {
     width: 100%;
     overflow-x: auto;
     border: 1px solid var(--color-border);
-    border-radius: 0.65rem;
+    border-radius: var(--form-radius);
     background: var(--color-surface);
 }
 
@@ -316,13 +324,13 @@
 }
 
 .forumTable th {
-    padding: 0.75rem 1rem;
+    padding: var(--size-space-3) var(--size-space-4);
     border-bottom: 1px solid var(--color-border);
     background: var(--color-surface-raised);
     color: var(--color-text-muted);
-    font-size: 0.7rem;
+    font-size: var(--font-size-2xs);
     font-weight: 700;
-    letter-spacing: 0.045em;
+    letter-spacing: var(--tracking-wide);
     line-height: 1.2;
     text-align: left;
     text-transform: uppercase;
@@ -330,10 +338,10 @@
 }
 
 .forumTable td {
-    padding: 0.85rem 1rem;
+    padding: var(--size-space-3) var(--size-space-4);
     border-bottom: 1px solid var(--color-border);
     color: var(--color-text-primary);
-    font-size: 0.85rem;
+    font-size: var(--font-size-sm);
     line-height: 1.4;
     text-align: left;
     vertical-align: middle;
@@ -343,12 +351,6 @@
     border-bottom: 0;
 }
 
-/*
- * Column sizing.
- *
- * The name and description columns receive the majority of the available
- * space, while statistics and actions remain compact.
- */
 .forumOrderColumn {
     width: 7rem;
 }
@@ -370,10 +372,7 @@
     text-align: right !important;
 }
 
-/* --------------------------------------------------
-   Category rows
--------------------------------------------------- */
-
+/* Category rows */
 .forumCategoryRow {
     background: var(--color-surface-strong);
 }
@@ -388,24 +387,21 @@
 
 .forumCategoryRow td:first-child {
     border-left: 3px solid var(--color-border);
-    padding-left: calc(1rem - 3px);
+    padding-left: calc(var(--size-space-4) - 3px);
 }
 
 .forumCategoryName {
     color: var(--color-text-primary);
-    font-size: 0.9rem;
+    font-size: var(--font-size-sm);
     font-weight: 700;
 }
 
 .forumCategoryDescription {
     color: var(--color-text-muted);
-    font-size: 0.82rem;
+    font-size: var(--font-size-sm);
 }
 
-/* --------------------------------------------------
-   Board rows
--------------------------------------------------- */
-
+/* Board rows */
 .forumBoardRow {
     background: var(--color-surface);
 }
@@ -418,7 +414,7 @@
     position: relative;
     padding-left: 1.35rem;
     color: var(--color-text-primary);
-    font-size: 0.85rem;
+    font-size: var(--font-size-sm);
     font-weight: 500;
 }
 
@@ -436,23 +432,20 @@
 
 .forumBoardDescription {
     color: var(--color-text-muted);
-    font-size: 0.82rem;
+    font-size: var(--font-size-sm);
 }
 
-/* --------------------------------------------------
-   Shared cells
--------------------------------------------------- */
-
+/* Shared cells */
 .forumOrderCell {
     color: var(--color-text-muted) !important;
-    font-size: 0.78rem !important;
+    font-size: var(--font-size-xs) !important;
     font-variant-numeric: tabular-nums;
     white-space: nowrap;
 }
 
 .forumStatisticCell {
     color: var(--color-text-muted) !important;
-    font-size: 0.8rem !important;
+    font-size: var(--font-size-xs) !important;
     font-variant-numeric: tabular-nums;
     white-space: nowrap;
 }
@@ -468,97 +461,84 @@
     align-items: center;
     justify-content: center;
     min-width: 4rem;
-    min-height: 2.15rem;
-    padding: 0.4rem 0.75rem;
+    min-height: var(--size-control-sm);
+    padding: var(--size-space-2) var(--size-space-3);
     border: 1px solid var(--color-border);
-    border-radius: 0.4rem;
+    border-radius: var(--form-radius);
     background: var(--color-surface);
     color: var(--color-text-primary);
     font: inherit;
-    font-size: 0.78rem;
+    font-size: var(--font-size-xs);
     font-weight: 600;
     cursor: pointer;
 }
 
 .forumEditButton:hover {
     border-color: var(--color-border);
-    background: var(--color-surface);
-    color: var(--color-text-muted);
+    background: var(--color-surface-hover);
+    color: var(--color-text-primary);
 }
 
 .forumEmptyCell {
-    padding: 2rem 1rem !important;
+    padding: var(--size-space-7) var(--size-space-4) !important;
     color: var(--color-text-muted) !important;
     text-align: center !important;
 }
 
-/* --------------------------------------------------
-   Responsive
--------------------------------------------------- */
-
-@media (max-width: 700px) {
-    .forumTable {
-        min-width: 800px;
-    }
-}
-
-/* --------------------------------------------------
-   Forum viewer
--------------------------------------------------- */
-
+/* =========================================================
+   FORUM VIEWER / BOARD EDITOR
+   ========================================================= */
 .forumViewer {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: var(--size-space-4);
 }
-
-/* --------------------------------------------------
-   Board editor
--------------------------------------------------- */
 
 .boardEditor {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: var(--size-space-4);
 }
 
+/* =========================================================
+   ADMIN STATS
+   ========================================================= */
 .adminStatsGrid {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 0.75rem;
+    gap: var(--size-space-3);
 }
 
 .adminStat {
     display: flex;
     flex-direction: column;
-    gap: 0.4rem;
+    gap: var(--size-space-2);
     min-width: 0;
-    padding: 0.9rem;
+    padding: var(--size-space-4);
     border: 1px solid var(--color-border);
-    border-radius: 0.5rem;
+    border-radius: var(--form-radius);
     background: var(--color-surface-strong);
 }
 
 .adminStatLabel {
     color: var(--color-text-muted);
-    font-size: 0.72rem;
+    font-size: var(--font-size-xs);
     font-weight: 700;
-    letter-spacing: 0.035em;
+    letter-spacing: var(--tracking-wide);
     text-transform: uppercase;
 }
 
-/* --------------------------------------------------
-   Unassigned boards
--------------------------------------------------- */
-
+/* =========================================================
+   UNASSIGNED BOARDS
+   ========================================================= */
 .unassignedIntro {
-    margin-bottom: 1rem;
+    margin-bottom: var(--size-space-4);
 }
 
 .unassignedIntro p {
     margin: 0;
     color: var(--color-text-muted);
-    font-size: 0.85rem;
+    font-size: var(--font-size-sm);
     line-height: 1.45;
 }
 
@@ -570,20 +550,20 @@
 }
 
 .unassignedTable th {
-    padding: 0.75rem 1rem;
+    padding: var(--size-space-3) var(--size-space-4);
     border-bottom: 1px solid var(--color-border);
     background: var(--color-surface-strong);
     color: var(--color-text-muted);
-    font-size: 0.7rem;
+    font-size: var(--font-size-2xs);
     font-weight: 700;
-    letter-spacing: 0.045em;
+    letter-spacing: var(--tracking-wide);
     text-align: left;
     text-transform: uppercase;
     white-space: nowrap;
 }
 
 .unassignedTable td {
-    padding: 0.85rem 1rem;
+    padding: var(--size-space-3) var(--size-space-4);
     border-bottom: 1px solid var(--color-border);
     vertical-align: middle;
 }
@@ -594,7 +574,7 @@
 
 .unassignedBoardRow {
     background: var(--color-surface);
-    transition: background-color 120ms ease;
+    transition: background-color var(--form-transition);
 }
 
 .unassignedBoardRow:hover {
@@ -603,13 +583,13 @@
 
 .unassignedBoardName {
     color: var(--color-text-primary);
-    font-size: 0.85rem;
+    font-size: var(--font-size-sm);
     font-weight: 600;
 }
 
 .unassignedBoardDescription {
     color: var(--color-text-muted);
-    font-size: 0.82rem;
+    font-size: var(--font-size-sm);
     line-height: 1.4;
 }
 
@@ -620,22 +600,40 @@
 .assignCategoryForm {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: var(--size-space-2);
 }
 
-.assignCategoryForm .adminInput {
+.assignCategoryForm .input {
     min-width: 0;
     flex: 1;
 }
 
-.assignCategoryForm .adminPrimaryButton {
+.assignCategoryForm .primaryButton {
     flex-shrink: 0;
     white-space: nowrap;
 }
 
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
 @media (max-width: 900px) {
+    .formGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .deleteCategoryForm {
+        margin-top: var(--size-space-4);
+        padding-right: 0;
+    }
+
     .adminStatsGrid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 700px) {
+    .forumTable {
+        min-width: 800px;
     }
 }
 

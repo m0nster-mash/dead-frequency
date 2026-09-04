@@ -1,7 +1,7 @@
+/* =========================================================
+   COLOR PRIMITIVES
+   ========================================================= */
 :root {
-    /* ============================================================
-       Semantic Colour Palette
-       ============================================================ */
     --theme-white: #ffffff;
     --theme-black: #000000;
 
@@ -81,9 +81,9 @@
     --theme-slate-tonal-005: #696f7f;
     --theme-slate-tonal-006: #818593;
 
-    /* ============================================================
+    /* =========================================================
        SEMANTIC TOKENS — LIGHT THEME
-       ============================================================ */
+       ========================================================= */
 
     /* Surfaces */
     --color-bg: var(--theme-grey-001);
@@ -131,30 +131,36 @@
     --color-sidebar-item-hover: var(--color-surface-raised);
     --color-sidebar-item-active: var(--theme-grey-tonal-001);
 
+    /* Icons & avatars */
+    --color-icon-default: var(--theme-slate-005);
+    --color-avatar-default: var(--theme-blue-101);
+
+    /* Interaction states */
+    --color-surface-hover: var(--color-surface-raised);
+    --color-border-hover: var(--color-border-strong);
+
     /* Effects */
     --shadow-sm: 0 1px 2px rgb(29 30 32 / 4%);
     --shadow-md: 0 4px 18px rgb(29 30 32 / 6%);
+    --shadow-lg: 0 12px 40px rgb(29 30 32 / 20%);
 
-    /* NEW TOKENS */
-    --color-icon-default: var(--theme-slate-005);
-    --color-avatar-default: var(--theme-blue-101);
-    --color-text-user: var(--theme-slate-005);
-
-    /* ============================================================
+    /* =========================================================
        LAYOUT / TYPOGRAPHY / MOTION
-       ============================================================ */
+       ========================================================= */
     --sidebar-width: 250px;
     --sidebar-collapsed-width: 76px;
     --topbar-height: 68px;
     --current-sidebar-width: var(--sidebar-width);
 
     --font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --font-size-2xs: 0.6875rem;
     --font-size-xs: 0.75rem;
     --font-size-sm: 0.875rem;
     --font-size-md: 1rem;
     --font-size-lg: 1.125rem;
     --font-size-xl: 1.5rem;
     --font-size-2xl: 2rem;
+    --tracking-wide: 0.05em;
 
     --radius-sm: 6px;
     --radius-md: 10px;
@@ -163,7 +169,9 @@
     --transition-fast: 150ms ease;
     --transition-normal: 250ms ease;
 
-    /* Form elements */
+    /* =========================================================
+       FORM / CONTROL TOKENS
+       ========================================================= */
     --form-background: var(--color-surface);
     --form-surface: var(--color-surface-raised);
     --form-border: var(--color-border);
@@ -176,15 +184,15 @@
     --form-accent-muted: var(--theme-blue-101);
     --form-danger: var(--theme-red-005);
     --form-danger-muted: rgb(255 97 97 / 16%);
-    --form-shadow-focus: 0 0 0 3px rgb(47 107 255 / 22%);
+    --form-shadow-focus: 0 0 0 3px color-mix(in srgb, var(--color-action-primary) 22%, transparent);
 
     --form-radius: 4px;
     --form-radius-sm: 2px;
     --form-transition: 140ms ease;
 
-    /* ============================================================
+    /* =========================================================
        SIZE TOKENS
-       ============================================================ */
+       ========================================================= */
     --size-space-1: 0.25rem;
     --size-space-2: 0.5rem;
     --size-space-3: 0.75rem;
@@ -193,19 +201,20 @@
     --size-space-6: 1.5rem;
     --size-space-7: 2.0rem;
 
+    /* NOTE: unused across the reviewed component files — confirm before removing */
     --size-control-sm: 36px;
     --size-control-md: 40px;
     --size-control-lg: 48px;
 
     --size-icon-sm: 36px;
+    /* NOTE: unused across the reviewed component files — confirm before removing */
     --size-icon-md: 50px;
     --size-icon-lg: 100px;
-
-    --size-radius-sm: 6px;
-    --size-radius-md: 10px;
-    --size-radius-lg: 14px;
 }
 
+/* =========================================================
+   DARK THEME OVERRIDES
+   ========================================================= */
 .dark {
     /* Surfaces */
     --color-bg: var(--theme-slate-002);
@@ -238,18 +247,18 @@
     /* Sidebar */
     --color-sidebar-item-active: var(--theme-slate-tonal-003);
 
+    /* Icons & avatars */
+    --color-icon-default: var(--theme-grey-tonal-006);
+    --color-avatar-default: var(--theme-blue-004);
+
     /* Effects */
     --shadow-sm: 0 1px 2px rgb(0 0 0 / 22%);
     --shadow-md: 0 4px 18px rgb(0 0 0 / 32%);
+    --shadow-lg: 0 12px 40px rgb(0 0 0 / 45%);
 
-    /* New tokens */
-    --color-icon-default: var(--theme-grey-tonal-006);
-    --color-avatar-default: var(--theme-blue-004);
-    --color-text-user: var(--theme-slate-tonal-006);
-
-    /* Form elements */
+    /* Form / control tokens */
     --form-accent-muted: var(--theme-blue-005);
-    --form-shadow-focus: 0 0 0 3px rgb(135 164 255 / 30%);
+    --form-shadow-focus: 0 0 0 3px color-mix(in srgb, var(--color-action-primary) 30%, transparent);
 }
 
 /* =========================================================
@@ -278,10 +287,9 @@ body {
     -webkit-font-smoothing: antialiased;
 }
 
-/* ==========================================================================
- * Base resets scoped to form controls
- * ========================================================================== */
-
+/* =========================================================
+   FORM ELEMENTS — BASE RESET
+   ========================================================= */
 input,
 textarea,
 select,
@@ -292,16 +300,9 @@ button {
     margin: 0;
 }
 
-*,
-*::before,
-*::after {
-    box-sizing: border-box;
-}
-
-/* ==========================================================================
- * Layout helpers
- * ========================================================================== */
-
+/* =========================================================
+   LAYOUT HELPERS
+   ========================================================= */
 form {
     display: flex;
     flex-direction: column;
@@ -332,10 +333,9 @@ label {
     color: var(--form-label);
 }
 
-/* ==========================================================================
- * Text inputs, text areas, selects
- * ========================================================================== */
-
+/* =========================================================
+   TEXT INPUTS, TEXT AREAS & SELECTS
+   ========================================================= */
 input[type="text"],
 input[type="email"],
 input[type="password"],
@@ -420,10 +420,9 @@ select.error {
     background-color: var(--color-danger-bg);
 }
 
-/* ==========================================================================
- * Checkboxes & radios
- * ========================================================================== */
-
+/* =========================================================
+   CHECKBOXES & RADIOS
+   ========================================================= */
 input[type="checkbox"],
 input[type="radio"] {
     appearance: none;
@@ -490,10 +489,9 @@ input[type="radio"]:disabled {
     cursor: not-allowed;
 }
 
-/* ==========================================================================
- * Range
- * ========================================================================== */
-
+/* =========================================================
+   RANGE INPUTS
+   ========================================================= */
 input[type="range"] {
     width: 100%;
     height: 1.25rem;
@@ -541,10 +539,9 @@ input[type="range"]::-moz-range-thumb {
     cursor: pointer;
 }
 
-/* ==========================================================================
- * File input
- * ========================================================================== */
-
+/* =========================================================
+   FILE INPUT
+   ========================================================= */
 input[type="file"] {
     width: 100%;
     padding: 0.5rem;
@@ -574,10 +571,9 @@ input[type="file"]::file-selector-button:hover {
     border-color: var(--form-border-hover);
 }
 
-/* ==========================================================================
- * Buttons
- * ========================================================================== */
-
+/* =========================================================
+   BUTTONS
+   ========================================================= */
 button,
 input[type="submit"],
 input[type="button"],
@@ -628,16 +624,14 @@ input[type="reset"]:disabled {
     cursor: not-allowed;
 }
 
-/* ==========================================================================
- * Reduced motion
- * ========================================================================== */
-
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
 @media (prefers-reduced-motion: reduce) {
     * {
         transition: none !important;
     }
 }
-
 
 /* =========================================================
    APP STRUCTURE

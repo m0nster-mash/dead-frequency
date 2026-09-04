@@ -1,5 +1,5 @@
 /* =========================================================
-   Page Header
+   PAGE HEADER
    ========================================================= */
 .contentHeader {
     display: flex;
@@ -24,7 +24,7 @@
     color: var(--color-text-muted);
     font-size: var(--font-size-xs);
     font-weight: 700;
-    letter-spacing: 0.08em;
+    letter-spacing: var(--tracking-wide);
     line-height: 1.4;
     text-transform: uppercase;
 }
@@ -45,7 +45,7 @@
 }
 
 /* =========================================================
-   Main Content Panel
+   MAIN CONTENT PANEL
    ========================================================= */
 .mainContentCard {
     position: relative;
@@ -61,7 +61,7 @@
 }
 
 /* =========================================================
-   Card Header
+   CARD HEADER
    ========================================================= */
 .cardHeader {
     display: flex;
@@ -93,7 +93,7 @@
 }
 
 /* =========================================================
-   Panel Body
+   PANEL BODY
    ========================================================= */
 .mainContentCardBody {
     padding: var(--size-space-6);
@@ -107,9 +107,8 @@
     margin-bottom: 0;
 }
 
-
 /* =========================================================
-   Table of Contents
+   TABLE OF CONTENTS
    ========================================================= */
 .contentHeaderTocToggle {
     display: block;
@@ -135,7 +134,7 @@
 }
 
 .tableOfContentsButton:hover {
-    background: var(--form-surface);
+    background: var(--color-surface-hover);
     border-color: var(--form-border-hover);
 }
 
@@ -170,7 +169,7 @@
     color: var(--color-text-primary);
     font-size: var(--font-size-xs);
     font-weight: 700;
-    letter-spacing: 0.05em;
+    letter-spacing: var(--tracking-wide);
     text-transform: uppercase;
 }
 
@@ -208,13 +207,13 @@
 }
 
 .tableOfContentsLink:hover {
-    background: var(--form-surface);
+    background: var(--color-surface-hover);
     color: var(--color-text-primary);
 }
 
 .tableOfContentsLinkActive {
     border-left-color: var(--form-accent);
-    background: var(--form-surface);
+    background: var(--color-surface-hover);
     color: var(--color-text-primary);
     font-weight: 600;
 }
@@ -236,7 +235,7 @@
     color: var(--color-text-primary);
     font-size: var(--font-size-xs);
     font-weight: 700;
-    letter-spacing: 0.05em;
+    letter-spacing: var(--tracking-wide);
     text-transform: uppercase;
 }
 
@@ -254,11 +253,11 @@
 }
 
 .contentHeaderTocItemLevel3 {
-    padding-left: var(--size-space-4);
+    padding-left: var(--size-space-3);
 }
 
 .contentHeaderTocItemLevel4 {
-    padding-left: var(--size-space-6);
+    padding-left: var(--size-space-5);
 }
 
 .contentHeaderTocItem a {
@@ -273,12 +272,12 @@
 }
 
 .contentHeaderTocItem a:hover {
-    background: var(--form-background);
+    background: var(--color-surface-hover);
     color: var(--color-text-primary);
 }
 
 /* =========================================================
-   Back To Top
+   BACK TO TOP
    ========================================================= */
 .backToTopButton {
     position: absolute;
@@ -292,7 +291,7 @@
     border: 1px solid var(--color-border);
     border-radius: var(--form-radius);
     background: var(--color-surface-strong);
-    color: var(--color-text-muted);
+    color: var(--color-icon-default);
     font-size: var(--font-size-md);
     line-height: 1;
     text-decoration: none;
@@ -300,7 +299,7 @@
 }
 
 .backToTopButton:hover {
-    background: var(--form-surface);
+    background: var(--color-surface-hover);
     border-color: var(--form-border-hover);
     color: var(--color-text-primary);
 }
@@ -316,7 +315,7 @@
 }
 
 /* =========================================================
-   Responsive
+   RESPONSIVE
    ========================================================= */
 @media (max-width: 768px) {
     .contentHeaderMain {
@@ -324,20 +323,8 @@
         gap: var(--size-space-4);
     }
 
-    .contentHeaderMain .primaryButton {
+    .primaryButton {
         width: 100%;
-    }
-
-    .contentHeaderTocToggle {
-        display: block;
-    }
-
-    .contentHeaderToc {
-        display: none;
-    }
-
-    .contentHeaderTocOpen {
-        display: block;
     }
 
     .cardHeader {
@@ -347,20 +334,11 @@
     .mainContentCardBody {
         padding: var(--size-space-5);
     }
-
-    .contentHeaderMain {
-        flex-direction: column;
-        gap: var(--size-space-4);
-    }
-
-    .primaryButton {
-        width: 100%;
-    }
 }
 
 @media (max-width: 480px) {
     .contentHeader {
-        gap: var(--size-space-4);
+        gap: var(--size-space-3);
         margin-bottom: var(--size-space-5);
     }
 
@@ -387,19 +365,6 @@
     .backToTopButton {
         right: var(--size-space-3);
         bottom: var(--size-space-3);
-    }
-
-    .contentHeader {
-        gap: var(--size-space-3);
-        margin-bottom: var(--size-space-5);
-    }
-
-    .contentHeaderMain h1 {
-        font-size: var(--font-size-lg);
-    }
-
-    .subtitle {
-        font-size: var(--font-size-sm);
     }
 
     .contentHeaderToc {
