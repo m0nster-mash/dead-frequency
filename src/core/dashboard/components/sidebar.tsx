@@ -2,10 +2,12 @@ import {NavSection, SidebarNav} from "@/app/dashboard/components/sidebar-nav";
 import {AvatarRenderer} from "@/feature/avatar/components/avatar-renderer";
 import {getAvatarConfigForUser} from "@/feature/avatar/lib/actions";
 import {DEFAULT_AVATAR_CONFIG} from "@/feature/avatar/lib/options";
+import ForumIcon from "@/shared/svg/bootstrap-forum-icon.svg";
 import GearIcon from "@/shared/svg/bootstrap-gear-icon.svg";
+import PersonIcon from "@/shared/svg/bootstrap-person-icon.svg";
+import QuestionIcon from "@/shared/svg/bootstrap-question-icon.svg";
 import AdminIcon from "@/shared/svg/bootstrap-settings.svg";
 import DotIcon from "@/shared/svg/bootstrap-three-dot-icon.svg";
-import PageIcon from "@/shared/svg/page-icon.svg";
 import {auth, SignOutButton} from "@core/auth";
 import {DropdownMenu} from "@shared/components/dropdown-menu";
 import styles from "@shared/styles/dashboard.module.css";
@@ -41,7 +43,9 @@ export async function Sidebar(): Promise<JSX.Element> {
             .toUpperCase()
         : ":)";
 
-    // Resolves avatar canvas asset arrays, falling back to base models if the user has not designed one
+    /**
+     * Resolves avatar canvas asset arrays, falling back to base models if the user has not designed one.
+     */
     const avatarConfig = session
         ? (await getAvatarConfigForUser(session.user.id)) ?? DEFAULT_AVATAR_CONFIG
         : null;
@@ -54,21 +58,65 @@ export async function Sidebar(): Promise<JSX.Element> {
         {
             title: "Test Pages",
             items: [
-                {href: "/style-test", label: "Style Test", icon: <PageIcon/>}
+                {
+                    href: "/style-test",
+                    label: "Style Test",
+                    icon: <QuestionIcon/>,
+                },
             ],
         },
+
         {
             title: "Features",
             items: [
-                {href: "/avatar", label: "Avatar System", icon: <PageIcon/>},
-                {href: "/forum", label: "Forum", icon: <PageIcon/>},
+                {
+                    href: "/avatar",
+                    label: "Avatar System",
+                    icon: <PersonIcon/>,
+                },
+                {
+                    href: "/forum",
+                    label: "Forum",
+                    icon: <ForumIcon/>,
+                }
             ],
         },
+
         ...(isAdmin
-            ? [{
-                title: "Management",
-                items: [{href: "/admin", label: "Admin Panel", icon: <AdminIcon/>}],
-            }]
+            ? [
+                {
+                    title: "Management",
+                    items: [
+                        {
+                            type: "expandable" as const,
+                            label: "Administration",
+                            icon: <AdminIcon/>,
+                            links: [
+                                {
+                                    href: "/admin/users",
+                                    label: "Users",
+                                    icon: <GearIcon/>,
+                                },
+                                {
+                                    href: "/admin/forum",
+                                    label: "Forum Management",
+                                    icon: <GearIcon/>,
+                                },
+                                {
+                                    href: "/admin/audit-log",
+                                    label: "Audit Log",
+                                    icon: <GearIcon/>,
+                                },
+                                {
+                                    href: "/admin/reports",
+                                    label: "Reports",
+                                    icon: <GearIcon/>,
+                                }
+                            ],
+                        },
+                    ],
+                },
+            ]
             : []),
     ];
 

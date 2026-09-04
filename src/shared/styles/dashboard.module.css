@@ -92,6 +92,7 @@
     font-size: var(--font-size-sm);
     font-weight: 500;
     transition: background var(--transition-fast), color var(--transition-fast);
+    border: none;
 }
 
 .navItem:hover {
@@ -106,6 +107,44 @@
 }
 
 .navItem svg {
+    flex: 0 0 19px;
+    width: 19px;
+    height: 19px;
+}
+
+/* =========================================================
+   EXPANDABLE BUTTON
+   ========================================================= */
+.expandableNavButton {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 42px;
+    width: 100%;
+    margin-bottom: 3px;
+    padding: 0 10px;
+    border-radius: var(--radius-sm);
+    border: none;
+    background: transparent;
+    color: var(--color-sidebar-text);
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    cursor: pointer;
+    transition: background var(--transition-fast), color var(--transition-fast);
+}
+
+.expandableNavButton:hover {
+    color: var(--color-sidebar-text-active);
+    background: var(--color-sidebar-item-hover);
+}
+
+.expandableNavButton.active {
+    color: var(--color-sidebar-text-active);
+    background: var(--color-sidebar-item-active);
+    font-weight: 600;
+}
+
+.expandableNavButton svg {
     flex: 0 0 19px;
     width: 19px;
     height: 19px;
@@ -193,6 +232,14 @@
     padding: 0;
 }
 
+.sidebar[data-collapsed="true"] .expandableNavButton {
+    position: relative;
+    justify-content: center;
+    width: 100%;
+    padding: 0;
+}
+
+
 .sidebar[data-collapsed="true"] .userCard {
     justify-content: center;
     padding: 14px 8px;
@@ -201,6 +248,18 @@
 .sidebar[data-collapsed="true"] .sidebarNav {
     padding-left: 12px;
     padding-right: 12px;
+}
+
+.sidebar[data-collapsed="true"] .subNav {
+    width: 100%;
+    box-sizing: border-box;
+    margin: -3px 0 6px;
+    padding: 5px;
+    background: var(--color-surface-raised);
+    border: 1px solid var(--color-border-secondary);
+    border-top: 0;
+    border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+    box-shadow: 0 4px 10px rgb(0 0 0 / 0.08);
 }
 
 
@@ -286,4 +345,111 @@
     width: 100%;
     stroke-width: 1;
     stroke: currentColor;
+}
+
+/* =========================================================
+   EXPANDABLE MENU
+   ========================================================= */
+.expandIcon {
+    margin-left: auto;
+    font-size: 0.75rem;
+    transition: transform var(--transition-normal);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: currentColor;
+}
+
+.expandIconOpen {
+    transform: rotate(180deg);
+}
+
+.subNav {
+    margin: -3px 0 6px;
+    padding: 6px 6px 7px;
+    background: var(--color-surface-raised);
+    border: 1px solid var(--color-border-secondary);
+    border-top: 0;
+    border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+    box-shadow: 0 4px 10px rgb(0 0 0 / 0.08),
+    inset 0 1px 0 rgb(255 255 255 / 0.03);
+}
+
+.expandableNavButton[aria-expanded="true"] {
+    border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+    border: 1px solid var(--color-border-secondary);
+}
+
+.subNavItem {
+    display: flex;
+    align-items: center;
+    min-height: var(--size-icon-sm);
+    width: 100%;
+    margin: 5px 0;
+    padding-left: 10px;
+    border-radius: calc(var(--radius-sm) - 2px);
+    border: 1px solid var(--color-border-secondary);
+    color: var(--color-sidebar-text);
+    background: var(--color-surface-muted);
+    font-size: 0.9em;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background var(--transition-fast), color var(--transition-fast), padding-left var(--transition-fast);
+}
+
+.subNavItem:hover {
+    color: var(--color-sidebar-text-active);
+    background: var(--color-sidebar-item-hover);
+}
+
+.subNavItem.active {
+    color: var(--color-sidebar-text-active);
+    background: var(--color-sidebar-item-active);
+    font-weight: 600;
+}
+
+.subNavItem svg {
+    flex: 0 0 19px;
+    width: 19px;
+    height: 19px;
+    margin-right: 5px;
+}
+
+.subNav {
+    overflow: hidden;
+
+    margin: -3px 0 6px;
+    padding: 0 6px;
+
+    background: var(--color-surface-raised);
+    border: 1px solid var(--color-border-secondary);
+    border-top: 0;
+    border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+
+    box-shadow: 0 4px 10px rgb(0 0 0 / 0.08),
+    inset 0 1px 0 rgb(255 255 255 / 0.03);
+
+    transition: max-height var(--transition-normal),
+    opacity var(--transition-fast),
+    padding var(--transition-normal);
+}
+
+.subNavOpen {
+    max-height: 400px;
+    padding-top: 6px;
+    padding-bottom: 7px;
+    opacity: 1;
+}
+
+.subNavClosed {
+    max-height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    opacity: 0;
+    border-color: transparent;
+    box-shadow: none;
+}
+
+.expandableNavButton[aria-expanded="true"] {
+    border-radius: var(--radius-sm) var(--radius-sm) 0 0;
 }
