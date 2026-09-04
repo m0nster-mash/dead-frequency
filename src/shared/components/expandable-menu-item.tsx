@@ -72,19 +72,18 @@ export default function ExpandableMenuItem({
                 </svg>
             </button>
 
-            {isOpen && (
-                <div className={styles.subNav}>
-                    {links.map((link) => (
-                        <Link
-                            key={link.href}
-                            href={link.href}
-                            title={link.label}
-                            className={styles.subNavItem}>
-                            {link.label}
-                        </Link>
-                    ))}
-                </div>
-            )}
+            <div className={`${styles.subNav} ${
+                isOpen ? styles.subNavOpen : styles.subNavClosed
+            }`}>
+                {links.map((link) => (
+                    <Link key={link.href}
+                          href={link.href}
+                          title={link.label}
+                          className={styles.subNavItem}>
+                        {link.label}
+                    </Link>
+                ))}
+            </div>
         </div>
     );
 }
