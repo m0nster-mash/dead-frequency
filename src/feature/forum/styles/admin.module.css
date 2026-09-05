@@ -1,15 +1,6 @@
 /* =========================================================
    LAYOUT
    ========================================================= */
-.container {
-    width: 100%;
-}
-
-.categorySelector {
-    max-width: 32rem;
-    margin-bottom: var(--size-space-6);
-}
-
 .categoryEditor {
     display: flex;
     flex-direction: column;

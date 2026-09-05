@@ -156,68 +156,6 @@
     transform: rotate(180deg);
 }
 
-.tableOfContents {
-    display: flex;
-    flex-direction: column;
-    gap: var(--size-space-3);
-    padding: var(--size-space-4);
-    border-left: 2px solid var(--color-border);
-}
-
-.tableOfContentsTitle {
-    margin: 0;
-    color: var(--color-text-primary);
-    font-size: var(--font-size-xs);
-    font-weight: 700;
-    letter-spacing: var(--tracking-wide);
-    text-transform: uppercase;
-}
-
-.tableOfContentsList {
-    display: flex;
-    flex-direction: column;
-    gap: var(--size-space-1);
-    margin: 0;
-    padding: 0;
-    list-style: none;
-}
-
-.tableOfContentsItem {
-    margin: 0;
-}
-
-.tableOfContentsItemLevel3 {
-    padding-left: var(--size-space-3);
-}
-
-.tableOfContentsItemLevel4 {
-    padding-left: var(--size-space-5);
-}
-
-.tableOfContentsLink {
-    display: block;
-    padding: var(--size-space-2) var(--size-space-3);
-    border-left: 2px solid transparent;
-    border-radius: 0 var(--form-radius) var(--form-radius) 0;
-    color: var(--color-text-muted);
-    font-size: var(--font-size-sm);
-    line-height: 1.4;
-    text-decoration: none;
-    transition: background-color var(--form-transition), border-color var(--form-transition), color var(--form-transition);
-}
-
-.tableOfContentsLink:hover {
-    background: var(--color-surface-hover);
-    color: var(--color-text-primary);
-}
-
-.tableOfContentsLinkActive {
-    border-left-color: var(--form-accent);
-    background: var(--color-surface-hover);
-    color: var(--color-text-primary);
-    font-weight: 600;
-}
-
 .contentHeaderToc {
     display: none;
     padding: var(--size-space-4);
@@ -250,14 +188,6 @@
 
 .contentHeaderTocItem {
     margin: 0;
-}
-
-.contentHeaderTocItemLevel3 {
-    padding-left: var(--size-space-3);
-}
-
-.contentHeaderTocItemLevel4 {
-    padding-left: var(--size-space-5);
 }
 
 .contentHeaderTocItem a {
@@ -323,10 +253,6 @@
         gap: var(--size-space-4);
     }
 
-    .primaryButton {
-        width: 100%;
-    }
-
     .cardHeader {
         padding: var(--size-space-4) var(--size-space-5);
     }
@@ -356,10 +282,6 @@
 
     .mainContentCardBody {
         padding: var(--size-space-4);
-    }
-
-    .tableOfContents {
-        padding: var(--size-space-3);
     }
 
     .backToTopButton {

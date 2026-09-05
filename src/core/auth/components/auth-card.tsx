@@ -2,6 +2,7 @@
 
 import {authClient} from "@/core/auth/lib/auth-client";
 import styles from "@/shared/styles/auth-card.module.css";
+import formStyles from "@/shared/styles/form-panel.module.css";
 import {useRouter} from "next/navigation";
 import {JSX, SubmitEvent, useState} from "react";
 
@@ -105,14 +106,14 @@ export function AuthCard({initialMode = "login"}: AuthCardProps): JSX.Element {
                     </button>
                 </div>
 
-                <form className={styles.form} onSubmit={handleSubmit} key={mode}>
+                <form className={formStyles.form} onSubmit={handleSubmit} key={mode}>
                     {mode === "register" ? (
-                        <div className={styles.field}>
-                            <label className={styles.label} htmlFor="name">
+                        <div className={formStyles.field}>
+                            <label className={formStyles.label} htmlFor="name">
                                 Name
                             </label>
                             <input id="name"
-                                   className={styles.input}
+                                   className={formStyles.input}
                                    type="text"
                                    required
                                    name="name"
@@ -121,12 +122,12 @@ export function AuthCard({initialMode = "login"}: AuthCardProps): JSX.Element {
                         </div>
                     ) : null}
 
-                    <div className={styles.field}>
+                    <div className={formStyles.field}>
                         <label className={styles.label} htmlFor="email">
                             Email
                         </label>
                         <input id="email"
-                               className={styles.input}
+                               className={formStyles.input}
                                required
                                type="email"
                                name="email"
@@ -134,12 +135,12 @@ export function AuthCard({initialMode = "login"}: AuthCardProps): JSX.Element {
                                autoComplete="email"/>
                     </div>
 
-                    <div className={styles.field}>
+                    <div className={formStyles.field}>
                         <label className={styles.label} htmlFor="password">
                             Password
                         </label>
                         <input id="password"
-                               className={styles.input}
+                               className={formStyles.input}
                                required
                                type="password"
                                name="password"
@@ -147,9 +148,9 @@ export function AuthCard({initialMode = "login"}: AuthCardProps): JSX.Element {
                                autoComplete={mode === "register" ? "new-password" : "current-password"}/>
                     </div>
 
-                    {error ? <p className={styles.error}>{error}</p> : null}
+                    {error ? <p className={formStyles.error}>{error}</p> : null}
 
-                    <button className={styles.submit} type="submit" disabled={loading}>
+                    <button className={formStyles.submit} type="submit" disabled={loading}>
                         {loading ? "Please wait..." : mode === "register" ? "Create account" : "Sign in"}
                     </button>
                 </form>
