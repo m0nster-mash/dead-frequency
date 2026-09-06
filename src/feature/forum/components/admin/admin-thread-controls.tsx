@@ -1,6 +1,7 @@
 "use client";
 
-import styles from "@/feature/forum/styles/forum.module.css";
+// import styles from "@/feature/forum/styles/forum.module.css";
+import styles from "@/shared/styles/form.module.css";
 import Placeholder from "@shared/components/placeholder";
 
 type AdminThreadControlsProps = {

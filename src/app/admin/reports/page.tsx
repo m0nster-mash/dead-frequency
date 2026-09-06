@@ -1,7 +1,8 @@
 import {requireSession} from "@/core/auth/lib/require-session";
 import {MainContentPanel} from "@/core/dashboard/components/panels/main-card";
 import {PageHeader} from "@/core/dashboard/components/panels/page-header";
-import styles from "@/shared/styles/form-panel.module.css";
+// import styles from "@/shared/styles/form-panel.module.css";
+import styles from "@/shared/styles/form.module.css";
 import {report} from "@shared/communication/interactions/schema/interactions.schema";
 import {db} from "@shared/db/client";
 import {desc, eq} from "drizzle-orm";

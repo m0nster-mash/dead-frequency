@@ -2,11 +2,14 @@ import {requireSession} from "@/core/auth/lib/require-session";
 import {user} from "@/core/auth/schema/auth.schema";
 import {MainContentPanel} from "@/core/dashboard/components/panels/main-card";
 import {PageHeader} from "@/core/dashboard/components/panels/page-header";
-import styles from "@/shared/styles/form-panel.module.css";
+import badgeStyle from "@/shared/styles/badge.module.css";
+import panelStyle from "@/shared/styles/panel.module.css";
+import tableStyle from "@/shared/styles/tables.module.css";
 import {auditLog} from "@shared/communication/moderation/schema/moderation.schema";
 import {db} from "@shared/db/client";
 import {desc, eq} from "drizzle-orm";
 import {JSX} from "react";
+
 
 /**
  * The system audit log.
@@ -41,14 +44,14 @@ export default async function AdminAuditLogPage(): Promise<JSX.Element> {
         .limit(100);
 
     return (
-        <div className={styles.wrapper}>
+        <div className={panelStyle.panelViewport}>
             <PageHeader eyebrow={"Administration"}
                         title={"Audit Log"}
                         subtitle={"Unified moderation history across every module"}/>
 
             <MainContentPanel title={"Recent mod actions"}>
-                <div className={styles.tableWrapper}>
-                    <table className={styles.table}>
+                <div className={tableStyle.tableWrapper}>
+                    <table className={tableStyle.table}>
                         <thead>
                         <tr>
                             <th>When</th>
@@ -63,7 +66,7 @@ export default async function AdminAuditLogPage(): Promise<JSX.Element> {
                         {entries.map((e) => (
                             <tr key={e.id}>
                                 <td>{new Date(e.createdAt).toLocaleString()}</td>
-                                <td><span className={styles.badge}>{e.module}</span></td>
+                                <td><span className={badgeStyle.badge}>{e.module}</span></td>
                                 <td>{e.action}</td>
                                 <td>{e.moderatorName || e.moderatorEmail || "—"}</td>
                                 <td>{e.reason || "—"}</td>
@@ -71,7 +74,7 @@ export default async function AdminAuditLogPage(): Promise<JSX.Element> {
                         ))}
                         {entries.length === 0 && (
                             <tr>
-                                <td colSpan={5} className={styles.tableEmpty}>
+                                <td colSpan={5} className={tableStyle.tableEmptyCell}>
                                     No mod actions recorded yet.
                                 </td>
                             </tr>

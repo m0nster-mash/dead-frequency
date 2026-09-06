@@ -1,7 +1,8 @@
 "use client";
 
 import DownArrowIcon from "@/shared/svg/bootstrap-down-arrow-icon.svg";
-import styles from "@shared/styles/dashboard.module.css";
+// import styles from "@shared/styles/dashboard.module.css";
+import styles from "@/shared/styles/form.module.css";
 import Link from "next/link";
 import {JSX, ReactNode, useState} from "react";
 

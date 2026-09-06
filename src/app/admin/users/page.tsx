@@ -2,7 +2,8 @@ import {AdminUserTable} from "@/core/admin/components/admin-user-table";
 import {auth} from "@/core/auth";
 import {requireSession} from "@/core/auth/lib/require-session";
 import {PageHeader} from "@/core/dashboard/components/panels/page-header";
-import styles from "@/shared/styles/form-panel.module.css";
+// import styles from "@/shared/styles/form-panel.module.css";
+import styles from "@/shared/styles/form.module.css";
 import {headers} from "next/headers";
 import {JSX} from "react";
 

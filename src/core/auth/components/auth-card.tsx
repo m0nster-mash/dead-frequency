@@ -1,8 +1,11 @@
 "use client";
 
 import {authClient} from "@/core/auth/lib/auth-client";
-import styles from "@/shared/styles/auth-card.module.css";
-import formStyles from "@/shared/styles/form-panel.module.css";
+import brandStyles from "@/shared/styles/brand.module.css";
+import buttonStyles from "@/shared/styles/buttons.module.css";
+import formStyles from "@/shared/styles/form.module.css";
+import panelStyles from "@/shared/styles/panel.module.css";
+import tabStyles from "@/shared/styles/patterns/tabs.module.css";
 import {useRouter} from "next/navigation";
 import {JSX, SubmitEvent, useState} from "react";
 
@@ -80,98 +83,120 @@ export function AuthCard({initialMode = "login"}: AuthCardProps): JSX.Element {
     }
 
     return (
-        <div className={styles.wrapper}>
-            <div className={styles.card}>
-                <div className={styles.header}>
-                    <div className={styles.brand}>Dead Frequency</div>
-                    <div className={styles.subtitle}>
-                        {mode === "login" ? "Sign in to continue" : "Create an account to get started"}
-                    </div>
-                </div>
-
-                <div className={styles.tabs} role="tablist" aria-label="Authentication mode">
-                    <button type="button"
-                            role="tab"
-                            aria-selected={mode === "login"}
-                            className={mode === "login" ? `${styles.tab} ${styles.tabActive}` : styles.tab}
-                            onClick={() => switchMode("login")}>
-                        Sign in
-                    </button>
-                    <button type="button"
-                            role="tab"
-                            aria-selected={mode === "register"}
-                            className={mode === "register" ? `${styles.tab} ${styles.tabActive}` : styles.tab}
-                            onClick={() => switchMode("register")}>
-                        Register
-                    </button>
-                </div>
-
-                <form className={formStyles.form} onSubmit={handleSubmit} key={mode}>
-                    {mode === "register" ? (
-                        <div className={formStyles.field}>
-                            <label className={formStyles.label} htmlFor="name">
-                                Name
-                            </label>
-                            <input id="name"
-                                   className={formStyles.input}
-                                   type="text"
-                                   required
-                                   name="name"
-                                   placeholder="Jane Doe"
-                                   autoComplete="name"/>
+        <div className={panelStyles.panelViewport}>
+            <div className={`${panelStyles.panel} ${panelStyles.panelConstrained} ${panelStyles.panelElevated}`}>
+                <div className={panelStyles.panelBody}>
+                    <div style={{marginBottom: "var(--size-space-6)"}}>
+                        <div className={brandStyles.brandLarge}>Dead Frequency</div>
+                        <div style={{
+                            marginTop: "var(--size-space-2)",
+                            color: "var(--color-text-muted)",
+                            fontSize: "var(--font-size-sm)"
+                        }}>
+                            {mode === "login" ? "Sign in to continue" : "Create an account to get started"}
                         </div>
-                    ) : null}
-
-                    <div className={formStyles.field}>
-                        <label className={styles.label} htmlFor="email">
-                            Email
-                        </label>
-                        <input id="email"
-                               className={formStyles.input}
-                               required
-                               type="email"
-                               name="email"
-                               placeholder="you@example.com"
-                               autoComplete="email"/>
                     </div>
 
-                    <div className={formStyles.field}>
-                        <label className={styles.label} htmlFor="password">
-                            Password
-                        </label>
-                        <input id="password"
-                               className={formStyles.input}
-                               required
-                               type="password"
-                               name="password"
-                               placeholder="••••••••"
-                               autoComplete={mode === "register" ? "new-password" : "current-password"}/>
+                    <div className={tabStyles.tabs} role="tablist" aria-label="Authentication mode"
+                         style={{marginBottom: "var(--size-space-6)"}}>
+                        <button type="button"
+                                role="tab"
+                                aria-selected={mode === "login"}
+                                className={mode === "login" ? `${tabStyles.tab} ${tabStyles.tabActive}` : tabStyles.tab}
+                                onClick={() => switchMode("login")}>
+                            Sign in
+                        </button>
+                        <button type="button"
+                                role="tab"
+                                aria-selected={mode === "register"}
+                                className={mode === "register" ? `${tabStyles.tab} ${tabStyles.tabActive}` : tabStyles.tab}
+                                onClick={() => switchMode("register")}>
+                            Register
+                        </button>
                     </div>
 
-                    {error ? <p className={formStyles.error}>{error}</p> : null}
+                    <form className={formStyles.form} onSubmit={handleSubmit} key={mode}>
+                        {mode === "register" ? (
+                            <div className={formStyles.formField}>
+                                <label className={formStyles.formLabel} htmlFor="name">
+                                    Name
+                                </label>
+                                <input id="name"
+                                       className={formStyles.formInput}
+                                       type="text"
+                                       required
+                                       name="name"
+                                       placeholder="Jane Doe"
+                                       autoComplete="name"/>
+                            </div>
+                        ) : null}
 
-                    <button className={formStyles.submit} type="submit" disabled={loading}>
-                        {loading ? "Please wait..." : mode === "register" ? "Create account" : "Sign in"}
-                    </button>
-                </form>
+                        <div className={formStyles.formField}>
+                            <label className={formStyles.formLabel} htmlFor="email">
+                                Email
+                            </label>
+                            <input id="email"
+                                   className={formStyles.formInput}
+                                   required
+                                   type="email"
+                                   name="email"
+                                   placeholder="you@example.com"
+                                   autoComplete="email"/>
+                        </div>
 
-                <p className={styles.footer}>
-                    {mode === "login" ? (
-                        <span>
-                            Need an account?{" "}
-                            <span className={styles.link} onClick={() => switchMode("register")}>
-                                Register
+                        <div className={formStyles.formField}>
+                            <label className={formStyles.formLabel} htmlFor="password">
+                                Password
+                            </label>
+                            <input id="password"
+                                   className={formStyles.formInput}
+                                   required
+                                   type="password"
+                                   name="password"
+                                   placeholder="••••••••"
+                                   autoComplete={mode === "register" ? "new-password" : "current-password"}/>
+                        </div>
+
+                        {error ? <p className={formStyles.formError}>{error}</p> : null}
+
+                        <button className={buttonStyles.btn} type="submit" disabled={loading}>
+                            {loading ? "Please wait..." : mode === "register" ? "Create account" : "Sign in"}
+                        </button>
+                    </form>
+
+                    <p style={{
+                        marginTop: "var(--size-space-6)",
+                        textAlign: "center",
+                        fontSize: "var(--font-size-sm)",
+                        color: "var(--color-text-muted)"
+                    }}>
+                        {mode === "login" ? (
+                            <span>
+                                Need an account?{" "}
+                                <span style={{
+                                    marginLeft: "var(--size-space-1)",
+                                    color: "var(--color-action-primary)",
+                                    fontWeight: "600",
+                                    cursor: "pointer"
+                                }} onClick={() => switchMode("register")}>
+                                    Register
+                                </span>
                             </span>
-                        </span>
-                    ) : (
-                        <span>
-                            Already have an account?{" "}
-                            <span className={styles.link} onClick={() => switchMode("login")}>
-                                Sign in
+                        ) : (
+                            <span>
+                                Already have an account?{" "}
+                                <span style={{
+                                    marginLeft: "var(--size-space-1)",
+                                    color: "var(--color-action-primary)",
+                                    fontWeight: "600",
+                                    cursor: "pointer"
+                                }} onClick={() => switchMode("login")}>
+                                    Sign in
+                                </span>
                             </span>
-                        </span>
-                    )}
-                </p>
+                        )}
+                    </p>
+                </div>
             </div>
         </div>
     );

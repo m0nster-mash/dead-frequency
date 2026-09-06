@@ -2,7 +2,7 @@
 
 import {useSidebar} from "@/app/dashboard/components/sidebar-context";
 import {authClient} from "@/core/auth/lib/auth-client";
-import styles from "@/shared/styles/dashboard.module.css";
+import sidebarStyles from "@/shared/styles/patterns/sidebar.module.css";
 import ExitIcon from "@/shared/svg/bootstrap-exit-icon.svg";
 import {useRouter} from "next/navigation";
 import {JSX} from "react";
@@ -32,7 +32,7 @@ export function SignOutButton(): JSX.Element {
 
     return (
         <button
-            className={`${styles.buttonSignOut}${collapsed ? ` ${styles.buttonSignOutCollapsed}` : ""}`}
+            className={`${sidebarStyles.buttonSignOut}${collapsed ? ` ${sidebarStyles.buttonSignOutCollapsed}` : ""}`}
             type="button"
             aria-label="Sign out"
             onClick={handleSignOut}>

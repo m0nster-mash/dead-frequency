@@ -4,7 +4,8 @@ import {AvatarRenderer} from "@/feature/avatar/components/avatar-renderer";
 import {saveAvatarConfig} from "@/feature/avatar/lib/actions";
 import {AVATAR_OPTIONS, AvatarPartCategory,} from "@/feature/avatar/lib/options";
 import {AvatarConfig} from "@/feature/avatar/lib/types";
-import styles from "@/shared/styles/form-panel.module.css";
+// import styles from "@/shared/styles/form-panel.module.css";
+import styles from "@/shared/styles/form.module.css";
 import {useRouter} from "next/navigation";
 import {JSX, useState} from "react";
 

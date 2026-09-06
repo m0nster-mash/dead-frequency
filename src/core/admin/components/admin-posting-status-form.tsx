@@ -1,7 +1,8 @@
 "use client";
 
 import {MainContentPanel} from "@/core/dashboard/components/panels/main-card";
-import styles from "@/shared/styles/form-panel.module.css";
+// import styles from "@/shared/styles/form-panel.module.css";
+import styles from "@/shared/styles/form.module.css";
 import {JSX, useState} from "react";
 
 /**

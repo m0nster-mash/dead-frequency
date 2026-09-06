@@ -1,5 +1,5 @@
 import {MainContentPanel} from "@/core/dashboard/components/panels/main-card";
-import LoremIpsum from "@shared/components/lorem-ipsum";
+import LoremIpsum from "@/shared/components/lorem-ipsum";
 
 export default async function HomePage() {
 

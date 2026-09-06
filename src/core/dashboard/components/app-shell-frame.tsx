@@ -1,7 +1,8 @@
 "use client";
 
 import {useSidebar} from "@/app/dashboard/components/sidebar-context";
-import styles from "@shared/styles/dashboard.module.css";
+// import styles from "@shared/styles/dashboard.module.css";
+import styles from "@/shared/styles/form.module.css";
 import {CSSProperties, JSX, ReactNode} from "react";
 
 /**

@@ -1,7 +1,7 @@
 import {requireSession} from "@/core/auth/lib/require-session";
 import {MainContentPanel} from "@/core/dashboard/components/panels/main-card";
 import {PageHeader} from "@/core/dashboard/components/panels/page-header";
-import LoremIpsum from "@shared/components/lorem-ipsum";
+import LoremIpsum from "@/shared/components/lorem-ipsum";
 import {JSX} from "react";
 
 /**

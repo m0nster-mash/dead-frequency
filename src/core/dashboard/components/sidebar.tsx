@@ -8,9 +8,9 @@ import PersonIcon from "@/shared/svg/bootstrap-person-icon.svg";
 import QuestionIcon from "@/shared/svg/bootstrap-question-icon.svg";
 import AdminIcon from "@/shared/svg/bootstrap-settings.svg";
 import DotIcon from "@/shared/svg/bootstrap-three-dot-icon.svg";
-import {auth, SignOutButton} from "@core/auth";
-import {DropdownMenu} from "@shared/components/dropdown-menu";
-import styles from "@shared/styles/dashboard.module.css";
+import {auth, SignOutButton} from "@/core/auth";
+import {DropdownMenu} from "@/shared/components/dropdown-menu";
+import sidebarStyles from "@/shared/styles/patterns/sidebar.module.css";
 import {headers} from "next/headers";
 import Link from "next/link";
 import {JSX} from "react";
@@ -29,11 +29,6 @@ export async function Sidebar(): Promise<JSX.Element> {
     const userRole = session ? session.user.role : null;
     const isAdmin = userRole === "admin";
 
-    /**
-     * Splits full name structures along blank whitespace fragments, maps the first index character of individual
-     * elements, glues up to two characters together, and pushes them to uppercase characters. Drops a smile symbol
-     * emoji if missing names.
-     **/
     const initials = session?.user?.name
         ? session.user.name
             .split(" ")
@@ -43,17 +38,10 @@ export async function Sidebar(): Promise<JSX.Element> {
             .toUpperCase()
         : ":)";
 
-    /**
-     * Resolves avatar canvas asset arrays, falling back to base models if the user has not designed one.
-     */
     const avatarConfig = session
         ? (await getAvatarConfigForUser(session.user.id)) ?? DEFAULT_AVATAR_CONFIG
         : null;
 
-    /**
-     * Maintains separate visual menu tracking tiers, executing conditional element pushes using array interpolation
-     * to inject administrative short-links if permissions are verified.
-     **/
     const sections: NavSection[] = [
         {
             title: "Test Pages",
@@ -65,7 +53,6 @@ export async function Sidebar(): Promise<JSX.Element> {
                 },
             ],
         },
-
         {
             title: "Features",
             items: [
@@ -81,7 +68,6 @@ export async function Sidebar(): Promise<JSX.Element> {
                 }
             ],
         },
-
         ...(isAdmin
             ? [
                 {
@@ -92,26 +78,10 @@ export async function Sidebar(): Promise<JSX.Element> {
                             label: "Administration",
                             icon: <AdminIcon/>,
                             links: [
-                                {
-                                    href: "/admin/users",
-                                    label: "Users",
-                                    icon: <GearIcon/>,
-                                },
-                                {
-                                    href: "/admin/forum",
-                                    label: "Forum Management",
-                                    icon: <GearIcon/>,
-                                },
-                                {
-                                    href: "/admin/audit-log",
-                                    label: "Audit Log",
-                                    icon: <GearIcon/>,
-                                },
-                                {
-                                    href: "/admin/reports",
-                                    label: "Reports",
-                                    icon: <GearIcon/>,
-                                }
+                                {href: "/admin/users", label: "Users", icon: <GearIcon/>},
+                                {href: "/admin/forum", label: "Forum Management", icon: <GearIcon/>},
+                                {href: "/admin/audit-log", label: "Audit Log", icon: <GearIcon/>},
+                                {href: "/admin/reports", label: "Reports", icon: <GearIcon/>}
                             ],
                         },
                     ],
@@ -124,8 +94,10 @@ export async function Sidebar(): Promise<JSX.Element> {
         <SidebarFrame toggleButton={<SidebarToggleButton/>}>
             <div>
                 {session ? (
-                    <div className={styles.userCard}>
-                        <div className={styles.avatar}>
+                    <div className={sidebarStyles.userCard}>
+                        {/* TODO: styles.avatar has no equivalent in the new sidebar.module.css —
+                            find where the avatar-circle rule landed, or reintroduce it. */}
+                        <div className={sidebarStyles.avatar}>
                             {avatarConfig ? (
                                 <AvatarRenderer config={avatarConfig} size={36}/>
                             ) : (
@@ -133,14 +105,14 @@ export async function Sidebar(): Promise<JSX.Element> {
                             )}
                         </div>
 
-                        <div className={`${styles.userInfo} ${styles.hideOnCollapse}`}>
+                        <div className={`${sidebarStyles.userInfo} ${sidebarStyles.hideOnCollapse}`}>
                             <strong>
                                 <Link href={`/user/${session.user.id}`}>{userName}</Link>
                             </strong>
                             <span>{userRole}</span>
                         </div>
 
-                        <div className={styles.hideOnCollapse}>
+                        <div className={sidebarStyles.hideOnCollapse}>
                             <DropdownMenu
                                 trigger={<DotIcon/>}
                                 align="start"
@@ -152,10 +124,6 @@ export async function Sidebar(): Promise<JSX.Element> {
                                         type: "action",
                                         label: "Sign out",
                                         danger: false,
-                                        /**
-                                         * Fires an encrypted API request to wipe out session cookies directly on the
-                                         * server whenever a client triggers the sign-out button option.
-                                         **/
                                         action: async () => {
                                             "use server";
                                             await auth.api.signOut({headers: await headers()});
@@ -173,14 +141,14 @@ export async function Sidebar(): Promise<JSX.Element> {
             <SidebarNav sections={sections}/>
 
             {session ? (
-                <div className={styles.sidebarFooter}>
+                <div className={sidebarStyles.sidebarFooter}>
                     <SignOutButton/>
                 </div>
             ) : (
                 <div>
-                    <Link href="/login" className={styles.navItem}>
+                    <Link href="/login" className={sidebarStyles.navItem}>
                         <GearIcon/>
-                        <span className={styles.hideOnCollapse}>Login / Register</span>
+                        <span className={sidebarStyles.hideOnCollapse}>Login / Register</span>
                     </Link>
                 </div>
             )}

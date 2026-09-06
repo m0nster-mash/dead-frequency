@@ -1,6 +1,7 @@
 "use client";
 
-import styles from "@/shared/styles/content-panel.module.css";
+import panel from "@/shared/styles/panel.module.css";
+import card from "@/shared/styles/patterns/card.module.css";
 import {JSX, ReactNode} from "react";
 
 /**
@@ -45,19 +46,23 @@ export function MainContentPanel({
     const sectionId = id ?? slugify(title);
 
     return (
-        <section className={`${styles.card} ${styles.mainContentCard} ${className}`}>
-            <div className={styles.cardHeader}>
+        <section className={`${panel.panel} ${className}`}>
+            <div className={panel.panelHeader}>
                 <div>
-                    <h2 id={sectionId}>{title}</h2>
-                    {description && (<p>{description}</p>)}
+                    <h2 className={panel.panelHeaderTitle} id={sectionId}>{title}</h2>
+                    {description && (<p className={panel.panelHeaderDescription}>{description}</p>)}
                 </div>
             </div>
 
-            <div className={styles.mainContentCardBody}> {children} </div>
+            <div className={panel.panelBody}>{children}</div>
 
             {/* Routes window scroll focus point straight back up to global parent boundary elements. */}
             {showBackToTop && (
-                <a href="#top" className={styles.backToTopButton} aria-label="Back to top of page"> ↑ </a>
+                <a href="#top" className={`${card.cardBackToTop}`}
+                   style={{display: "inline-flex", alignItems: "center", justifyContent: "center"}}
+                   aria-label="Back to top of page">
+                    ↑
+                </a>
             )}
         </section>
     );

@@ -1,7 +1,8 @@
 import {ThemeToggle} from "@/app/components/theme-toggle";
 import Breadcrumbs from "@/core/dashboard/components/breadcrumbs";
 import BellIcon from "@/shared/svg/bootstrap-bell-icon.svg";
-import styles from "@shared/styles/dashboard.module.css";
+// import styles from "@shared/styles/dashboard.module.css";
+import styles from "@/shared/styles/form.module.css";
 import {JSX} from "react";
 
 /**

@@ -1,7 +1,8 @@
 "use client";
 
-import {useBreadcrumbLabels} from "@shared/components/breadcrumbs-context";
-import styles from "@shared/styles/dashboard.module.css";
+import {useBreadcrumbLabels} from "@/shared/components/breadcrumbs-context";
+// import styles from "@shared/styles/dashboard.module.css";
+import styles from "@/shared/styles/form.module.css";
 import Link from "next/link";
 import {usePathname} from "next/navigation";
 import {JSX} from "react";

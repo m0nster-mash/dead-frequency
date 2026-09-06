@@ -1,7 +1,8 @@
 import {auth} from "@/core/auth";
 import {MainContentPanel} from "@/core/dashboard/components/panels/main-card";
 import {PageHeader} from "@/core/dashboard/components/panels/page-header";
-import styles from "@/shared/styles/form-panel.module.css";
+// import styles from "@/shared/styles/form-panel.module.css";
+import styles from "@/shared/styles/form.module.css";
 import {role, userRole} from "@shared/communication/permissions/schema/permissions.schema";
 import {userTrust} from "@shared/communication/status/schema/status.schema";
 import {db} from "@shared/db/client";

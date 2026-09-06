@@ -2,10 +2,11 @@
 
 import {DeleteUserModal} from "@/core/admin/components/delete-user-modal";
 import {MainContentPanel} from "@/core/dashboard/components/panels/main-card";
-import styles from "@/shared/styles/form-panel.module.css";
+// import styles from "@/shared/styles/form-panel.module.css";
+import styles from "@/shared/styles/form.module.css";
 import EditIcon from "@/shared/svg/bootstrap-edit-icon.svg";
-import SearchIcon from "@shared/svg/bootstrap-search-icon.svg";
-import TrashIcon from "@shared/svg/bootstrap-trash-icon.svg";
+import SearchIcon from "@/shared/svg/bootstrap-search-icon.svg";
+import TrashIcon from "@/shared/svg/bootstrap-trash-icon.svg";
 import Link from "next/link";
 import {JSX, useState} from "react";
 

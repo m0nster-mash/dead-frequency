@@ -4,7 +4,8 @@ import {PageHeader} from "@/core/dashboard/components/panels/page-header";
 import {CreateCategoryPanel} from "@/feature/forum/components/admin/create-category-panel";
 import {ViewForumPanel} from "@/feature/forum/components/admin/view-forum-panel";
 import {getForumHierarchy} from "@/feature/forum/lib/queries";
-import styles from "@/shared/styles/form-panel.module.css";
+// import styles from "@/shared/styles/form-panel.module.css";
+import styles from "@/shared/styles/form.module.css";
 import {JSX} from "react";
 
 /**

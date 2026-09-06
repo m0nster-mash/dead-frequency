@@ -1,6 +1,7 @@
 import {requireSession} from "@/core/auth/lib/require-session";
 import {MainContentPanel} from "@/core/dashboard/components/panels/main-card";
-import styles from "@/shared/styles/form-panel.module.css";
+// import styles from "@/shared/styles/form-panel.module.css";
+import styles from "@/shared/styles/form.module.css";
 import Link from "next/link";
 import {JSX} from "react";
 
