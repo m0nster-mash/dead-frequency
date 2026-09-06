@@ -105,12 +105,15 @@
    BACK TO TOP
    Positioning only — the visual look (border, background,
    color, hover) comes from composing core/primitives/buttons
-   .module.css's .iconBtn + .iconBtnFilled. This class just pins
-   it to the corner of a card.
+   .module.css's .iconBtn + .iconBtnSubtle (the lighter of the
+   two "filled" icon tones — this button used the same subtle
+   surface/border combo as admin's .orderButton, not the
+   stronger tone used by the sidebar toggle). This class just
+   pins it to the corner of a card.
    was: position/right/bottom portion of .backToTopButton
    (content-panel) — the border/background/color rules from the
    same class were dropped here since they're now covered by
-   .iconBtn + .iconBtnFilled.
+   .iconBtn + .iconBtnSubtle.
    ----------------------------------------------------------- */
 .cardBackToTop {
     position: absolute;

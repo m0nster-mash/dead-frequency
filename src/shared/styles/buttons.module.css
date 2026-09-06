@@ -38,9 +38,9 @@
     text-decoration: none;
     cursor: pointer;
     transition: background-color var(--form-transition),
-        border-color var(--form-transition),
-        color var(--form-transition),
-        transform var(--form-transition);
+    border-color var(--form-transition),
+    color var(--form-transition),
+    transform var(--form-transition);
 }
 
 .btn:active:not(:disabled) {
@@ -153,9 +153,9 @@
     text-decoration: none;
     cursor: pointer;
     transition: background-color var(--form-transition),
-        border-color var(--form-transition),
-        color var(--form-transition),
-        transform var(--form-transition);
+    border-color var(--form-transition),
+    color var(--form-transition),
+    transform var(--form-transition);
 }
 
 .iconBtn:active:not(:disabled) {
@@ -174,13 +174,11 @@
     opacity: 0.5;
 }
 
-/* Filled at rest — was: dashboard.module.css .iconButton,
-   dropdown-menu.module.css .dropdownToggleButton,
-   content-panel.module.css .backToTopButton, admin.module.css
-   .orderButton. These four had small inconsistencies (border
-   color-border-secondary vs color-border, disabled opacity .3
-   on .orderButton vs .5 everywhere else) — standardized below;
-   the .3 opacity was dropped in favor of the .5 used elsewhere. */
+/* Filled at rest, stronger tone — was: dashboard.module.css
+   .iconButton, dropdown-menu.module.css .dropdownToggleButton.
+   These two used background: color-surface-strong + border:
+   color-border-secondary. Use for standalone, prominent
+   triggers (sidebar collapse toggle, dropdown trigger). */
 .iconBtnFilled {
     border: 1px solid var(--color-border-secondary);
     background: var(--color-surface-strong);
@@ -188,6 +186,28 @@
 }
 
 .iconBtnFilled:hover:not(:disabled) {
+    color: var(--color-text-primary);
+    background: var(--color-surface-hover);
+}
+
+/* Filled at rest, subtler tone — was: content-panel.module.css
+   .backToTopButton, admin.module.css .orderButton. These two
+   used a visibly lighter combination — background: color-surface
+   + border: color-border — than .iconBtnFilled above. Initially
+   (incorrectly) merged into .iconBtnFilled; split back out here
+   since the two tone levels are visually distinct in the
+   original sheets. Use for icon buttons embedded inline in
+   content (a back-to-top button floating over a card, reorder
+   arrows inside a table row) rather than standalone chrome.
+   Disabled opacity standardized to the shared .5 in .iconBtn's
+   base rule above, dropping .orderButton's original .3. */
+.iconBtnSubtle {
+    border: 1px solid var(--color-border);
+    background: var(--color-surface);
+    color: var(--color-icon-default);
+}
+
+.iconBtnSubtle:hover:not(:disabled) {
     color: var(--color-text-primary);
     background: var(--color-surface-hover);
 }

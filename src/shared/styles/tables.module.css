@@ -22,18 +22,29 @@
     border-radius: var(--form-radius);
 }
 
-/* was: .table (form-panel). admin's .boardTable additionally set
-   table-layout: fixed and a min-width for horizontal scroll on
-   small screens — pulled in here since both are reasonable
-   defaults for any data table, not something specific to admin.
-   Adjust min-width per usage if a table has fewer columns. */
+/* was: .table (form-panel). CORRECTION: an earlier pass of this
+   file also folded in table-layout: fixed on the assumption it
+   was a safe shared default — it isn't. Only admin's .boardTable
+   used fixed layout; .forumTable and .unassignedTable (also
+   admin) deliberately used auto layout with border-collapse:
+   separate instead, so their "auto"-width description column
+   could wrap flexibly rather than being locked to a strict
+   column width. Base .table below uses auto layout + collapse,
+   matching the majority (form-panel's generic table, plus
+   forumTable/unassignedTable); use the .tableFixed modifier for
+   tables like the old .boardTable that want strict column
+   widths. */
 .table {
     width: 100%;
     min-width: 640px;
     border-collapse: collapse;
-    table-layout: fixed;
     color: var(--color-text-primary);
     font-size: var(--font-size-sm);
+}
+
+/* was: table-layout: fixed portion of .boardTable (admin) */
+.tableFixed {
+    table-layout: fixed;
 }
 
 .table thead {

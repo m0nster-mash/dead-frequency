@@ -36,16 +36,29 @@
     backdrop-filter: blur(2px);
 }
 
-/* was: .modal (form-panel). Padding moved out of this rule and
-   into .modalHeader / .modalBody below, since the header/body
-   split (adopted from forum's .adminModal) replaces form-panel's
-   single unstructured padded box. Box-shadow strengthened to
-   match forum's .adminModal, which was the more considered of
-   the two. */
+/* was: .modal (form-panel) combined with forum's
+   .adminModalContent (which held the flex/max-height rules
+   separately from .adminModal itself). Padding moved out of
+   this rule and into .modalHeader / .modalBody below, since the
+   header/body split replaces form-panel's single unstructured
+   padded box. Box-shadow strengthened to match forum's
+   .adminModal, which was the more considered of the two.
+
+   FIX: the two source files disagreed on where overflow should
+   happen. form-panel put overflow-y: auto directly on .modal
+   (the whole box scrolls, header included). forum's
+   .adminModalContent used display: flex + max-height but never
+   gave .adminModalBody flex: 1 / min-height: 0, so its intended
+   "fixed header, scrolling body" layout wouldn't actually have
+   worked as written. Rebuilt correctly below: .modal clips
+   (overflow: hidden) and lays out as a column; .modalBody is the
+   flexed, independently-scrolling region. */
 .modal {
+    display: flex;
+    flex-direction: column;
     width: min(100%, 480px);
     max-height: calc(100vh - (var(--size-space-6) * 2));
-    overflow-y: auto;
+    overflow: hidden;
     border: 1px solid var(--color-border);
     border-radius: var(--form-radius);
     background: var(--form-background);
@@ -110,8 +123,12 @@
    was: .adminModalBody (forum), .modalDescription (form-panel)
    ----------------------------------------------------------- */
 
-/* was: .adminModalBody (forum) */
+/* was: .adminModalBody (forum), with flex: 1 / min-height: 0
+   added so it actually scrolls independently of .modalHeader —
+   see the FIX note on .modal above. */
 .modalBody {
+    flex: 1 1 auto;
+    min-height: 0;
     overflow-y: auto;
     padding: var(--size-space-6);
 }
