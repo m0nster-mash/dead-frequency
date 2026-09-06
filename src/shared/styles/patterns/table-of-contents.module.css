@@ -1,0 +1,126 @@
+/* =========================================================
+   TABLE OF CONTENTS — pattern
+   A disclosure widget: a toggle button that expands/collapses
+   an anchor list. Drops into a card's panel body — it has no
+   idea what page it's on, which is what makes it a pattern
+   rather than something baked into a specific page's stylesheet.
+
+   source: content-panel.module.css .tableOfContentsButton* /
+           .contentHeaderToc*
+   Renamed throughout from the "contentHeader..." / "tableOf
+   Contents..." prefixes (which named it after the page it used
+   to live in) to a plain "toc..." prefix, since this is now a
+   standalone, page-agnostic component.
+   ========================================================= */
+
+/* was: .contentHeaderTocToggle (content-panel) — a near-empty
+   wrapper (`display: block; width: 100%`) around the toggle
+   button below. Folded directly into .tocToggle instead of kept
+   as a separate wrapper class, since the button itself can just
+   be full-width. */
+
+/* was: .tableOfContentsButton (content-panel) */
+.tocToggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--size-space-3);
+    width: 100%;
+    padding: var(--size-space-3) var(--size-space-4);
+    border: 1px solid var(--color-border);
+    border-radius: var(--form-radius);
+    background: var(--form-background);
+    color: var(--color-text-primary);
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    text-align: left;
+    cursor: pointer;
+    transition: background-color var(--form-transition), border-color var(--form-transition);
+}
+
+.tocToggle:hover {
+    background: var(--color-surface-hover);
+    border-color: var(--form-border-hover);
+}
+
+.tocToggle:focus-visible {
+    outline: none;
+    border-color: var(--form-accent);
+    box-shadow: var(--form-shadow-focus);
+}
+
+/* was: .tableOfContentsButtonIcon (content-panel) */
+.tocToggleIcon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--font-size-md);
+    transition: transform var(--form-transition);
+}
+
+/* was: .tableOfContentsButtonIconOpen (content-panel) */
+.tocToggleIconOpen {
+    transform: rotate(180deg);
+}
+
+/* was: .contentHeaderToc (content-panel) */
+.tocPanel {
+    display: none;
+    padding: var(--size-space-4);
+    border: 1px solid var(--color-border);
+    border-radius: var(--form-radius);
+    background: var(--color-surface-strong);
+}
+
+/* was: .contentHeaderTocOpen (content-panel) */
+.tocPanelOpen {
+    display: block;
+}
+
+/* was: .contentHeaderTocTitle (content-panel) */
+.tocTitle {
+    margin: 0 0 var(--size-space-3);
+    color: var(--color-text-primary);
+    font-size: var(--font-size-xs);
+    font-weight: 700;
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+}
+
+/* was: .contentHeaderTocList (content-panel) */
+.v {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-space-1);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+/* was: .contentHeaderTocItem (content-panel) */
+.tocItem {
+    margin: 0;
+}
+
+/* was: .contentHeaderTocItem a (content-panel) */
+.tocLink {
+    display: block;
+    padding: var(--size-space-2) var(--size-space-3);
+    border-radius: var(--form-radius);
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+    line-height: 1.4;
+    text-decoration: none;
+    transition: background-color var(--form-transition), color var(--form-transition);
+}
+
+.tocLink:hover {
+    background: var(--color-surface-hover);
+    color: var(--color-text-primary);
+}
+
+@media (max-width: 480px) {
+    .tocPanel {
+        padding: var(--size-space-3);
+    }
+}

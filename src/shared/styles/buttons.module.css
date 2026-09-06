@@ -1,0 +1,251 @@
+/* =========================================================
+   BUTTONS — primitive
+   One button system for the whole app: solid/outline text
+   buttons and square icon buttons, each with tone and size
+   modifiers. Apply these classes directly to <button>, <a>, or
+   any clickable element.
+
+   global/reset.css already restyles native <button> elements to
+   look like .btnPrimary by default. These classes exist for (a)
+   anchors styled as buttons, where the native reset doesn't
+   apply, and (b) every case that needs a variant other than the
+   plain solid default.
+   ========================================================= */
+
+/* -----------------------------------------------------------
+   TEXT BUTTONS
+   Merges: form-panel.module.css   .submit
+           admin.module.css        .primaryButton
+           admin.module.css        .dangerButton
+           form-panel.module.css   .modalCancel
+           form-panel.module.css   .modalSubmit (the delete-
+                                    confirmation variant)
+   ----------------------------------------------------------- */
+
+/* was: shared base of .submit (form-panel) and .primaryButton
+   (admin) — these two were nearly identical already. */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--size-space-2);
+    padding: var(--size-space-3) var(--size-space-5);
+    border-radius: var(--form-radius);
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    line-height: 1;
+    white-space: nowrap;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color var(--form-transition),
+        border-color var(--form-transition),
+        color var(--form-transition),
+        transform var(--form-transition);
+}
+
+.btn:active:not(:disabled) {
+    transform: translateY(1px);
+}
+
+.btn:focus-visible {
+    outline: none;
+    box-shadow: var(--form-shadow-focus);
+}
+
+.btn:disabled {
+    cursor: not-allowed;
+}
+
+/* was: .submit (form-panel), .primaryButton (admin) */
+.btnPrimary {
+    border: 1px solid var(--form-accent);
+    background-color: var(--form-accent);
+    color: var(--color-action-primary-text);
+}
+
+.btnPrimary:hover:not(:disabled) {
+    background-color: var(--form-accent-hover);
+    border-color: var(--form-accent-hover);
+}
+
+.btnPrimary:disabled {
+    background-color: var(--form-border);
+    border-color: var(--form-border);
+    color: var(--form-placeholder);
+}
+
+/* was: .modalCancel (form-panel) — a plain outlined button.
+   Generalized as "secondary" since nothing about it was
+   actually modal-specific. */
+.btnSecondary {
+    border: 1px solid var(--form-border);
+    background: var(--form-background);
+    color: var(--color-text-primary);
+}
+
+.btnSecondary:hover:not(:disabled) {
+    background: var(--form-surface);
+    border-color: var(--form-border-hover);
+}
+
+.btnSecondary:disabled {
+    color: var(--form-placeholder);
+}
+
+/* Solid danger — was: .modalSubmit (form-panel), the delete-
+   confirmation button style. Use for a confirming destructive
+   action (e.g. the submit button inside a delete-confirmation
+   modal). */
+.btnDanger {
+    border: 1px solid var(--form-danger);
+    background: var(--form-danger);
+    color: var(--color-action-primary-text);
+}
+
+.btnDanger:hover:not(:disabled) {
+    filter: brightness(0.9);
+}
+
+.btnDanger:disabled {
+    background: var(--form-border);
+    border-color: var(--form-border);
+    color: var(--form-placeholder);
+}
+
+/* Muted/outline danger — was: .dangerButton (admin). Visually
+   softer than .btnDanger. Use for lower-emphasis destructive
+   actions inline in a list or row; use .btnDanger for a
+   confirming action inside a modal. */
+.btnDangerMuted {
+    border: 1px solid var(--form-danger);
+    background: var(--form-danger-muted);
+    color: var(--form-danger);
+}
+
+.btnDangerMuted:hover:not(:disabled) {
+    filter: brightness(0.9);
+}
+
+/* -----------------------------------------------------------
+   ICON BUTTONS
+   Merges: form-panel.module.css      .iconButton (+ Danger /
+                                        Primary / Large modifiers)
+           admin.module.css           .orderButton
+           dashboard.module.css       .iconButton
+           dropdown-menu.module.css   .dropdownToggleButton
+           content-panel.module.css   .backToTopButton
+   ----------------------------------------------------------- */
+
+/* Shared base: a square, centered, icon-sized clickable area.
+   was: the structural rules duplicated (with tiny variations)
+   across all five sources listed above. */
+.iconBtn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    width: 2rem;
+    height: 2rem;
+    padding: 0;
+    border-radius: var(--form-radius);
+    font-size: var(--font-size-md);
+    line-height: 1;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color var(--form-transition),
+        border-color var(--form-transition),
+        color var(--form-transition),
+        transform var(--form-transition);
+}
+
+.iconBtn:active:not(:disabled) {
+    transform: translateY(1px);
+}
+
+.iconBtn:focus-visible {
+    outline: none;
+    border-color: var(--form-accent);
+    box-shadow: var(--form-shadow-focus);
+}
+
+.iconBtn:disabled {
+    color: var(--form-placeholder);
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+/* Filled at rest — was: dashboard.module.css .iconButton,
+   dropdown-menu.module.css .dropdownToggleButton,
+   content-panel.module.css .backToTopButton, admin.module.css
+   .orderButton. These four had small inconsistencies (border
+   color-border-secondary vs color-border, disabled opacity .3
+   on .orderButton vs .5 everywhere else) — standardized below;
+   the .3 opacity was dropped in favor of the .5 used elsewhere. */
+.iconBtnFilled {
+    border: 1px solid var(--color-border-secondary);
+    background: var(--color-surface-strong);
+    color: var(--color-icon-default);
+}
+
+.iconBtnFilled:hover:not(:disabled) {
+    color: var(--color-text-primary);
+    background: var(--color-surface-hover);
+}
+
+/* Transparent at rest, appears on hover — was: form-panel's
+   .iconButton. Used for inline row-level actions (e.g. a table
+   action column) where a visible border on every row would be
+   too heavy visually. */
+.iconBtnGhost {
+    border: 1px solid transparent;
+    background: transparent;
+    color: var(--color-icon-default);
+}
+
+.iconBtnGhost:hover:not(:disabled) {
+    background: var(--form-surface);
+    border-color: var(--color-border);
+    color: var(--color-text-primary);
+}
+
+/* Tone modifiers — was: .iconButtonDanger / .iconButtonPrimary
+   (form-panel). Combine with .iconBtnGhost or .iconBtnFilled. */
+.iconBtnDanger {
+    color: var(--form-danger);
+}
+
+.iconBtnDanger:hover:not(:disabled) {
+    background: var(--form-danger-muted);
+    border-color: var(--form-danger);
+    color: var(--form-danger);
+}
+
+.iconBtnPrimary {
+    color: var(--form-accent);
+}
+
+.iconBtnPrimary:hover:not(:disabled) {
+    background: var(--form-surface);
+    border-color: var(--form-accent);
+    color: var(--form-accent);
+}
+
+/* Size modifiers. Base .iconBtn is 2rem / 32px, matching the
+   majority of sources (form-panel's iconButton, admin's
+   orderButton, content-panel's backToTopButton). Two sources —
+   dashboard's sidebar toggle and dropdown's trigger — used 36px
+   for a slightly more prominent standalone trigger; kept as an
+   explicit modifier rather than changing the default. */
+/* was: hardcoded 36px size in dashboard.module.css .iconButton
+   and dropdown-menu.module.css .dropdownToggleButton */
+.iconBtnMd {
+    width: 36px;
+    height: 36px;
+}
+
+/* was: .iconButtonLarge (form-panel) */
+.iconBtnLg {
+    width: var(--size-control-md);
+    height: var(--size-control-md);
+    font-size: var(--font-size-lg);
+}

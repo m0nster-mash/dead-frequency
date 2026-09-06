@@ -1,0 +1,398 @@
+/* =========================================================
+   SIDEBAR — pattern
+   The site-wide nav rail: collapsible sidebar, its header and
+   nav items, the topbar, and the app shell that positions main
+   content around them. This was previously named
+   dashboard.module.css, but it isn't dashboard-specific — it's
+   the navigation chrome around every page, so it belongs here
+   as a core pattern rather than a feature file.
+
+   Usage assumption: apply core/primitives/buttons.module.css's
+   .iconBtn (+ .iconBtnFilled) to icon buttons inside the
+   sidebar/topbar, and core/primitives/brand.module.css's .brand
+   / .brandName to the logo lockup. This file no longer defines
+   either — see the notes below at each removed class.
+   source: dashboard.module.css (entire file, minus .brand /
+           .brandName / .iconButton — see notes inline)
+   ========================================================= */
+
+/* -----------------------------------------------------------
+   SIDEBAR SHELL
+   ----------------------------------------------------------- */
+.sidebar {
+    position: fixed;
+    z-index: 100;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    width: var(--sidebar-width);
+    height: 100vh;
+    background: var(--color-sidebar-bg);
+    border-right: 1px solid var(--color-border);
+    transition: width var(--transition-normal), transform var(--transition-normal);
+}
+
+.sidebarHeader {
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: var(--topbar-height);
+    padding: 0 16px 0 20px;
+    border-bottom: 1px solid var(--color-border);
+}
+
+/* REMOVED: .brand / .brandName — now
+   core/primitives/brand.module.css's .brand / .brandName.
+   Apply those classes directly to the logo link inside
+   .sidebarHeader. */
+
+/* REMOVED: .iconButton — now core/primitives/buttons.module.css's
+   .iconBtn + .iconBtnFilled (this sidebar's icon buttons were
+   already "filled at rest," matching that variant exactly). */
+
+/* was: .sidebarToggle (dashboard) — positioning-only modifier,
+   apply alongside .iconBtn + .iconBtnFilled from
+   buttons.module.css. */
+.sidebarToggle {
+    margin-left: auto;
+}
+
+.sidebarToggle svg {
+    transition: transform var(--transition-normal);
+}
+
+/* -----------------------------------------------------------
+   NAV ITEMS
+   ----------------------------------------------------------- */
+.sidebarNav {
+    flex: 1;
+    padding: 22px 12px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.navItem {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    gap: 12px;
+    min-height: 42px;
+    margin-bottom: 3px;
+    padding: 0 10px;
+    border-radius: var(--radius-sm);
+    color: var(--color-sidebar-text);
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    transition: background var(--transition-fast), color var(--transition-fast);
+    border: none;
+}
+
+.navItem:hover {
+    color: var(--color-sidebar-text-active);
+    background: var(--color-sidebar-item-hover);
+}
+
+.navItem.active {
+    color: var(--color-sidebar-text-active);
+    background: var(--color-sidebar-item-active);
+    font-weight: 600;
+}
+
+.navItem svg {
+    flex: 0 0 19px;
+    width: 19px;
+    height: 19px;
+}
+
+/* -----------------------------------------------------------
+   EXPANDABLE NAV ITEMS
+   ----------------------------------------------------------- */
+.expandableNavButton {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 42px;
+    width: 100%;
+    margin-bottom: 3px;
+    padding: 0 10px;
+    border-radius: var(--radius-sm);
+    border: none;
+    background: transparent;
+    color: var(--color-sidebar-text);
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    cursor: pointer;
+    transition: background var(--transition-fast), color var(--transition-fast);
+}
+
+.expandableNavButton:hover {
+    color: var(--color-sidebar-text-active);
+    background: var(--color-sidebar-item-hover);
+}
+
+.expandableNavButton.active {
+    color: var(--color-sidebar-text-active);
+    background: var(--color-sidebar-item-active);
+    font-weight: 600;
+}
+
+.expandableNavButton svg {
+    flex: 0 0 19px;
+    width: 19px;
+    height: 19px;
+}
+
+.expandableNavButton[aria-expanded="true"] {
+    border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+    border: 1px solid var(--color-border-secondary);
+}
+
+.expandIcon {
+    margin-left: auto;
+    font-size: 0.75rem;
+    transition: transform var(--transition-normal);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: currentColor;
+}
+
+.expandIconOpen {
+    transform: rotate(180deg);
+}
+
+.subNav {
+    overflow: hidden;
+    margin: -3px 0 6px;
+    padding: 0 6px;
+    background: var(--color-surface-raised);
+    border: 1px solid var(--color-border-secondary);
+    border-top: 0;
+    border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+    box-shadow: var(--shadow-md), inset 0 1px 0 rgb(255 255 255 / 0.03);
+    transition: max-height var(--transition-normal), opacity var(--transition-fast), padding var(--transition-normal);
+}
+
+.subNavOpen {
+    max-height: 400px;
+    padding-top: 6px;
+    padding-bottom: 7px;
+    opacity: 1;
+}
+
+.subNavClosed {
+    max-height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    opacity: 0;
+    border-color: transparent;
+    box-shadow: none;
+}
+
+.subNavItem {
+    display: flex;
+    align-items: center;
+    min-height: var(--size-icon-sm);
+    width: 100%;
+    margin: 5px 0;
+    padding-left: 10px;
+    border-radius: calc(var(--radius-sm) - 2px);
+    border: 1px solid var(--color-border-secondary);
+    color: var(--color-sidebar-text);
+    background: var(--color-surface-muted);
+    font-size: 0.9em;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background var(--transition-fast), color var(--transition-fast), padding-left var(--transition-fast);
+}
+
+.subNavItem:hover {
+    color: var(--color-sidebar-text-active);
+    background: var(--color-sidebar-item-hover);
+}
+
+.subNavItem.active {
+    color: var(--color-sidebar-text-active);
+    background: var(--color-sidebar-item-active);
+    font-weight: 600;
+}
+
+.subNavItem svg {
+    flex: 0 0 19px;
+    width: 19px;
+    height: 19px;
+    margin-right: 5px;
+}
+
+/* -----------------------------------------------------------
+   SIDEBAR FOOTER
+   ----------------------------------------------------------- */
+.sidebarFooter {
+    padding: 14px;
+    border-top: 1px solid var(--color-border);
+}
+
+.userCard {
+    padding: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.userInfo {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    flex: 1;
+}
+
+.userInfo strong {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 12px;
+}
+
+.userInfo span {
+    margin-top: 2px;
+    color: var(--color-text-muted);
+    font-size: 11px;
+}
+
+/* -----------------------------------------------------------
+   COLLAPSED STATE
+   ----------------------------------------------------------- */
+[data-collapsed="true"] ~ * .hideOnCollapse,
+[data-collapsed="true"] .hideOnCollapse {
+    display: none !important;
+}
+
+.sidebar[data-collapsed="true"] {
+    width: var(--sidebar-collapsed-width);
+}
+
+.sidebar[data-collapsed="true"] .sidebarHeader {
+    justify-content: center;
+    padding: 0;
+}
+
+.sidebar[data-collapsed="true"] .sidebarToggle {
+    margin-left: 0;
+}
+
+.sidebar[data-collapsed="true"] .navItem {
+    justify-content: center;
+    padding: 0;
+}
+
+.sidebar[data-collapsed="true"] .expandableNavButton {
+    position: relative;
+    justify-content: center;
+    width: 100%;
+    padding: 0;
+}
+
+.sidebar[data-collapsed="true"] .userCard {
+    justify-content: center;
+    padding: 14px 8px;
+}
+
+.sidebar[data-collapsed="true"] .sidebarNav {
+    padding-left: 12px;
+    padding-right: 12px;
+}
+
+.sidebar[data-collapsed="true"] .subNav {
+    width: 100%;
+    box-sizing: border-box;
+    margin: -3px 0 6px;
+    padding: 5px;
+    background: var(--color-surface-raised);
+    border: 1px solid var(--color-border-secondary);
+    border-top: 0;
+    border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+    box-shadow: var(--shadow-lg);
+}
+
+/* -----------------------------------------------------------
+   MAIN SHELL / TOPBAR
+   Kept together with the sidebar (rather than split into a
+   separate file) because both are driven by the same
+   --current-sidebar-width variable and collapse in lockstep.
+   ----------------------------------------------------------- */
+.mainShell {
+    height: 100vh;
+    margin-left: var(--current-sidebar-width);
+    transition: margin-left var(--transition-normal);
+}
+
+.topbar {
+    position: fixed;
+    z-index: 90;
+    top: 0;
+    right: 0;
+    left: var(--current-sidebar-width);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: var(--topbar-height);
+    padding: 0 28px;
+    background: var(--color-surface);
+    border-bottom: 1px solid var(--color-border);
+    backdrop-filter: blur(10px);
+    transition: left var(--transition-normal);
+}
+
+.topbarLeft,
+.topbarRight {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+/* REMOVED: .iconButton usage on topbar buttons — same as the
+   sidebar, apply .iconBtn + .iconBtnFilled from
+   buttons.module.css. */
+
+.notificationButton {
+    position: relative;
+}
+
+.notificationDot {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 6px;
+    height: 6px;
+    border: 1px solid var(--color-surface);
+    border-radius: 50%;
+    background: var(--color-danger-bg);
+}
+
+.appContent {
+    height: 100vh;
+    padding: calc(var(--topbar-height) + 34px) 32px 48px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+}
+
+/* -----------------------------------------------------------
+   SIGN OUT
+   ----------------------------------------------------------- */
+.buttonSignOut {
+    width: 100%;
+}
+
+.buttonSignOutCollapsed {
+    height: var(--size-icon-sm);
+    padding: 0;
+    display: grid;
+    place-items: center;
+    width: 100%;
+    stroke-width: 1;
+    stroke: currentColor;
+}

@@ -1,0 +1,144 @@
+/* =========================================================
+   CARD — pattern
+   A "card" is not a new surface — it's the panel primitive
+   (core/primitives/panel.module.css) plus the specific pieces
+   that make a bordered box read as a self-contained content
+   card: an intro heading (eyebrow/title/subtitle) above or
+   inside it, an optional table-of-contents slot, and an
+   optional pinned back-to-top button.
+
+   Usage assumption: apply .panel (+ .panelPadded or
+   .panelHeader/.panelBody, as needed) from panel.module.css to
+   the container FIRST. This file only adds the intro heading
+   and the back-to-top positioning on top of that — it does not
+   redefine the surface.
+   ========================================================= */
+
+/* -----------------------------------------------------------
+   INTRO HEADING (eyebrow + title + optional subtitle)
+   Merges: content-panel.module.css  .contentHeader /
+             .contentHeaderMain / .eyebrow / h1 / .subtitle
+           forum.module.css          .summaryHeader /
+             .summaryEyebrow / .summaryTitle
+   These were the same idea at two different scales:
+   content-panel's version sits above a panel as a page-level
+   heading; forum's sits inside a padded panel as a smaller
+   section intro. Both scales are kept, since collapsing them
+   into one size would visibly shrink the page-level heading.
+   ----------------------------------------------------------- */
+
+/* was: .contentHeader (content-panel, page-level — flex column,
+   larger bottom margin) merged with .summaryHeader (forum,
+   simpler — just a bottom margin). Use the larger margin by
+   default; both worked fine with it. */
+.cardIntro {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-space-4);
+    margin-bottom: var(--size-space-6);
+}
+
+/* was: .contentHeaderMain (content-panel) — the row that holds
+   the eyebrow+title block on the left and page-level actions
+   (e.g. a button) on the right. Only needed for the page-level
+   scale; forum's card-level intro didn't have this row. */
+.cardIntroMain {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--size-space-6);
+}
+
+.cardIntroMain > div {
+    min-width: 0;
+}
+
+/* was: .eyebrow (content-panel, font-size-xs) merged with
+   .summaryEyebrow (forum, font-size-2xs — one step smaller).
+   Standardized on the larger (xs) size since it reads better as
+   a page-level label; forum's usage was the more disposable of
+   the two. */
+.cardEyebrow {
+    display: block;
+    margin: 0 0 var(--size-space-2);
+    color: var(--color-text-muted);
+    font-size: var(--font-size-xs);
+    font-weight: 700;
+    letter-spacing: var(--tracking-wide);
+    line-height: 1.4;
+    text-transform: uppercase;
+}
+
+/* was: content-panel's bare `h1` selector inside
+   .contentHeaderMain (font-size-xl) — the page-level title. */
+.cardTitle {
+    margin: 0;
+    color: var(--color-text-primary);
+    font-size: var(--font-size-xl);
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+/* was: .summaryTitle (forum, font-size-md) — the smaller title
+   used for a card-level intro rather than a whole page. Apply
+   instead of .cardTitle, not alongside it. */
+.cardTitleCompact {
+    margin: 0;
+    color: var(--color-text-primary);
+    font-size: var(--font-size-md);
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+/* was: .subtitle (content-panel) — the page-level subtitle
+   under .cardTitle. (Not to be confused with
+   .panelHeaderDescription in panel.module.css, which is the
+   smaller description used inside a bordered .panelHeader bar.) */
+.cardSubtitle {
+    margin: var(--size-space-2) 0 0;
+    color: var(--color-text-muted);
+    font-size: var(--font-size-md);
+    line-height: 1.5;
+}
+
+/* -----------------------------------------------------------
+   BACK TO TOP
+   Positioning only — the visual look (border, background,
+   color, hover) comes from composing core/primitives/buttons
+   .module.css's .iconBtn + .iconBtnFilled. This class just pins
+   it to the corner of a card.
+   was: position/right/bottom portion of .backToTopButton
+   (content-panel) — the border/background/color rules from the
+   same class were dropped here since they're now covered by
+   .iconBtn + .iconBtnFilled.
+   ----------------------------------------------------------- */
+.cardBackToTop {
+    position: absolute;
+    right: var(--size-space-4);
+    bottom: var(--size-space-4);
+}
+
+@media (max-width: 480px) {
+    .cardBackToTop {
+        right: var(--size-space-3);
+        bottom: var(--size-space-3);
+    }
+
+    .cardIntro {
+        gap: var(--size-space-3);
+        margin-bottom: var(--size-space-5);
+    }
+
+    .cardIntroMain {
+        flex-direction: column;
+        gap: var(--size-space-4);
+    }
+
+    .cardTitle {
+        font-size: var(--font-size-lg);
+    }
+
+    .cardSubtitle {
+        font-size: var(--font-size-sm);
+    }
+}

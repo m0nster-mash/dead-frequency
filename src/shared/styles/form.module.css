@@ -1,0 +1,233 @@
+/* =========================================================
+   FORM — primitive
+   Field/label/input/layout rules shared by every form in the
+   app. Previously duplicated almost verbatim between
+   form-panel.module.css and admin.module.css.
+
+   NOT INCLUDED HERE: form-panel.module.css also had
+   .sectionTitle / .sectionSubtitle, used to head a form section.
+   These turned out to be visually identical to
+   core/primitives/panel.module.css's .panelHeaderTitle /
+   .panelHeaderDescription (same font sizes, same colors) — use
+   those instead of a form-specific duplicate.
+   ========================================================= */
+
+/* was: .form (form-panel, admin — identical) */
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-space-4);
+}
+
+/* was: .field (form-panel, admin — identical) */
+.formField {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-space-2);
+}
+
+/* was: .label (form-panel, admin — identical). Renamed from the
+   bare "label" since that name is too generic to keep scanning
+   for collisions against. */
+.formLabel {
+    font-size: var(--font-size-xs);
+    font-weight: 600;
+    letter-spacing: var(--tracking-wide);
+    color: var(--form-label);
+}
+
+/* was: .input (form-panel) merged with .input (admin, which
+   additionally set min-height: var(--size-control-md)). Kept
+   the min-height — it makes inputs easier to tap and nothing in
+   form-panel's usage conflicts with it. */
+.formInput {
+    width: 100%;
+    min-height: var(--size-control-md);
+    padding: var(--size-space-3) var(--size-space-3);
+    background-color: var(--form-background);
+    border: 1px solid var(--form-border);
+    border-radius: var(--form-radius);
+    color: var(--form-text);
+    font-size: var(--font-size-md);
+    transition: border-color var(--form-transition), box-shadow var(--form-transition);
+}
+
+.formInput:hover {
+    border-color: var(--form-border-hover);
+}
+
+.formInput:focus {
+    outline: none;
+    border-color: var(--form-accent);
+    box-shadow: var(--form-shadow-focus);
+}
+
+.formInput::placeholder {
+    color: var(--form-placeholder);
+}
+
+.formInput:disabled {
+    background-color: var(--form-surface);
+    color: var(--form-placeholder);
+    border-color: var(--form-border);
+    cursor: not-allowed;
+    opacity: 0.75;
+}
+
+/* -----------------------------------------------------------
+   LAYOUT
+   Two different multi-field layouts existed and are both kept,
+   since they solve different problems: .formRow wraps fields
+   fluidly (good for 2 fields of variable width), .formGrid
+   locks to a fixed column count (good for admin's uniform
+   3-field rows).
+   ----------------------------------------------------------- */
+
+/* was: .row (form-panel) */
+.formRow {
+    display: flex;
+    gap: var(--size-space-4);
+    flex-wrap: wrap;
+}
+
+.formRow > .formField {
+    flex: 1 1 220px;
+}
+
+/* was: .formGrid (admin) */
+.formGrid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--size-space-4);
+}
+
+@media (max-width: 900px) {
+    .formGrid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* was: .actions (form-panel — left-aligned/inline) and
+   .formActions (admin — right-aligned). Kept as one base class
+   with a modifier for the right-aligned case, since left-
+   aligned (default flex, no justify-content) was the more
+   common of the two. */
+.formActions {
+    display: flex;
+    align-items: center;
+    gap: var(--size-space-3);
+    margin-top: var(--size-space-1);
+}
+
+/* was: .formActions (admin) — the right-aligned variant */
+.formActionsEnd {
+    justify-content: flex-end;
+}
+
+/* -----------------------------------------------------------
+   FEEDBACK
+   was: .error / .success (form-panel)
+   ----------------------------------------------------------- */
+
+/* was: .error (form-panel) */
+.formError {
+    padding: var(--size-space-2) var(--size-space-3);
+    border-radius: var(--form-radius);
+    background: var(--form-danger-muted);
+    color: var(--form-danger);
+    font-size: var(--font-size-sm);
+    margin: 0;
+}
+
+/* was: .success (form-panel) */
+.formSuccess {
+    padding: var(--size-space-2) var(--size-space-3);
+    border-radius: var(--form-radius);
+    background: var(--color-success-bg);
+    color: var(--color-success);
+    font-size: var(--font-size-sm);
+    margin: 0;
+}
+
+/* was: .divider (form-panel) */
+.formDivider {
+    border: none;
+    border-top: 1px solid var(--color-border);
+    margin: var(--size-space-2) 0;
+}
+
+/* -----------------------------------------------------------
+   READ-ONLY DETAIL LIST
+   A label/value list for displaying (not editing) data —
+   visually paired with forms since it reuses the same label
+   conventions, but every row is static text.
+   was: .details / .detailRow / .detailLabel / .detailValue /
+        .detailValueMuted / .detailValueStrong (form-panel)
+   ----------------------------------------------------------- */
+
+/* was: .details (form-panel) — renamed since "details" read as
+   confusable with the native <details> element. */
+.detailList {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    border: 1px solid var(--color-border);
+    border-radius: var(--form-radius);
+    overflow: hidden;
+}
+
+.detailRow {
+    display: grid;
+    grid-template-columns: minmax(160px, 0.35fr) minmax(0, 1fr);
+    align-items: center;
+    gap: var(--size-space-4);
+    padding: var(--size-space-3) var(--size-space-4);
+    margin: 0;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.detailRow:last-child {
+    border-bottom: none;
+}
+
+.detailRow:hover {
+    background: var(--form-surface);
+}
+
+.detailLabel {
+    margin: 0;
+    color: var(--color-text-muted);
+    font-size: var(--font-size-xs);
+    font-weight: 700;
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+}
+
+.detailValue {
+    min-width: 0;
+    margin: 0;
+    color: var(--color-text-primary);
+    font-size: var(--font-size-sm);
+    overflow-wrap: anywhere;
+}
+
+/* Optional muted value */
+.detailValueMuted {
+    color: var(--color-text-muted);
+}
+
+/* Optional emphasis for important values */
+.detailValueStrong {
+    font-weight: 600;
+}
+
+@media (max-width: 640px) {
+    .detailRow {
+        grid-template-columns: 1fr;
+        gap: var(--size-space-1);
+    }
+
+    .detailLabel {
+        font-size: var(--font-size-2xs);
+    }
+}

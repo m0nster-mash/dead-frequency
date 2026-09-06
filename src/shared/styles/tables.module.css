@@ -1,0 +1,184 @@
+/* =========================================================
+   TABLES — primitive
+   One table, one empty-cell treatment, one badge/status system.
+
+   Previously form-panel.module.css defined a generic table plus
+   a badge/status set, while admin.module.css defined three
+   separate tables (.boardTable, .forumTable, .unassignedTable)
+   that differed only in column widths and a couple of one-off
+   cells. Those feature-specific column widths now belong in
+   features/forum/forum-admin.module.css, layered as modifier
+   classes on top of the single .table defined here — they are
+   NOT reproduced in this file.
+   ========================================================= */
+
+/* was: .tableWrapper (form-panel) — the same shape as admin's
+   .boardTableWrapper / .forumTableContainer, just named
+   differently per table. */
+.tableWrapper {
+    width: 100%;
+    overflow-x: auto;
+    border: 1px solid var(--color-border);
+    border-radius: var(--form-radius);
+}
+
+/* was: .table (form-panel). admin's .boardTable additionally set
+   table-layout: fixed and a min-width for horizontal scroll on
+   small screens — pulled in here since both are reasonable
+   defaults for any data table, not something specific to admin.
+   Adjust min-width per usage if a table has fewer columns. */
+.table {
+    width: 100%;
+    min-width: 640px;
+    border-collapse: collapse;
+    table-layout: fixed;
+    color: var(--color-text-primary);
+    font-size: var(--font-size-sm);
+}
+
+.table thead {
+    background: var(--form-surface);
+}
+
+.table th {
+    padding: var(--size-space-3) var(--size-space-4);
+    border-bottom: 1px solid var(--color-border);
+    color: var(--color-text-muted);
+    font-size: var(--font-size-xs);
+    font-weight: 700;
+    letter-spacing: var(--tracking-wide);
+    text-align: left;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.table td {
+    padding: var(--size-space-3) var(--size-space-4);
+    border-bottom: 1px solid var(--color-border);
+    vertical-align: middle;
+}
+
+.table tbody tr {
+    transition: background-color var(--form-transition);
+}
+
+.table tbody tr:hover {
+    background: var(--form-surface);
+}
+
+.table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* was: .tableActions (form-panel) — renamed to make clear this
+   targets a column, not the action buttons inside it (those
+   come from core/primitives/buttons.module.css). */
+.tableActionsColumn {
+    width: 1%;
+    text-align: right !important;
+    white-space: nowrap;
+}
+
+/* was: .tableNumeric (form-panel) */
+.tableNumericColumn {
+    text-align: right !important;
+    white-space: nowrap;
+}
+
+/* -----------------------------------------------------------
+   EMPTY CELL
+   was: .tableEmpty (form-panel) merged with .forumEmptyCell
+   (admin — same idea, slightly more vertical padding).
+   Standardized on the larger padding.
+   ----------------------------------------------------------- */
+.tableEmptyCell {
+    padding: var(--size-space-7) var(--size-space-4) !important;
+    color: var(--color-text-muted);
+    text-align: center;
+}
+
+/* -----------------------------------------------------------
+   BADGES & STATUS
+   was: .status / .statusActive / .statusBanned / .badge
+   (form-panel), plus a second, visually different .badge
+   (forum — smaller, rectangular, uppercase "tag" style used on
+   forum threads, e.g. "pinned"/"locked"). The two .badge
+   definitions collided in name but were not the same component;
+   both are kept below under distinct names.
+   ----------------------------------------------------------- */
+
+/* was: .status (form-panel) — renamed to avoid the bare, easily
+   -collided name "status". */
+.statusBadge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--size-space-1);
+    padding: var(--size-space-1) var(--size-space-2);
+    border-radius: 999px;
+    font-size: var(--font-size-xs);
+    font-weight: 600;
+    line-height: 1.4;
+    white-space: nowrap;
+}
+
+/* was: .statusActive (form-panel) */
+.statusBadgeSuccess {
+    background: var(--color-success-bg);
+    color: var(--color-success);
+}
+
+/* was: .statusBanned (form-panel) — generalized name since
+   "banned" is specific to user administration; the reusable
+   part is the danger tone, not the specific status it labels. */
+.statusBadgeDanger {
+    background: var(--form-danger-muted);
+    color: var(--form-danger);
+}
+
+/* was: .badge (form-panel) — a pill, for short value labels
+   like a role. */
+.badge {
+    display: inline-flex;
+    align-items: center;
+    padding: var(--size-space-1) var(--size-space-2);
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+    background: var(--form-surface);
+    color: var(--color-text-primary);
+    font-size: var(--font-size-xs);
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+/* was: .badge (forum) — a second, differently-shaped badge that
+   shared a name with the one above. Renamed .badgeTag so both
+   can coexist without one silently overwriting the other. */
+.badgeTag {
+    display: inline-flex;
+    flex-shrink: 0;
+    align-items: center;
+    padding: 0.2rem 0.45rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    color: var(--color-text-secondary);
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    line-height: 1;
+    text-transform: uppercase;
+}
+
+@media (max-width: 640px) {
+    .table th,
+    .table td {
+        padding: var(--size-space-2) var(--size-space-3);
+    }
+
+    .table th {
+        font-size: var(--font-size-2xs);
+    }
+
+    .table td {
+        font-size: var(--font-size-sm);
+    }
+}

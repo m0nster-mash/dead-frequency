@@ -1,0 +1,208 @@
+/* =========================================================
+   MODAL — primitive
+
+   DECISION: standardized on a JS-controlled overlay (a plain
+   .modalOverlay + .modal div pair, toggled by component state)
+   rather than the native <dialog> element. form-panel.module.css
+   already used this approach; forum.module.css's confirmation
+   dialog (.adminModal, built on native <dialog> + ::backdrop)
+   will need its MARKUP migrated to this pattern — its
+   header/close-button structure was better considered than
+   form-panel's, though, so that part is merged in below rather
+   than dropped.
+
+   This file composes core/primitives/form.module.css and
+   core/primitives/buttons.module.css for fields and actions
+   instead of redefining them. form-panel.module.css previously
+   had near-duplicate .modalField / .modalLabel / .modalInput and
+   .modalCancel / .modalSubmit rules — those are DELETED here;
+   use .formField / .formLabel / .formInput and
+   .btn + .btnSecondary / .btn + .btnDanger directly instead.
+   ========================================================= */
+
+/* was: .modalOverlay (form-panel). backdrop-filter is new —
+   added to carry over the visual intent of forum's
+   .adminModal::backdrop, which isn't available on a plain div
+   the way it is on <dialog>. */
+.modalOverlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--size-space-4);
+    background: rgb(0 0 0 / 0.55);
+    backdrop-filter: blur(2px);
+}
+
+/* was: .modal (form-panel). Padding moved out of this rule and
+   into .modalHeader / .modalBody below, since the header/body
+   split (adopted from forum's .adminModal) replaces form-panel's
+   single unstructured padded box. Box-shadow strengthened to
+   match forum's .adminModal, which was the more considered of
+   the two. */
+.modal {
+    width: min(100%, 480px);
+    max-height: calc(100vh - (var(--size-space-6) * 2));
+    overflow-y: auto;
+    border: 1px solid var(--color-border);
+    border-radius: var(--form-radius);
+    background: var(--form-background);
+    color: var(--color-text-primary);
+    box-shadow: var(--shadow-lg);
+}
+
+/* -----------------------------------------------------------
+   HEADER
+   was: .adminModalHeader / .adminModalEyebrow / .adminModalTitle
+   / .adminModalClose (forum) — this header-with-close-button
+   structure replaces form-panel's plain .modalTitle, which had
+   no built-in way to close the modal other than an external
+   action.
+   ----------------------------------------------------------- */
+
+/* was: .adminModalHeader (forum) */
+.modalHeader {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--size-space-4);
+    padding: var(--size-space-5) var(--size-space-6);
+    border-bottom: 1px solid var(--color-border);
+}
+
+/* was: .adminModalEyebrow (forum) — optional, only needed when
+   a modal benefits from a category label above its title. */
+.modalEyebrow {
+    display: block;
+    margin-bottom: var(--size-space-1);
+    color: var(--color-text-muted);
+    font-size: var(--font-size-2xs);
+    font-weight: 600;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+}
+
+/* was: .adminModalTitle (forum). form-panel's plain .modalTitle
+   (font-size-lg, no eyebrow support) was dropped in favor of
+   this smaller, eyebrow-paired version. */
+.modalTitle {
+    margin: 0;
+    color: var(--color-text-primary);
+    font-size: var(--font-size-md);
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+/* Apply alongside core/primitives/buttons.module.css's .iconBtn
+   + .iconBtnGhost classes rather than redefining a close-button
+   look here — this class only adds the size/position tweaks a
+   close button needs inside a modal header. */
+/* was: .adminModalClose (forum) */
+.modalCloseButton {
+    flex-shrink: 0;
+    font-size: 1.35rem;
+}
+
+/* -----------------------------------------------------------
+   BODY / DESCRIPTION
+   was: .adminModalBody (forum), .modalDescription (form-panel)
+   ----------------------------------------------------------- */
+
+/* was: .adminModalBody (forum) */
+.modalBody {
+    overflow-y: auto;
+    padding: var(--size-space-6);
+}
+
+/* was: .modalDescription (form-panel) */
+.modalDescription {
+    margin: 0 0 var(--size-space-5);
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+    line-height: 1.6;
+}
+
+.modalDescription strong {
+    color: var(--color-text-primary);
+    font-weight: 600;
+}
+
+/* -----------------------------------------------------------
+   FORM CONTENT
+   was: .modalForm (form-panel, kept as-is).
+   DELETED: .modalField / .modalLabel / .modalInput (form-panel)
+   — these were near-duplicates of .formField / .formLabel /
+   .formInput. Compose those directly from
+   core/primitives/form.module.css in markup instead, e.g.:
+     className={`${form.formField}`}  →  label + input inside
+   ----------------------------------------------------------- */
+
+.modalForm {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-space-4);
+}
+
+/* was: .modalError (form-panel). Visually identical to
+   .formError in core/primitives/form.module.css — kept here as
+   its own class only because it sits directly under .modalForm
+   without the margin context .formError assumes elsewhere.
+   Revisit whether this can just compose .formError once both
+   are in use side by side. */
+.modalError {
+    margin: 0;
+    padding: var(--size-space-2) var(--size-space-3);
+    border-radius: var(--form-radius);
+    background: var(--form-danger-muted);
+    color: var(--form-danger);
+    font-size: var(--font-size-sm);
+    line-height: 1.5;
+}
+
+/* -----------------------------------------------------------
+   ACTIONS
+   was: .modalActions (form-panel, kept as-is).
+   DELETED: .modalCancel / .modalSubmit (form-panel) — compose
+   core/primitives/buttons.module.css's .btn + .btnSecondary
+   (cancel) and .btn + .btnDanger (confirm a destructive action)
+   directly in markup instead.
+   ----------------------------------------------------------- */
+
+.modalActions {
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--size-space-3);
+    margin-top: var(--size-space-1);
+}
+
+/* -----------------------------------------------------------
+   RESPONSIVE
+   was: form-panel's @media (max-width: 640px) modal rules
+   ----------------------------------------------------------- */
+@media (max-width: 640px) {
+    .modalOverlay {
+        align-items: flex-end;
+        padding: var(--size-space-2);
+    }
+
+    .modal {
+        width: 100%;
+        max-height: calc(100vh - var(--size-space-4));
+        border-radius: var(--form-radius) var(--form-radius) 0 0;
+    }
+
+    .modalHeader,
+    .modalBody {
+        padding: var(--size-space-4);
+    }
+
+    .modalActions {
+        flex-direction: column-reverse;
+    }
+
+    .modalActions > * {
+        width: 100%;
+    }
+}
