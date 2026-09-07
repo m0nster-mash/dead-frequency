@@ -1,7 +1,7 @@
-import {relations} from "drizzle-orm";
-import {index, pgTable, text, timestamp} from "drizzle-orm/pg-core";
 import {user} from "@/core/auth/schema/auth.schema";
 import {authorColumns} from "@shared/communication/author/lib/author";
+import {relations} from "drizzle-orm";
+import {index, pgTable, text, timestamp} from "drizzle-orm/pg-core";
 
 /**
  * Chatbox conversation container table managing topic-organized message threads.

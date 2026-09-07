@@ -13,6 +13,7 @@ import {randomUUID} from "crypto";
 import {eq, sql} from "drizzle-orm";
 import {revalidatePath} from "next/cache";
 import {headers} from "next/headers";
+import {mention} from "@shared/communication/mentions/schema/mentions.schema";
 
 /**
  * High-security inline validation utility checking server-side session authentication tokens. Extracts account
@@ -161,6 +162,33 @@ export async function createMessageAction(input: {
     // Update user trust/engagement metrics
     await recordPost(user.id);
 
+    // **NEW: Parse and create mention records**
+    const {parseAndCreateMentions} = await import("./mentions");
+    const createdMentionIds = await parseAndCreateMentions(messageId, cleanBody, user.id);
+
+    // **NEW: Send notifications for each mention**
+    for (const mentionId of createdMentionIds) {
+        // Get the mentioned user ID
+        const [mentionRecord] = await db
+            .select()
+            .from(mention)
+            .where(eq(mention.id, mentionId))
+            .limit(1);
+
+        if (mentionRecord) {
+            await notify({
+                userId: mentionRecord.mentionedUserId,
+                type: "mention",
+                payload: {
+                    module: "chatbox",
+                    messageId,
+                    conversationId: input.conversationId,
+                    fromUserId: user.id,
+                },
+            });
+        }
+    }
+
     // Invalidate conversation messages cache
     revalidatePath(`/chatbox/${input.conversationId}`);
 
@@ -256,6 +284,14 @@ export async function deleteMessageAction(input: {
             deletedAt: now,
         })
         .where(eq(chatboxMessage.id, input.messageId));
+
+    // **NEW: Clean up associated mention records**
+    const {deleteMentionsForMessage} = await import("./mentions");
+    await deleteMentionsForMessage(input.messageId);
+
+    // **NEW: Clean up associated reaction records**
+    const {deleteReactionsForMessage} = await import("./reactions");
+    await deleteReactionsForMessage(input.messageId);
 
     // Log the moderation action
     await logModAction({
