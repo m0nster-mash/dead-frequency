@@ -85,6 +85,13 @@
       "when": 1788820256746,
       "tag": "0011_ancient_the_fallen",
       "breakpoints": true
+    },
+    {
+      "idx": 12,
+      "version": "7",
+      "when": 1788820624923,
+      "tag": "0012_lucky_morg",
+      "breakpoints": true
     }
   ]
 }

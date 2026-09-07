@@ -1,7 +1,7 @@
 import {user} from "@/core/auth/schema/auth.schema";
 import {authorColumns} from "@shared/communication/author/lib/author";
 import {relations} from "drizzle-orm";
-import {index, pgTable, text, timestamp} from "drizzle-orm/pg-core";
+import {index, integer, pgTable, text, timestamp} from "drizzle-orm/pg-core";
 
 /**
  * Chatbox conversation container table managing topic-organized message threads.
@@ -40,9 +40,9 @@ export const chatboxConversation = pgTable(
             .defaultNow()
             .notNull(),
 
-        messageCount: text("message_count")
+        messageCount: integer("message_count")
             .notNull()
-            .default("0"),
+            .default(0),
 
         createdAt: timestamp("created_at")
             .defaultNow()
@@ -60,7 +60,7 @@ export const chatboxConversation = pgTable(
 
         // Speeds up activity-based feed sorting and recent conversation discovery
         index("chatbox_conversation_last_message_idx").on(table.contextId, table.lastMessageAt),
-    ],
+    ]
 );
 
 /**
@@ -126,7 +126,7 @@ export const chatboxMessage = pgTable(
 
         // Optimizes feed sorting by recent activity across all messages
         index("chatbox_message_created_idx").on(table.conversationId, table.createdAt),
-    ],
+    ]
 );
 
 /**
@@ -149,7 +149,7 @@ export const chatboxConversationRelations = relations(
          * belonging to a conversation in a single optimized query.
          */
         messages: many(chatboxMessage),
-    }),
+    })
 );
 
 /**
