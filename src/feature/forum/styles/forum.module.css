@@ -1,37 +1,10 @@
 /* =========================================================
-   FORUM — feature (public forum UI)
-   Board listing, thread listing, post discussion, the post
-   editor, and moderator controls reachable from within a
-   thread. Everything generic (surfaces, section intros, badges,
-   modals, buttons) has been removed in favor of composing
-   core/primitives and core/patterns — what's left here is only
-   true because it's forum data: boards, threads, posts.
-
-   Usage assumptions carried over from core:
-   - Summary/board boxes: apply core/primitives/panel.module.css's
-     .panel + .panelPadded + .panelRaised, then card.module.css's
-     .cardIntro / .cardEyebrow / .cardTitleCompact for the
-     header inside them.
-   - Thread tags (e.g. "pinned"): core/primitives/tables
-     .module.css's .badgeTag.
-   - The moderation modal: core/primitives/modal.module.css's
-     .modalOverlay / .modal / .modalHeader / .modalBody, with
-     its markup migrated off the old native <dialog> element —
-     see the DECISION note in modal.module.css.
-   - Modal close button: core/primitives/buttons.module.css's
-     .iconBtn + .iconBtnGhost, plus modal.module.css's
-     .modalCloseButton for sizing.
-   source: forum.module.css
+   FORUM
    ========================================================= */
 
 /* -----------------------------------------------------------
    LAYOUT
-   was: .wrapper / .categories (forum) — renamed .wrapper since
-   a bare "wrapper" export is hard to identify at a glance in
-   devtools once several feature files exist side by side.
    ----------------------------------------------------------- */
-
-/* was: .wrapper (forum) */
 .forumWrapper {
     display: flex;
     flex-direction: column;
@@ -51,11 +24,7 @@
 
 /* -----------------------------------------------------------
    BOARD LIST ROW
-   was: .board (forum) — renamed .boardRow, paralleling
-   .threadRow below, since "board" alone reads as the data
-   object rather than the row that displays it.
    ----------------------------------------------------------- */
-
 .boardRow {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(320px, 1.2fr);
@@ -123,10 +92,6 @@
     white-space: nowrap;
 }
 
-/* was: declared twice, identically, in the original file (once
-   here for the board-list context, once again in the thread-
-   list section below). Kept as a single declaration — apply it
-   in both places. */
 .threadAuthor {
     color: var(--color-text-secondary);
     font-size: var(--font-size-xs);
@@ -153,13 +118,6 @@
     line-height: 1.3;
 }
 
-/* was: no boards/threads yet, plain muted inline text. Renamed
-   .boardListEmpty — see the naming-collision note below on
-   .discussionEmpty; the original file used the bare class
-   ".empty" for both this and a visually different bordered-box
-   state, which is a real bug in the source (CSS Modules would
-   merge both rule sets onto one class). Split back into two
-   distinctly-named classes here. */
 .boardListEmpty {
     padding: var(--size-space-2) 0;
     color: var(--color-text-muted);
@@ -168,17 +126,7 @@
 
 /* -----------------------------------------------------------
    META LABELS
-   was: three near-identical uppercase label rules scattered
-   across the file — .label / .statLabel / .summaryLabel (one
-   comma-grouped rule), plus .threadStatLabel and
-   .adminResourceLabel / .adminSectionLabel (each declared
-   separately elsewhere in the file with the same values, one
-   with a smaller font-size override). Consolidated into one
-   base class plus one size modifier.
    ----------------------------------------------------------- */
-
-/* was: .label, .statLabel, .summaryLabel, .adminResourceLabel,
-   .adminSectionLabel (forum) */
 .metaLabel {
     color: var(--color-text-muted);
     font-size: var(--font-size-2xs);
@@ -188,19 +136,13 @@
     text-transform: uppercase;
 }
 
-/* was: the smaller override on .statLabel, and the separately-
-   declared .threadStatLabel (both landed on the same 0.65rem
-   value) */
 .metaLabelSm {
     font-size: 0.65rem;
 }
 
 /* -----------------------------------------------------------
    BOARD THREAD LIST
-   was: .threadList / .thread (forum) — .thread renamed
-   .threadRow, matching .boardRow above.
    ----------------------------------------------------------- */
-
 .threadList {
     display: flex;
     flex-direction: column;
@@ -257,10 +199,6 @@
     line-height: 1.4;
 }
 
-/* was: .badge (forum) — DELETED. Use
-   core/primitives/tables.module.css's .badgeTag directly; it's
-   the same rectangular uppercase tag style. */
-
 .threadReplies,
 .threadActivity {
     display: flex;
@@ -277,17 +215,12 @@
     min-width: 0;
 }
 
-/* was: .threadStatValue (forum) */
 .threadStatValue {
     color: var(--color-text-primary);
     font-size: 0.9rem;
     font-weight: 600;
     line-height: 1.3;
 }
-
-/* was: .threadStatLabel (forum) — DELETED as its own rule; use
-   .metaLabel + .metaLabelSm above, which land on the same
-   values. */
 
 .threadActivityUser {
     overflow: hidden;
@@ -307,16 +240,7 @@
 
 /* -----------------------------------------------------------
    FORUM / BOARD SUMMARY STATS
-   The bordered box itself, and the eyebrow/title above the
-   stats, are DELETED here — was: .forumSummary / .boardSummary
-   / .summaryHeader / .summaryEyebrow / .summaryTitle (forum).
-   Apply core/primitives/panel.module.css's .panel + .panelPadded
-   + .panelRaised for the box, and core/patterns/card.module
-   .css's .cardIntro / .cardEyebrow / .cardTitleCompact for the
-   heading inside it. What remains below (the stats grid itself)
-   is genuinely forum-specific data display.
    ----------------------------------------------------------- */
-
 .summaryGrid {
     display: grid;
     grid-template-columns: 160px 160px minmax(0, 1fr);
@@ -366,10 +290,7 @@
 
 /* -----------------------------------------------------------
    POST COMPOSITION
-   No primitive overlap — this is a bespoke editor toolbar, not
-   the core form input. Kept as-is.
    ----------------------------------------------------------- */
-
 .postForm {
     display: flex;
     flex-direction: column;
@@ -452,24 +373,8 @@
 }
 
 /* -----------------------------------------------------------
-   MODERATION MODAL — thread-level controls
-   The modal box/header/body — was: .adminModal /
-   .adminModal::backdrop / .adminModalContent / .adminModalHeader
-   / .adminModalEyebrow / .adminModalTitle / .adminModalClose /
-   .adminModalBody (forum) — is DELETED entirely. Apply
-   core/primitives/modal.module.css's .modalOverlay / .modal /
-   .modalHeader / .modalEyebrow / .modalTitle / .modalBody, and
-   core/primitives/buttons.module.css's .iconBtn + .iconBtnGhost
-   (+ modal.module.css's .modalCloseButton for sizing) for the
-   close button. This also means migrating this modal's markup
-   off the native <dialog> element — see the DECISION note at
-   the top of modal.module.css.
-
-   What's below is the content INSIDE that modal: the actual
-   moderation controls, which are genuinely forum/thread-
-   specific and have no core equivalent.
+   MODERATION MODAL
    ----------------------------------------------------------- */
-
 .adminThreadControls {
     display: flex;
     flex-direction: column;
@@ -483,10 +388,6 @@
     padding-bottom: var(--size-space-4);
     border-bottom: 1px solid var(--color-border);
 }
-
-/* was: .adminResourceLabel / .adminSectionLabel — DELETED as
-   their own rule; use .metaLabel above, which lands on the same
-   values. */
 
 .adminResourceName {
     overflow: hidden;
@@ -510,10 +411,6 @@
     gap: var(--size-space-2);
 }
 
-/* Deliberately not built from core/primitives/buttons.module.css
-   — this is a left-aligned, icon+label action tile, distinct
-   enough from a standard button that redefining it here reads
-   more clearly than stretching a button variant to fit. */
 .adminControlButton {
     min-height: 2.5rem;
     padding: 0.6rem 0.75rem;
@@ -555,9 +452,6 @@
 
 /* -----------------------------------------------------------
    RESPONSIVE
-   was: forum's @media rules, trimmed of everything now handled
-   by core files (.adminModal / .adminModalHeader / .adminModalBody
-   sizing is now core/primitives/modal.module.css's concern).
    ----------------------------------------------------------- */
 @media (max-width: 800px) {
     .boardRow {
@@ -614,10 +508,7 @@
 
 /* -----------------------------------------------------------
    BOARD THREAD DISCUSSION
-   No primitive overlap — post/reply layout is genuinely forum-
-   specific. Kept as-is.
    ----------------------------------------------------------- */
-
 .threadDiscussion {
     display: flex;
     flex-direction: column;
@@ -753,13 +644,6 @@
     color: var(--color-text-muted);
 }
 
-/* was: the SECOND, differently-styled ".empty" rule in the
-   original file — a bordered placeholder box, used for "no
-   replies yet" in a thread. This shared its class name with the
-   plain-text board/thread-list empty state above (originally
-   both called ".empty"), which is a genuine bug in the source:
-   CSS Modules would have merged both rule sets onto one class.
-   Renamed .discussionEmpty to resolve it. */
 .discussionEmpty {
     padding: var(--size-space-6);
     border: 1px solid var(--color-border);

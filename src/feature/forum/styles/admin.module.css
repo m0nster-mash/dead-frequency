@@ -1,31 +1,9 @@
 /* =========================================================
-   FORUM-ADMIN — feature (forum's admin section)
-   Category/board management: the category editor form, the
-   board/category hierarchy tables, reorder controls, and the
-   unassigned-boards table. Nearly everything generic (panel
-   sections, form fields, tables, buttons) has been removed in
-   favor of composing core/primitives — what's left is only true
-   because it's forum category/board data specifically.
-
-   Usage assumptions carried over from core:
-   - Panel + sections: core/primitives/panel.module.css's .panel
-     / .panelBody / .panelSection / .panelSectionHeader /
-     .panelSectionTitle / .panelSectionDescription.
-   - Forms: core/primitives/form.module.css's .form / .formGrid
-     / .formField / .formLabel / .formInput / .formActions +
-     .formActionsEnd.
-   - Buttons: core/primitives/buttons.module.css's .btn +
-     .btnPrimary / .btnDangerMuted, and .iconBtn + .iconBtnSubtle
-     for the reorder arrows.
-   - Tables: core/primitives/tables.module.css's .tableWrapper /
-     .table / .tableEmptyCell, with the column-width classes
-     below layered on top.
-   source: admin.module.css
+   FORUM-ADMIN
    ========================================================= */
 
 /* -----------------------------------------------------------
    LAYOUT
-   was: .categoryEditor (admin)
    ----------------------------------------------------------- */
 .categoryEditor {
     display: flex;
@@ -33,168 +11,9 @@
     gap: 0;
 }
 
-/* was: .editorSection / .editorSection:first-child /
-   .sectionHeader / .sectionTitle / .sectionDescription (admin)
-   — all DELETED. Use core/primitives/panel.module.css's
-   .panelSection / .panelSection:first-child / .panelSectionHeader
-   / .panelSectionTitle / .panelSectionDescription instead — they
-   were extracted from these exact rules. */
-
-/* was: .form / .formGrid / .field / .label / .input /
-   .formActions (admin) — all DELETED. Use
-   core/primitives/form.module.css's .form / .formGrid /
-   .formField / .formLabel / .formInput / .formActions +
-   .formActionsEnd (admin's version was the right-aligned one).
-   These were near-duplicates of form-panel's versions and are
-   now the single source in core. */
-
-/* was: .primaryButton (admin) — DELETED, use
-   core/primitives/buttons.module.css's .btn + .btnPrimary. */
-
-/* was: .dangerButton (admin) — DELETED, use
-   core/primitives/buttons.module.css's .btn + .btnDangerMuted. */
-
 /* -----------------------------------------------------------
-   DELETE-CATEGORY LAYOUT HACK
-   was: .deleteCategoryForm (admin). Kept as-is — this pulls a
-   delete button up and to the left to sit flush with the rename
-   form's submit button above it, using a negative margin tied
-   to that specific layout. It's fragile (depends on the exact
-   height of the sibling form) and worth replacing with an
-   explicit flex/grid layout next time this section's markup is
-   touched, but preserved here rather than silently "fixed"
-   during this pass.
+   FORUM HIERARCHY TABLE
    ----------------------------------------------------------- */
-.deleteCategoryForm {
-    display: flex;
-    justify-content: flex-end;
-    margin-top: -2.4rem;
-    padding-right: 6.5rem;
-}
-
-/* -----------------------------------------------------------
-   BOARD / CATEGORY HIERARCHY TABLE
-   The table itself — was: .boardTableWrapper / .boardTable /
-   .forumTableContainer / .forumTable / .unassignedTable + their
-   th/td rules (admin) — is DELETED. Use
-   core/primitives/tables.module.css's .tableWrapper / .table
-   directly. What's below are the column-width and cell
-   modifiers layered on top of that shared table — these are
-   genuinely specific to this page's columns (order, category
-   name, board name, statistics, actions), not general table
-   concerns.
-   ----------------------------------------------------------- */
-
-.orderColumn {
-    width: 8rem;
-}
-
-.actionColumn {
-    width: 6.5rem;
-}
-
-.removeColumn {
-    width: 9.5rem;
-}
-
-.orderCell {
-    white-space: nowrap;
-}
-
-.orderControls {
-    display: flex;
-    align-items: center;
-    gap: var(--size-space-2);
-}
-
-.orderNumber {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 1.5rem;
-    color: var(--color-text-muted);
-    font-size: var(--font-size-xs);
-    font-weight: 700;
-}
-
-.orderButtons {
-    display: flex;
-    gap: var(--size-space-1);
-}
-
-/* was: .orderButton (admin) — DELETED as a standalone visual
-   definition. Compose core/primitives/buttons.module.css's
-   .iconBtn + .iconBtnSubtle in markup instead; they use the same
-   surface/border tone this button had. */
-
-.boardFieldForm {
-    display: contents;
-}
-
-.boardDescription {
-    color: var(--color-text-muted);
-    font-size: var(--font-size-sm);
-    line-height: 1.4;
-}
-
-.actionCell {
-    white-space: nowrap;
-}
-
-.actionCell form {
-    margin: 0;
-}
-
-/* -----------------------------------------------------------
-   REORDER & EMPTY STATES
-   was: .reorderForm / .reorderFooter (admin, kept — layout only).
-   .emptyState (admin) — DELETED, use
-   core/primitives/panel.module.css's .panelEmptyState.
-   ----------------------------------------------------------- */
-.reorderForm {
-    display: flex;
-    flex-direction: column;
-    margin-top: var(--size-space-4);
-}
-
-.reorderFooter {
-    display: flex;
-    justify-content: flex-end;
-}
-
-/* -----------------------------------------------------------
-   FORUM HIERARCHY TABLE — category/board row styling
-   Column widths and row treatments specific to this table's
-   data shape (a category row followed by its indented board
-   rows). Genuinely forum-specific; no primitive equivalent.
-   ----------------------------------------------------------- */
-
-/* Widens the shared .table's default 640px min-width. Both the
-   board reorder table and the category/board hierarchy table
-   (admin's old .boardTable and .forumTable) used 900px — apply
-   alongside core/primitives/tables.module.css's .table class on
-   either.
-
-   NOTE on .boardTable specifically: it also used
-   table-layout: fixed (unlike .forumTable / .unassignedTable,
-   which relied on auto layout for their description column to
-   wrap). Apply core/primitives/tables.module.css's .tableFixed
-   modifier alongside .table + .wideTable for that one table
-   only — not for the category/board hierarchy or unassigned-
-   boards tables below, which should stay auto layout.
-
-   NOT CARRIED FORWARD: .forumTable and .unassignedTable also
-   both used border-collapse: separate; border-spacing: 0
-   instead of the collapse core/primitives/tables.module.css's
-   .table now uses. This was flattened to one behavior (collapse)
-   for consistency; flag for visual review since collapsed vs.
-   separate borders render shared cell edges slightly differently
-   (relevant here since .forumCategoryRow relies on a border-left
-   accent on its first cell). */
-.wideTable {
-    min-width: 900px;
-}
-
 .forumOrderColumn {
     width: 7rem;
 }
@@ -216,7 +35,6 @@
     text-align: right !important;
 }
 
-/* Category rows */
 .forumCategoryRow {
     background: var(--color-surface-strong);
 }
@@ -241,7 +59,6 @@
     font-size: var(--font-size-sm);
 }
 
-/* Board rows */
 .forumBoardRow {
     background: var(--color-surface);
 }
@@ -275,7 +92,6 @@
     font-size: var(--font-size-sm);
 }
 
-/* Shared cells */
 .forumOrderCell {
     color: var(--color-text-muted) !important;
     font-size: var(--font-size-xs) !important;
@@ -296,9 +112,6 @@
     white-space: nowrap;
 }
 
-/* Deliberately not built from core/primitives/buttons.module.css
-   — this is a compact inline text-style edit link embedded in a
-   table cell, not a standalone action button. */
 .forumEditButton {
     display: inline-flex;
     align-items: center;
@@ -322,14 +135,8 @@
     color: var(--color-text-primary);
 }
 
-/* was: .forumEmptyCell (admin) — DELETED, use
-   core/primitives/tables.module.css's .tableEmptyCell instead;
-   it was merged from this exact rule. */
-
 /* -----------------------------------------------------------
    FORUM VIEWER / BOARD EDITOR
-   was: .forumViewer / .boardEditor (admin) — thin layout
-   wrappers, kept as-is.
    ----------------------------------------------------------- */
 .forumViewer {
     display: flex;
@@ -345,10 +152,6 @@
 
 /* -----------------------------------------------------------
    ADMIN STATS
-   was: .adminStatsGrid / .adminStat / .adminStatLabel (admin).
-   Genuinely forum-admin-specific data display; kept as-is,
-   apart from .adminStatLabel, which duplicated the same
-   uppercase muted label used elsewhere — see note below.
    ----------------------------------------------------------- */
 .adminStatsGrid {
     display: grid;
@@ -367,13 +170,6 @@
     background: var(--color-surface-strong);
 }
 
-/* was: .adminStatLabel (admin) — same uppercase/muted/tracking-
-   wide treatment as features/forum/forum.module.css's
-   .metaLabel. Left as its own declaration here rather than
-   importing across feature files (forum-admin and forum are
-   siblings, not layered on each other); if a shared "meta label"
-   pattern is worth having, it belongs one level up, in
-   core/primitives, not borrowed sideways between features. */
 .adminStatLabel {
     color: var(--color-text-muted);
     font-size: var(--font-size-xs);
@@ -384,19 +180,7 @@
 
 /* -----------------------------------------------------------
    UNASSIGNED BOARDS
-   was: .unassignedIntro / .unassignedIntro p /
-   .unassignedTable(+th/td) / .unassignedBoardRow /
-   .unassignedBoardName / .unassignedBoardDescription /
-   .assignColumn / .assignCategoryForm (admin). Table base rules
-   DELETED — use core/primitives/tables.module.css's .table
-   directly; what remains is the column width and the inline
-   assign-to-category form, both specific to this view.
    ----------------------------------------------------------- */
-
-.unassignedIntro {
-    margin-bottom: var(--size-space-4);
-}
-
 .unassignedIntro p {
     margin: 0;
     color: var(--color-text-muted);
@@ -429,9 +213,6 @@
     width: 17rem;
 }
 
-/* Compose core/primitives/form.module.css's .formInput on the
-   input and .btn + .btnPrimary on the button inside this row;
-   this class only handles the inline row layout. */
 .assignCategoryForm {
     display: flex;
     align-items: center;
@@ -450,30 +231,10 @@
 
 /* -----------------------------------------------------------
    RESPONSIVE
-   was: admin's @media rules, trimmed of everything now handled
-   by core files (.formGrid's collapse to 1fr, for instance, now
-   lives in core/primitives/form.module.css).
    ----------------------------------------------------------- */
 @media (max-width: 900px) {
-    .deleteCategoryForm {
-        margin-top: var(--size-space-4);
-        padding-right: 0;
-    }
-
     .adminStatsGrid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-}
-
-@media (max-width: 700px) {
-    /* was: 700px breakpoint originally only narrowed .forumTable
-       (the hierarchy table) to 800px; .boardTable had no such
-       override. Scoped this to .wideTable generally so both
-       tables get a sensible narrower minimum on small screens —
-       revisit if the board reorder table turns out to need its
-       own breakpoint instead. */
-    .wideTable {
-        min-width: 800px;
     }
 }
 
