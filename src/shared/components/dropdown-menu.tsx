@@ -5,9 +5,6 @@ import Link from "next/link";
 import {JSX, ReactNode, useEffect, useRef, useState} from "react";
 
 /**
- * TODO:: clean up styles
- */
-/**
  * Union configuration options defining a single render item inside the dropdown matrix. Supports hyperlinks,
  * action dispatcher triggers, text headers, and visual line dividers.
  */

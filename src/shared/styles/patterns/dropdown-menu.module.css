@@ -11,8 +11,8 @@
     align-items: center;
     justify-content: center;
     padding: 0;
-    height: 36px;
-    width: 36px;
+    height: var(--size-icon-sm);
+    width: var(--size-icon-sm);
     border-radius: var(--radius-sm);
     color: var(--color-text-primary);
 }

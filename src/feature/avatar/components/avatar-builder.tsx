@@ -4,8 +4,8 @@ import {AvatarRenderer} from "@/feature/avatar/components/avatar-renderer";
 import {saveAvatarConfig} from "@/feature/avatar/lib/actions";
 import {AVATAR_OPTIONS, AvatarPartCategory,} from "@/feature/avatar/lib/options";
 import {AvatarConfig} from "@/feature/avatar/lib/types";
-// import styles from "@/shared/styles/form-panel.module.css";
-import styles from "@/shared/styles/form.module.css";
+import buttonStyles from "@/shared/styles/buttons.module.css";
+import formStyles from "@/shared/styles/form.module.css";
 import {useRouter} from "next/navigation";
 import {JSX, useState} from "react";
 
@@ -80,21 +80,21 @@ export function AvatarBuilder({initialConfig}: AvatarBuilderProps): JSX.Element 
     }
 
     return (
-        <div className={styles.section}>
+        <div>
             <div style={{display: "flex", gap: "2rem", alignItems: "flex-start"}}>
                 <AvatarRenderer config={config} size={160}/>
 
                 <div style={{flex: 1}}>
                     {CATEGORIES.map(({key, label}) => (
-                        <div key={key} className={styles.field}>
-                            <label className={styles.label}>{label}</label>
+                        <div key={key} className={formStyles.formField}>
+                            <label className={formStyles.formLabel}>{label}</label>
                             <div style={{display: "flex", gap: "0.5rem"}}>
                                 {AVATAR_OPTIONS[key].map((option) => (
                                     <button
                                         key={option.id}
                                         type="button"
                                         onClick={() => updatePart(key, option.id)}
-                                        className={styles.input}
+                                        className={formStyles.formInput}
                                         style={{
                                             fontWeight: config[key] === option.id ? 700 : 400,
                                         }}>
@@ -107,13 +107,13 @@ export function AvatarBuilder({initialConfig}: AvatarBuilderProps): JSX.Element 
                 </div>
             </div>
 
-            {error ? <p className={styles.error}>{error}</p> : null}
-            {success ? <p className={styles.success}>{success}</p> : null}
+            {error ? <p className={formStyles.formError}>{error}</p> : null}
+            {success ? <p className={formStyles.formSuccess}>{success}</p> : null}
 
-            <div className={styles.actions}>
+            <div className={formStyles.formActions}>
                 <button
                     type="button"
-                    className={styles.submit}
+                    className={`${buttonStyles.btn} ${buttonStyles.btnPrimary}`}
                     disabled={loading}
                     onClick={handleSave}>
                     {loading ? "Saving..." : "Save avatar"}

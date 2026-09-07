@@ -3,9 +3,6 @@
 import {createContext, JSX, ReactNode, useContext, useEffect, useMemo, useState} from "react";
 
 /**
- * TODO:: clean up styles
- */
-/**
  * Registry structure tracking dynamic segment slug string mappings to clean text titles.
  */
 type LabelMap = Record<string, string>;

@@ -3,9 +3,6 @@
 import {useBreadcrumbLabel} from "@/shared/components/breadcrumbs-context";
 
 /**
- * TODO:: clean up styles
- */
-/**
  * Properties for the BreadcrumbLabel component.
  *
  * @property {string} segment - The dynamic URL route slug segment string matching the active route path parameter.
