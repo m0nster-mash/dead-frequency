@@ -78,7 +78,7 @@ export async function createConversationAction(input: {
             description: cleanDescription,
             createdByUserId: user.id,
             lastMessageAt: now,
-            messageCount: "0",
+            messageCount: 0,
             createdAt: now,
         });
 
