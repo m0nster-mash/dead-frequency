@@ -8,9 +8,6 @@ import {desc, eq} from "drizzle-orm";
 import {JSX} from "react";
 
 /**
- * TODO:: clean up styles
- */
-/**
  * Tthe central moderation reports queue.
  *
  * @returns {Promise<JSX.Element>} A promise resolving to the administrative user reports moderation viewport.
@@ -42,7 +39,7 @@ export default async function AdminReportsPage(): Promise<JSX.Element> {
                             <th>Reason</th>
                             <th>Details</th>
                             <th>Reported</th>
-                            <th className={tableStyle.tableActions}>Actions</th>
+                            <th className={tableStyle.tableActionsColumn}>Actions</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -52,14 +49,14 @@ export default async function AdminReportsPage(): Promise<JSX.Element> {
                                 <td>{r.reason}</td>
                                 <td>{r.details || "—"}</td>
                                 <td>{new Date(r.createdAt).toLocaleString()}</td>
-                                <td className={tableStyle.tableActions}>
+                                <td className={tableStyle.tableActionsColumn}>
                                     {/* TODO:: wire up server actions: mark actioned/dismissed, jump to record via module+recordId once module views exist */}
                                 </td>
                             </tr>
                         ))}
                         {openReports.length === 0 && (
                             <tr>
-                                <td colSpan={5} className={tableStyle.tableEmpty}>No open reports.</td>
+                                <td colSpan={5} className={tableStyle.tableEmptyCell}>No open reports.</td>
                             </tr>
                         )}
                         </tbody>

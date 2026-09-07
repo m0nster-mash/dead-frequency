@@ -6,10 +6,6 @@ import {getForumHierarchy} from "@/feature/forum/lib/queries";
 import {notFound} from "next/navigation";
 import {JSX} from "react";
 
-/**
- * TODO:: clean up styles
- */
-
 type Props = {
     params: Promise<{
         boardId: string;

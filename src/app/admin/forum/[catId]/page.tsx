@@ -5,9 +5,6 @@ import {EditCategoryPanel} from "@/feature/forum/components/admin/edit-category-
 import {getForumHierarchy} from "@/feature/forum/lib/queries";
 import {JSX} from "react";
 
-/**
- * TODO:: clean up styles
- */
 export default async function ViewCategoryPage(): Promise<JSX.Element> {
     await requireSession({role: "admin"});
 

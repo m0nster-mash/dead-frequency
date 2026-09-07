@@ -6,9 +6,6 @@ import {headers} from "next/headers";
 import {JSX} from "react";
 
 /**
- * TODO:: clean up styles
- */
-/**
  * The primary administrator control panel.
  *
  * @returns {Promise<JSX.Element>} A promise resolving to the main administrative landing layout view.

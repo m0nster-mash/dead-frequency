@@ -14,9 +14,6 @@ import Link from "next/link";
 import {JSX} from "react";
 
 /**
- * TODO:: clean up styles
- */
-/**
  * Properties for the AdminUserDetailsPage component.
  *
  * @property {Promise<{ userId: string }>} params - A promise resolving to route parameters containing the targeted

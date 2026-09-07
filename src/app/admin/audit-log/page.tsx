@@ -9,10 +9,6 @@ import {desc, eq} from "drizzle-orm";
 import {JSX} from "react";
 
 /**
- * TODO:: clean up styles
- */
-
-/**
  * The system audit log.
  *
  * @returns {Promise<JSX.Element>} A promise resolving to the administrative system-wide audit history dashboard UI

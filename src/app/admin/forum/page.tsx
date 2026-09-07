@@ -7,9 +7,6 @@ import {getForumHierarchy} from "@/feature/forum/lib/queries";
 import {JSX} from "react";
 
 /**
- * TODO:: clean up styles
- */
-/**
  * Forum hierarchy manager.
  *
  * @returns {Promise<JSX.Element>} Forum administration page.
