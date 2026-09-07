@@ -8,9 +8,6 @@ import {useRouter} from "next/navigation";
 import {JSX} from "react";
 
 /**
- * TODO:: clean up styles
- */
-/**
  * An interactive Client Component button that handles user session termination and secure context exit routing.
  *
  * @returns {JSX.Element} The visual sign-out action control button layer.

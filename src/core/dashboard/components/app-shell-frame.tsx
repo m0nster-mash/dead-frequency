@@ -5,9 +5,6 @@ import sidebarStyles from "@/shared/styles/patterns/sidebar.module.css";
 import {CSSProperties, JSX, ReactNode} from "react";
 
 /**
- * TODO:: clean up styles
- */
-/**
  * Properties for the AppShellFrame component.
  *
  * @property {ReactNode} sidebar - The side drawer navigation viewport layout.

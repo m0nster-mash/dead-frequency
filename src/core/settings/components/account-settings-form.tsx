@@ -2,8 +2,13 @@
 
 import {authClient} from "@/core/auth/lib/auth-client";
 import {MainContentPanel} from "@/core/dashboard/components/panels/main-card";
-// import styles from "@/shared/styles/form-panel.module.css";
-import styles from "@/shared/styles/form.module.css";
+import panelStyles from "@/shared/styles/panel.module.css";
+import tableStyles from "@/shared/styles/tables.module.css";
+import sidebarStyles from "@/shared/styles/patterns/sidebar.module.css";
+import buttonStyles from "@/shared/styles/buttons.module.css";
+import formStyles from "@/shared/styles/form.module.css";
+import modalStyles from "@/shared/styles/modal.module.css";
+import cardStyles from "@/shared/styles/patterns/card.module.css";
 import {useRouter} from "next/navigation";
 import {JSX, SubmitEvent, useState} from "react";
 
@@ -220,27 +225,27 @@ export function AccountSettingsForm({
     }
 
     return (
-        <div className={styles.wrapper}>
+        <div>
             <MainContentPanel title={"Update Username"}>
-                <div className={styles.section}>
-                    <p className={styles.sectionSubtitle}>
+                <div>
+                    <p className={panelStyles.panelHeaderSubtitle}>
                         This is the name that will be displayed across the app.
                     </p>
-                    <form className={styles.form} onSubmit={handleProfileSubmit}>
-                        <div className={styles.field}>
-                            <label className={styles.label} htmlFor="name"> Username </label>
+                    <form className={formStyles.form} onSubmit={handleProfileSubmit}>
+                        <div className={formStyles.formField}>
+                            <label className={formStyles.formLabel} htmlFor="name"> Username </label>
                             <input id="name"
                                    name="name"
-                                   className={styles.input}
+                                   className={formStyles.formInput}
                                    defaultValue={currentName}
                                    placeholder="Your name"
                                    autoComplete="name"
                                    required/>
                         </div>
-                        {profileState.error ? <p className={styles.error}>{profileState.error}</p> : null}
-                        {profileState.success ? (<p className={styles.success}>{profileState.success}</p>) : null}
-                        <div className={styles.actions}>
-                            <button type="submit" className={styles.submit} disabled={profileState.loading}>
+                        {profileState.error ? <p className={formStyles.formError}>{profileState.error}</p> : null}
+                        {profileState.success ? (<p className={formStyles.formSuccess}>{profileState.success}</p>) : null}
+                        <div className={formStyles.actions}>
+                            <button type="submit" className={`${buttonStyles.btn} ${buttonStyles.btnPrimary}`} disabled={profileState.loading}>
                                 {profileState.loading ? "Saving..." : "Save username"}
                             </button>
                         </div>
@@ -249,26 +254,26 @@ export function AccountSettingsForm({
             </MainContentPanel>
 
             <MainContentPanel title={"Update Email"}>
-                <div className={styles.section}>
-                    <p className={styles.sectionSubtitle}>
+                <div>
+                    <p className={panelStyles.panelHeaderSubtitle}>
                         We&apos;ll send a confirmation to your new address if verification is required.
                     </p>
-                    <form className={styles.form} onSubmit={handleEmailSubmit}>
-                        <div className={styles.field}>
-                            <label className={styles.label} htmlFor="email"> Email </label>
+                    <form className={formStyles.form} onSubmit={handleEmailSubmit}>
+                        <div className={formStyles.formField}>
+                            <label className={formStyles.formLabel} htmlFor="email"> Email </label>
                             <input id="email"
                                    name="email"
                                    type="email"
-                                   className={styles.input}
+                                   className={formStyles.formInput}
                                    defaultValue={currentEmail}
                                    placeholder="you@example.com"
                                    autoComplete="email"
                                    required/>
                         </div>
-                        {emailState.error ? <p className={styles.error}>{emailState.error}</p> : null}
-                        {emailState.success ? <p className={styles.success}>{emailState.success}</p> : null}
-                        <div className={styles.actions}>
-                            <button type="submit" className={styles.submit} disabled={emailState.loading}>
+                        {emailState.error ? <p className={formStyles.formError}>{emailState.error}</p> : null}
+                        {emailState.success ? <p className={formStyles.formSuccess}>{emailState.success}</p> : null}
+                        <div className={formStyles.actions}>
+                            <button type="submit" className={`${buttonStyles.btn} ${buttonStyles.btnPrimary}`} disabled={emailState.loading}>
                                 {emailState.loading ? "Saving..." : "Update email"}
                             </button>
                         </div>
@@ -277,49 +282,49 @@ export function AccountSettingsForm({
             </MainContentPanel>
 
             <MainContentPanel title={"Update Password"}>
-                <div className={styles.section}>
-                    <p className={styles.sectionSubtitle}>
+                <div>
+                    <p className={panelStyles.panelHeaderSubtitle}>
                         Use at least 8 characters. Updating your password will sign you out of other sessions.
                     </p>
-                    <form className={styles.form} onSubmit={handlePasswordSubmit}>
-                        <div className={styles.field}>
-                            <label className={styles.label} htmlFor="currentPassword">
+                    <form className={formStyles.form} onSubmit={handlePasswordSubmit}>
+                        <div className={formStyles.formField}>
+                            <label className={formStyles.formLabel} htmlFor="currentPassword">
                                 Current password
                             </label>
                             <input id="currentPassword"
                                    name="currentPassword"
                                    type="password"
-                                   className={styles.input}
+                                   className={formStyles.formInput}
                                    autoComplete="current-password"
                                    required/>
                         </div>
-                        <hr className={styles.divider}/>
-                        <div className={styles.row}>
-                            <div className={styles.field}>
-                                <label className={styles.label} htmlFor="newPassword"> New password </label>
+                        <hr className={formStyles.formDivider}/>
+                        <div className={formStyles.formRow}>
+                            <div className={formStyles.formField}>
+                                <label className={formStyles.formLabel} htmlFor="newPassword"> New password </label>
                                 <input id="newPassword"
                                        name="newPassword"
                                        type="password"
-                                       className={styles.input}
+                                       className={formStyles.formInput}
                                        autoComplete="new-password"
                                        required/>
                             </div>
-                            <div className={styles.field}>
-                                <label className={styles.label} htmlFor="confirmPassword">
+                            <div className={formStyles.formField}>
+                                <label className={formStyles.formLabel} htmlFor="confirmPassword">
                                     Confirm new password
                                 </label>
                                 <input id="confirmPassword"
                                        name="confirmPassword"
                                        type="password"
-                                       className={styles.input}
+                                       className={formStyles.formInput}
                                        autoComplete="new-password"
                                        required/>
                             </div>
                         </div>
-                        {passwordState.error ? <p className={styles.error}>{passwordState.error}</p> : null}
-                        {passwordState.success ? (<p className={styles.success}>{passwordState.success}</p>) : null}
-                        <div className={styles.actions}>
-                            <button type="submit" className={styles.submit} disabled={passwordState.loading}>
+                        {passwordState.error ? <p className={formStyles.formError}>{passwordState.error}</p> : null}
+                        {passwordState.success ? (<p className={formStyles.formSuccess}>{passwordState.success}</p>) : null}
+                        <div className={formStyles.formActions}>
+                            <button type="submit" className={`${buttonStyles.btn} ${buttonStyles.btnPrimary}`} disabled={passwordState.loading}>
                                 {passwordState.loading ? "Saving..." : "Update password"}
                             </button>
                         </div>

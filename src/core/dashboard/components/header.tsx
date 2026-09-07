@@ -6,9 +6,6 @@ import buttonStyles from "@shared/styles/buttons.module.css";
 import {JSX} from "react";
 
 /**
- * TODO:: clean up styles
- */
-/**
  * An asynchronous Next.js Server Page component that renders the central top navigation toolbar.
  *
  * @returns {Promise<JSX.Element>} A promise resolving to the global application dashboard header element tree

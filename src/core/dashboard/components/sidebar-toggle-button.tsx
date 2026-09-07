@@ -8,9 +8,6 @@ import RightArrowSquare from "@/shared/svg/bootstrap-right-square-icon.svg";
 import {JSX} from "react";
 
 /**
- * TODO:: clean up styles
- */
-/**
  * An interactive Client Component button that controls the centralized layout sidebar dimensional tracking states.
  *
  * @returns {JSX.Element} The visual structural layout state modifier switch button.

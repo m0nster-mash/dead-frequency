@@ -119,6 +119,13 @@
     line-height: 1.3;
 }
 
+.panelHeaderSubtitle {
+    color: var(--color-text-primary);
+    font-size: var(--font-size-sm);
+    font-weight: 700;
+    margin-bottom: var(--size-space-6);
+}
+
 /* was: .cardHeader p (content-panel). Also absorbs form-panel's
    .sectionSubtitle (font-size-sm, muted, same purpose) — the
    description line under a section title. */

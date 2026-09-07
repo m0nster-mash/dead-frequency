@@ -1,13 +1,10 @@
 "use client";
 
+import buttonStyles from "@/shared/styles/buttons.module.css";
 import panelStyles from "@/shared/styles/panel.module.css";
 import cardStyles from "@/shared/styles/patterns/card.module.css";
-import buttonStyles from "@shared/styles/buttons.module.css";
 import {JSX, ReactNode} from "react";
 
-/**
- * TODO:: clean up styles
- */
 /**
  * Properties for the MainContentPanel component.
  *

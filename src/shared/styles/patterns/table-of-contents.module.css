@@ -88,7 +88,7 @@
 }
 
 /* was: .contentHeaderTocList (content-panel) */
-.v {
+.tocList {
     display: flex;
     flex-direction: column;
     gap: var(--size-space-1);

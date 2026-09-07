@@ -7,10 +7,6 @@ import Link from "next/link";
 import {JSX, ReactNode} from "react";
 
 /**
- * TODO:: clean up styles
- */
-
-/**
  * Properties for the SidebarFrame component.
  *
  * @property {ReactNode} toggleButton - Interactive trigger node (ex. hamburger switch) to adjust panel widths.

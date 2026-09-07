@@ -18,9 +18,6 @@ import SidebarFrame from "./sidebar-frame";
 import SidebarToggleButton from "./sidebar-toggle-button";
 
 /**
- * TODO:: clean up styles
- */
-/**
  * The left-side bar.
  *
  * @returns {Promise<JSX.Element>} A promise resolving to the fully hydrated navigation column cluster.
@@ -98,8 +95,7 @@ export async function Sidebar(): Promise<JSX.Element> {
             <div>
                 {session ? (
                     <div className={sidebarStyles.userCard}>
-                        {/* TODO: styles.avatar has no equivalent in the new sidebar.module.css, find where the avatar-circle rule landed, or reintroduce it. */}
-                        <div className={sidebarStyles.avatar}>
+                         <div>
                             {avatarConfig ? (
                                 <AvatarRenderer config={avatarConfig} size={36}/>
                             ) : (
