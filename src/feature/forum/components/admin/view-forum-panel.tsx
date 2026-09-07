@@ -1,12 +1,10 @@
 import {MainContentPanel} from "@/core/dashboard/components/panels/main-card";
 import {UnassignedBoard} from "@/feature/forum/components/admin/unassigned-boards";
 import {ForumBoard, ForumCategory, ViewCategoryContent,} from "@/feature/forum/components/admin/view-category-content";
-import styles from "@/feature/forum/styles/admin.module.css";
+import adminStyles from "@/feature/forum/styles/admin.module.css";
+import tableStyles from "@/shared/styles/tables.module.css";
 import {JSX, useMemo} from "react";
 
-/**
- * TODO:: clean up styles
- */
 type Props = {
     categories: ForumCategory[];
     unassignedBoards?: ForumBoard[];
@@ -39,33 +37,33 @@ export function ViewForumPanel({
     );
 
     return (
-        <div className={styles.forumViewer}>
+        <div className={adminStyles.forumViewer}>
             <MainContentPanel title={"View Forum"}>
-                <div className={styles.forumTableContainer}>
-                    <table className={styles.forumTable}>
+                <div className={tableStyles.tableWrapper}>
+                    <table className={tableStyles.table}>
                         <thead>
                         <tr>
-                            <th className={styles.forumOrderColumn}>
+                            <th className={adminStyles.forumOrderColumn}>
                                 Order
                             </th>
 
-                            <th className={styles.forumNameColumn}>
+                            <th className={adminStyles.forumNameColumn}>
                                 Name
                             </th>
 
-                            <th className={styles.forumDescriptionColumn}>
+                            <th className={adminStyles.forumDescriptionColumn}>
                                 Description
                             </th>
 
-                            <th className={styles.forumStatisticColumn}>
+                            <th className={adminStyles.forumStatisticColumn}>
                                 Total Threads
                             </th>
 
-                            <th className={styles.forumStatisticColumn}>
+                            <th className={adminStyles.forumStatisticColumn}>
                                 Total Posts
                             </th>
 
-                            <th className={styles.forumActionsColumn}>
+                            <th className={adminStyles.forumActionsColumn}>
                                 Actions
                             </th>
                         </tr>
@@ -78,7 +76,7 @@ export function ViewForumPanel({
 
                         {sortedCategories.length === 0 && (
                             <tr>
-                                <td colSpan={6} className={styles.forumEmptyCell}>
+                                <td colSpan={6} className={tableStyles.tableEmptyCell}>
                                     No forum categories have been
                                     created.
                                 </td>
@@ -90,7 +88,7 @@ export function ViewForumPanel({
             </MainContentPanel>
 
             <MainContentPanel title={"Unassigned Boards"}>
-                <div className={styles.unassignedIntro}>
+                <div className={tableStyles.table}>
                     <p>
                         These boards currently do not belong to a forum
                         category. Assign them to a category or edit the board
@@ -99,19 +97,19 @@ export function ViewForumPanel({
                 </div>
 
                 {sortedUnassignedBoards.length > 0 ? (
-                    <div className={styles.forumTableContainer}>
-                        <table className={styles.unassignedTable}>
+                    <div className={tableStyles.tableWrapper}>
+                        <table className={tableStyles.table}>
                             <thead>
                             <tr>
                                 <th>Name</th>
                                 <th>Description</th>
-                                <th className={styles.forumStatisticColumn}>
+                                <th className={adminStyles.forumStatisticColumn}>
                                     Total Threads
                                 </th>
-                                <th className={styles.assignColumn}>
+                                <th className={adminStyles.assignColumn}>
                                     Assign Category
                                 </th>
-                                <th className={styles.forumActionsColumn}>
+                                <th className={adminStyles.forumActionsColumn}>
                                     Actions
                                 </th>
                             </tr>
@@ -128,7 +126,7 @@ export function ViewForumPanel({
                         </table>
                     </div>
                 ) : (
-                    <div className={styles.adminEmptyState}>
+                    <div className={tableStyles.tableEmptyCell}>
                         No unassigned boards.
                     </div>
                 )}

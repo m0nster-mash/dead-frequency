@@ -1,10 +1,7 @@
-import styles from "@/feature/forum/styles/forum.module.css";
+import forumStyles from "@/feature/forum/styles/forum.module.css";
 import Placeholder from "@shared/components/placeholder";
 import Link from "next/link";
 
-/**
- * TODO:: clean up styles
- */
 export type BoardDisplayItem = {
     id: string;
     name: string;
@@ -31,61 +28,61 @@ export function BoardDisplay({
                              }: BoardDisplayProps) {
     if (boards.length === 0) {
         return (
-            <div className={styles.empty}>
+            <div className={forumStyles.discussionEmpty}>
                 {emptyMessage}
             </div>
         );
     }
 
     return (
-        <div className={styles.boardList}>
+        <div className={forumStyles.boardList}>
             {boards.map((board) => (
                 <article key={board.id}
-                         className={styles.board}>
-                    <div className={styles.boardMain}>
+                         className={forumStyles.boardRow}>
+                    <div className={forumStyles.boardMain}>
                         <Link href={board.href}
-                              className={styles.boardName}>
+                              className={forumStyles.boardName}>
                             {board.name}
                         </Link>
 
-                        <p className={styles.boardDescription}>
+                        <p className={forumStyles.boardDescription}>
                             {board.description || "—"}
                         </p>
                     </div>
 
-                    <div className={styles.boardActivity}>
-                        <div className={styles.latestThread}>
-                            <span className={styles.label}>
+                    <div className={forumStyles.boardActivity}>
+                        <div className={forumStyles.latestThread}>
+                            <span className={forumStyles.metaLabel}>
                                 Latest thread
                             </span>
 
-                            <span className={styles.threadName}>
+                            <span className={forumStyles.threadName}>
                                 {board.latestThread?.name || <Placeholder text={"thread_name"}/>}
                             </span>
 
-                            <span className={styles.threadAuthor}>
+                            <span className={forumStyles.threadAuthor}>
                                 by{" "}
                                 {board.latestThread?.author || <Placeholder text={"author_name"}/>}
                             </span>
                         </div>
 
-                        <div className={styles.boardStats}>
-                            <div className={styles.stat}>
-                                <span className={styles.statValue}>
+                        <div className={forumStyles.boardStats}>
+                            <div className={forumStyles.stat}>
+                                <span className={forumStyles.statValue}>
                                     {board.threadTotal ?? <Placeholder text={"thread_total"}/>}
                                 </span>
 
-                                <span className={styles.statLabel}>
+                                <span className={forumStyles.metaLabel}>
                                     Threads
                                 </span>
                             </div>
 
-                            <div className={styles.stat}>
-                                <span className={styles.statValue}>
+                            <div className={forumStyles.stat}>
+                                <span className={forumStyles.statValue}>
                                     {board.postTotal ?? <Placeholder text={"post_total"}/>}
                                 </span>
 
-                                <span className={styles.statLabel}>
+                                <span className={forumStyles.metaLabel}>
                                     Posts
                                 </span>
                             </div>

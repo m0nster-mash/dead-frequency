@@ -1,10 +1,9 @@
 import {MainContentPanel} from "@/core/dashboard/components/panels/main-card";
 import {PostContentArea} from "@/feature/forum/components/post-content-area";
-import styles from "@/feature/forum/styles/forum.module.css";
+import forumStyles from "@/feature/forum/styles/forum.module.css";
+import buttonStyles from "@/shared/styles/buttons.module.css";
+import formStyles from "@/shared/styles/form.module.css";
 
-/**
- * TODO:: clean up styles
- */
 type CreateReplyPanelProps = {
     action: (formData: FormData) => void | Promise<void>;
     title?: string;
@@ -18,19 +17,19 @@ export function CreateReplyPanel({
                                  }: CreateReplyPanelProps) {
     return (
         <MainContentPanel title={title}>
-            <form className={styles.postForm}
+            <form className={forumStyles.postForm}
                   action={action}>
-                <div className={styles.field}>
+                <div className={formStyles.field}>
                     <label htmlFor="reply-body"
-                           className={styles.label}>
+                           className={formStyles.formLabel}>
                         Reply
                     </label>
                     <PostContentArea name="body" placeholder="Write your reply..."/>
                 </div>
 
-                <div className={styles.postFormActions}>
+                <div className={forumStyles.postFormActions}>
                     <button type="submit"
-                            className={styles.submit}>
+                            className={`${buttonStyles.btn} ${buttonStyles.btnPrimary}`}>
                         {submitLabel}
                     </button>
                 </div>

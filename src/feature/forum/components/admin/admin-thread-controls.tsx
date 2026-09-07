@@ -1,12 +1,12 @@
 "use client";
 
-// import styles from "@/feature/forum/styles/forum.module.css";
-import styles from "@/shared/styles/form.module.css";
+import adminStyles from "@/feature/forum/styles/admin.module.css";
+import buttonStyles from "@/shared/styles/buttons.module.css";
+import formStyles from "@/shared/styles/form.module.css";
+import modalStyles from "@/shared/styles/modal.module.css";
+import panelStyles from "@/shared/styles/panel.module.css";
 import Placeholder from "@shared/components/placeholder";
 
-/**
- * TODO:: clean up styles
- */
 type AdminThreadControlsProps = {
     threadId?: string;
     threadTitle?: string;
@@ -14,78 +14,78 @@ type AdminThreadControlsProps = {
 
 export function AdminThreadControls({threadId, threadTitle,}: AdminThreadControlsProps) {
     return (
-        <div className={styles.adminThreadControls}>
-            <div className={styles.adminResource}>
-                <span className={styles.adminResourceLabel}>
-                    Thread
+        <div>
+            <div className={panelStyles.panelPadded}>
+                <span className={modalStyles.modalHeader}>
+                    Thread:
                 </span>
 
-                <span className={styles.adminResourceName}>
+                <span className={modalStyles.modalDescription}>
                     {threadTitle || <Placeholder text={"THREAD_NAME"}/>}
                 </span>
             </div>
 
-            <div className={styles.adminControlSection}>
-                <span className={styles.adminSectionLabel}>
+            <div className={panelStyles.panelPadded}>
+                <span className={modalStyles.modalHeader}>
                     Thread status
                 </span>
 
-                <div className={styles.adminControlGrid}>
+                <div className={formStyles.formGrid}>
                     <button type="button"
-                            className={styles.adminControlButton}>
+                            className={`${buttonStyles.btn} ${buttonStyles.btnPrimary}`}>
                         <Placeholder text={"LOCK_THREAD"}/>
                     </button>
 
                     <button type="button"
-                            className={styles.adminControlButton}>
+                            className={`${buttonStyles.btn} ${buttonStyles.btnPrimary}`}>
                         <Placeholder text={"UNLOCK_THREAD"}/>
                     </button>
                 </div>
             </div>
 
-            <div className={styles.adminControlSection}>
-                <span className={styles.adminSectionLabel}>
+            <div className={panelStyles.panelPadded}>
+                <span className={modalStyles.modalHeader}>
                     Thread management
                 </span>
 
-                <div className={styles.adminControlGrid}>
+                <div className={formStyles.formGrid}>
                     <button type="button"
-                            className={styles.adminControlButton}>
+                            className={`${buttonStyles.btn} ${buttonStyles.btnPrimary}`}>
                         <Placeholder text={"MOVE_THREAD"}/>
                     </button>
 
                     <button type="button"
-                            className={styles.adminControlButton}>
+                            className={`${buttonStyles.btn} ${buttonStyles.btnPrimary}`}>
                         <Placeholder text={"PIN_THREAD"}/>
                     </button>
 
                     <button type="button"
-                            className={styles.adminControlButton}>
+                            className={`${buttonStyles.btn} ${buttonStyles.btnPrimary}`}>
                         <Placeholder text={"UNPIN_THREAD"}/>
                     </button>
                 </div>
             </div>
 
-            <div className={styles.adminControlSection}>
-                <span className={styles.adminSectionLabel}>
+            <div className={panelStyles.panelPadded}>
+                <span className={modalStyles.modalHeader}>
                     Moderation
                 </span>
 
-                <div className={styles.adminControlGrid}>
+                <div className={formStyles.formGrid}>
                     <button type="button"
-                            className={styles.adminControlButton}>
+                            className={`${buttonStyles.btn} ${buttonStyles.btnPrimary}`}>
                         <Placeholder text={"EDIT_THREAD"}/>
                     </button>
 
                     <button type="button"
-                            className={`${styles.adminControlButton} ${styles.adminControlButtonDanger}`}>
+                            className={`${`${buttonStyles.btn} ${buttonStyles.btnPrimary}`} ${adminStyles.adminControlButtonDanger}`}>
                         <Placeholder text={"DELETE_THREAD"}/>
                     </button>
                 </div>
             </div>
 
-            <div className={styles.adminControlFooter}>
-                <span className={styles.adminPlaceholderNote}>
+            <div className={panelStyles.panelPadded}>
+                <span className={modalStyles.modalDescription}>
                    <Placeholder text={"ADDITIONAL_THREAD_MODERATION_TOOLS"}/>
                 </span>
             </div>
