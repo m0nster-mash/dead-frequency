@@ -7,9 +7,6 @@ import {usePathname} from "next/navigation";
 import {JSX, ReactNode, useEffect, useState} from "react";
 
 /**
- * TODO:: clean up styles
- */
-/**
  * Structural definition for an individual navigation item anchor link.
  *
  * @property {string} href - Target URL or route pathname to navigate to.

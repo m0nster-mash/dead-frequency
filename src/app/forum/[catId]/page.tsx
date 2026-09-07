@@ -4,15 +4,11 @@ import {PageHeader} from "@/core/dashboard/components/panels/page-header";
 import {BoardDisplay} from "@/feature/forum/components/board-display";
 import {ForumStatsPanel} from "@/feature/forum/components/forum-stats-panel";
 import {getCategoryWithBoards} from "@/feature/forum/lib/queries";
-import styles from "@/feature/forum/styles/forum.module.css";
 import {BreadcrumbLabel} from "@/shared/components/breadcrumb-label";
 import Placeholder from "@shared/components/placeholder";
 import {notFound} from "next/navigation";
 import {JSX} from "react";
 
-/**
- * TODO:: clean up styles
- */
 /**
  * Properties for the ForumCategoryPage component.
  *
@@ -48,7 +44,7 @@ export default async function ForumCategoryPage({params}: PageProps): Promise<JS
     }));
 
     return (
-        <div className={styles.wrapper}>
+        <div>
             <BreadcrumbLabel segment={catId}
                              label={category.label}/>
 

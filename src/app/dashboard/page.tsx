@@ -5,9 +5,6 @@ import LoremIpsum from "@/shared/components/lorem-ipsum";
 import {JSX} from "react";
 
 /**
- * TODO:: clean up styles
- */
-/**
  * A page that serves as the root landing viewport for the dashboard.
  *
  * @returns {Promise<JSX.Element>} A promise resolving to the user workspace dashboard landing viewport.
@@ -35,15 +32,7 @@ export default async function DashboardPage(): Promise<JSX.Element> {
 
             <MainContentPanel title={"Example: Main Content Panel"}
                               id={"main-content-panel"}>
-                <p>
-                    This panel contains a title, a simple content area for any amount or kind of content, and a "return
-                    to home" arrow button at the bottom.
-                </p>
-                <p>
-                    Now, here's some filler text to pad the area:
-                </p>
-                <hr/>
-                <LoremIpsum length={3} regular={true}/>
+                <LoremIpsum length={5} regular={true}/>
             </MainContentPanel>
         </>
     );

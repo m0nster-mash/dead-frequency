@@ -8,7 +8,7 @@ import {desc, eq} from "drizzle-orm";
 import {JSX} from "react";
 
 /**
- * Tthe central moderation reports queue.
+ * The central moderation reports queue.
  *
  * @returns {Promise<JSX.Element>} A promise resolving to the administrative user reports moderation viewport.
  */

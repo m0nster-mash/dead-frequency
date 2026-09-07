@@ -1,21 +1,19 @@
 import {requireSession} from "@/core/auth/lib/require-session";
 import {MainContentPanel} from "@/core/dashboard/components/panels/main-card";
 import {PageHeader} from "@/core/dashboard/components/panels/page-header";
+import {ThreadAdminButton} from "@/feature/forum/components/admin/thread-admin-button";
 import {CreatePostPanel} from "@/feature/forum/components/create-post-panel";
 import {ForumStatsPanel} from "@/feature/forum/components/forum-stats-panel";
-import {ThreadAdminButton} from "@/feature/forum/components/admin/thread-admin-button";
 import {createThreadAction} from "@/feature/forum/lib/actions";
 import {getBoardWithThreads} from "@/feature/forum/lib/queries";
-import styles from "@/feature/forum/styles/forum.module.css";
+import forumStyles from "@/feature/forum/styles/forum.module.css";
 import {BreadcrumbLabel} from "@/shared/components/breadcrumb-label";
+import tableStyles from "@/shared/styles/tables.module.css";
 import Placeholder from "@shared/components/placeholder";
 import Link from "next/link";
 import {notFound} from "next/navigation";
 import {JSX} from "react";
 
-/**
- * TODO:: clean up styles
- */
 /**
  * Properties for the ForumBoardPage component.
  *
@@ -44,7 +42,7 @@ export default async function ForumBoardPage({params}: PageProps): Promise<JSX.E
     }
 
     return (
-        <div className={styles.wrapper}>
+        <div className={forumStyles.wrapper}>
 
             <BreadcrumbLabel segment={boardId}
                              label={board.label}/>
@@ -54,52 +52,52 @@ export default async function ForumBoardPage({params}: PageProps): Promise<JSX.E
                         subtitle={board.description || "Threads in this board"}/>
 
             <MainContentPanel title="Threads">
-                <div className={styles.threadList}>
+                <div className={forumStyles.threadList}>
                     {board.threads.map((thread) => (
-                        <article key={thread.id} className={styles.thread}>
-                            <div className={styles.threadMain}>
-                                <div className={styles.threadTitleRow}>
+                        <article key={thread.id} className={forumStyles.threadRow}>
+                            <div className={forumStyles.threadMain}>
+                                <div className={forumStyles.threadTitleRow}>
                                     {thread.pinned && (
-                                        <span className={styles.badge}>
+                                        <span className={tableStyles.badgeTag}>
                                             Pinned
                                         </span>
                                     )}
 
                                     <Link href={`/forum/${catId}/${boardId}/thread/${thread.id}`}
-                                          className={styles.threadTitle}>
+                                          className={forumStyles.threadTitle}>
                                         {thread.title}
                                     </Link>
 
                                     <ThreadAdminButton threadId={thread.id} threadTitle={thread.title}/>
                                 </div>
 
-                                <div className={styles.threadMeta}>
+                                <div className={forumStyles.threadMeta}>
                                     Started by{" "}
-                                    <span className={styles.threadAuthor}>
+                                    <span className={forumStyles.threadAuthor}>
                                         {thread.authorName || thread.authorEmail || "—"}
                                     </span>
                                 </div>
                             </div>
 
-                            <div className={styles.threadReplies}>
-                                <span className={styles.threadStatValue}>
+                            <div className={forumStyles.threadReplies}>
+                                <span className={forumStyles.threadStatValue}>
                                     {Math.max(0, thread.postCount - 1)}
                                 </span>
-                                <span className={styles.threadStatLabel}>
+                                <span className={`${forumStyles.metaLabel} ${forumStyles.metaLabelSm}`}>
                                     Replies
                                 </span>
                             </div>
 
-                            <div className={styles.threadActivity}>
-                                <span className={styles.threadStatLabel}>
+                            <div className={forumStyles.threadActivity}>
+                                <span className={`${forumStyles.metaLabel} ${forumStyles.metaLabelSm}`}>
                                     Last activity
                                 </span>
 
-                                <span className={styles.threadActivityUser}>
+                                <span className={forumStyles.threadActivityUser}>
                                     <Placeholder text={"LAST_USER_NAME"}/>
                                 </span>
 
-                                <span className={styles.threadActivityTime}>
+                                <span className={forumStyles.threadActivityTime}>
                                     {new Date(thread.lastPostAt).toLocaleString()}
                                 </span>
                             </div>
@@ -107,7 +105,7 @@ export default async function ForumBoardPage({params}: PageProps): Promise<JSX.E
                     ))}
 
                     {board.threads.length === 0 && (
-                        <div className={styles.empty}>
+                        <div className={forumStyles.discussionEmpty}>
                             No threads yet. Be the first to post.
                         </div>
                     )}

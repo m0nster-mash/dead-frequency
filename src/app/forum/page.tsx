@@ -4,13 +4,9 @@ import {PageHeader} from "@/core/dashboard/components/panels/page-header";
 import {BoardDisplay} from "@/feature/forum/components/board-display";
 import {ForumStatsPanel} from "@/feature/forum/components/forum-stats-panel";
 import {getForumHierarchy} from "@/feature/forum/lib/queries";
-import styles from "@/feature/forum/styles/forum.module.css";
 import Placeholder from "@shared/components/placeholder";
 import {JSX} from "react";
 
-/**
- * TODO:: clean up styles
- */
 /**
  * The central forum catalog directory landing view.
  *
@@ -21,8 +17,7 @@ export default async function ForumIndexPage(): Promise<JSX.Element> {
     const categories = await getForumHierarchy();
 
     return (
-        <div className={styles.wrapper}>
-
+        <div>
             <PageHeader eyebrow="Communication"
                         title="Forum"
                         subtitle="Browse categories and boards"/>

@@ -5,9 +5,6 @@ import {JSX} from "react";
 import DashboardPage from "./dashboard/page";
 
 /**
- * TODO:: clean up styles
- */
-/**
  * The root entry conditional router for the application.
  *
  * @returns {Promise<JSX.Element>} A promise resolving to the correct contextual landing viewport component stream.

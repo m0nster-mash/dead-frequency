@@ -7,9 +7,6 @@ import Link from "next/link";
 import {JSX, ReactNode} from "react";
 
 /**
- * TODO:: clean up styles
- */
-/**
  * Properties for the SidebarFrame component.
  *
  * @property {ReactNode} toggleButton - Interactive trigger element (an icon button) to toggle layout width.
@@ -34,8 +31,7 @@ export default function SidebarFrame({toggleButton, children}: SidebarFrameProps
     const {collapsed} = useSidebar();
 
     return (
-        <aside className={`${sidebarStyles.sidebar}${collapsed ? ` ${sidebarStyles.sidebarCollapsed}` : ""}`}
-               id="sidebar"
+        <aside id="sidebar"
                data-collapsed={collapsed}
                style={{width: "var(--current-sidebar-width)"}}>
             <div className={sidebarStyles.sidebarHeader}>

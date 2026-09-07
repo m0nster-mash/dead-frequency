@@ -1,8 +1,7 @@
 import {auth} from "@/core/auth";
 import {MainContentPanel} from "@/core/dashboard/components/panels/main-card";
 import {PageHeader} from "@/core/dashboard/components/panels/page-header";
-// import styles from "@/shared/styles/form-panel.module.css";
-import styles from "@/shared/styles/form.module.css";
+import formStyles from "@/shared/styles/form.module.css";
 import {role, userRole} from "@shared/communication/permissions/schema/permissions.schema";
 import {userTrust} from "@shared/communication/status/schema/status.schema";
 import {db} from "@shared/db/client";
@@ -11,9 +10,6 @@ import {headers} from "next/headers";
 import {notFound} from "next/navigation";
 import {JSX} from "react";
 
-/**
- * TODO:: clean up styles
- */
 /**
  * Properties for the PublicProfilePage component.
  *
@@ -69,20 +65,20 @@ export default async function PublicProfilePage({params}: PageProps): Promise<JS
             .limit(1);
 
     return (
-        <div className={styles.wrapper}>
+        <div>
             <PageHeader eyebrow={"Profile"}
                         title={user.name || user.email}
                         subtitle={roles.map((r) => r.label).join(", ") || "Member"}/>
 
             <MainContentPanel title={"Overview"}>
-                <dl className={styles.details}>
-                    <div className={styles.detailRow}>
-                        <dt className={styles.detailLabel}>Post count</dt>
-                        <dd className={styles.detailValue}>{trust?.postCount ?? 0}</dd>
+                <dl className={formStyles.detailList}>
+                    <div className={formStyles.detailRow}>
+                        <dt className={formStyles.detailLabel}>Post count</dt>
+                        <dd className={formStyles.detailValue}>{trust?.postCount ?? 0}</dd>
                     </div>
-                    <div className={styles.detailRow}>
-                        <dt className={styles.detailLabel}>Trust level</dt>
-                        <dd className={styles.detailValue}>{trust?.trustLevel ?? "new"}</dd>
+                    <div className={formStyles.detailRow}>
+                        <dt className={formStyles.detailLabel}>Trust level</dt>
+                        <dd className={formStyles.detailValue}>{trust?.trustLevel ?? "new"}</dd>
                     </div>
                 </dl>
 
