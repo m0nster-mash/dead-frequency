@@ -1,7 +1,9 @@
 "use client";
 
 import {authClient} from "@/core/auth/lib/auth-client";
-import styles from "@/shared/styles/form-panel.module.css";
+import buttonStyles from "@/shared/styles/buttons.module.css";
+import formStyles from "@/shared/styles/form.module.css";
+import modalStyles from "@/shared/styles/modal.module.css";
 import {useRouter} from "next/navigation";
 import {JSX, SubmitEvent, useState} from "react";
 
@@ -79,32 +81,32 @@ export function DeleteUserModal({
     }
 
     return (
-        <div className={styles.modalOverlay}
+        <div className={modalStyles.modalOverlay}
              role="presentation"
              onClick={onCloseAction}>
-            <div className={styles.modal}
+            <div className={modalStyles.modal}
                  role="dialog"
                  aria-modal="true"
                  aria-labelledby="delete-user-title"
                  onClick={(event) => event.stopPropagation()}>
 
                 <h2 id="delete-user-title"
-                    className={styles.modalTitle}>
+                    className={modalStyles.modalTitle}>
                     Delete user
                 </h2>
-                <p className={styles.modalDescription}>
+                <p className={modalStyles.modalDescription}>
                     Are you sure you want to delete{" "}
                     <strong>{userEmail}</strong>?
                     This cannot be undone.
                 </p>
 
-                <form className={styles.modalForm}
+                <form className={formStyles.form}
                       onSubmit={handleSubmit}>
-                    <div className={styles.modalField}>
-                        <label className={styles.modalLabel} htmlFor="confirm-email">
+                    <div className={formStyles.formField}>
+                        <label className={formStyles.formLabel} htmlFor="confirm-email">
                             Type <strong>{userEmail}</strong> to confirm
                         </label>
-                        <input className={styles.modalInput}
+                        <input className={formStyles.formInput}
                                id="confirm-email"
                                name="confirmEmail"
                                autoComplete="off"
@@ -113,17 +115,17 @@ export function DeleteUserModal({
                                required/>
                     </div>
 
-                    {error ? (<p className={styles.modalError}> {error} </p>) : null}
+                    {error ? (<p className={modalStyles.modalError}> {error} </p>) : null}
 
-                    <div className={styles.modalActions}>
+                    <div className={modalStyles.modalActions}>
                         <button type="button"
-                                className={styles.modalCancel}
+                                className={`${buttonStyles.btn} ${buttonStyles.btnSecondary}`}
                                 onClick={onCloseAction}
                                 disabled={loading}>
                             Cancel
                         </button>
                         <button type="submit"
-                                className={styles.modalSubmit}
+                                className={`${buttonStyles.btn} ${buttonStyles.btnDanger}`}
                                 disabled={!isConfirmed || loading}>
                             {loading ? "Deleting..." : "Delete user"}
                         </button>

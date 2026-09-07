@@ -1,5 +1,7 @@
 "use client";
-import styles from "@/shared/styles/content-panel.module.css";
+
+import cardStyles from "@/shared/styles/patterns/card.module.css";
+import tocStyles from "@/shared/styles/patterns/table-of-contents.module.css";
 import {JSX, useState} from "react";
 
 /**
@@ -42,46 +44,44 @@ export function PageHeader({eyebrow, title, subtitle, items = []}: PageHeaderPro
     const [isTocOpen, setIsTocOpen] = useState(false);
 
     return (
-        <header className={styles.contentHeader}>
-            <div className={styles.contentHeaderMain}>
+        <header className={cardStyles.cardIntro}>
+            <div className={cardStyles.cardIntroMain}>
                 <div>
-                    <p className={styles.eyebrow}>{eyebrow}</p>
-                    <h1>{title}</h1>
-                    <p className={styles.subtitle}>{subtitle}</p>
+                    <p className={cardStyles.cardEyebrow}>{eyebrow}</p>
+                    <h1 className={cardStyles.cardTitle}>{title}</h1>
+                    <p className={cardStyles.cardSubtitle}>{subtitle}</p>
                 </div>
             </div>
 
             {items.length > 0 && (
                 <>
-                    <div className={styles.contentHeaderTocToggle}>
-                        <button type="button"
-                                className={styles.tableOfContentsButton}
-                                onClick={() => setIsTocOpen((open) => !open)}
-                                aria-expanded={isTocOpen}
-                                aria-controls="page-table-of-contents">
-                            <span>Table of Contents</span>
-                            <span className={`${styles.tableOfContentsButtonIcon} ${isTocOpen
-                                ? styles.tableOfContentsButtonIconOpen
-                                : ""}`}
-                                  aria-hidden="true"> ↓ </span>
-                            {/* TODO:: replace ↓ with SVG */}
-                        </button>
-                    </div>
+                    <button type="button"
+                            className={tocStyles.tocToggle}
+                            onClick={() => setIsTocOpen((open) => !open)}
+                            aria-expanded={isTocOpen}
+                            aria-controls="page-table-of-contents">
+                        <span>Table of Contents</span>
+                        <span className={`${tocStyles.tocToggleIcon} ${isTocOpen ? tocStyles.tocToggleIconOpen : ""}`}
+                              aria-hidden="true">
+                            ↓
+                        </span>
+                    </button>
 
                     <div id="page-table-of-contents"
-                         className={isTocOpen
-                             ? `${styles.contentHeaderToc} ${styles.contentHeaderTocOpen}`
-                             : styles.contentHeaderToc}>
+                         className={isTocOpen ? `${tocStyles.tocPanel} ${tocStyles.tocPanelOpen}` : tocStyles.tocPanel}>
                         <nav aria-label="Table of contents">
-                            <p className={styles.contentHeaderTocTitle}> On this page </p>
-                            <ol className={styles.contentHeaderTocList}>
+                            <p className={tocStyles.tocTitle}>On this page</p>
+                            <ol className={tocStyles.tocList}>
                                 {items.map((item) => (
-                                    <li key={item.id} className={styles.contentHeaderTocItem}>
+                                    <li key={item.id} className={tocStyles.tocItem}>
                                         {/* Forces items to lose keyboard index focus thresholds (`-1`) when hidden to
                                             prevent invisible keyboard trap issues on focus trees. */}
                                         <a href={`#${item.id}`}
+                                           className={tocStyles.tocLink}
                                            tabIndex={isTocOpen ? 0 : -1}
-                                           onClick={() => setIsTocOpen(false)}> {item.label} </a>
+                                           onClick={() => setIsTocOpen(false)}>
+                                            {item.label}
+                                        </a>
                                     </li>
                                 ))}
                             </ol>

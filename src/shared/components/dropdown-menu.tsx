@@ -1,6 +1,6 @@
 "use client";
 
-import styles from "@/shared/styles/dropdown-menu.module.css";
+import dropdownStyles from "@/shared/styles/patterns/dropdown-menu.module.css";
 import Link from "next/link";
 import {JSX, ReactNode, useEffect, useRef, useState} from "react";
 
@@ -56,8 +56,8 @@ export function DropdownMenu({trigger, items, align = "end"}: DropdownMenuProps)
 
     // Resolves localized structural class names based on target horizontal boundary alignments
     const menuClassName = align === "start"
-        ? `${styles.dropdownMenu} ${styles.dropdownMenuStart}`
-        : `${styles.dropdownMenu} ${styles.dropdownMenuEnd}`;
+        ? `${dropdownStyles.dropdownMenu} ${dropdownStyles.dropdownMenuStart}`
+        : `${dropdownStyles.dropdownMenu} ${dropdownStyles.dropdownMenuEnd}`;
 
     // Manages dynamic window close traps following interface presentation states
     useEffect(() => {
@@ -92,9 +92,9 @@ export function DropdownMenu({trigger, items, align = "end"}: DropdownMenuProps)
     }, [open]);
 
     return (
-        <div className={styles.dropdown} ref={containerRef}>
+        <div className={dropdownStyles.dropdown} ref={containerRef}>
             <button type="button"
-                    className={styles.dropdownToggleButton}
+                    className={dropdownStyles.dropdownToggleButton}
                     aria-haspopup="menu"
                     aria-expanded={open}
                     onClick={() => setOpen((prev) => !prev)}>
@@ -105,16 +105,16 @@ export function DropdownMenu({trigger, items, align = "end"}: DropdownMenuProps)
                 <ul role="menu" className={menuClassName}>
                     {items.map((item, index) => {
                         if (item.type === "divider") {
-                            return <li key={index} role="separator" className={styles.dropdownDivider}/>;
+                            return <li key={index} role="separator" className={dropdownStyles.dropdownDivider}/>;
                         }
 
                         if (item.type === "header") {
-                            return <li key={index} className={styles.dropdownHeader}>{item.label}</li>;
+                            return <li key={index} className={dropdownStyles.dropdownHeader}>{item.label}</li>;
                         }
 
-                        const itemClass = `${styles.dropdownItem} ${item.danger
-                            ? styles.dropdownItemDanger
-                            : ""} ${item.disabled ? styles.dropdownItemDisabled : ""}`;
+                        const itemClass = `${dropdownStyles.dropdownItem} ${item.danger
+                            ? dropdownStyles.dropdownItemDanger
+                            : ""} ${item.disabled ? dropdownStyles.dropdownItemDisabled : ""}`;
 
                         return (
                             <li key={index}>

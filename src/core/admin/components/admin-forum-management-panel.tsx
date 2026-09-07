@@ -1,11 +1,16 @@
 "use client";
 
 import {MainContentPanel} from "@/core/dashboard/components/panels/main-card";
-import styles from "@/shared/styles/form-panel.module.css";
+import formStyles from "@/shared/styles/form.module.css";
+import buttonStyles from "@/shared/styles/buttons.module.css";
+import panelStyles from "@shared/styles/panel.module.css";
+import tableStyles from "@/shared/styles/tables.module.css";
 import {JSX, useMemo} from "react";
 
 /**
  * Structural definition of a forum board configuration record.
+ *
+ * TODO:: this panel is not currently in use anywhere. If it's no longer needed, delete it.
  *
  * @property {string} id - Unique identifier for the board.
  * @property {string} categoryId - Parent category reference identifier.
@@ -87,84 +92,84 @@ export function AdminForumManagementPanel(props: Props): JSX.Element {
     return (
         <>
             <MainContentPanel title={"Create Category"}>
-                <form className={styles.form} action={props.createCategoryAction}>
-                    <div className={styles.field}>
-                        <label className={styles.label}>Label</label>
-                        <input name="label" className={styles.input} required/>
+                <form className={formStyles.form} action={props.createCategoryAction}>
+                    <div className={formStyles.formField}>
+                        <label className={formStyles.formLabel}>Label</label>
+                        <input name="label" className={formStyles.formInput} required/>
                     </div>
-                    <div className={styles.field}>
-                        <label className={styles.label}>Sort Order</label>
-                        <input name="sortOrder" className={styles.input} type="number" defaultValue={0} required/>
+                    <div className={formStyles.formField}>
+                        <label className={formStyles.formLabel}>Sort Order</label>
+                        <input name="sortOrder" className={formStyles.formInput} type="number" defaultValue={0} required/>
                     </div>
-                    <button type="submit" className={styles.submit}>Add Category</button>
+                    <button type="submit" className={`${buttonStyles.btn} ${buttonStyles.btnPrimary}`}>Add Category</button>
                 </form>
             </MainContentPanel>
 
             <MainContentPanel title={"Reorder Categories"}>
-                <form className={styles.form} action={props.reorderCategoriesAction}>
-                    <div className={styles.field}>
-                        <label className={styles.label}>Category IDs in order (comma-separated)</label>
-                        <input name="orderedCategoryIds" className={styles.input} placeholder="cat-id-1,cat-id-2"
+                <form className={formStyles.form} action={props.reorderCategoriesAction}>
+                    <div className={formStyles.formField}>
+                        <label className={formStyles.formLabel}>Category IDs in order (comma-separated)</label>
+                        <input name="orderedCategoryIds" className={formStyles.formInput} placeholder="cat-id-1,cat-id-2"
                                required/>
                     </div>
-                    <button type="submit" className={styles.submit}>Apply Category Order</button>
+                    <button type="submit" className={`${buttonStyles.btn} ${buttonStyles.btnPrimary}`}>Apply Category Order</button>
                 </form>
             </MainContentPanel>
 
             {allCategories.map((category) => (
                 <MainContentPanel key={category.id} title={`Category: ${category.label}`}>
-                    <form className={styles.form} action={props.updateCategoryAction}>
+                    <form className={formStyles.form} action={props.updateCategoryAction}>
                         <input type="hidden" name="categoryId" value={category.id}/>
-                        <div className={styles.field}>
-                            <label className={styles.label}>Label</label>
-                            <input name="label" className={styles.input} defaultValue={category.label} required/>
+                        <div className={formStyles.formField}>
+                            <label className={formStyles.formLabel}>Label</label>
+                            <input name="label" className={formStyles.formInput} defaultValue={category.label} required/>
                         </div>
-                        <div className={styles.field}>
-                            <label className={styles.label}>Sort Order</label>
-                            <input name="sortOrder" className={styles.input} type="number"
+                        <div className={formStyles.formField}>
+                            <label className={formStyles.formLabel}>Sort Order</label>
+                            <input name="sortOrder" className={formStyles.formInput} type="number"
                                    defaultValue={category.sortOrder} required/>
                         </div>
-                        <button type="submit" className={styles.submit}>Update Category</button>
+                        <button type="submit" className={`${buttonStyles.btn} ${buttonStyles.btnPrimary}`}>Update Category</button>
                     </form>
 
-                    <form className={styles.form} action={props.deleteCategoryAction}>
+                    <form className={formStyles.form} action={props.deleteCategoryAction}>
                         <input type="hidden" name="categoryId" value={category.id}/>
-                        <button type="submit" className={styles.submit}>Delete Category</button>
+                        <button type="submit" className={`${buttonStyles.btn} ${buttonStyles.btnPrimary}`}>Delete Category</button>
                     </form>
 
                     <hr/>
 
-                    <h4 className={styles.sectionTitle}>Create Board in this Category</h4>
-                    <form className={styles.form} action={props.createBoardAction}>
+                    <h4 className={panelStyles.panelHeaderTitle}>Create Board in this Category</h4>
+                    <form className={formStyles.form} action={props.createBoardAction}>
                         <input type="hidden" name="categoryId" value={category.id}/>
-                        <div className={styles.field}>
-                            <label className={styles.label}>Label</label>
-                            <input name="label" className={styles.input} required/>
+                        <div className={formStyles.formField}>
+                            <label className={formStyles.formLabel}>Label</label>
+                            <input name="label" className={formStyles.formInput} required/>
                         </div>
-                        <div className={styles.field}>
-                            <label className={styles.label}>Description</label>
-                            <input name="description" className={styles.input}/>
+                        <div className={formStyles.formField}>
+                            <label className={formStyles.formLabel}>Description</label>
+                            <input name="description" className={formStyles.formInput}/>
                         </div>
-                        <div className={styles.field}>
-                            <label className={styles.label}>Sort Order</label>
-                            <input name="sortOrder" className={styles.input} type="number" defaultValue={0} required/>
+                        <div className={formStyles.formField}>
+                            <label className={formStyles.formLabel}>Sort Order</label>
+                            <input name="sortOrder" className={formStyles.formInput} type="number" defaultValue={0} required/>
                         </div>
-                        <button type="submit" className={styles.submit}>Add Board</button>
+                        <button type="submit" className={`${buttonStyles.btn} ${buttonStyles.btnPrimary}`}>Add Board</button>
                     </form>
 
-                    <h4 className={styles.sectionTitle}>Reorder Boards in this Category</h4>
-                    <form className={styles.form} action={props.reorderBoardsAction}>
+                    <h4 className={panelStyles.panelHeaderTitle}>Reorder Boards in this Category</h4>
+                    <form className={formStyles.form} action={props.reorderBoardsAction}>
                         <input type="hidden" name="categoryId" value={category.id}/>
-                        <div className={styles.field}>
-                            <label className={styles.label}>Board IDs in order (comma-separated)</label>
-                            <input name="orderedBoardIds" className={styles.input} placeholder="board-id-1,board-id-2"
+                        <div className={formStyles.formField}>
+                            <label className={formStyles.formLabel}>Board IDs in order (comma-separated)</label>
+                            <input name="orderedBoardIds" className={formStyles.formInput} placeholder="board-id-1,board-id-2"
                                    required/>
                         </div>
-                        <button type="submit" className={styles.submit}>Apply Board Order</button>
+                        <button type="submit" className={`${buttonStyles.btn} ${buttonStyles.btnPrimary}`}>Apply Board Order</button>
                     </form>
 
-                    <div className={styles.tableWrapper}>
-                        <table className={styles.table}>
+                    <div className={tableStyles.tableWrapper}>
+                        <table className={tableStyles.table}>
                             <thead>
                             <tr>
                                 <th>Label</th>
@@ -180,45 +185,45 @@ export function AdminForumManagementPanel(props: Props): JSX.Element {
                                     <td>{board.description || "—"}</td>
                                     <td>{board.sortOrder}</td>
                                     <td>
-                                        <form className={styles.form} action={props.updateBoardAction}>
+                                        <form className={formStyles.form} action={props.updateBoardAction}>
                                             <input type="hidden" name="boardId" value={board.id}/>
                                             <input type="hidden" name="categoryId" value={category.id}/>
-                                            <input name="label" className={styles.input} defaultValue={board.label}
+                                            <input name="label" className={formStyles.formInput} defaultValue={board.label}
                                                    required/>
-                                            <input name="description" className={styles.input}
+                                            <input name="description" className={formStyles.formInput}
                                                    defaultValue={board.description ?? ""}/>
-                                            <input name="sortOrder" className={styles.input} type="number"
+                                            <input name="sortOrder" className={formStyles.formInput} type="number"
                                                    defaultValue={board.sortOrder} required/>
-                                            <button type="submit" className={styles.submit}>Update</button>
+                                            <button type="submit" className={`${buttonStyles.btn} ${buttonStyles.btnPrimary}`}>Update</button>
                                         </form>
 
-                                        <form className={styles.form} action={props.deleteBoardAction}>
+                                        <form className={formStyles.form} action={props.deleteBoardAction}>
                                             <input type="hidden" name="boardId" value={board.id}/>
-                                            <button type="submit" className={styles.submit}>Delete</button>
+                                            <button type="submit" className={`${buttonStyles.btn} ${buttonStyles.btnPrimary}`}>Delete</button>
                                         </form>
 
-                                        <form className={styles.form} action={props.removeBoardFromCategoryAction}>
+                                        <form className={formStyles.form} action={props.removeBoardFromCategoryAction}>
                                             <input type="hidden" name="boardId" value={board.id}/>
-                                            <button type="submit" className={styles.submit}>Remove from Category
+                                            <button type="submit" className={`${buttonStyles.btn} ${buttonStyles.btnPrimary}`}>Remove from Category
                                             </button>
                                         </form>
 
-                                        <form className={styles.form} action={props.moveBoardAction}>
+                                        <form className={formStyles.form} action={props.moveBoardAction}>
                                             <input type="hidden" name="boardId" value={board.id}/>
-                                            <select name="targetCategoryId" className={styles.input}
+                                            <select name="targetCategoryId" className={formStyles.formInput}
                                                     defaultValue={category.id}>
                                                 {allCategories.map((cat) => (
                                                     <option key={cat.id} value={cat.id}>{cat.label}</option>
                                                 ))}
                                             </select>
-                                            <button type="submit" className={styles.submit}>Move Board</button>
+                                            <button type="submit" className={`${buttonStyles.btn} ${buttonStyles.btnPrimary}`}>Move Board</button>
                                         </form>
                                     </td>
                                 </tr>
                             ))}
                             {category.boards.length === 0 && (
                                 <tr>
-                                    <td colSpan={4} className={styles.tableEmpty}>No boards in this category.</td>
+                                    <td colSpan={4} className={tableStyles.tableEmptyCell}>No boards in this category.</td>
                                 </tr>
                             )}
                             </tbody>

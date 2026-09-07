@@ -1,12 +1,13 @@
 import {AdminPostingStatusForm} from "@/core/admin/components/admin-posting-status-form";
 import {applyPostingStatusAction} from "@/core/admin/lib/actions";
-import {auth} from "@core/auth";
 import {requireSession} from "@/core/auth/lib/require-session";
 import {requireUser} from "@/core/auth/lib/require-user";
 import {MainContentPanel} from "@/core/dashboard/components/panels/main-card";
 import {PageHeader} from "@/core/dashboard/components/panels/page-header";
+import formStyle from "@/shared/styles/form.module.css";
+import {auth} from "@core/auth";
 import {BreadcrumbLabel} from "@shared/components/breadcrumb-label";
-import styles from "@shared/styles/form-panel.module.css";
+import buttonStyles from "@shared/styles/buttons.module.css";
 import EditIcon from "@shared/svg/bootstrap-edit-icon.svg";
 import {headers} from "next/headers";
 import Link from "next/link";
@@ -47,13 +48,12 @@ export default async function AdminUserDetailsPage({params}: PageProps): Promise
     const requestHeaders = await headers();
     await requireSession({role: "admin"});
 
-    let user;
     let sessions: Array<{
         createdAt: string | Date;
         updatedAt?: string | Date | null
     }> = [];
 
-    user = await requireUser(userId, {
+    const user = await requireUser(userId, {
         headers: requestHeaders,
         context: "admin/details",
     });
@@ -103,7 +103,7 @@ export default async function AdminUserDetailsPage({params}: PageProps): Promise
     ];
 
     return (
-        <div className={styles.wrapper}>
+        <div>
             <BreadcrumbLabel segment={userId} label={user.name ?? undefined}/>
 
             <PageHeader eyebrow={"Viewing Profile Details For..."}
@@ -111,12 +111,12 @@ export default async function AdminUserDetailsPage({params}: PageProps): Promise
                         subtitle={"User details"}/>
 
             <MainContentPanel title={"User Details"}>
-                <section className={styles.section}>
-                    <dl className={styles.details}>
+                <section>
+                    <dl className={formStyle.detailList}>
                         {details.map((item) => (
-                            <div key={item.label} className={styles.detailRow}>
-                                <dt className={styles.detailLabel}> {item.label} </dt>
-                                <dd className={styles.detailValue}> {item.value} </dd>
+                            <div key={item.label} className={formStyle.detailRow}>
+                                <dt className={formStyle.detailLabel}> {item.label} </dt>
+                                <dd className={formStyle.detailValue}> {item.value} </dd>
                             </div>
                         ))}
                     </dl>
@@ -124,8 +124,9 @@ export default async function AdminUserDetailsPage({params}: PageProps): Promise
             </MainContentPanel>
 
             <MainContentPanel title={"Admin Actions"}>
-                <div className={styles.actions}>
-                    <Link href={`/admin/users/${user.id}/edit`} className={styles.submit}>
+                <div className={formStyle.formActions}>
+                    <Link href={`/admin/users/${user.id}/edit`}
+                          className={`${buttonStyles.btn} ${buttonStyles.btnPrimary}`}>
                         <EditIcon/> Edit user
                     </Link>
                 </div>

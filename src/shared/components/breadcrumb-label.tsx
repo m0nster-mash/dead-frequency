@@ -1,6 +1,6 @@
 "use client";
 
-import {useBreadcrumbLabel} from "@shared/components/breadcrumbs-context";
+import {useBreadcrumbLabel} from "@/shared/components/breadcrumbs-context";
 
 /**
  * Properties for the BreadcrumbLabel component.

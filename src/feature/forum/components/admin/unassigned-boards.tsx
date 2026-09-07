@@ -1,6 +1,9 @@
 import {ForumBoard, ForumCategory} from "@/feature/forum/components/admin/view-category-content";
-import styles from "@/feature/forum/styles/admin.module.css";
+
+import adminStyles from "@/feature/forum/styles/admin.module.css";
 import Placeholder from "@/shared/components/placeholder";
+import buttonStyles from "@/shared/styles/buttons.module.css";
+import formStyles from "@/shared/styles/form.module.css";
 import Link from "next/link";
 import {JSX} from "react";
 
@@ -15,33 +18,33 @@ type Props = {
  */
 export function UnassignedBoard({board, categories, assignCategoryAction}: Props): JSX.Element {
     return (
-        <tr className={styles.unassignedBoardRow}>
+        <tr className={adminStyles.unassignedBoardRow}>
             <td>
-                <div className={styles.unassignedBoardName}>
+                <div className={adminStyles.unassignedBoardName}>
                     {board.label}
                 </div>
             </td>
 
             <td>
-                <div className={styles.unassignedBoardDescription}>
+                <div className={adminStyles.unassignedBoardDescription}>
                     {board.description || "—"}
                 </div>
             </td>
 
-            <td className={styles.forumStatisticCell}>
+            <td className={adminStyles.forumStatisticCell}>
                 <Placeholder text={"BOARD_TOTAL_THREADS"}/>
             </td>
 
             <td>
                 {assignCategoryAction ? (
                     <form action={assignCategoryAction}
-                          className={styles.assignCategoryForm}>
+                          className={adminStyles.assignCategoryForm}>
                         <input type="hidden"
                                name="boardId"
                                value={board.id}/>
 
                         <select name="categoryId"
-                                className={styles.adminInput}
+                                className={formStyles.formInput}
                                 defaultValue=""
                                 required>
                             <option value="" disabled>
@@ -55,7 +58,7 @@ export function UnassignedBoard({board, categories, assignCategoryAction}: Props
                             ))}
                         </select>
 
-                        <button type="submit" className={styles.adminPrimaryButton}>
+                        <button type="submit" className={`${buttonStyles.btn} ${buttonStyles.btnPrimary}`}>
                             Assign
                         </button>
                     </form>
@@ -64,8 +67,8 @@ export function UnassignedBoard({board, categories, assignCategoryAction}: Props
                 )}
             </td>
 
-            <td className={styles.forumActionCell}>
-                <Link href={`/admin/forum/boards/${board.id}`} className={styles.forumEditButton}>
+            <td className={adminStyles.forumActionCell}>
+                <Link href={`/admin/forum/boards/${board.id}`} className={adminStyles.forumEditButton}>
                     Edit
                 </Link>
             </td>

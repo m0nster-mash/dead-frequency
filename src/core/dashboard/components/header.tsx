@@ -1,7 +1,8 @@
 import {ThemeToggle} from "@/app/components/theme-toggle";
 import Breadcrumbs from "@/core/dashboard/components/breadcrumbs";
 import BellIcon from "@/shared/svg/bootstrap-bell-icon.svg";
-import styles from "@shared/styles/dashboard.module.css";
+import sidebarStyles from "@/shared/styles/patterns/sidebar.module.css";
+import buttonStyles from "@shared/styles/buttons.module.css";
 import {JSX} from "react";
 
 /**
@@ -12,16 +13,16 @@ import {JSX} from "react";
 export default async function Header(): Promise<JSX.Element> {
 
     return (
-        <header className={styles.topbar}>
-            <div className={styles.topbarLeft}>
+        <header className={sidebarStyles.topbar}>
+            <div className={sidebarStyles.topbarLeft}>
                 <Breadcrumbs/>
             </div>
 
-            <div className={styles.topbarRight}>
+            <div className={sidebarStyles.topbarRight}>
                 <ThemeToggle/>
-                <button className={`${styles.iconButton} ${styles.notificationButton}`} aria-label="Notifications">
+                <button className={`${buttonStyles.iconBtn} ${buttonStyles.iconBtnFilled} ${sidebarStyles.notificationButton}`} aria-label="Notifications">
                     <BellIcon/>
-                    <span className={styles.notificationDot}></span>
+                    <span className={sidebarStyles.notificationDot}></span>
                 </button>
             </div>
         </header>

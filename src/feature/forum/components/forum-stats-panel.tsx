@@ -1,4 +1,6 @@
-import styles from "@/feature/forum/styles/forum.module.css";
+import forumStyles from "@/feature/forum/styles/forum.module.css";
+import panelStyles from "@/shared/styles/panel.module.css";
+import cardStyles from "@/shared/styles/patterns/card.module.css";
 import {ReactNode} from "react";
 
 export type ForumStat = {
@@ -27,43 +29,43 @@ export function ForumStatsPanel({
                                     latestActivity,
                                 }: ForumStatsPanelProps) {
     return (
-        <section className={styles.forumSummary}>
-            <div className={styles.summaryHeader}>
+        <section className={`${panelStyles.panel} ${panelStyles.panelPadded} ${panelStyles.panelRaised}`}>
+            <div className={cardStyles.cardIntro}>
                 <div>
-                    <span className={styles.summaryEyebrow}>
+                    <span className={cardStyles.cardEyebrow}>
                         {eyebrow}
                     </span>
 
-                    <h2 className={styles.summaryTitle}>
+                    <h2 className={cardStyles.cardTitleCompact}>
                         {title}
                     </h2>
                 </div>
             </div>
 
-            <div className={styles.summaryGrid}>
+            <div className={forumStyles.summaryGrid}>
                 {stats.map((stat) => (
                     <div key={stat.label}
-                         className={styles.summaryStat}>
-                        <span className={styles.summaryValue}>
+                         className={forumStyles.summaryStat}>
+                        <span className={forumStyles.summaryValue}>
                             {stat.value}
                         </span>
 
-                        <span className={styles.summaryLabel}>
+                        <span className={forumStyles.metaLabel}>
                             {stat.label}
                         </span>
                     </div>
                 ))}
 
-                <div className={styles.summaryRecent}>
-                    <span className={styles.summaryLabel}>
+                <div className={forumStyles.summaryRecent}>
+                    <span className={forumStyles.metaLabel}>
                         {latestActivity.label || "Latest activity"}
                     </span>
 
-                    <span className={styles.recentThread}>
+                    <span className={forumStyles.recentThread}>
                         {latestActivity.title}
                     </span>
 
-                    <span className={styles.recentMeta}>
+                    <span className={forumStyles.recentMeta}>
                         Last post by {latestActivity.user} ·{" "}
                         {latestActivity.time}
                     </span>

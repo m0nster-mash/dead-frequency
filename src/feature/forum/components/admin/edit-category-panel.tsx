@@ -2,8 +2,11 @@
 
 import {MainContentPanel} from "@/core/dashboard/components/panels/main-card";
 import {ForumCategory, ViewCategoryContent,} from "@/feature/forum/components/admin/view-category-content";
-import styles from "@/feature/forum/styles/admin.module.css";
+import adminStyles from "@/feature/forum/styles/admin.module.css";
 import Placeholder from "@/shared/components/placeholder";
+import buttonStyles from "@/shared/styles/buttons.module.css";
+import formStyles from "@/shared/styles/form.module.css";
+import tableStyles from "@/shared/styles/tables.module.css";
 import {JSX, useMemo, useState} from "react";
 
 type Props = {
@@ -41,15 +44,15 @@ export function EditCategoryPanel({
     );
 
     return (
-        <div className={styles.categoryEditor}>
+        <div className={adminStyles.categoryEditor}>
             <MainContentPanel title={"Edit Category"}>
-                <div className={styles.adminField}>
-                    <label className={styles.adminLabel} htmlFor="edit-category-select">
+                <div className={formStyles.formField}>
+                    <label className={formStyles.formLabel} htmlFor="edit-category-select">
                         Category
                     </label>
 
                     <select id="edit-category-select"
-                            className={styles.adminInput}
+                            className={formStyles.formInput}
                             value={selectedCategoryId}
                             onChange={(event) =>
                                 setSelectedCategoryId(event.target.value)}>
@@ -68,49 +71,49 @@ export function EditCategoryPanel({
 
             {!selectedCategory ? (
                 <MainContentPanel title={"Category"}>
-                    <div className={styles.adminEmptyState}>
+                    <div className={tableStyles.tableEmptyCell}>
                         Select a category to begin editing.
                     </div>
                 </MainContentPanel>
             ) : (
                 <>
                     <MainContentPanel title={"Category Information"}>
-                        <form className={styles.adminForm}
+                        <form className={formStyles.form}
                               action={updateCategoryAction}>
                             <input type="hidden"
                                    name="categoryId"
                                    value={selectedCategory.id}/>
 
-                            <div className={styles.adminFormGrid}>
-                                <div className={styles.adminField}>
-                                    <label className={styles.adminLabel} htmlFor="edit-category-label">
+                            <div className={formStyles.formGrid}>
+                                <div className={formStyles.formField}>
+                                    <label className={formStyles.formLabel} htmlFor="edit-category-label">
                                         Label
                                     </label>
 
                                     <input id="edit-category-label"
                                            name="label"
                                            type="text"
-                                           className={styles.adminInput}
+                                           className={formStyles.formInput}
                                            defaultValue={selectedCategory.label}
                                            required/>
                                 </div>
 
-                                <div className={styles.adminField}>
-                                    <label className={styles.adminLabel}
+                                <div className={formStyles.formField}>
+                                    <label className={formStyles.formLabel}
                                            htmlFor="edit-category-sort-order">
                                         Sort Order
                                     </label>
 
                                     <input id="edit-category-sort-order"
                                            name="sortOrder"
-                                           className={styles.adminInput}
+                                           className={formStyles.formInput}
                                            type="number"
                                            defaultValue={selectedCategory.sortOrder}
                                            required/>
                                 </div>
 
-                                <div className={styles.adminField}>
-                                    <label className={styles.adminLabel}>
+                                <div className={formStyles.formField}>
+                                    <label className={formStyles.formLabel}>
                                         Description
                                     </label>
 
@@ -118,15 +121,15 @@ export function EditCategoryPanel({
                                 </div>
                             </div>
 
-                            <div className={styles.adminFormActions}>
+                            <div className={formStyles.formActions}>
                                 <button type="submit"
-                                        className={styles.adminPrimaryButton}>
+                                        className={`${buttonStyles.btn} ${buttonStyles.btnPrimary}`}>
                                     Update
                                 </button>
 
                                 <button type="submit"
                                         formAction={deleteCategoryAction}
-                                        className={styles.adminDangerButton}>
+                                        className={`${buttonStyles.btn} ${buttonStyles.btnDanger}`}>
                                     Delete
                                 </button>
                             </div>
@@ -134,33 +137,33 @@ export function EditCategoryPanel({
                     </MainContentPanel>
 
                     <MainContentPanel title={"Category Settings"}>
-                        <div className={styles.adminPlaceholderGrid}>
-                            <div className={styles.adminPlaceholderField}>
-                                <span className={styles.adminLabel}>
+                        <div>
+                            <div>
+                                <span className={formStyles.formLabel}>
                                     Visibility
                                 </span>
 
                                 <Placeholder text={"CATEGORY_VISIBILITY"}/>
                             </div>
 
-                            <div className={styles.adminPlaceholderField}>
-                                <span className={styles.adminLabel}>
+                            <div>
+                                <span className={formStyles.formLabel}>
                                     Permissions
                                 </span>
 
                                 <Placeholder text={"CATEGORY_PERMISSIONS"}/>
                             </div>
 
-                            <div className={styles.adminPlaceholderField}>
-                                <span className={styles.adminLabel}>
+                            <div>
+                                <span className={formStyles.formLabel}>
                                     Posting Rules
                                 </span>
 
                                 <Placeholder text={"CATEGORY_POSTING_RULES"}/>
                             </div>
 
-                            <div className={styles.adminPlaceholderField}>
-                                <span className={styles.adminLabel}>
+                            <div>
+                                <span className={formStyles.formLabel}>
                                     Moderation Settings
                                 </span>
 
@@ -170,22 +173,22 @@ export function EditCategoryPanel({
                     </MainContentPanel>
 
                     <MainContentPanel title={"View Category"}>
-                        <div className={styles.forumTableWrapper}>
-                            <table className={styles.forumTable}>
+                        <div className={tableStyles.tableWrapper}>
+                            <table className={tableStyles.table}>
                                 <thead>
                                 <tr>
-                                    <th className={styles.forumOrderColumn}>
+                                    <th className={adminStyles.forumOrderColumn}>
                                         Order
                                     </th>
                                     <th>Name</th>
                                     <th>Description</th>
-                                    <th className={styles.forumStatisticColumn}>
+                                    <th className={adminStyles.forumStatisticColumn}>
                                         Total Threads
                                     </th>
-                                    <th className={styles.forumStatisticColumn}>
+                                    <th className={adminStyles.forumStatisticColumn}>
                                         Total Posts
                                     </th>
-                                    <th className={styles.forumStatisticColumn}>
+                                    <th className={adminStyles.forumStatisticColumn}>
                                         Actions
                                     </th>
                                 </tr>
@@ -199,25 +202,25 @@ export function EditCategoryPanel({
                     </MainContentPanel>
 
                     <MainContentPanel title={"Category Statistics"}>
-                        <div className={styles.adminPlaceholderGrid}>
-                            <div className={styles.adminPlaceholderField}>
-                                <span className={styles.adminLabel}>
+                        <div>
+                            <div>
+                                <span className={formStyles.formLabel}>
                                     Total Threads
                                 </span>
 
                                 <Placeholder text={"CATEGORY_TOTAL_THREADS"}/>
                             </div>
 
-                            <div className={styles.adminPlaceholderField}>
-                                <span className={styles.adminLabel}>
+                            <div>
+                                <span className={formStyles.formLabel}>
                                     Total Posts
                                 </span>
 
                                 <Placeholder text={"CATEGORY_TOTAL_POSTS"}/>
                             </div>
 
-                            <div className={styles.adminPlaceholderField}>
-                                <span className={styles.adminLabel}>
+                            <div>
+                                <span className={formStyles.formLabel}>
                                     Last Activity
                                 </span>
                                 <Placeholder text={"CATEGORY_LAST_ACTIVITY"}/>

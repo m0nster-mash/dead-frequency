@@ -3,7 +3,6 @@ import {requireSession} from "@/core/auth/lib/require-session";
 import {requireUser} from "@/core/auth/lib/require-user";
 import {PageHeader} from "@/core/dashboard/components/panels/page-header";
 import {BreadcrumbLabel} from "@shared/components/breadcrumb-label";
-import styles from "@shared/styles/form-panel.module.css";
 import {headers} from "next/headers";
 import {JSX} from "react";
 
@@ -36,7 +35,7 @@ export default async function AdminEditUserPage({params}: PageProps): Promise<JS
     });
 
     return (
-        <div className={styles.wrapper}>
+        <div>
             <BreadcrumbLabel segment={userId} label={user.name ?? undefined}/>
 
             <PageHeader eyebrow={"Viewing Profile Details For..."}

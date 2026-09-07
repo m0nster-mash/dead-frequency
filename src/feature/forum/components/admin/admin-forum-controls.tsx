@@ -1,8 +1,8 @@
 "use client";
 
-import styles from "@/feature/forum/styles/forum.module.css";
-import React, {ReactNode, useEffect, useRef} from "react";
+import modalStyles from "@/shared/styles/modal.module.css";
 import CloseIcon from "@shared/svg/bootstrap-close-icon.svg";
+import React, {ReactNode, useEffect, useRef} from "react";
 
 export type AdminForumControlType =
     | "thread"
@@ -55,31 +55,30 @@ export function AdminForumControls({
 
     return (
         <dialog ref={dialogRef}
-                className={styles.adminModal}
                 onCancel={handleClose}
                 onClose={handleClose}
                 onClick={handleBackdropClick}>
-            <div className={styles.adminModalContent}>
-                <div className={styles.adminModalHeader}>
+            <div>
+                <div className={modalStyles.modalHeader}>
                     <div>
-                        <span className={styles.adminModalEyebrow}>
+                        <span className={modalStyles.modalEyebrow}>
                             Forum Administration
                         </span>
 
-                        <h2 className={styles.adminModalTitle}>
+                        <h2 className={modalStyles.modalTitle}>
                             {getControlTitle(type)}
                         </h2>
                     </div>
 
                     <button type="button"
-                            className={styles.adminModalClose}
+                            className={modalStyles.modalCloseButton}
                             onClick={handleClose}
                             aria-label="Close administration controls">
-                        <CloseIcon />
+                        <CloseIcon/>
                     </button>
                 </div>
 
-                <div className={styles.adminModalBody}>
+                <div className={modalStyles.modalBody}>
                     {children}
                 </div>
             </div>

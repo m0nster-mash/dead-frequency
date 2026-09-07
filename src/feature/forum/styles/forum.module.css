@@ -1,13 +1,20 @@
-.wrapper {
+/* =========================================================
+   FORUM
+   ========================================================= */
+
+/* -----------------------------------------------------------
+   LAYOUT
+   ----------------------------------------------------------- */
+.forumWrapper {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: var(--size-space-6);
 }
 
 .categories {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: var(--size-space-6);
 }
 
 .boardList {
@@ -15,20 +22,23 @@
     flex-direction: column;
 }
 
-.board {
+/* -----------------------------------------------------------
+   BOARD LIST ROW
+   ----------------------------------------------------------- */
+.boardRow {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(320px, 1.2fr);
-    gap: 2rem;
+    gap: var(--size-space-5);
     align-items: center;
-    padding: 1.25rem 0;
-    border-bottom: 1px solid var(--color-border, rgba(255, 255, 255, 0.08));
+    padding: var(--size-space-4) 0;
+    border-bottom: 1px solid var(--color-border);
 }
 
-.board:first-child {
+.boardRow:first-child {
     padding-top: 0;
 }
 
-.board:last-child {
+.boardRow:last-child {
     padding-bottom: 0;
     border-bottom: 0;
 }
@@ -39,12 +49,12 @@
 
 .boardName {
     display: inline-block;
-    color: var(--color-text-primary, inherit);
-    font-size: 1rem;
+    color: var(--color-text-primary);
+    font-size: var(--font-size-md);
     font-weight: 600;
     line-height: 1.4;
     text-decoration: none;
-    transition: opacity 0.15s ease;
+    transition: opacity var(--transition-fast);
 }
 
 .boardName:hover {
@@ -52,16 +62,16 @@
 }
 
 .boardDescription {
-    margin: 0.35rem 0 0;
-    color: var(--color-text-secondary, #888);
-    font-size: 0.875rem;
+    margin: var(--size-space-1) 0 0;
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
     line-height: 1.5;
 }
 
 .boardActivity {
     display: grid;
     grid-template-columns: minmax(0, 1fr) auto;
-    gap: 1.5rem;
+    gap: var(--size-space-5);
     align-items: center;
 }
 
@@ -72,21 +82,10 @@
     gap: 0.15rem;
 }
 
-.label,
-.statLabel,
-.summaryLabel {
-    color: var(--color-text-muted, #777);
-    font-size: 0.7rem;
-    font-weight: 600;
-    letter-spacing: 0.06em;
-    line-height: 1.3;
-    text-transform: uppercase;
-}
-
 .threadName {
     overflow: hidden;
-    color: var(--color-text-primary, inherit);
-    font-size: 0.875rem;
+    color: var(--color-text-primary);
+    font-size: var(--font-size-sm);
     font-weight: 500;
     line-height: 1.4;
     text-overflow: ellipsis;
@@ -94,14 +93,14 @@
 }
 
 .threadAuthor {
-    color: var(--color-text-secondary, #888);
-    font-size: 0.75rem;
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-xs);
     line-height: 1.4;
 }
 
 .boardStats {
     display: flex;
-    gap: 1.5rem;
+    gap: var(--size-space-5);
     flex-shrink: 0;
 }
 
@@ -113,172 +112,56 @@
 }
 
 .statValue {
-    color: var(--color-text-primary, inherit);
+    color: var(--color-text-primary);
     font-size: 0.95rem;
     font-weight: 600;
     line-height: 1.3;
 }
 
-.statLabel {
-    font-size: 0.65rem;
+.boardListEmpty {
+    padding: var(--size-space-2) 0;
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
 }
 
-.empty {
-    padding: 0.5rem 0;
-    color: var(--color-text-muted, #777);
-    font-size: 0.875rem;
-}
-
-/* Forum summary */
-
-.forumSummary {
-    padding: 1.5rem;
-    border: 1px solid var(--color-border, rgba(255, 255, 255, 0.08));
-    border-radius: 0.75rem;
-    background: var(--color-surface-raised, rgba(255, 255, 255, 0.025));
-}
-
-.summaryHeader {
-    margin-bottom: 1.5rem;
-}
-
-.summaryEyebrow {
-    display: block;
-    margin-bottom: 0.25rem;
-    color: var(--color-text-muted, #777);
-    font-size: 0.7rem;
+/* -----------------------------------------------------------
+   META LABELS
+   ----------------------------------------------------------- */
+.metaLabel {
+    color: var(--color-text-muted);
+    font-size: var(--font-size-2xs);
     font-weight: 600;
-    letter-spacing: 0.06em;
+    letter-spacing: var(--tracking-wide);
+    line-height: 1.3;
     text-transform: uppercase;
 }
 
-.summaryTitle {
-    margin: 0;
-    color: var(--color-text-primary, inherit);
-    font-size: 1rem;
-    font-weight: 600;
-    line-height: 1.4;
+.metaLabelSm {
+    font-size: 0.65rem;
 }
 
-.summaryGrid {
-    display: grid;
-    grid-template-columns: 160px 160px minmax(0, 1fr);
-    gap: 1.5rem;
-    align-items: stretch;
-}
-
-.summaryStat {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 0.25rem;
-    padding-right: 1.5rem;
-    border-right: 1px solid var(--color-border, rgba(255, 255, 255, 0.08));
-}
-
-.summaryValue {
-    color: var(--color-text-primary, inherit);
-    font-size: 1.5rem;
-    font-weight: 650;
-    line-height: 1.2;
-}
-
-.summaryRecent {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    min-width: 0;
-    gap: 0.25rem;
-}
-
-.recentThread {
-    overflow: hidden;
-    color: var(--color-text-primary, inherit);
-    font-size: 0.95rem;
-    font-weight: 600;
-    line-height: 1.4;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-.recentMeta {
-    color: var(--color-text-secondary, #888);
-    font-size: 0.8rem;
-    line-height: 1.4;
-}
-
-/* Responsive */
-
-@media (max-width: 800px) {
-    .board {
-        grid-template-columns: 1fr;
-        gap: 1rem;
-    }
-
-    .boardActivity {
-        grid-template-columns: 1fr auto;
-        gap: 1rem;
-    }
-
-    .summaryGrid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
-    .summaryRecent {
-        grid-column: 1 / -1;
-        padding-top: 1rem;
-        border-top: 1px solid var(--color-border, rgba(255, 255, 255, 0.08));
-    }
-
-    .summaryStat:nth-child(2) {
-        border-right: 0;
-    }
-}
-
-@media (max-width: 500px) {
-    .boardActivity {
-        grid-template-columns: 1fr;
-    }
-
-    .boardStats {
-        gap: 2rem;
-    }
-
-    .summaryGrid {
-        grid-template-columns: 1fr 1fr;
-        gap: 1rem;
-    }
-
-    .summaryStat {
-        padding-right: 1rem;
-    }
-
-    .summaryRecent {
-        grid-column: 1 / -1;
-    }
-}
-
-/* Board thread list */
-
+/* -----------------------------------------------------------
+   BOARD THREAD LIST
+   ----------------------------------------------------------- */
 .threadList {
     display: flex;
     flex-direction: column;
 }
 
-.thread {
+.threadRow {
     display: grid;
     grid-template-columns: minmax(0, 1fr) 90px minmax(180px, 220px);
-    gap: 1.5rem;
+    gap: var(--size-space-5);
     align-items: center;
-    padding: 1.15rem 0;
-    border-bottom: 1px solid var(--color-border, rgba(255, 255, 255, 0.08));
+    padding: var(--size-space-4) 0;
+    border-bottom: 1px solid var(--color-border);
 }
 
-.thread:first-child {
+.threadRow:first-child {
     padding-top: 0;
 }
 
-.thread:last-child {
+.threadRow:last-child {
     padding-bottom: 0;
     border-bottom: 0;
 }
@@ -290,14 +173,14 @@
 .threadTitleRow {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: var(--size-space-2);
     min-width: 0;
 }
 
 .threadTitle {
     overflow: hidden;
-    color: var(--color-text-primary, inherit);
-    font-size: 0.95rem;
+    color: var(--color-text-primary);
+    font-size: var(--font-size-sm);
     font-weight: 600;
     line-height: 1.4;
     text-decoration: none;
@@ -310,29 +193,10 @@
 }
 
 .threadMeta {
-    margin-top: 0.3rem;
-    color: var(--color-text-muted, #777);
-    font-size: 0.75rem;
+    margin-top: var(--size-space-1);
+    color: var(--color-text-muted);
+    font-size: var(--font-size-xs);
     line-height: 1.4;
-}
-
-.threadAuthor {
-    color: var(--color-text-secondary, #888);
-}
-
-.badge {
-    display: inline-flex;
-    flex-shrink: 0;
-    align-items: center;
-    padding: 0.2rem 0.45rem;
-    border: 1px solid var(--color-border, rgba(255, 255, 255, 0.1));
-    border-radius: 0.25rem;
-    color: var(--color-text-secondary, #888);
-    font-size: 0.65rem;
-    font-weight: 600;
-    letter-spacing: 0.04em;
-    line-height: 1;
-    text-transform: uppercase;
 }
 
 .threadReplies,
@@ -352,24 +216,15 @@
 }
 
 .threadStatValue {
-    color: var(--color-text-primary, inherit);
+    color: var(--color-text-primary);
     font-size: 0.9rem;
     font-weight: 600;
     line-height: 1.3;
 }
 
-.threadStatLabel {
-    color: var(--color-text-muted, #777);
-    font-size: 0.65rem;
-    font-weight: 600;
-    letter-spacing: 0.06em;
-    line-height: 1.3;
-    text-transform: uppercase;
-}
-
 .threadActivityUser {
     overflow: hidden;
-    color: var(--color-text-primary, inherit);
+    color: var(--color-text-primary);
     font-size: 0.8rem;
     font-weight: 500;
     line-height: 1.35;
@@ -378,47 +233,18 @@
 }
 
 .threadActivityTime {
-    color: var(--color-text-secondary, #888);
+    color: var(--color-text-secondary);
     font-size: 0.7rem;
     line-height: 1.35;
 }
 
-
-/* Board-specific summary */
-
-.boardSummary {
-    padding: 1.5rem;
-    border: 1px solid var(--color-border, rgba(255, 255, 255, 0.08));
-    border-radius: 0.75rem;
-    background: var(--color-surface-raised, rgba(255, 255, 255, 0.025));
-}
-
-.summaryHeader {
-    margin-bottom: 1.5rem;
-}
-
-.summaryEyebrow {
-    display: block;
-    margin-bottom: 0.25rem;
-    color: var(--color-text-muted, #777);
-    font-size: 0.7rem;
-    font-weight: 600;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-}
-
-.summaryTitle {
-    margin: 0;
-    color: var(--color-text-primary, inherit);
-    font-size: 1rem;
-    font-weight: 600;
-    line-height: 1.4;
-}
-
+/* -----------------------------------------------------------
+   FORUM / BOARD SUMMARY STATS
+   ----------------------------------------------------------- */
 .summaryGrid {
     display: grid;
     grid-template-columns: 160px 160px minmax(0, 1fr);
-    gap: 1.5rem;
+    gap: var(--size-space-5);
     align-items: stretch;
 }
 
@@ -426,25 +252,16 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: 0.25rem;
-    padding-right: 1.5rem;
-    border-right: 1px solid var(--color-border, rgba(255, 255, 255, 0.08));
+    gap: var(--size-space-1);
+    padding-right: var(--size-space-5);
+    border-right: 1px solid var(--color-border);
 }
 
 .summaryValue {
-    color: var(--color-text-primary, inherit);
-    font-size: 1.5rem;
+    color: var(--color-text-primary);
+    font-size: var(--font-size-xl);
     font-weight: 650;
     line-height: 1.2;
-}
-
-.summaryLabel {
-    color: var(--color-text-muted, #777);
-    font-size: 0.7rem;
-    font-weight: 600;
-    letter-spacing: 0.06em;
-    line-height: 1.3;
-    text-transform: uppercase;
 }
 
 .summaryRecent {
@@ -452,12 +269,12 @@
     flex-direction: column;
     justify-content: center;
     min-width: 0;
-    gap: 0.25rem;
+    gap: var(--size-space-1);
 }
 
 .recentThread {
     overflow: hidden;
-    color: var(--color-text-primary, inherit);
+    color: var(--color-text-primary);
     font-size: 0.95rem;
     font-weight: 600;
     line-height: 1.4;
@@ -466,96 +283,34 @@
 }
 
 .recentMeta {
-    color: var(--color-text-secondary, #888);
+    color: var(--color-text-secondary);
     font-size: 0.8rem;
     line-height: 1.4;
 }
 
-
-/* Responsive */
-
-@media (max-width: 800px) {
-    .thread {
-        grid-template-columns: minmax(0, 1fr) auto;
-        gap: 1rem;
-    }
-
-    .threadActivity {
-        grid-column: 1 / -1;
-        padding-top: 0.75rem;
-        border-top: 1px solid var(--color-border, rgba(255, 255, 255, 0.06));
-    }
-
-    .threadReplies {
-        align-items: flex-end;
-        text-align: right;
-    }
-
-    .summaryGrid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
-    .summaryRecent {
-        grid-column: 1 / -1;
-        padding-top: 1rem;
-        border-top: 1px solid var(--color-border, rgba(255, 255, 255, 0.08));
-    }
-
-    .summaryStat:nth-child(2) {
-        border-right: 0;
-    }
-}
-
-@media (max-width: 500px) {
-    .thread {
-        grid-template-columns: 1fr;
-    }
-
-    .threadReplies {
-        align-items: flex-start;
-        text-align: left;
-    }
-
-    .threadActivity {
-        grid-column: auto;
-    }
-
-    .summaryGrid {
-        grid-template-columns: 1fr 1fr;
-        gap: 1rem;
-    }
-
-    .summaryStat {
-        padding-right: 1rem;
-    }
-
-    .summaryRecent {
-        grid-column: 1 / -1;
-    }
-}
-
-/* Post composition */
-
+/* -----------------------------------------------------------
+   POST COMPOSITION
+   ----------------------------------------------------------- */
 .postForm {
     display: flex;
     flex-direction: column;
-    gap: 1.25rem;
+    gap: var(--size-space-5);
 }
 
 .postFormActions {
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    gap: 0.75rem;
+    gap: var(--size-space-3);
 }
 
 .postContentArea {
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    border: 1px solid var(--color-border, rgba(255, 255, 255, 0.1));
-    border-radius: 0.5rem;
-    background: var(--color-surface-raised, rgba(255, 255, 255, 0.025));
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    background: var(--color-surface-raised);
 }
 
 .editorToolbar {
@@ -563,12 +318,12 @@
     align-items: center;
     min-height: 2.5rem;
     padding: 0.4rem 0.6rem;
-    border-bottom: 1px solid var(--color-border, rgba(255, 255, 255, 0.08));
+    border-bottom: 1px solid var(--color-border);
 }
 
 .editorToolbarPlaceholder {
-    color: var(--color-text-muted, #777);
-    font-size: 0.7rem;
+    color: var(--color-text-muted);
+    font-size: var(--font-size-2xs);
     line-height: 1.3;
 }
 
@@ -582,14 +337,14 @@
     border: 0;
     outline: 0;
     background: transparent;
-    color: var(--color-text-primary, inherit);
+    color: var(--color-text-primary);
     font: inherit;
-    font-size: 0.875rem;
+    font-size: var(--font-size-sm);
     line-height: 1.6;
 }
 
 .editor::placeholder {
-    color: var(--color-text-muted, #777);
+    color: var(--color-text-muted);
 }
 
 .editor:focus {
@@ -605,127 +360,39 @@
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    gap: 1rem;
+    gap: var(--size-space-4);
     min-height: 2.25rem;
     padding: 0.4rem 0.6rem;
-    border-top: 1px solid var(--color-border, rgba(255, 255, 255, 0.08));
+    border-top: 1px solid var(--color-border);
 }
 
 .editorFooterPlaceholder {
-    color: var(--color-text-muted, #777);
+    color: var(--color-text-muted);
     font-size: 0.65rem;
     line-height: 1.3;
 }
 
-/* Forum administration modal */
-
-.adminModal {
-    width: min(36rem, calc(100vw - 2rem));
-    max-width: 36rem;
-    padding: 0;
-    border: 1px solid var(--color-border, rgba(255, 255, 255, 0.1));
-    border-radius: 0.75rem;
-    background: var(--color-surface-raised, #111);
-    color: var(--color-text-primary, inherit);
-    box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.35);
-}
-
-.adminModal::backdrop {
-    background: rgba(0, 0, 0, 0.65);
-    backdrop-filter: blur(2px);
-}
-
-.adminModalContent {
-    display: flex;
-    flex-direction: column;
-    max-height: min(42rem, calc(100vh - 2rem));
-}
-
-.adminModalHeader {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 1rem;
-    padding: 1.25rem 1.5rem;
-    border-bottom: 1px solid var(--color-border, rgba(255, 255, 255, 0.08));
-}
-
-.adminModalEyebrow {
-    display: block;
-    margin-bottom: 0.25rem;
-    color: var(--color-text-muted, #777);
-    font-size: 0.65rem;
-    font-weight: 600;
-    letter-spacing: 0.07em;
-    text-transform: uppercase;
-}
-
-.adminModalTitle {
-    margin: 0;
-    color: var(--color-text-primary, inherit);
-    font-size: 1rem;
-    font-weight: 600;
-    line-height: 1.4;
-}
-
-.adminModalClose {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 2rem;
-    height: 2rem;
-    flex-shrink: 0;
-    padding: 0;
-    border: 0;
-    border-radius: 0.35rem;
-    background: transparent;
-    color: var(--color-text-muted, #777);
-    cursor: pointer;
-    font-size: 1.35rem;
-    line-height: 1;
-}
-
-.adminModalClose:hover {
-    background: var(--form-accent-hover, rgba(255, 255, 255, 0.05));
-    color: var(--color-text-primary, inherit);
-}
-
-.adminModalBody {
-    overflow-y: auto;
-    padding: 1.5rem;
-}
-
-
-/* Thread administration */
-
+/* -----------------------------------------------------------
+   MODERATION MODAL
+   ----------------------------------------------------------- */
 .adminThreadControls {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: var(--size-space-6);
 }
 
 .adminResource {
     display: flex;
     flex-direction: column;
-    gap: 0.25rem;
-    padding-bottom: 1rem;
-    border-bottom: 1px solid var(--color-border, rgba(255, 255, 255, 0.08));
-}
-
-.adminResourceLabel,
-.adminSectionLabel {
-    color: var(--color-text-muted, #777);
-    font-size: 0.65rem;
-    font-weight: 600;
-    letter-spacing: 0.06em;
-    line-height: 1.3;
-    text-transform: uppercase;
+    gap: var(--size-space-1);
+    padding-bottom: var(--size-space-4);
+    border-bottom: 1px solid var(--color-border);
 }
 
 .adminResourceName {
     overflow: hidden;
-    color: var(--color-text-primary, inherit);
-    font-size: 0.9rem;
+    color: var(--color-text-primary);
+    font-size: var(--font-size-sm);
     font-weight: 600;
     line-height: 1.4;
     text-overflow: ellipsis;
@@ -741,33 +408,29 @@
 .adminControlGrid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0.5rem;
+    gap: var(--size-space-2);
 }
 
 .adminControlButton {
     min-height: 2.5rem;
     padding: 0.6rem 0.75rem;
-    border: 1px solid var(--color-border, rgba(255, 255, 255, 0.1));
+    border: 1px solid var(--color-border);
     border-radius: 0.4rem;
-    background: var(--color-surface-raised, rgba(255, 255, 255, 0.03));
-    color: var(--color-text-primary, inherit);
+    background: var(--color-surface-raised);
+    color: var(--color-text-primary);
     cursor: pointer;
     font: inherit;
     font-size: 0.75rem;
     font-weight: 500;
     text-align: left;
-    transition:
-        background 0.15s ease,
-        border-color 0.15s ease,
-        opacity 0.15s ease;
+    transition: background 0.15s ease, border-color 0.15s ease, opacity 0.15s ease;
 }
 
 .adminControlButton:hover {
-    background: var(--form-accent-hover, rgba(255, 255, 255, 0.06));
+    background: var(--color-surface-hover);
 }
 
-.adminControlButton:focus-visible,
-.adminModalClose:focus-visible {
+.adminControlButton:focus-visible {
     outline: 2px solid currentColor;
     outline-offset: 2px;
 }
@@ -777,25 +440,65 @@
 }
 
 .adminControlFooter {
-    padding-top: 1rem;
-    border-top: 1px solid var(--color-border, rgba(255, 255, 255, 0.08));
+    padding-top: var(--size-space-4);
+    border-top: 1px solid var(--color-border);
 }
 
 .adminPlaceholderNote {
-    color: var(--color-text-muted, #777);
-    font-size: 0.7rem;
+    color: var(--color-text-muted);
+    font-size: var(--font-size-2xs);
     line-height: 1.5;
 }
 
-
-@media (max-width: 500px) {
-    .adminModal {
-        width: calc(100vw - 1rem);
+/* -----------------------------------------------------------
+   RESPONSIVE
+   ----------------------------------------------------------- */
+@media (max-width: 800px) {
+    .boardRow {
+        grid-template-columns: 1fr;
+        gap: var(--size-space-4);
     }
 
-    .adminModalHeader,
-    .adminModalBody {
-        padding: 1rem;
+    .boardActivity {
+        grid-template-columns: 1fr auto;
+        gap: var(--size-space-4);
+    }
+
+    .summaryGrid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .summaryRecent {
+        grid-column: 1 / -1;
+        padding-top: var(--size-space-4);
+        border-top: 1px solid var(--color-border);
+    }
+
+    .summaryStat:nth-child(2) {
+        border-right: 0;
+    }
+}
+
+@media (max-width: 500px) {
+    .boardActivity {
+        grid-template-columns: 1fr;
+    }
+
+    .boardStats {
+        gap: var(--size-space-5);
+    }
+
+    .summaryGrid {
+        grid-template-columns: 1fr 1fr;
+        gap: var(--size-space-4);
+    }
+
+    .summaryStat {
+        padding-right: var(--size-space-4);
+    }
+
+    .summaryRecent {
+        grid-column: 1 / -1;
     }
 
     .adminControlGrid {
@@ -803,33 +506,22 @@
     }
 }
 
-/* ThreadAdminButton */
-.adminThreadButton {
-    height: var(--size-icon-sm);
-    width: var(--size-icon-sm);
-    padding: 0;
-    display: grid;
-    place-items: center;
-    stroke-width: 1;
-    stroke: currentColor;
-    background-color: var(--color-surface-strong);
-    border-color: var(--color-border);
-    color: var(--color-text-primary);
-}
-
+/* -----------------------------------------------------------
+   BOARD THREAD DISCUSSION
+   ----------------------------------------------------------- */
 .threadDiscussion {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: var(--size-space-4);
 }
 
 .post {
     display: grid;
     grid-template-columns: 10rem minmax(0, 1fr);
     overflow: hidden;
-    border: 1px solid var(--color-border, rgba(255, 255, 255, 0.1));
-    border-radius: 0.5rem;
-    background: var(--color-surface-raised, rgba(255, 255, 255, 0.025));
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    background: var(--color-surface-raised);
 }
 
 .originalPost {
@@ -840,9 +532,9 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.5rem;
-    padding: 1rem 0.75rem;
-    border-right: 1px solid var(--color-border, rgba(255, 255, 255, 0.08));
+    gap: var(--size-space-2);
+    padding: var(--size-space-4) var(--size-space-3);
+    border-right: 1px solid var(--color-border);
     background: rgba(0, 0, 0, 0.08);
     text-align: center;
 }
@@ -853,9 +545,9 @@
     justify-content: center;
     width: 4rem;
     height: 4rem;
-    border: 1px solid var(--color-border, rgba(255, 255, 255, 0.1));
+    border: 1px solid var(--color-border);
     border-radius: 50%;
-    color: var(--color-text-muted, #777);
+    color: var(--color-text-muted);
     font-size: 0.6rem;
 }
 
@@ -866,7 +558,7 @@
 }
 
 .postRank {
-    color: var(--color-text-muted, #777);
+    color: var(--color-text-muted);
     font-size: 0.7rem;
 }
 
@@ -875,7 +567,7 @@
     flex-direction: column;
     gap: 0.2rem;
     margin-top: 0.35rem;
-    color: var(--color-text-muted, #777);
+    color: var(--color-text-muted);
     font-size: 0.65rem;
 }
 
@@ -889,53 +581,49 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 1rem;
+    gap: var(--size-space-4);
     min-height: 2.75rem;
     padding: 0.55rem 0.8rem;
-    border-bottom: 1px solid var(--color-border, rgba(255, 255, 255, 0.08));
+    border-bottom: 1px solid var(--color-border);
 }
 
 .postHeaderMeta {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
+    gap: var(--size-space-3);
     min-width: 0;
 }
 
-.postNumber {
-    color: var(--color-text-muted, #777);
-    font-size: 0.7rem;
-}
-
+.postNumber,
 .postDate {
-    color: var(--color-text-muted, #777);
+    color: var(--color-text-muted);
     font-size: 0.7rem;
 }
 
 .postActions {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: var(--size-space-2);
 }
 
 .postAction {
     border: 0;
     background: transparent;
-    color: var(--color-text-muted, #777);
+    color: var(--color-text-muted);
     cursor: pointer;
     font-size: 0.65rem;
 }
 
 .postAction:hover {
-    color: var(--color-text-primary, inherit);
+    color: var(--color-text-primary);
 }
 
 .postBody {
     min-height: 8rem;
-    padding: 1rem;
+    padding: var(--size-space-4);
     white-space: pre-wrap;
     overflow-wrap: anywhere;
-    font-size: 0.875rem;
+    font-size: var(--font-size-sm);
     line-height: 1.7;
 }
 
@@ -943,24 +631,24 @@
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    gap: 1rem;
+    gap: var(--size-space-4);
     min-height: 2.25rem;
     margin-top: auto;
     padding: 0.4rem 0.8rem;
-    border-top: 1px solid var(--color-border, rgba(255, 255, 255, 0.08));
-    color: var(--color-text-muted, #777);
+    border-top: 1px solid var(--color-border);
+    color: var(--color-text-muted);
     font-size: 0.6rem;
 }
 
 .deletedPost {
-    color: var(--color-text-muted, #777);
+    color: var(--color-text-muted);
 }
 
-.empty {
-    padding: 2rem;
-    border: 1px solid var(--color-border, rgba(255, 255, 255, 0.1));
-    border-radius: 0.5rem;
-    color: var(--color-text-muted, #777);
+.discussionEmpty {
+    padding: var(--size-space-6);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    color: var(--color-text-muted);
     text-align: center;
 }
 
@@ -974,7 +662,7 @@
         align-items: center;
         justify-content: flex-start;
         border-right: 0;
-        border-bottom: 1px solid var(--color-border, rgba(255, 255, 255, 0.08));
+        border-bottom: 1px solid var(--color-border);
         text-align: left;
     }
 
@@ -985,7 +673,7 @@
 
     .postStats {
         flex-direction: row;
-        gap: 0.75rem;
+        gap: var(--size-space-3);
         margin-left: auto;
     }
 }

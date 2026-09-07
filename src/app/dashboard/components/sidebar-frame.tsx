@@ -1,7 +1,8 @@
 "use client";
 
 import {useSidebar} from "@/app/dashboard/components/sidebar-context";
-import styles from "@shared/styles/dashboard.module.css";
+import sidebarStyles from "@/shared/styles/patterns/sidebar.module.css";
+import brandStyles from "@/shared/styles/brand.module.css";
 import Link from "next/link";
 import {JSX, ReactNode} from "react";
 
@@ -30,14 +31,13 @@ export default function SidebarFrame({toggleButton, children}: SidebarFrameProps
     const {collapsed} = useSidebar();
 
     return (
-        <aside className={`${styles.sidebar}${collapsed ? ` ${styles.sidebarCollapsed}` : ""}`}
-               id="sidebar"
+        <aside id="sidebar"
                data-collapsed={collapsed}
                style={{width: "var(--current-sidebar-width)"}}>
-            <div className={styles.sidebarHeader}>
+            <div className={sidebarStyles.sidebarHeader}>
                 {!collapsed && (
-                    <Link href="/" className={styles.brand}>
-                        <span className={styles.brandName}>dead-frequency</span>
+                    <Link href="/" className={brandStyles.brand}>
+                        <span className={brandStyles.brandName}>dead-frequency</span>
                     </Link>
                 )}
                 {toggleButton}

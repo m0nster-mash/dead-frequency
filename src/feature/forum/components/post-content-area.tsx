@@ -1,4 +1,4 @@
-import styles from "@/feature/forum/styles/forum.module.css";
+import forumStyles from "@/feature/forum/styles/forum.module.css";
 import Placeholder from "@shared/components/placeholder";
 
 type PostContentAreaProps = {
@@ -20,32 +20,32 @@ export function PostContentArea({
                                 }: PostContentAreaProps) {
 
     return (
-        <div className={styles.postContentArea}>
-            <div className={styles.editorToolbar}>
-                <div className={styles.editorToolbarPlaceholder}>
+        <div className={forumStyles.postContentArea}>
+            <div className={forumStyles.editorToolbar}>
+                <div className={forumStyles.editorToolbarPlaceholder}>
                     {/* TODO: Future Markdown / WYSIWYG controls */}
                     <Placeholder text={"FORMATTING_CONTROLS"}/>
                 </div>
             </div>
 
             <textarea name={name}
-                      className={styles.editor}
+                      className={forumStyles.editor}
                       placeholder={placeholder}
                       defaultValue={defaultValue}
                       required={required}
                       disabled={disabled}
                       rows={rows}/>
 
-            <div className={styles.editorFooter}>
-                <span className={styles.editorFooterPlaceholder}>
+            <div className={forumStyles.editorFooter}>
+                <span className={forumStyles.editorFooterPlaceholder}>
                     <Placeholder text={"MARKDOWN_CONTROLS"}/>
                 </span>
 
-                <span className={styles.editorFooterPlaceholder}>
+                <span className={forumStyles.editorFooterPlaceholder}>
                     <Placeholder text={"ATTACHMENTS"}/>
                 </span>
 
-                <span className={styles.editorFooterPlaceholder}>
+                <span className={forumStyles.editorFooterPlaceholder}>
                     <Placeholder text={"PREVIEW"}/>
                 </span>
             </div>

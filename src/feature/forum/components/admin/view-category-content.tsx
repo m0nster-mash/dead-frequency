@@ -1,5 +1,6 @@
-import styles from "@/feature/forum/styles/admin.module.css";
+import adminStyles from "@/feature/forum/styles/admin.module.css";
 import Placeholder from "@/shared/components/placeholder";
+import tableStyles from "@/shared/styles/tables.module.css";
 import Link from "next/link";
 import {JSX} from "react";
 
@@ -42,36 +43,36 @@ export function ViewCategoryContent({
     return (
         <>
             {showCategoryRow && (
-                <tr className={styles.forumCategoryRow}>
-                    <td className={styles.forumOrderCell}>
+                <tr className={adminStyles.forumCategoryRow}>
+                    <td className={adminStyles.forumOrderCell}>
                         <Placeholder text={"CATEGORY_ORDER"}/>
                     </td>
 
                     <td>
-                        <div className={styles.forumCategoryName}>
+                        <div className={adminStyles.forumCategoryName}>
                             {category.label}
                         </div>
                     </td>
 
                     <td>
-                        <div className={styles.forumCategoryDescription}>
+                        <div className={adminStyles.forumCategoryDescription}>
                             {category.description || (
                                 <Placeholder text={"CATEGORY_DESCRIPTION"}/>
                             )}
                         </div>
                     </td>
 
-                    <td className={styles.forumStatisticCell}>
+                    <td className={adminStyles.forumStatisticCell}>
                         <Placeholder text={"CATEGORY_TOTAL_THREADS"}/>
                     </td>
 
-                    <td className={styles.forumStatisticCell}>
+                    <td className={adminStyles.forumStatisticCell}>
                         <Placeholder text={"CATEGORY_TOTAL_POSTS"}/>
                     </td>
 
-                    <td className={styles.forumActionCell}>
+                    <td className={adminStyles.forumActionCell}>
                         <Link href={`/admin/forum/${category.id}`}
-                              className={styles.forumEditButton}>
+                              className={adminStyles.forumEditButton}>
                             Edit
                         </Link>
                     </td>
@@ -79,34 +80,34 @@ export function ViewCategoryContent({
             )}
 
             {boards.map((board) => (
-                <tr key={board.id} className={styles.forumBoardRow}>
-                    <td className={styles.forumOrderCell}>
+                <tr key={board.id} className={adminStyles.forumBoardRow}>
+                    <td className={adminStyles.forumOrderCell}>
                         <Placeholder text={"BOARD_ORDER"}/>
                     </td>
 
                     <td>
-                        <div className={styles.forumBoardName}>
+                        <div className={adminStyles.forumBoardName}>
                             {board.label}
                         </div>
                     </td>
 
                     <td>
-                        <div className={styles.forumBoardDescription}>
+                        <div className={adminStyles.forumBoardDescription}>
                             {board.description || "—"}
                         </div>
                     </td>
 
-                    <td className={styles.forumStatisticCell}>
+                    <td className={adminStyles.forumStatisticCell}>
                         <Placeholder text={"BOARD_TOTAL_THREADS"}/>
                     </td>
 
-                    <td className={styles.forumStatisticCell}>
+                    <td className={adminStyles.forumStatisticCell}>
                         <Placeholder text={"BOARD_TOTAL_POSTS"}/>
                     </td>
 
-                    <td className={styles.forumActionCell}>
+                    <td className={adminStyles.forumActionCell}>
                         <Link href={`/admin/forum/boards/${board.id}`}
-                              className={styles.forumEditButton}>
+                              className={adminStyles.forumEditButton}>
                             Edit
                         </Link>
                     </td>
@@ -114,8 +115,8 @@ export function ViewCategoryContent({
             ))}
 
             {boards.length === 0 && showCategoryRow && (
-                <tr className={styles.forumBoardRow}>
-                    <td colSpan={6} className={styles.forumEmptyCell}>
+                <tr className={adminStyles.forumBoardRow}>
+                    <td colSpan={6} className={tableStyles.tableEmptyCell}>
                         No boards in this category.
                     </td>
                 </tr>

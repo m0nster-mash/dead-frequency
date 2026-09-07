@@ -2,7 +2,6 @@ import {AdminUserTable} from "@/core/admin/components/admin-user-table";
 import {auth} from "@/core/auth";
 import {requireSession} from "@/core/auth/lib/require-session";
 import {PageHeader} from "@/core/dashboard/components/panels/page-header";
-import styles from "@/shared/styles/form-panel.module.css";
 import {headers} from "next/headers";
 import {JSX} from "react";
 
@@ -31,19 +30,19 @@ export default async function AdminPage(): Promise<JSX.Element> {
         : "users");
 
     return (
-        <div className={styles.wrapper}>
+        <div>
             <PageHeader eyebrow={"Administration"} title={"Admin Panel"} subtitle={registeredUsers}/>
 
             <AdminUserTable
-                users={users.map((user) => ({
-                    id: user.id,
-                    name: user.name ?? "",
-                    email: user.email,
-                    role: user.role ?? "user",
-                    banned: Boolean(user.banned)
-                }))}
-                currentUserId={session.user.id}
-            />
+                users={
+                    users.map((user) => ({
+                        id: user.id,
+                        name: user.name ?? "",
+                        email: user.email,
+                        role: user.role ?? "user",
+                        banned: Boolean(user.banned)
+                    }))}
+                currentUserId={session.user.id}/>
         </div>
     );
 }

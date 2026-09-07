@@ -1,4 +1,4 @@
-import {AuthCard} from "@core/auth";
+import {AuthCard} from "@/core/auth";
 import {JSX} from "react";
 
 /**

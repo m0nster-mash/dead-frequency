@@ -1,12 +1,14 @@
 "use client";
 
+import sidebarStyles from "@/shared/styles/patterns/sidebar.module.css";
 import DownArrowIcon from "@/shared/svg/bootstrap-down-arrow-icon.svg";
-import styles from "@shared/styles/dashboard.module.css";
 import Link from "next/link";
 import {JSX, ReactNode, useState} from "react";
 
 /**
  * Structural definition for a link within an expandable menu.
+ *
+ * TODO:: no usages. Determine if this can just be deleted.
  *
  * @property {string} label - Display text for the menu link.
  * @property {string} href - Target URL or route pathname to navigate to.
@@ -56,15 +58,15 @@ export default function ExpandableMenuItem({
                     onClick={() => setIsOpen((open) => !open)}
                     aria-expanded={isOpen}
                     title={label}
-                    className={styles.expandableNavButton}>
-                <span className={styles.expandableMenuButtonContent}>
+                    className={sidebarStyles.expandableNavButton}>
+                <span>
                     {icon && <span>{icon}</span>}
-                    <span className={styles.hideOnCollapse}>{label}</span>
+                    <span className={sidebarStyles.hideOnCollapse}>{label}</span>
                 </span>
 
-                <svg className={`${styles.expandIcon} ${
-                    isOpen ? styles.expandIconOpen : ""
-                } ${styles.hideOnCollapse}`}
+                <svg className={`${sidebarStyles.expandIcon} ${
+                    isOpen ? sidebarStyles.expandIconOpen : ""
+                } ${sidebarStyles.hideOnCollapse}`}
                      viewBox="0 0 20 20"
                      fill="currentColor"
                      aria-hidden="true">
@@ -72,14 +74,14 @@ export default function ExpandableMenuItem({
                 </svg>
             </button>
 
-            <div className={`${styles.subNav} ${
-                isOpen ? styles.subNavOpen : styles.subNavClosed
+            <div className={`${sidebarStyles.subNav} ${
+                isOpen ? sidebarStyles.subNavOpen : sidebarStyles.subNavClosed
             }`}>
                 {links.map((link) => (
                     <Link key={link.href}
                           href={link.href}
                           title={link.label}
-                          className={styles.subNavItem}>
+                          className={sidebarStyles.subNavItem}>
                         {link.label}
                     </Link>
                 ))}

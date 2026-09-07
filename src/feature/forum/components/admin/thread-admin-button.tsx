@@ -2,7 +2,7 @@
 
 import {AdminForumControls} from "@/feature/forum/components/admin/admin-forum-controls";
 import {AdminThreadControls} from "@/feature/forum/components/admin/admin-thread-controls";
-import styles from "@/feature/forum/styles/forum.module.css";
+import buttonStyles from "@/shared/styles/buttons.module.css";
 import GearIcon from "@shared/svg/bootstrap-gear-icon.svg";
 import {useState} from "react";
 
@@ -17,7 +17,7 @@ export function ThreadAdminButton({threadId, threadTitle,}: ThreadAdminButtonPro
     return (
         <>
             <button type="button"
-                    className={styles.adminThreadButton}
+                    className={`${buttonStyles.iconBtn} ${buttonStyles.iconBtnFilled}`}
                     onClick={() => setOpen(true)}
                     aria-label={`Manage thread: ${threadTitle}`}>
                 <GearIcon/>

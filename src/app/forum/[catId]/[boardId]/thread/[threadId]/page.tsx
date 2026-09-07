@@ -3,7 +3,7 @@ import {PageHeader} from "@/core/dashboard/components/panels/page-header";
 import {CreateReplyPanel} from "@/feature/forum/components/create-reply-panel";
 import {replyToThreadAction} from "@/feature/forum/lib/actions";
 import {getThreadWithPosts} from "@/feature/forum/lib/queries";
-import styles from "@/feature/forum/styles/forum.module.css";
+import forumStyles from "@/feature/forum/styles/forum.module.css";
 import {BreadcrumbLabel} from "@/shared/components/breadcrumb-label";
 import Placeholder from "@shared/components/placeholder";
 import {notFound} from "next/navigation";
@@ -47,7 +47,7 @@ export default async function ForumThreadPage({params}: PageProps): Promise<JSX.
         "Unknown";
 
     return (
-        <div className={styles.wrapper}>
+        <div>
             <BreadcrumbLabel segment={threadId}
                              label={data.thread.title}/>
 
@@ -55,62 +55,62 @@ export default async function ForumThreadPage({params}: PageProps): Promise<JSX.
                         title={data.thread.title}
                         subtitle={`Started by ${threadAuthor}`}/>
 
-            <section className={styles.threadDiscussion}>
+            <section className={forumStyles.threadDiscussion}>
                 {data.posts.map((post, index) => {
                     const author = post.authorName || post.authorEmail || "Unknown";
 
                     return (
                         <article key={post.id}
-                                 className={styles.post}>
-                            <aside className={styles.postSidebar}>
-                                <div className={styles.avatarPlaceholder}>
+                                 className={forumStyles.post}>
+                            <aside className={forumStyles.postSidebar}>
+                                <div className={forumStyles.avatarPlaceholder}>
                                     <Placeholder text={"avatar"}/>
                                 </div>
 
-                                <div className={styles.postAuthor}>
+                                <div className={forumStyles.postAuthor}>
                                     {author}
                                 </div>
 
-                                <div className={styles.postRank}>
+                                <div className={forumStyles.postRank}>
                                     <Placeholder text={"USER_RANK"}/>
                                 </div>
 
-                                <div className={styles.postStats}>
+                                <div className={forumStyles.postStats}>
                                     <span>Posts: <Placeholder text={"POST_COUNT"}/></span>
                                     <span>Joined: <Placeholder text={"join_date"}/></span>
                                 </div>
                             </aside>
 
-                            <div className={styles.postContent}>
-                                <header className={styles.postHeader}>
-                                    <div className={styles.postHeaderMeta}>
-                                        <span className={styles.postNumber}>
+                            <div className={forumStyles.postContent}>
+                                <header className={forumStyles.postHeader}>
+                                    <div className={forumStyles.postHeaderMeta}>
+                                        <span className={forumStyles.postNumber}>
                                             #{index + 2}
                                         </span>
 
-                                        <time className={styles.postDate}>
+                                        <time className={forumStyles.postDate}>
                                             {new Date(
                                                 post.createdAt
                                             ).toLocaleString()}
                                         </time>
                                     </div>
 
-                                    <div className={styles.postActions}>
+                                    <div className={forumStyles.postActions}>
                                         <button type="button"
-                                                className={styles.postAction}>
+                                                className={forumStyles.postAction}>
                                             <Placeholder text={"quote"}/>
                                         </button>
 
                                         <button type="button"
-                                                className={styles.postAction}>
+                                                className={forumStyles.postAction}>
                                             <Placeholder text={"report"}/>
                                         </button>
                                     </div>
                                 </header>
 
-                                <div className={styles.postBody}>
+                                <div className={forumStyles.postBody}>
                                     {post.deletedAt ? (
-                                        <em className={styles.deletedPost}>
+                                        <em className={forumStyles.deletedPost}>
                                             This post has been deleted.
                                         </em>
                                     ) : (
@@ -118,7 +118,7 @@ export default async function ForumThreadPage({params}: PageProps): Promise<JSX.
                                     )}
                                 </div>
 
-                                <footer className={styles.postFooter}>
+                                <footer className={forumStyles.postFooter}>
                                     <span><Placeholder text={"permalink"}/></span>
                                     <span><Placeholder text={"edit"}/></span>
                                 </footer>
@@ -128,7 +128,7 @@ export default async function ForumThreadPage({params}: PageProps): Promise<JSX.
                 })}
 
                 {data.posts.length === 0 && (
-                    <div className={styles.empty}>
+                    <div className={forumStyles.discussionEmpty}>
                         No replies yet.
                     </div>
                 )}

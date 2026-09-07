@@ -1,6 +1,5 @@
 import {requireSession} from "@/core/auth/lib/require-session";
 import {MainContentPanel} from "@/core/dashboard/components/panels/main-card";
-import styles from "@/shared/styles/form-panel.module.css";
 import Link from "next/link";
 import {JSX} from "react";
 
@@ -13,7 +12,7 @@ export default async function AdminPage(): Promise<JSX.Element> {
     await requireSession({role: "admin"});
 
     return (
-        <div className={styles.wrapper}>
+        <div>
             {/* TODO:: add proper clean menu */}
             <MainContentPanel title={"Admin Tools"}>
                 <ul>

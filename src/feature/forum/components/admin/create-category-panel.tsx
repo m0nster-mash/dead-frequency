@@ -1,7 +1,8 @@
 "use client";
 
 import {MainContentPanel} from "@/core/dashboard/components/panels/main-card";
-import styles from "@/feature/forum/styles/admin.module.css";
+import buttonStyles from "@/shared/styles/buttons.module.css";
+import formStyles from "@/shared/styles/form.module.css";
 import {JSX} from "react";
 
 type Props = {
@@ -14,49 +15,49 @@ type Props = {
 export function CreateCategoryPanel({createCategoryAction,}: Props): JSX.Element {
     return (
         <MainContentPanel title={"Create Category"}>
-            <form className={styles.adminForm}
+            <form className={formStyles.form}
                   action={createCategoryAction}>
-                <div className={styles.adminFormGrid}>
-                    <div className={styles.adminField}>
-                        <label className={styles.adminLabel} htmlFor="create-category-label">
+                <div className={formStyles.formGrid}>
+                    <div className={formStyles.formField}>
+                        <label className={formStyles.formLabel} htmlFor="create-category-label">
                             Label
                         </label>
 
                         <input id="create-category-label"
                                name="label"
                                type="text"
-                               className={styles.adminInput}
+                               className={formStyles.formInput}
                                required/>
                     </div>
 
-                    <div className={styles.adminField}>
-                        <label className={styles.adminLabel} htmlFor="create-category-label">
+                    <div className={formStyles.formField}>
+                        <label className={formStyles.formLabel} htmlFor="create-category-label">
                             Description
                         </label>
 
                         <input id="create-category-label"
                                name="description"
                                type="text"
-                               className={styles.adminInput}
+                               className={formStyles.formInput}
                                required/>
                     </div>
 
-                    <div className={styles.adminField}>
-                        <label className={styles.adminLabel} htmlFor="create-category-sort-order">
+                    <div className={formStyles.formField}>
+                        <label className={formStyles.formLabel} htmlFor="create-category-sort-order">
                             Order
                         </label>
 
                         <input id="create-category-sort-order"
                                name="sortOrder"
-                               className={styles.adminInput}
+                               className={formStyles.formInput}
                                type="number"
                                defaultValue={0}
                                required/>
                     </div>
                 </div>
 
-                <div className={styles.adminFormActions}>
-                    <button type="submit" className={styles.adminPrimaryButton}>
+                <div className={formStyles.formActions}>
+                    <button type="submit" className={`${buttonStyles.btn} ${buttonStyles.btnPrimary}`}>
                         Create
                     </button>
                 </div>

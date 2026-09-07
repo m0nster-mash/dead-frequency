@@ -1,7 +1,7 @@
 "use client";
 
-import {useBreadcrumbLabels} from "@shared/components/breadcrumbs-context";
-import styles from "@shared/styles/dashboard.module.css";
+import {useBreadcrumbLabels} from "@/shared/components/breadcrumbs-context";
+import breadcrumbStyles from "@/shared/styles/patterns/breadcrumbs.module.css";
 import Link from "next/link";
 import {usePathname} from "next/navigation";
 import {JSX} from "react";
@@ -18,8 +18,8 @@ export default function Breadcrumbs(): JSX.Element {
     const segments = pathname.split("/").filter(Boolean);
 
     return (
-        <nav className={styles.breadcrumbs} aria-label="Breadcrumb">
-            <Link className={styles.home} href="/"> Home </Link>
+        <nav className={breadcrumbStyles.breadcrumbs} aria-label="Breadcrumb">
+            <Link className={breadcrumbStyles.home} href="/"> Home </Link>
 
             {segments.map((segment, index) => {
                 // Cuts the original segment sequence up to the active depth index to build the valid pathway target
@@ -32,8 +32,8 @@ export default function Breadcrumbs(): JSX.Element {
                 const isLast = index === segments.length - 1;
 
                 return (
-                    <span className={styles.item} key={segment}>
-                        <span className={styles.separator} aria-hidden="true">
+                    <span className={breadcrumbStyles.item} key={segment}>
+                        <span className={breadcrumbStyles.separator} aria-hidden="true">
                             {" "} / {" "}
                         </span>
 
@@ -42,11 +42,11 @@ export default function Breadcrumbs(): JSX.Element {
                              * Binds aria-current attributes to signal screen reading engines that this item
                              * represents the visitor's current active structural location context on the site map.
                              **/
-                            <span className={styles.current} aria-current="page">
+                            <span className={breadcrumbStyles.current} aria-current="page">
                                 [ {label} ]
                             </span>
                         ) : (
-                            <Link className={styles.link} href={href}>
+                            <Link className={breadcrumbStyles.link} href={href}>
                                 {label}
                             </Link>
                         )}
