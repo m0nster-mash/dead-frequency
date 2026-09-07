@@ -8,7 +8,7 @@ import {JSX, ReactNode, useState} from "react";
 /**
  * Structural definition for a link within an expandable menu.
  *
- * TODO:: no useages. Determine if this can just be deleted.
+ * TODO:: no usages. Determine if this can just be deleted.
  *
  * @property {string} label - Display text for the menu link.
  * @property {string} href - Target URL or route pathname to navigate to.

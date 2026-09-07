@@ -1,21 +1,12 @@
 import {ForumBoard, ForumCategory} from "@/feature/forum/components/admin/view-category-content";
 
 import adminStyles from "@/feature/forum/styles/admin.module.css";
-import forumStyles from "@/feature/forum/styles/forum.module.css";
-import panelStyles from "@/shared/styles/panel.module.css";
-import tableStyles from "@/shared/styles/tables.module.css";
-import sidebarStyles from "@/shared/styles/patterns/sidebar.module.css";
+import Placeholder from "@/shared/components/placeholder";
 import buttonStyles from "@/shared/styles/buttons.module.css";
 import formStyles from "@/shared/styles/form.module.css";
-import modalStyles from "@/shared/styles/modal.module.css";
-import cardStyles from "@/shared/styles/patterns/card.module.css";
-import Placeholder from "@/shared/components/placeholder";
 import Link from "next/link";
 import {JSX} from "react";
 
-/**
- * TODO:: clean up styles
- */
 type Props = {
     board: ForumBoard;
     categories: ForumCategory[];

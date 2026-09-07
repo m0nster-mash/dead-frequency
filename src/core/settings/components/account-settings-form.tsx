@@ -2,19 +2,12 @@
 
 import {authClient} from "@/core/auth/lib/auth-client";
 import {MainContentPanel} from "@/core/dashboard/components/panels/main-card";
-import panelStyles from "@/shared/styles/panel.module.css";
-import tableStyles from "@/shared/styles/tables.module.css";
-import sidebarStyles from "@/shared/styles/patterns/sidebar.module.css";
 import buttonStyles from "@/shared/styles/buttons.module.css";
 import formStyles from "@/shared/styles/form.module.css";
-import modalStyles from "@/shared/styles/modal.module.css";
-import cardStyles from "@/shared/styles/patterns/card.module.css";
+import panelStyles from "@/shared/styles/panel.module.css";
 import {useRouter} from "next/navigation";
 import {JSX, SubmitEvent, useState} from "react";
 
-/**
- * TODO:: clean up styles
- */
 /**
  * Properties for the AccountSettingsForm component.
  *
@@ -243,9 +236,11 @@ export function AccountSettingsForm({
                                    required/>
                         </div>
                         {profileState.error ? <p className={formStyles.formError}>{profileState.error}</p> : null}
-                        {profileState.success ? (<p className={formStyles.formSuccess}>{profileState.success}</p>) : null}
+                        {profileState.success ? (
+                            <p className={formStyles.formSuccess}>{profileState.success}</p>) : null}
                         <div className={formStyles.actions}>
-                            <button type="submit" className={`${buttonStyles.btn} ${buttonStyles.btnPrimary}`} disabled={profileState.loading}>
+                            <button type="submit" className={`${buttonStyles.btn} ${buttonStyles.btnPrimary}`}
+                                    disabled={profileState.loading}>
                                 {profileState.loading ? "Saving..." : "Save username"}
                             </button>
                         </div>
@@ -273,7 +268,8 @@ export function AccountSettingsForm({
                         {emailState.error ? <p className={formStyles.formError}>{emailState.error}</p> : null}
                         {emailState.success ? <p className={formStyles.formSuccess}>{emailState.success}</p> : null}
                         <div className={formStyles.actions}>
-                            <button type="submit" className={`${buttonStyles.btn} ${buttonStyles.btnPrimary}`} disabled={emailState.loading}>
+                            <button type="submit" className={`${buttonStyles.btn} ${buttonStyles.btnPrimary}`}
+                                    disabled={emailState.loading}>
                                 {emailState.loading ? "Saving..." : "Update email"}
                             </button>
                         </div>
@@ -322,9 +318,11 @@ export function AccountSettingsForm({
                             </div>
                         </div>
                         {passwordState.error ? <p className={formStyles.formError}>{passwordState.error}</p> : null}
-                        {passwordState.success ? (<p className={formStyles.formSuccess}>{passwordState.success}</p>) : null}
+                        {passwordState.success ? (
+                            <p className={formStyles.formSuccess}>{passwordState.success}</p>) : null}
                         <div className={formStyles.formActions}>
-                            <button type="submit" className={`${buttonStyles.btn} ${buttonStyles.btnPrimary}`} disabled={passwordState.loading}>
+                            <button type="submit" className={`${buttonStyles.btn} ${buttonStyles.btnPrimary}`}
+                                    disabled={passwordState.loading}>
                                 {passwordState.loading ? "Saving..." : "Update password"}
                             </button>
                         </div>

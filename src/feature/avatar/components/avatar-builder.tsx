@@ -10,9 +10,6 @@ import {useRouter} from "next/navigation";
 import {JSX, useState} from "react";
 
 /**
- * TODO:: clean up styles
- */
-/**
  * Properties for the AvatarBuilder component.
  *
  * @property {AvatarConfig} initialConfig - The initial visual layout parameters of the user's avatar character.
