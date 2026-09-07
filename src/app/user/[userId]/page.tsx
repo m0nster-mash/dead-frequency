@@ -12,6 +12,9 @@ import {notFound} from "next/navigation";
 import {JSX} from "react";
 
 /**
+ * TODO:: clean up styles
+ */
+/**
  * Properties for the PublicProfilePage component.
  *
  * @property {Promise<{ userId: string }>} params - A promise resolving to the route parameters containing the

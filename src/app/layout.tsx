@@ -6,6 +6,9 @@ import "./globals.css";
 import React, {JSX, ReactNode} from "react";
 
 /**
+ * TODO:: clean up styles
+ */
+/**
  * Global application metadata dictionary configuration for Next.js. Controls the fallback document head tags, site
  * indexing signatures, and default titles.
  */

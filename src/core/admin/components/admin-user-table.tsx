@@ -11,6 +11,9 @@ import Link from "next/link";
 import {JSX, useState} from "react";
 
 /**
+ * TODO:: clean up styles
+ */
+/**
  * Structural definition of a platform user record for administration context.
  *
  * @property {string} id - Unique operational identifier for the account.

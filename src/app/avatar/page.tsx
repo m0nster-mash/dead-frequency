@@ -7,6 +7,9 @@ import {DEFAULT_AVATAR_CONFIG} from "@/feature/avatar/lib/options";
 import {JSX} from "react";
 
 /**
+ * TODO:: clean up styles
+ */
+/**
  * Personal account settings page.
  *
  * @returns {Promise<JSX.Element>} A promise resolving to the user profile customization configuration layout

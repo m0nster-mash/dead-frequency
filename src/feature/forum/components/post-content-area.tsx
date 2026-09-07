@@ -1,6 +1,9 @@
 import styles from "@/feature/forum/styles/forum.module.css";
 import Placeholder from "@shared/components/placeholder";
 
+/**
+ * TODO:: clean up styles
+ */
 type PostContentAreaProps = {
     name?: string;
     placeholder?: string;

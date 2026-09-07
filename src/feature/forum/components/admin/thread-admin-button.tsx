@@ -6,6 +6,9 @@ import styles from "@/feature/forum/styles/forum.module.css";
 import GearIcon from "@shared/svg/bootstrap-gear-icon.svg";
 import {useState} from "react";
 
+/**
+ * TODO:: clean up styles
+ */
 type ThreadAdminButtonProps = {
     threadId: string;
     threadTitle: string;

@@ -4,6 +4,9 @@ import styles from "@/feature/forum/styles/forum.module.css";
 import React, {ReactNode, useEffect, useRef} from "react";
 import CloseIcon from "@shared/svg/bootstrap-close-icon.svg";
 
+/**
+ * TODO:: clean up styles
+ */
 export type AdminForumControlType =
     | "thread"
     | "board"

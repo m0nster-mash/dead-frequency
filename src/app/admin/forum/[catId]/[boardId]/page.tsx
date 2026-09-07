@@ -3,9 +3,12 @@ import {requireSession} from "@/core/auth/lib/require-session";
 import {PageHeader} from "@/core/dashboard/components/panels/page-header";
 import {EditBoardPanel} from "@/feature/forum/components/admin/edit-board-panel";
 import {getForumHierarchy} from "@/feature/forum/lib/queries";
-import panelStyle from "@/shared/styles/panel.module.css";
 import {notFound} from "next/navigation";
 import {JSX} from "react";
+
+/**
+ * TODO:: clean up styles
+ */
 
 type Props = {
     params: Promise<{
@@ -27,16 +30,14 @@ export default async function ViewBoardPage({params,}: Props): Promise<JSX.Eleme
     }
 
     return (
-        <div className={panelStyle.panelViewport}>
+        <div>
             <PageHeader eyebrow={"Administration"}
                         title={"Edit Board"}
                         subtitle={"Manage forum board configuration"}/>
 
-            <div>
-                <EditBoardPanel board={board}
-                                categories={categories}
-                                updateBoardAction={updateForumBoardAction}/>
-            </div>
+            <EditBoardPanel board={board}
+                            categories={categories}
+                            updateBoardAction={updateForumBoardAction}/>
         </div>
     );
 }

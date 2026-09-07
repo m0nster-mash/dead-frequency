@@ -1,10 +1,12 @@
 "use client";
 
 import {useSidebar} from "@/app/dashboard/components/sidebar-context";
-// import styles from "@shared/styles/dashboard.module.css";
-import styles from "@/shared/styles/form.module.css";
+import sidebarStyles from "@/shared/styles/patterns/sidebar.module.css";
 import {CSSProperties, JSX, ReactNode} from "react";
 
+/**
+ * TODO:: clean up styles
+ */
 /**
  * Properties for the AppShellFrame component.
  *
@@ -41,9 +43,9 @@ export default function AppShellFrame({sidebar, header, children}: AppShellFrame
     return (
         <div className="app" style={shellStyle}>
             {sidebar}
-            <div className={styles.mainShell}>
+            <div className={sidebarStyles.mainShell}>
                 {header}
-                <main className={styles.appContent}>
+                <main className={sidebarStyles.appContent}>
                     <div id="top">{children}</div>
                 </main>
             </div>

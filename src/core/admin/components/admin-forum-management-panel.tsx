@@ -6,6 +6,9 @@ import styles from "@/shared/styles/form.module.css";
 import {JSX, useMemo} from "react";
 
 /**
+ * TODO:: clean up styles
+ */
+/**
  * Structural definition of a forum board configuration record.
  *
  * @property {string} id - Unique identifier for the board.

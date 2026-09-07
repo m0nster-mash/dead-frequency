@@ -1,12 +1,14 @@
 "use client";
 
 import DownArrowIcon from "@/shared/svg/bootstrap-down-arrow-icon.svg";
-// import styles from "@shared/styles/dashboard.module.css";
-import styles from "@/shared/styles/form.module.css";
+import sidebarStyles from "@/shared/styles/patterns/sidebar.module.css";
 import Link from "next/link";
 import {usePathname} from "next/navigation";
 import {JSX, ReactNode, useEffect, useState} from "react";
 
+/**
+ * TODO:: clean up styles
+ */
 /**
  * Structural definition for an individual navigation item anchor link.
  *
@@ -136,23 +138,23 @@ function ExpandableMenuItem({item, pathname}: {
                     onClick={() => setIsOpen((open) => !open)}
                     aria-expanded={isOpen}
                     title={item.label}
-                    className={`${styles.expandableNavButton}${hasActiveChild ? ` ${styles.active}` : ""}`}>
+                    className={`${sidebarStyles.expandableNavButton}${hasActiveChild ? ` ${sidebarStyles.active}` : ""}`}>
                 {item.icon}
 
-                <span className={styles.hideOnCollapse}>
+                <span className={sidebarStyles.hideOnCollapse}>
                     {item.label}
                 </span>
 
-                <span className={`${styles.expandIcon} ${
-                    isOpen ? styles.expandIconOpen : ""
-                } ${styles.hideOnCollapse}`}
+                <span className={`${sidebarStyles.expandIcon} ${
+                    isOpen ? sidebarStyles.expandIconOpen : ""
+                } ${sidebarStyles.hideOnCollapse}`}
                       aria-hidden="true">
                     <DownArrowIcon/>
                 </span>
             </button>
 
             {isOpen && (
-                <div className={styles.subNav}>
+                <div className={sidebarStyles.subNav}>
                     {item.links.map((link) => {
                         const active = isNavItemActive(
                             pathname,
@@ -163,12 +165,12 @@ function ExpandableMenuItem({item, pathname}: {
                             <Link key={link.href}
                                   href={link.href}
                                   title={link.label}
-                                  className={`${styles.subNavItem}${
-                                      active ? ` ${styles.active}` : ""
+                                  className={`${sidebarStyles.subNavItem}${
+                                      active ? ` ${sidebarStyles.active}` : ""
                                   }`}>
                                 {link.icon}
 
-                                <span className={styles.hideOnCollapse}>
+                                <span className={sidebarStyles.hideOnCollapse}>
                                     {link.label}
                                 </span>
                             </Link>
@@ -196,11 +198,11 @@ export function SidebarNav({sections}: SidebarNavProps): JSX.Element {
     const pathname = usePathname();
 
     return (
-        <nav className={styles.sidebarNav}>
+        <nav className={sidebarStyles.sidebarNav}>
             {sections.map((section, sectionIndex) => (
                 <div key={section.title ?? sectionIndex}>
                     {section.title && (
-                        <h5 className={styles.hideOnCollapse}>
+                        <h5 className={sidebarStyles.hideOnCollapse}>
                             {section.title}
                         </h5>
                     )}
@@ -223,12 +225,12 @@ export function SidebarNav({sections}: SidebarNavProps): JSX.Element {
                             <Link key={item.href}
                                   href={item.href}
                                   title={item.label}
-                                  className={`${styles.navItem}${
-                                      active ? ` ${styles.active}` : ""
+                                  className={`${sidebarStyles.navItem}${
+                                      active ? ` ${sidebarStyles.active}` : ""
                                   }`}>
                                 {item.icon}
 
-                                <span className={styles.hideOnCollapse}>
+                                <span className={sidebarStyles.hideOnCollapse}>
                                     {item.label}
                                 </span>
                             </Link>

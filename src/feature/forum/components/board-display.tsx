@@ -2,6 +2,9 @@ import styles from "@/feature/forum/styles/forum.module.css";
 import Placeholder from "@shared/components/placeholder";
 import Link from "next/link";
 
+/**
+ * TODO:: clean up styles
+ */
 export type BoardDisplayItem = {
     id: string;
     name: string;

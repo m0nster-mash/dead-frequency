@@ -8,6 +8,9 @@ import {usePathname} from "next/navigation";
 import {JSX} from "react";
 
 /**
+ * TODO:: clean up styles
+ */
+/**
  * An interactive Client Component that parses the browser path routing location to render dynamic navigational
  * breadcrumb paths.
 

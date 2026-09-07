@@ -1,22 +1,25 @@
 import {NavSection, SidebarNav} from "@/app/dashboard/components/sidebar-nav";
+import {auth, SignOutButton} from "@/core/auth";
 import {AvatarRenderer} from "@/feature/avatar/components/avatar-renderer";
 import {getAvatarConfigForUser} from "@/feature/avatar/lib/actions";
 import {DEFAULT_AVATAR_CONFIG} from "@/feature/avatar/lib/options";
+import {DropdownMenu} from "@/shared/components/dropdown-menu";
+import sidebarStyles from "@/shared/styles/patterns/sidebar.module.css";
 import ForumIcon from "@/shared/svg/bootstrap-forum-icon.svg";
 import GearIcon from "@/shared/svg/bootstrap-gear-icon.svg";
 import PersonIcon from "@/shared/svg/bootstrap-person-icon.svg";
 import QuestionIcon from "@/shared/svg/bootstrap-question-icon.svg";
 import AdminIcon from "@/shared/svg/bootstrap-settings.svg";
 import DotIcon from "@/shared/svg/bootstrap-three-dot-icon.svg";
-import {auth, SignOutButton} from "@/core/auth";
-import {DropdownMenu} from "@/shared/components/dropdown-menu";
-import sidebarStyles from "@/shared/styles/patterns/sidebar.module.css";
 import {headers} from "next/headers";
 import Link from "next/link";
 import {JSX} from "react";
 import SidebarFrame from "./sidebar-frame";
 import SidebarToggleButton from "./sidebar-toggle-button";
 
+/**
+ * TODO:: clean up styles
+ */
 /**
  * The left-side bar.
  *
@@ -95,8 +98,7 @@ export async function Sidebar(): Promise<JSX.Element> {
             <div>
                 {session ? (
                     <div className={sidebarStyles.userCard}>
-                        {/* TODO: styles.avatar has no equivalent in the new sidebar.module.css —
-                            find where the avatar-circle rule landed, or reintroduce it. */}
+                        {/* TODO: styles.avatar has no equivalent in the new sidebar.module.css, find where the avatar-circle rule landed, or reintroduce it. */}
                         <div className={sidebarStyles.avatar}>
                             {avatarConfig ? (
                                 <AvatarRenderer config={avatarConfig} size={36}/>

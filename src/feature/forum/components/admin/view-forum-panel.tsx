@@ -4,6 +4,9 @@ import {ForumBoard, ForumCategory, ViewCategoryContent,} from "@/feature/forum/c
 import styles from "@/feature/forum/styles/admin.module.css";
 import {JSX, useMemo} from "react";
 
+/**
+ * TODO:: clean up styles
+ */
 type Props = {
     categories: ForumCategory[];
     unassignedBoards?: ForumBoard[];

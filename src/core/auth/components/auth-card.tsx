@@ -10,6 +10,9 @@ import {useRouter} from "next/navigation";
 import {JSX, SubmitEvent, useState} from "react";
 
 /**
+ * TODO:: clean up styles
+ */
+/**
  * Valid operational state modes for the authentication workflow.
  */
 type Mode = "login" | "register";

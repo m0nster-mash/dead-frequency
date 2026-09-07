@@ -3,6 +3,9 @@
 import {createContext, JSX, type ReactNode, useContext, useEffect, useState} from "react";
 
 /**
+ * TODO:: clean up styles
+ */
+/**
  * Value shape exposed by the SidebarContext.
  *
  * @property {boolean} collapsed - Indicates whether the sidebar interface is minimized.

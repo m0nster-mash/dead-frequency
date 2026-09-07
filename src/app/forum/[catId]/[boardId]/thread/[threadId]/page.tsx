@@ -10,6 +10,9 @@ import {notFound} from "next/navigation";
 import {JSX} from "react";
 
 /**
+ * TODO:: clean up styles
+ */
+/**
  * Properties for the ForumThreadPage component.
  *
  * @property {Promise<{ catId: string; boardId: string; threadId: string }>} params - A promise resolving to the

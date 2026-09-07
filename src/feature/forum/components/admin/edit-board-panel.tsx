@@ -6,6 +6,9 @@ import styles from "@/feature/forum/styles/admin.module.css";
 import Placeholder from "@/shared/components/placeholder";
 import {JSX} from "react";
 
+/**
+ * TODO:: clean up styles
+ */
 type Props = {
     board: ForumBoard;
     categories: ForumCategory[];

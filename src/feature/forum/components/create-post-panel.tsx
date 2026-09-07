@@ -2,6 +2,9 @@ import {MainContentPanel} from "@/core/dashboard/components/panels/main-card";
 import {PostContentArea} from "@/feature/forum/components/post-content-area";
 import styles from "@/feature/forum/styles/forum.module.css";
 
+/**
+ * TODO:: clean up styles
+ */
 type CreatePostPanelProps = {
     action: (formData: FormData) => void | Promise<void>;
     title?: string;

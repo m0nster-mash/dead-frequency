@@ -3,6 +3,9 @@ import Placeholder from "@/shared/components/placeholder";
 import Link from "next/link";
 import {JSX} from "react";
 
+/**
+ * TODO:: clean up styles
+ */
 export type ForumBoard = {
     id: string;
     categoryId: string;

@@ -11,6 +11,9 @@ import {notFound} from "next/navigation";
 import {JSX} from "react";
 
 /**
+ * TODO:: clean up styles
+ */
+/**
  * Properties for the ForumCategoryPage component.
  *
  * @property {Promise<{ catId: string }>} params - A promise resolving to the dynamic path parameters.

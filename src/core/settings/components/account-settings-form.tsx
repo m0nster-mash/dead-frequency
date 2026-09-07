@@ -8,6 +8,9 @@ import {useRouter} from "next/navigation";
 import {JSX, SubmitEvent, useState} from "react";
 
 /**
+ * TODO:: clean up styles
+ */
+/**
  * Properties for the AccountSettingsForm component.
  *
  * @property {string} currentName - The user's existing display username.

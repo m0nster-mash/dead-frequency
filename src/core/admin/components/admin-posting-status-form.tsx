@@ -1,10 +1,13 @@
 "use client";
 
 import {MainContentPanel} from "@/core/dashboard/components/panels/main-card";
-// import styles from "@/shared/styles/form-panel.module.css";
-import styles from "@/shared/styles/form.module.css";
+import formStyle from "@/shared/styles/form.module.css";
+import buttonStyles from "@shared/styles/buttons.module.css";
 import {JSX, useState} from "react";
 
+/**
+ * TODO:: clean up styles
+ */
 /**
  * Properties for the AdminPostingStatusForm component.
  *
@@ -40,13 +43,13 @@ export function AdminPostingStatusForm({userId, onSubmitAction}: Props): JSX.Ele
 
     return (
         <MainContentPanel title={"Posting Status"}>
-            <form className={styles.form} action={onSubmitAction}>
+            <form className={formStyle.form} action={onSubmitAction}>
                 <input type="hidden" name="userId" value={userId}/>
 
-                <div className={styles.field}>
-                    <label className={styles.label}>Scope</label>
+                <div className={formStyle.formField}>
+                    <label className={formStyle.formLabel}>Scope</label>
                     <select name="module"
-                            className={styles.input}
+                            className={formStyle.formInput}
                             value={module}
                             onChange={(e) => setModule(e.target.value)}>
                         <option value="">Site-wide</option>
@@ -54,21 +57,21 @@ export function AdminPostingStatusForm({userId, onSubmitAction}: Props): JSX.Ele
                     </select>
                 </div>
 
-                <div className={styles.field}>
-                    <label className={styles.label}>Status</label>
+                <div className={formStyle.formField}>
+                    <label className={formStyle.formLabel}>Status</label>
                     <select name="status"
-                            className={styles.input}
+                            className={formStyle.formInput}
                             defaultValue="muted">
                         {STATUSES.map((s) => <option key={s} value={s}>{s}</option>)}
                     </select>
                 </div>
 
-                <div className={styles.field}>
-                    <label className={styles.label}>Reason</label>
-                    <input name="reason" className={styles.input}/>
+                <div className={formStyle.formField}>
+                    <label className={formStyle.formLabel}>Reason</label>
+                    <input name="reason" className={formStyle.formInput}/>
                 </div>
 
-                <button type="submit" className={styles.submit}>Apply</button>
+                <button type="submit" className={`${buttonStyles.btn} ${buttonStyles.btnPrimary}`}>Apply</button>
             </form>
         </MainContentPanel>
     );

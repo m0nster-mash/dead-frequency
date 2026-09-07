@@ -7,6 +7,9 @@ import Link from "next/link";
 import {JSX, ReactNode, useState} from "react";
 
 /**
+ * TODO:: clean up styles
+ */
+/**
  * Structural definition for a link within an expandable menu.
  *
  * @property {string} label - Display text for the menu link.

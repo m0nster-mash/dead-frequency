@@ -9,6 +9,9 @@ import Placeholder from "@shared/components/placeholder";
 import {JSX} from "react";
 
 /**
+ * TODO:: clean up styles
+ */
+/**
  * The central forum catalog directory landing view.
  *
  * @returns {Promise<JSX.Element>} A promise resolving to the primary systemic forum catalog dashboard directory UI.

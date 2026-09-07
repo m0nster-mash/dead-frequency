@@ -1,9 +1,13 @@
 "use client";
 
-import panel from "@/shared/styles/panel.module.css";
-import card from "@/shared/styles/patterns/card.module.css";
+import panelStyles from "@/shared/styles/panel.module.css";
+import cardStyles from "@/shared/styles/patterns/card.module.css";
+import buttonStyles from "@shared/styles/buttons.module.css";
 import {JSX, ReactNode} from "react";
 
+/**
+ * TODO:: clean up styles
+ */
 /**
  * Properties for the MainContentPanel component.
  *
@@ -46,19 +50,21 @@ export function MainContentPanel({
     const sectionId = id ?? slugify(title);
 
     return (
-        <section className={`${panel.panel} ${className}`}>
-            <div className={panel.panelHeader}>
+        <section className={`${panelStyles.panel} ${className}`}>
+            <div className={panelStyles.panelHeader}>
                 <div>
-                    <h2 className={panel.panelHeaderTitle} id={sectionId}>{title}</h2>
-                    {description && (<p className={panel.panelHeaderDescription}>{description}</p>)}
+                    <h2 className={panelStyles.panelHeaderTitle} id={sectionId}>{title}</h2>
+                    {description && (<p className={panelStyles.panelHeaderDescription}>{description}</p>)}
                 </div>
             </div>
 
-            <div className={panel.panelBody}>{children}</div>
+            <div className={panelStyles.panelBody}>{children}</div>
 
             {/* Routes window scroll focus point straight back up to global parent boundary elements. */}
+
             {showBackToTop && (
-                <a href="#top" className={`${card.cardBackToTop}`}
+                <a href="#top"
+                   className={`${buttonStyles.iconBtn} ${buttonStyles.iconBtnSubtle} ${cardStyles.cardBackToTop}`}
                    style={{display: "inline-flex", alignItems: "center", justifyContent: "center"}}
                    aria-label="Back to top of page">
                     ↑

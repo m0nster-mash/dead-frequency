@@ -6,6 +6,9 @@ import brandStyles from "@/shared/styles/brand.module.css";
 import Link from "next/link";
 import {JSX, ReactNode} from "react";
 
+/**
+ * TODO:: clean up styles
+ */
 
 /**
  * Properties for the SidebarFrame component.

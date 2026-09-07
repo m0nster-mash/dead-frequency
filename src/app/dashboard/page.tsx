@@ -5,6 +5,9 @@ import LoremIpsum from "@/shared/components/lorem-ipsum";
 import {JSX} from "react";
 
 /**
+ * TODO:: clean up styles
+ */
+/**
  * A page that serves as the root landing viewport for the dashboard.
  *
  * @returns {Promise<JSX.Element>} A promise resolving to the user workspace dashboard landing viewport.

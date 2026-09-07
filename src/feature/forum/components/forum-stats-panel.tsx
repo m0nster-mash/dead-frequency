@@ -1,6 +1,9 @@
 import styles from "@/feature/forum/styles/forum.module.css";
 import {ReactNode} from "react";
 
+/**
+ * TODO:: clean up styles
+ */
 export type ForumStat = {
     label: string;
     value: ReactNode;

@@ -4,6 +4,9 @@
 import styles from "@/shared/styles/form.module.css";
 import Placeholder from "@shared/components/placeholder";
 
+/**
+ * TODO:: clean up styles
+ */
 type AdminThreadControlsProps = {
     threadId?: string;
     threadTitle?: string;

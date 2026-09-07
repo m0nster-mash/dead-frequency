@@ -5,6 +5,9 @@ import tocStyles from "@/shared/styles/patterns/table-of-contents.module.css";
 import {JSX, useState} from "react";
 
 /**
+ * TODO:: clean up styles
+ */
+/**
  * Structural definition for an individual reference item inside the table of contents list.
  *
  * @property {string} id - The specific link anchor string corresponding to the destination element ID on the page.
