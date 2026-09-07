@@ -1,6 +1,6 @@
 "use client";
 
-import chatboxStyles from "@/feature/chatbox/styles/chatbox.module.css";
+import chatboxStyles from "@/feature/chatbox/styles/chatbox-widget.module.css";
 import buttonStyles from "@/shared/styles/buttons.module.css";
 import {JSX, useEffect, useRef, useState} from "react";
 
@@ -35,10 +35,10 @@ export function ChatboxWidget({
                               }: ChatboxWidgetProps): JSX.Element {
     const [messages, setMessages] = useState<ChatboxWidgetMessage[]>([]);
     const [messageBody, setMessageBody] = useState("");
-    const [isLoading, setIsLoading] = useState(false);
+    const [, setIsLoading] = useState(false);
     const [isSending, setIsSending] = useState(false);
     const messagesEndRef = useRef<HTMLDivElement>(null);
-    const refreshIntervalRef = useRef<NodeJS.Timeout>();
+    const refreshIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
     // Fetch messages from server
     const fetchMessages = async () => {
@@ -61,10 +61,14 @@ export function ChatboxWidget({
     // Set up auto-refresh interval
     useEffect(() => {
         // Fetch immediately on mount
-        fetchMessages();
+        (async () => {
+            await fetchMessages();
+        })();
 
         // Set up interval for refreshing
-        refreshIntervalRef.current = setInterval(fetchMessages, refreshInterval);
+        refreshIntervalRef.current = setInterval(() => {
+            fetchMessages();
+        }, refreshInterval);
 
         // Cleanup interval on unmount
         return () => {

@@ -78,6 +78,13 @@
       "when": 1788817172611,
       "tag": "0010_silent_manta",
       "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "7",
+      "when": 1788820256746,
+      "tag": "0011_ancient_the_fallen",
+      "breakpoints": true
     }
   ]
 }
