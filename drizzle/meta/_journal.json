@@ -71,6 +71,13 @@
       "when": 1788378852621,
       "tag": "0009_brief_nocturne",
       "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "7",
+      "when": 1788817172611,
+      "tag": "0010_silent_manta",
+      "breakpoints": true
     }
   ]
 }
