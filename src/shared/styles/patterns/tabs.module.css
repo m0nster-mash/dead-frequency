@@ -1,14 +1,6 @@
 /* =========================================================
-   TABS — pattern
-   A segmented tab switcher (e.g. "Sign in" / "Sign up" on the
-   auth screen). This had only one source and no duplication
-   elsewhere, so nothing was renamed or merged — kept here
-   verbatim as its own pattern file rather than left inside a
-   page-specific stylesheet, since a tab switcher is a generic,
-   reusable, nameable UI pattern.
-   source: auth-card.module.css .tabs / .tab / .tabActive
+   TABS
    ========================================================= */
-
 .tabs {
     display: flex;
     margin-bottom: var(--size-space-6);

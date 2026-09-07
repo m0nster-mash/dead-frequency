@@ -1,33 +1,9 @@
 /* =========================================================
-   PANEL — primitive
-   The base "bordered surface" building block used by every
-   higher-level container in the app (cards, modals share its
-   visual language, sidebars use it for sub-panels, etc).
-
-   This file intentionally knows nothing about what page or
-   feature it appears on. Page-level headers (eyebrow/title/
-   subtitle) and card-specific composition (TOC slot, tabs,
-   etc.) belong in core/patterns/card.module.css instead — this
-   file only provides the raw surface and generic subdivisions.
+   PANEL
    ========================================================= */
-
-/* -----------------------------------------------------------
+/* =========================================================
    SURFACE
-   Merges: auth-card.module.css        .card
-           content-panel.module.css    .mainContentCard
-           forum.module.css            .forumSummary / .boardSummary
-   These three were the same idea (bordered box, rounded
-   corners, background fill) with different border-radius
-   tokens (radius-lg / form-radius / radius-md) and background
-   tokens (surface / form-background / surface-raised), and
-   inconsistent padding (some padded the whole box, some split
-   into header/body). Standardized on radius-md + surface below;
-   use the modifiers to opt back into padding, elevation, or the
-   raised background where the old version had them.
-   ----------------------------------------------------------- */
-
-/* was: .card (auth-card), .mainContentCard (content-panel),
-   .forumSummary / .boardSummary (forum) */
+   ========================================================= */
 .panel {
     position: relative;
     overflow: hidden;
@@ -37,46 +13,28 @@
     color: var(--color-text-primary);
 }
 
-/* Stack spacing when multiple panels appear in sequence. */
-/* was: .mainContentCard + .mainContentCard (content-panel) */
 .panel + .panel {
     margin-top: var(--size-space-6);
 }
 
-/* Use when a panel has no header/body split and needs its own
-   padding directly (e.g. the old auth card, the old forum
-   summary boxes). */
-/* was: padding rules inlined in .card (auth-card) and
-   .forumSummary / .boardSummary (forum) */
 .panelPadded {
     padding: var(--size-space-6);
 }
 
-/* Auth's card additionally had a tighter max-width and larger
-   padding than the default above. Kept as a separate, stackable
-   modifier rather than folded into the base — most panels don't
-   want a max-width. */
-/* was: width / max-width / padding portion of .card (auth-card) */
 .panelConstrained {
     width: 100%;
     max-width: 400px;
     padding: var(--size-space-7) var(--size-space-6);
 }
 
-/* was: box-shadow: var(--shadow-md) in .card (auth-card) */
 .panelElevated {
     box-shadow: var(--shadow-md);
 }
 
-/* was: background: var(--color-surface-raised) in
-   .forumSummary / .boardSummary (forum) */
 .panelRaised {
     background: var(--color-surface-raised);
 }
 
-/* Centers a single panel in the viewport with page padding —
-   used for full-page flows like sign-in. */
-/* was: .wrapper (auth-card) */
 .panelViewport {
     display: flex;
     flex-direction: column;
@@ -85,13 +43,9 @@
     padding: var(--size-space-6);
     background: var(--color-bg);
 }
-/* -----------------------------------------------------------
+/* =========================================================
    HEADER / BODY SPLIT
-   was: .cardHeader / .cardHeader h2 / .cardHeader p /
-        .mainContentCardBody (content-panel)
-   ----------------------------------------------------------- */
-
-/* was: .cardHeader (content-panel) */
+   ========================================================= */
 .panelHeader {
     display: flex;
     align-items: flex-start;
@@ -106,11 +60,6 @@
     min-width: 0;
 }
 
-/* was: .cardHeader h2 (content-panel). Also absorbs form-panel's
-   .sectionTitle, which was font-size-lg/weight-700 — identical
-   to this rule — used to head a form section rather than a
-   panel's header bar. Same visual result, so no separate class
-   was created for it; apply .panelHeaderTitle there too. */
 .panelHeaderTitle {
     margin: 0;
     color: var(--color-text-primary);
@@ -126,9 +75,6 @@
     margin-bottom: var(--size-space-6);
 }
 
-/* was: .cardHeader p (content-panel). Also absorbs form-panel's
-   .sectionSubtitle (font-size-sm, muted, same purpose) — the
-   description line under a section title. */
 .panelHeaderDescription {
     margin: var(--size-space-2) 0 0;
     color: var(--color-text-muted);
@@ -136,7 +82,6 @@
     line-height: 1.5;
 }
 
-/* was: .mainContentCardBody (content-panel) */
 .panelBody {
     padding: var(--size-space-6);
 }
@@ -149,29 +94,19 @@
     margin-bottom: 0;
 }
 
-/* -----------------------------------------------------------
+/* =========================================================
    INTERNAL SECTIONS
-   For subdividing a panel's body into labeled sub-sections
-   (e.g. "Rename category" / "Reorder categories" stacked inside
-   one settings panel).
-   was: .editorSection / .editorSection:first-child /
-        .sectionHeader / .sectionTitle / .sectionDescription
-        (admin.module.css)
-   ----------------------------------------------------------- */
-
-/* was: .editorSection (admin) */
+   ========================================================= */
 .panelSection {
     padding: var(--size-space-6) 0;
     border-top: 1px solid var(--color-border);
 }
 
-/* was: .editorSection:first-child (admin) */
 .panelSection:first-child {
     padding-top: 0;
     border-top: 0;
 }
 
-/* was: .sectionHeader (admin) */
 .panelSectionHeader {
     display: flex;
     align-items: flex-start;
@@ -180,15 +115,6 @@
     margin-bottom: var(--size-space-5);
 }
 
-/* was: .sectionTitle (admin) — NOTE: form-panel.module.css also
-   had an unrelated, larger .sectionTitle (font-size-lg) used to
-   head an entire page-level form, not a panel sub-section. That
-   one is intentionally NOT merged here; it will resurface as
-   part of core/patterns/card.module.css's page-header treatment
-   in a later pass, alongside content-panel's eyebrow/h1/subtitle
-   and forum's summaryEyebrow/summaryTitle — all four are the
-   same "page header" idea, distinct from this panel-internal
-   sub-section title. */
 .panelSectionTitle {
     margin: 0;
     color: var(--color-text-primary);
@@ -196,10 +122,6 @@
     font-weight: 700;
 }
 
-/* was: .sectionDescription (admin) — same note as above: this
-   is the panel-internal counterpart to form-panel's
-   .sectionSubtitle, which is deferred to the future page-header
-   pattern rather than merged here. */
 .panelSectionDescription {
     margin: var(--size-space-1) 0 0;
     color: var(--color-text-muted);
@@ -207,21 +129,9 @@
     line-height: 1.45;
 }
 
-/* -----------------------------------------------------------
+/* =========================================================
    EMPTY STATE
-   A dashed placeholder box for "nothing here yet" states that
-   stand alone (not inside a table cell — see
-   core/primitives/tables.module.css's .tableEmptyCell for that
-   case).
-   was: .emptyState / .emptyState p (admin.module.css)
-   NOTE: forum.module.css also had a plain-text .empty class (no
-   border, just muted inline text used in board/thread listings).
-   That one was simple enough (three declarations) that it
-   wasn't worth merging into a shared class — reach for a plain
-   muted-text utility there instead once one exists. Flagging as
-   an open item.
-   ----------------------------------------------------------- */
-
+   ========================================================= */
 .panelEmptyState {
     padding: var(--size-space-6);
     border: 1px dashed var(--color-border);
@@ -234,11 +144,9 @@
     margin: 0;
 }
 
-/* -----------------------------------------------------------
+/* =========================================================
    RESPONSIVE
-   was: content-panel.module.css's @media rules for
-   .cardHeader / .mainContentCardBody
-   ----------------------------------------------------------- */
+   ========================================================= */
 @media (max-width: 768px) {
     .panelHeader {
         padding: var(--size-space-4) var(--size-space-5);

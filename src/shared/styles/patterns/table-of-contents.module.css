@@ -1,25 +1,6 @@
 /* =========================================================
-   TABLE OF CONTENTS — pattern
-   A disclosure widget: a toggle button that expands/collapses
-   an anchor list. Drops into a card's panel body — it has no
-   idea what page it's on, which is what makes it a pattern
-   rather than something baked into a specific page's stylesheet.
-
-   source: content-panel.module.css .tableOfContentsButton* /
-           .contentHeaderToc*
-   Renamed throughout from the "contentHeader..." / "tableOf
-   Contents..." prefixes (which named it after the page it used
-   to live in) to a plain "toc..." prefix, since this is now a
-   standalone, page-agnostic component.
+   TABLE OF CONTENTS
    ========================================================= */
-
-/* was: .contentHeaderTocToggle (content-panel) — a near-empty
-   wrapper (`display: block; width: 100%`) around the toggle
-   button below. Folded directly into .tocToggle instead of kept
-   as a separate wrapper class, since the button itself can just
-   be full-width. */
-
-/* was: .tableOfContentsButton (content-panel) */
 .tocToggle {
     display: inline-flex;
     align-items: center;
@@ -49,7 +30,6 @@
     box-shadow: var(--form-shadow-focus);
 }
 
-/* was: .tableOfContentsButtonIcon (content-panel) */
 .tocToggleIcon {
     display: inline-flex;
     align-items: center;
@@ -58,12 +38,10 @@
     transition: transform var(--form-transition);
 }
 
-/* was: .tableOfContentsButtonIconOpen (content-panel) */
 .tocToggleIconOpen {
     transform: rotate(180deg);
 }
 
-/* was: .contentHeaderToc (content-panel) */
 .tocPanel {
     display: none;
     padding: var(--size-space-4);
@@ -72,12 +50,10 @@
     background: var(--color-surface-strong);
 }
 
-/* was: .contentHeaderTocOpen (content-panel) */
 .tocPanelOpen {
     display: block;
 }
 
-/* was: .contentHeaderTocTitle (content-panel) */
 .tocTitle {
     margin: 0 0 var(--size-space-3);
     color: var(--color-text-primary);
@@ -87,7 +63,6 @@
     text-transform: uppercase;
 }
 
-/* was: .contentHeaderTocList (content-panel) */
 .tocList {
     display: flex;
     flex-direction: column;
@@ -97,12 +72,10 @@
     list-style: none;
 }
 
-/* was: .contentHeaderTocItem (content-panel) */
 .tocItem {
     margin: 0;
 }
 
-/* was: .contentHeaderTocItem a (content-panel) */
 .tocLink {
     display: block;
     padding: var(--size-space-2) var(--size-space-3);

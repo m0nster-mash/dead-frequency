@@ -1,3 +1,6 @@
+/* =========================================================
+   BREADCRUMBS
+   ========================================================= */
 .breadcrumbs {
     display: flex;
     align-items: center;
@@ -8,13 +11,13 @@
 
 .home,
 .link {
-    color: var(--color-text-secondary);
+    color: var(--color-text-primary);
     text-decoration: none;
 }
 
 .home:hover,
 .link:hover {
-    color: #111;
+    color: var(--color-text-muted);
     text-decoration: underline;
 }
 
@@ -25,10 +28,10 @@
 }
 
 .separator {
-    color:  var(--color-text-secondary);
+    color: var(--color-text-secondary);
 }
 
 .current {
-    color:  var(--color-text-secondary);
+    color: var(--color-text-secondary);
     font-weight: 600;
 }

@@ -1,12 +1,6 @@
 /* =========================================================
-   BRAND — primitive
-   Wordmark/logotype styling. Used inside the sidebar (paired
-   with an icon/mark, as a link) and standalone on the auth
-   screen (larger, centered, no icon).
+   BRAND
    ========================================================= */
-
-/* was: .brand (dashboard) — a horizontal logo+wordmark lockup,
-   used as a link. */
 .brand {
     display: flex;
     align-items: center;
@@ -15,7 +9,6 @@
     text-decoration: none;
 }
 
-/* was: .brandName (dashboard) */
 .brandName {
     font-size: 14px;
     font-weight: 700;
@@ -25,12 +18,6 @@
     color: var(--color-text-secondary);
 }
 
-/* was: .brand (auth-card) — this name collided with dashboard's
-   .brand above despite being visually different: a larger,
-   standalone wordmark with no icon, centered above a form.
-   Renamed .brandLarge to keep both without one overwriting the
-   other. Use on its own (no .brand base needed) since it isn't
-   a lockup with an icon. */
 .brandLarge {
     font-size: var(--font-size-xl);
     font-weight: 700;
