@@ -3,14 +3,12 @@
 import {DeleteUserModal} from "@/core/admin/components/delete-user-modal";
 import {authClient} from "@/core/auth/lib/auth-client";
 import {MainContentPanel} from "@/core/dashboard/components/panels/main-card";
-// import styles from "@/shared/styles/form-panel.module.css";
-import styles from "@/shared/styles/form.module.css";
+import formStyles from "@/shared/styles/form.module.css";
+import panelStyles from "@/shared/styles/panel.module.css";
+import buttonStyles from "@shared/styles/buttons.module.css";
 import {useRouter} from "next/navigation";
 import {JSX, SubmitEvent, useState} from "react";
 
-/**
- * TODO:: clean up styles
- */
 /**
  * Properties for the AdminEditUserForm component.
  *
@@ -214,45 +212,47 @@ export function AdminEditUserForm({
     }
 
     return (
-        <div className={styles.wrapper}>
+        <div>
             <MainContentPanel title={"Profile Details"}>
-                <div className={styles.section}>
-                    <form className={styles.form} onSubmit={handleProfileSubmit}>
-                        <div className={styles.field}>
-                            <label className={styles.label} htmlFor="name"> Username </label>
+                <div>
+                    <form className={formStyles.form} onSubmit={handleProfileSubmit}>
+                        <div className={formStyles.formField}>
+                            <label className={formStyles.formLabel} htmlFor="name"> Username </label>
                             <input id={"name"}
                                    name={"name"}
-                                   className={styles.input}
+                                   className={formStyles.formInput}
                                    defaultValue={currentName}
                                    required/>
                         </div>
-                        <div className={styles.field}>
-                            <label className={styles.label} htmlFor="email"> Email </label>
+                        <div className={formStyles.formField}>
+                            <label className={formStyles.formLabel} htmlFor="email"> Email </label>
                             <input id="email"
                                    name="email"
                                    type="email"
-                                   className={styles.input}
+                                   className={formStyles.formInput}
                                    defaultValue={currentEmail}
                                    required/>
                         </div>
-                        <div className={styles.field}>
-                            <label className={styles.label} htmlFor="role"> Role </label>
+                        <div className={formStyles.formField}>
+                            <label className={formStyles.formLabel} htmlFor="role"> Role </label>
                             <select id="role"
                                     name="role"
-                                    className={styles.input}
+                                    className={formStyles.formInput}
                                     defaultValue={currentRole}
                                     disabled={isCurrentUser}>
                                 <option value="user">User</option>
                                 <option value="admin">Admin</option>
                             </select>
                             {isCurrentUser && (
-                                <p className={styles.sectionSubtitle}>You can&apos;t change your own role.</p>
+                                <p className={panelStyles.panelHeaderTitle}>You can&apos;t change your own role.</p>
                             )}
                         </div>
-                        {profileState.error ? <p className={styles.error}>{profileState.error}</p> : null}
-                        {profileState.success ? (<p className={styles.success}>{profileState.success}</p>) : null}
-                        <div className={styles.actions}>
-                            <button type="submit" className={styles.submit} disabled={profileState.loading}>
+                        {profileState.error ? <p className={formStyles.formError}>{profileState.error}</p> : null}
+                        {profileState.success ? (
+                            <p className={formStyles.formSuccess}>{profileState.success}</p>) : null}
+                        <div className={formStyles.formActions}>
+                            <button type="submit" className={`${buttonStyles.btn} ${buttonStyles.btnPrimary}`}
+                                    disabled={profileState.loading}>
                                 {profileState.loading ? "Saving..." : "Save changes"}
                             </button>
                         </div>
@@ -261,32 +261,35 @@ export function AdminEditUserForm({
             </MainContentPanel>
 
             <MainContentPanel title={"Password"}>
-                <div className={styles.section}>
-                    <form className={styles.form} onSubmit={handlePasswordSubmit}>
-                        <div className={styles.row}>
-                            <div className={styles.field}>
-                                <label className={styles.label} htmlFor="newPassword"> New password </label>
+                <div>
+                    <form className={formStyles.form} onSubmit={handlePasswordSubmit}>
+                        <div className={formStyles.formRow}>
+                            <div className={formStyles.formField}>
+                                <label className={formStyles.formLabel} htmlFor="newPassword"> New password </label>
                                 <input id="newPassword"
                                        name="newPassword"
                                        type="password"
-                                       className={styles.input}
+                                       className={formStyles.formInput}
                                        autoComplete="new-password"
                                        required/>
                             </div>
-                            <div className={styles.field}>
-                                <label className={styles.label} htmlFor="confirmPassword"> Confirm new password </label>
+                            <div className={formStyles.formField}>
+                                <label className={formStyles.formLabel} htmlFor="confirmPassword"> Confirm new
+                                    password </label>
                                 <input id="confirmPassword"
                                        name="confirmPassword"
                                        type="password"
-                                       className={styles.input}
+                                       className={formStyles.formInput}
                                        autoComplete="new-password"
                                        required/>
                             </div>
                         </div>
-                        {passwordState.error ? <p className={styles.error}>{passwordState.error}</p> : null}
-                        {passwordState.success ? (<p className={styles.success}>{passwordState.success}</p>) : null}
-                        <div className={styles.actions}>
-                            <button type="submit" className={styles.submit} disabled={passwordState.loading}>
+                        {passwordState.error ? <p className={formStyles.formError}>{passwordState.error}</p> : null}
+                        {passwordState.success ? (
+                            <p className={formStyles.formSuccess}>{passwordState.success}</p>) : null}
+                        <div className={formStyles.formActions}>
+                            <button type="submit" className={`${buttonStyles.btn} ${buttonStyles.btnPrimary}`}
+                                    disabled={passwordState.loading}>
                                 {passwordState.loading ? "Saving..." : "Update password"}
                             </button>
                         </div>
@@ -295,13 +298,13 @@ export function AdminEditUserForm({
             </MainContentPanel>
 
             <MainContentPanel title={"Delete User"}>
-                <div className={styles.section}>
-                    <p className={styles.sectionSubtitle}>
+                <div>
+                    <p className={panelStyles.panelHeaderTitle}>
                         Deleting this user removes their account and sessions permanently.
                     </p>
-                    <div className={styles.actions}>
+                    <div className={formStyles.formActions}>
                         <button type="button"
-                                className={styles.submit}
+                                className={`${buttonStyles.btn} ${buttonStyles.btnPrimary}`}
                                 disabled={isCurrentUser}
                                 onClick={() => setShowDeleteModal(true)}>
                             Delete user

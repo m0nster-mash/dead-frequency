@@ -2,17 +2,16 @@
 
 import {DeleteUserModal} from "@/core/admin/components/delete-user-modal";
 import {MainContentPanel} from "@/core/dashboard/components/panels/main-card";
-// import styles from "@/shared/styles/form-panel.module.css";
-import styles from "@/shared/styles/form.module.css";
+import buttonStyles from "@/shared/styles/buttons.module.css";
+import formStyles from "@/shared/styles/form.module.css";
+import panelStyles from "@/shared/styles/panel.module.css";
+import tableStyles from "@/shared/styles/tables.module.css";
 import EditIcon from "@/shared/svg/bootstrap-edit-icon.svg";
 import SearchIcon from "@/shared/svg/bootstrap-search-icon.svg";
 import TrashIcon from "@/shared/svg/bootstrap-trash-icon.svg";
 import Link from "next/link";
 import {JSX, useState} from "react";
 
-/**
- * TODO:: clean up styles
- */
 /**
  * Structural definition of a platform user record for administration context.
  *
@@ -54,19 +53,19 @@ export function AdminUserTable({users, currentUserId}: AdminUserTableProps): JSX
 
     return (
         <MainContentPanel title={"User Table"}>
-            <div className={styles.section}>
-                <p className={styles.sectionSubtitle}>
+            <div>
+                <p className={panelStyles.panelHeaderTitle}>
                     {users.length} registered{" "} {users.length === 1 ? "user" : "users"}.
                 </p>
-                <div className={styles.tableWrapper}>
-                    <table className={styles.table}>
+                <div className={tableStyles.tableWrapper}>
+                    <table className={tableStyles.table}>
                         <thead>
                         <tr>
                             <th>Name</th>
                             <th>Email</th>
                             <th>Role</th>
                             <th>Status</th>
-                            <th className={styles.tableActions}> Actions</th>
+                            <th className={tableStyles.tableActionsColumn}> Actions</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -74,31 +73,31 @@ export function AdminUserTable({users, currentUserId}: AdminUserTableProps): JSX
                             <tr key={user.id}>
                                 <td>{user.name || "—"}</td>
                                 <td>{user.email}</td>
-                                <td><span className={styles.badge}> {user.role} </span></td>
+                                <td><span className={tableStyles.badge}> {user.role} </span></td>
                                 <td>
-                                    <span className={`${styles.status} ${user.banned
-                                        ? styles.statusBanned : styles.statusActive}`}>
+                                    <span className={`${tableStyles.statusBadge} ${user.banned
+                                        ? tableStyles.statusBadgeDanger : tableStyles.statusBadgeSuccess}`}>
                                         {user.banned ? "Banned" : "Active"}
                                     </span>
                                 </td>
-                                <td className={styles.tableActions}>
-                                    <div className={styles.iconActions}>
+                                <td className={tableStyles.tableActionsColumn}>
+                                    <div className={tableStyles.statusBadge}>
                                         <Link href={`/admin/users/${user.id}`}
-                                              className={styles.iconButton}
+                                              className={`${buttonStyles.iconBtn} ${buttonStyles.iconBtnFilled}`}
                                               title="View details"
                                               aria-label={`View details for ${user.email}`}>
                                             <SearchIcon/>
                                         </Link>
 
                                         <Link href={`/admin/users/${user.id}/edit`}
-                                              className={styles.iconButton}
+                                              className={`${buttonStyles.iconBtn} ${buttonStyles.iconBtnFilled}`}
                                               title="Edit user"
                                               aria-label={`Edit ${user.email}`}>
                                             <EditIcon/>
                                         </Link>
 
                                         <button type="button"
-                                                className={`${styles.iconButton} ${styles.iconButtonDanger}`}
+                                                className={`${buttonStyles.iconBtn} ${buttonStyles.iconBtnDanger}`}
                                                 title="Delete user"
                                                 aria-label={`Delete ${user.email}`}
                                                 disabled={user.id === currentUserId}
@@ -112,7 +111,7 @@ export function AdminUserTable({users, currentUserId}: AdminUserTableProps): JSX
 
                         {users.length === 0 && (
                             <tr>
-                                <td colSpan={5} className={styles.tableEmpty}> No users found.</td>
+                                <td colSpan={5} className={formStyles.tableEmpty}> No users found.</td>
                             </tr>
                         )}
                         </tbody>

@@ -64,6 +64,7 @@
     background: var(--form-background);
     color: var(--color-text-primary);
     box-shadow: var(--shadow-lg);
+    padding: var(--size-space-4);
 }
 
 /* -----------------------------------------------------------
