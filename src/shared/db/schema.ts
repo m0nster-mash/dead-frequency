@@ -1,8 +1,7 @@
-// Core schema
 export * from "@/core/auth/schema/auth.schema";
-
-// Avatar schema
 export * from "@/feature/avatar/schema/avatar.schema";
+export * from "@/feature/forum/schema/forum.schema";
+export * from "@/feature/chatbox/schema/chatbox.schema";
 
 // Communication system schemas
 // export * from "@/shared/communication/moderation/schema/moderation.schema";
@@ -13,4 +12,3 @@ export * from "@/feature/avatar/schema/avatar.schema";
 // export * from "@/shared/communication/social/schema/blocks.schema";
 // export * from "@/shared/communication/status/schema/status.schema";
 
-export * from "@/feature/forum/schema/forum.schema";
