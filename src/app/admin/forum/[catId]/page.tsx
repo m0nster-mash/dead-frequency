@@ -1,20 +1,42 @@
-import {deleteForumCategoryAction, updateForumCategoryAction,} from "@/core/admin/lib/forum-actions";
+import {
+    createForumBoardAction,
+    deleteForumCategoryAction,
+    updateForumCategoryAction,
+} from "@/core/admin/lib/forum-actions";
 import {requireSession} from "@/core/auth/lib/require-session";
 import {PageHeader} from "@/core/dashboard/components/panels/page-header";
+import {CreateBoardPanel} from "@/feature/forum/components/admin/create-board-panel";
 import {EditCategoryPanel} from "@/feature/forum/components/admin/edit-category-panel";
 import {getForumHierarchy} from "@/feature/forum/lib/queries";
+import {notFound} from "next/navigation";
 import {JSX} from "react";
 
-export default async function ViewCategoryPage(): Promise<JSX.Element> {
+type Props = {
+    params: Promise<{
+        catId: string;
+    }>;
+};
+
+export default async function ViewCategoryPage({params}: Props): Promise<JSX.Element> {
     await requireSession({role: "admin"});
 
+    const {catId} = await params;
     const categories = await getForumHierarchy();
+    const category = categories.find((cat) => cat.id === catId);
+
+    if (!category) {
+        notFound();
+    }
 
     return (
         <div>
             <PageHeader eyebrow={"Administration"}
-                        title={"Forum Management"}
-                        subtitle={"Manage forum categories and boards"}/>
+                        title={"Manage Category"}
+                        subtitle={`Manage boards in ${category.label}`}/>
+
+            <CreateBoardPanel createBoardAction={createForumBoardAction}
+                              categories={categories}
+                              defaultCategoryId={catId}/>
 
             <EditCategoryPanel categories={categories}
                                updateCategoryAction={updateForumCategoryAction}
