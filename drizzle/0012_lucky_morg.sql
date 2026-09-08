@@ -1,1 +1,0 @@
-ALTER TABLE "chatbox_conversation" ALTER COLUMN "message_count" SET DATA TYPE integer;
