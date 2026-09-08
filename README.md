@@ -1,4 +1,4 @@
-# dead-frequencey
+# dead-frequency
 
 ### Vanilla setup for:
 
