@@ -16,7 +16,7 @@
     "better-auth": "^1.7.1",
     "bootstrap-icons": "^1.13.1",
     "drizzle-orm": "^0.45.2",
-    "next": "16.3.2",
+    "next": "^16.3.4",
     "next-themes": "^0.4.6",
     "pg": "^8.23.0",
     "postgres": "^3.4.9",
@@ -35,7 +35,7 @@
     "dotenv": "^17.4.2",
     "drizzle-kit": "^0.31.10",
     "eslint": "^9",
-    "eslint-config-next": "16.3.2",
+    "eslint-config-next": "^16.3.4",
     "tsx": "^4.23.12",
     "typescript": "^5"
   }
