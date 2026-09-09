@@ -21,7 +21,16 @@ export function AdminThreadControls({threadId, threadTitle,}: AdminThreadControl
                 </span>
 
                 <span className={modalStyles.modalDescription}>
-                    {threadTitle || <Placeholder text={"THREAD_NAME"}/>}
+                    {threadTitle}
+                </span>
+            </div>
+            <div className={panelStyles.panelPadded}>
+                <span className={modalStyles.modalHeader}>
+                    ID:
+                </span>
+
+                <span className={modalStyles.modalDescription}>
+                    {threadId}
                 </span>
             </div>
 

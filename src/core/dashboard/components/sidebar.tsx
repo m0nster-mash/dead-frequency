@@ -1,5 +1,7 @@
 import {NavSection, SidebarNav} from "@/app/dashboard/components/sidebar-nav";
-import {auth, SignOutButton} from "@/core/auth";
+import {SignOutButton} from "@/core/auth";
+import {signOutAction} from "@/core/auth/lib/actions";
+import {requireSession} from "@/core/auth/lib/require-session";
 import {AvatarRenderer} from "@/feature/avatar/components/avatar-renderer";
 import {getAvatarConfigForUser} from "@/feature/avatar/lib/actions";
 import {DEFAULT_AVATAR_CONFIG} from "@/feature/avatar/lib/options";
@@ -11,7 +13,6 @@ import PersonIcon from "@/shared/svg/bootstrap-person-icon.svg";
 import QuestionIcon from "@/shared/svg/bootstrap-question-icon.svg";
 import AdminIcon from "@/shared/svg/bootstrap-settings.svg";
 import DotIcon from "@/shared/svg/bootstrap-three-dot-icon.svg";
-import {headers} from "next/headers";
 import Link from "next/link";
 import {JSX} from "react";
 import SidebarFrame from "./sidebar-frame";
@@ -23,8 +24,7 @@ import SidebarToggleButton from "./sidebar-toggle-button";
  * @returns {Promise<JSX.Element>} A promise resolving to the fully hydrated navigation column cluster.
  */
 export async function Sidebar(): Promise<JSX.Element> {
-    const requestHeaders = await headers();
-    const session = await auth.api.getSession({headers: requestHeaders});
+    const session = await requireSession();
     const userName = session ? session.user.name : null;
     const userRole = session ? session.user.role : null;
     const isAdmin = userRole === "admin";
@@ -95,7 +95,7 @@ export async function Sidebar(): Promise<JSX.Element> {
             <div>
                 {session ? (
                     <div className={sidebarStyles.userCard}>
-                         <div>
+                        <div>
                             {avatarConfig ? (
                                 <AvatarRenderer config={avatarConfig} size={36}/>
                             ) : (
@@ -122,10 +122,7 @@ export async function Sidebar(): Promise<JSX.Element> {
                                         type: "action",
                                         label: "Sign out",
                                         danger: false,
-                                        action: async () => {
-                                            "use server";
-                                            await auth.api.signOut({headers: await headers()});
-                                        },
+                                        action: signOutAction
                                     },
                                 ]}
                             />
