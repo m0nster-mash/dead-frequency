@@ -1,5 +1,3 @@
-"use client";
-
 import {SidebarProvider} from "@/app/dashboard/components/sidebar-context";
 import {Sidebar} from "@/core";
 import {JSX, ReactNode} from "react";
