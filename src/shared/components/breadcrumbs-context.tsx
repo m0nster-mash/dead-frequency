@@ -88,5 +88,5 @@ export function useBreadcrumbLabel(segment: string | undefined, label: string | 
 
         // Safely evicts the trace once the calling page dismounts
         return () => clearLabel(segment);
-    }, [segment, label]);
+    }, [segment, label, setLabel, clearLabel]);
 }
