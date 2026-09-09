@@ -12,8 +12,8 @@
     "db:studio": "drizzle-kit studio"
   },
   "dependencies": {
-    "@better-auth/drizzle-adapter": "^1.7.1",
-    "better-auth": "^1.7.1",
+    "@better-auth/drizzle-adapter": "^1.7.3",
+    "better-auth": "^1.7.3",
     "bootstrap-icons": "^1.13.1",
     "drizzle-orm": "^0.45.2",
     "next": "^16.3.4",
@@ -21,21 +21,21 @@
     "pg": "^8.23.0",
     "postgres": "^3.4.9",
     "prettier": "^3.9.6",
-    "react": "19.2.8",
-    "react-dom": "19.2.8"
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0"
   },
   "devDependencies": {
     "@svgr/webpack": "^8.1.0",
-    "@types/node": "^20",
+    "@types/node": "^22.20.2",
     "@types/pg": "^8.23.1",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@types/sanitize-html": "^2.16.1",
     "dotenv": "^17.4.2",
     "drizzle-kit": "^0.31.10",
-    "eslint": "^9",
+    "eslint": "^9.39.5",
     "eslint-config-next": "^16.3.4",
-    "tsx": "^4.23.12",
+    "tsx": "^4.23.13",
     "typescript": "^5"
   }
 }
