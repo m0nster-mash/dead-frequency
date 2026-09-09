@@ -39,6 +39,8 @@ export const avatarConfig =
     });
 
 /**
+ * TODO:: not in use. Can this be deleted?
+ *
  * Drizzle ORM Relational Mapping: avatarConfig Scope. Resolves a safe one-to-one lookup shortcut path back to the
  * parent User model.
  */

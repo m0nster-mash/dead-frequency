@@ -34,7 +34,7 @@ export async function canInteract(userA: string, userB: string): Promise<boolean
         .from(userBlock)
         .where(
             /**
-             * Funnels constraints through an logical OR condition to ensure that if either account has active block
+             * Funnels constraints through a logical OR condition to ensure that if either account has active block
              * parameters saved, the communication loop remains locked down.
              */
             or(
@@ -48,6 +48,8 @@ export async function canInteract(userA: string, userB: string): Promise<boolean
 }
 
 /**
+ * TODO:: implement blocking feature
+ *
  * Persists a new manual isolation record between two users inside the data persistence layer.
  *
  * @param {string} blockerId - The unique user identification key string of the member implementing the isolation guard.

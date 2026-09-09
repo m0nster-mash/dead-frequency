@@ -122,7 +122,8 @@ async function recalculateTrustLevel(userId: string): Promise<void> {
     }
 }
 
-/**
+/**TODO:: implement feature or delete function
+ *
  * Registers incoming report notifications, bans, or blocks to adjust localized account reputation scores.
  * Enforces an automated security ceiling, auto-quarantining users if negative logs cross boundary limits.
  *

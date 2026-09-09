@@ -25,7 +25,7 @@ type AppShellProps = {
  * @param {AppShellProps} props - The component properties.
  * @returns {JSX.Element} The visual foundation shell wrapper grid container.
  */
-export function AppShell({children, userName, userEmail, userRole}: AppShellProps): JSX.Element {
+export function AppShell({children}: AppShellProps): JSX.Element {
     return (
         <SidebarProvider>
             {/* Accepts decoupled visual layouts as explicit properties to clean up complex structural nesting hierarchies. */}

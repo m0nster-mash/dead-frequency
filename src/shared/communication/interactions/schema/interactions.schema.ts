@@ -163,6 +163,8 @@ export const subscription = pgTable(
 );
 
 /**
+ * TODO:: implement feature or delete function
+ *
  * Drizzle ORM Relational Mapping: report Scope.
  */
 export const reportRelations = relations(report, ({one}) => ({
@@ -173,6 +175,8 @@ export const reportRelations = relations(report, ({one}) => ({
 }));
 
 /**
+ * TODO:: implement feature or delete function
+ *
  * Drizzle ORM Relational Mapping: reaction Scope.
  */
 export const reactionRelations = relations(reaction, ({one}) => ({
@@ -183,6 +187,8 @@ export const reactionRelations = relations(reaction, ({one}) => ({
 }));
 
 /**
+ * TODO:: implement feature or delete function
+ *
  * Drizzle ORM Relational Mapping: comment Scope.
  */
 export const commentRelations = relations(comment, ({one}) => ({
@@ -190,6 +196,8 @@ export const commentRelations = relations(comment, ({one}) => ({
 }));
 
 /**
+ * TODO:: implement feature or delete function
+ *
  * Drizzle ORM Relational Mapping: activityEvent Scope.
  */
 export const activityEventRelations = relations(activityEvent, ({one}) => ({
@@ -200,6 +208,8 @@ export const activityEventRelations = relations(activityEvent, ({one}) => ({
 }));
 
 /**
+ * TODO:: implement feature or delete function
+ *
  * Drizzle ORM Relational Mapping: subscription Scope.
  */
 export const subscriptionRelations = relations(subscription, ({one}) => ({

@@ -87,7 +87,7 @@ export function AdminThreadControls({threadId, threadTitle,}: AdminThreadControl
                     </button>
 
                     <button type="button"
-                            className={`${`${buttonStyles.btn} ${buttonStyles.btnPrimary}`} ${adminStyles.adminControlButtonDanger}`}>
+                            className={`${buttonStyles.btn} ${buttonStyles.btnPrimary} ${adminStyles.adminControlButtonDanger}`}>
                         <Placeholder text={"DELETE_THREAD"}/>
                     </button>
                 </div>

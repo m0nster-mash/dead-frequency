@@ -131,6 +131,8 @@ export const userTrust = pgTable(
 );
 
 /**
+ * TODO:: implement feature or delete function
+ *
  * Drizzle ORM Relational Mapping: userStatus Scope.
  * Resolves a safe bidirectional reverse lookup path pointing back to the targeted parent User entity.
  */
@@ -139,6 +141,8 @@ export const userStatusRelations = relations(userStatus, ({one}) => ({
 }));
 
 /**
+ * TODO:: implement feature or delete function
+ *
  * Drizzle ORM Relational Mapping: userTrust Scope.
  * Resolves a safe bidirectional reverse lookup path pointing back to the tracked parent User entity.
  */

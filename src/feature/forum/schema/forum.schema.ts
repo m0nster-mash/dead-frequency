@@ -29,8 +29,8 @@ export const forumBoard = pgTable(
         id: text("id")
             .primaryKey(),
         /**
-         * Connects boards directly down to distinct categories. Purging categories cleanly sweeps all sub-boards out o
-         * f the database.
+         * Connects boards directly down to distinct categories. Purging categories cleanly sweeps all sub-boards out
+         * of the database.
          */
         categoryId: text("category_id")
             .notNull()
@@ -132,6 +132,8 @@ export const forumPost = pgTable(
 );
 
 /**
+ * TODO:: implement feature or delete function
+ *
  * Drizzle ORM Relational Mapping: forumBoard Scope.
  */
 export const forumBoardRelations = relations(forumBoard, ({one, many}) => ({
@@ -140,6 +142,8 @@ export const forumBoardRelations = relations(forumBoard, ({one, many}) => ({
 }));
 
 /**
+ * TODO:: implement feature or delete function
+ *
  * Drizzle ORM Relational Mapping: forumThread Scope.
  */
 export const forumThreadRelations = relations(forumThread, ({one, many}) => ({
@@ -149,6 +153,8 @@ export const forumThreadRelations = relations(forumThread, ({one, many}) => ({
 }));
 
 /**
+ * TODO:: implement feature or delete function
+ *
  * Drizzle ORM Relational Mapping: forumPost Scope.
  */
 export const forumPostRelations = relations(forumPost, ({one}) => ({

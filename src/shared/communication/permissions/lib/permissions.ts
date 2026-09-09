@@ -48,6 +48,8 @@ export async function hasRole(
 }
 
 /**
+ * TODO:: implement feature or delete function
+ *
  * High-performance shortcut wrapper evaluating elevated system privileges. Automatically permits passage if the
  * subject exhibits either absolute administrator or situational moderator rights.
  *
