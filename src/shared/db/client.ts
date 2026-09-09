@@ -31,7 +31,5 @@ if (process.env.NODE_ENV !== "production") {
 /**
  * The system-wide central database client interface instance. Combines node-postgres driver instances with unified
  * schema files to export type-safe Drizzle ORM query engines.
- *
- * @type {ReturnType<typeof drizzle>}
  */
-export const db: ReturnType<typeof drizzle> = drizzle({client: pool, schema});
+export const db = drizzle({client: pool, schema});
