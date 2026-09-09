@@ -1,0 +1,296 @@
+/* =========================================================
+   CHATBOX PANEL
+   ========================================================= */
+
+/* -----------------------------------------------------------
+   LAYOUT & CONTAINER
+   ----------------------------------------------------------- */
+.chatboxWrapper {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    background: var(--color-surface-raised);
+    min-height: 24rem;
+}
+
+.chatboxMessages {
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    flex: 1;
+    gap: var(--size-space-2);
+    padding: var(--size-space-4);
+    background: var(--color-surface);
+}
+
+.chatboxMessagesEmpty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+    text-align: center;
+    padding: var(--size-space-6);
+}
+
+/* -----------------------------------------------------------
+   MESSAGE ROW
+   ----------------------------------------------------------- */
+.message {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-space-2);
+    padding: var(--size-space-3);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xs);
+    background: var(--color-surface-raised);
+}
+
+.messageDeleted {
+    opacity: 0.6;
+    font-style: italic;
+    color: var(--color-text-muted);
+}
+
+.messageHeader {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--size-space-3);
+}
+
+.messageAuthor {
+    font-weight: 600;
+    font-size: var(--font-size-sm);
+    color: var(--color-text-primary);
+}
+
+.messageTime {
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+    white-space: nowrap;
+}
+
+.messageBody {
+    word-wrap: break-word;
+    overflow-wrap: anywhere;
+    white-space: pre-wrap;
+    font-size: var(--font-size-sm);
+    line-height: 1.5;
+    color: var(--color-text-primary);
+}
+
+.messageActions {
+    display: flex;
+    align-items: center;
+    gap: var(--size-space-2);
+    justify-content: flex-end;
+}
+
+.messageAction {
+    padding: 0.3rem 0.6rem;
+    border: 1px solid var(--color-border);
+    border-radius: 0.3rem;
+    background: transparent;
+    color: var(--color-text-muted);
+    cursor: pointer;
+    font-size: 0.65rem;
+    font-weight: 500;
+    transition: background var(--transition-fast), color var(--transition-fast);
+}
+
+.messageAction:hover {
+    background: var(--color-surface-hover);
+    color: var(--color-text-primary);
+}
+
+.messageAction:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+}
+
+.messageActionDanger {
+    border-color: var(--color-danger, rgba(255, 80, 80, 0.25));
+    color: var(--color-danger, #ff5050);
+}
+
+.messageActionDanger:hover {
+    background: rgba(255, 80, 80, 0.1);
+}
+
+/* -----------------------------------------------------------
+   MESSAGE INPUT AREA
+   ----------------------------------------------------------- */
+.inputContainer {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-space-3);
+    padding: var(--size-space-4);
+    border-top: 1px solid var(--color-border);
+    background: var(--color-surface-raised);
+}
+
+.inputForm {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-space-3);
+}
+
+.inputFieldWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-space-2);
+}
+
+.inputLabel {
+    font-size: var(--font-size-xs);
+    font-weight: 600;
+    color: var(--color-text-primary);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-wide);
+}
+
+.inputArea {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xs);
+    background: var(--color-surface);
+}
+
+.inputTextarea {
+    display: block;
+    width: 100%;
+    min-height: 3rem;
+    max-height: 8rem;
+    margin: 0;
+    padding: var(--size-space-2) var(--size-space-3);
+    resize: vertical;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    color: var(--color-text-primary);
+    font: inherit;
+    font-size: var(--font-size-sm);
+    line-height: 1.5;
+}
+
+.inputTextarea::placeholder {
+    color: var(--color-text-muted);
+}
+
+.inputTextarea:focus {
+    outline: none;
+}
+
+.inputTextarea:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.inputActions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: var(--size-space-3);
+    padding: var(--size-space-2) var(--size-space-3);
+    border-top: 1px solid var(--color-border);
+    background: var(--color-surface);
+}
+
+.inputButton {
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xs);
+    background: var(--color-surface-raised);
+    color: var(--color-text-primary);
+    cursor: pointer;
+    font-size: var(--font-size-xs);
+    font-weight: 600;
+    transition: background var(--transition-fast), border-color var(--transition-fast);
+}
+
+.inputButton:hover {
+    background: var(--color-surface-hover);
+    border-color: var(--color-border);
+}
+
+.inputButton:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+}
+
+.inputButtonPrimary {
+    background: var(--color-surface-muted);
+    border-color: var(--color-border);
+    color: var(--color-surface);
+}
+
+.inputButtonPrimary:hover {
+    opacity: 0.85;
+}
+
+.inputButtonPrimary:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* -----------------------------------------------------------
+   LOADING & ERROR STATES
+   ----------------------------------------------------------- */
+.loadingSpinner {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    border: 2px solid rgba(0, 0, 0, 0.1);
+    border-radius: 50%;
+    border-top-color: currentColor;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.errorMessage {
+    padding: var(--size-space-3);
+    border-radius: var(--radius-xs);
+    background: rgba(255, 80, 80, 0.1);
+    border: 1px solid rgba(255, 80, 80, 0.25);
+    color: var(--color-danger, #ff5050);
+    font-size: var(--font-size-sm);
+    line-height: 1.4;
+}
+
+/* -----------------------------------------------------------
+   RESPONSIVE
+   ----------------------------------------------------------- */
+@media (max-width: 600px) {
+    .chatboxWrapper {
+        min-height: 20rem;
+    }
+
+    .message {
+        padding: var(--size-space-2);
+    }
+
+    .messageHeader {
+        flex-direction: column;
+        gap: var(--size-space-1);
+    }
+
+    .messageActions {
+        justify-content: flex-start;
+    }
+
+    .inputTextarea {
+        min-height: 2.5rem;
+        max-height: 6rem;
+    }
+}
