@@ -97,6 +97,8 @@ export async function deleteForumCategoryAction(formData: FormData): Promise<voi
 }
 
 /**
+ * TODO:: implement feature or delete function
+ *
  * Sequentially updates the sequence weights of forum categories based on a list of clean string IDs.
  *
  * @param {FormData} formData - Payload containing the array list of ordered category identifiers.
@@ -165,6 +167,8 @@ export async function updateForumBoardAction(formData: FormData): Promise<void> 
 }
 
 /**
+ * TODO:: implement board deletion
+ *
  * Permanently removes an individual discussion board record from data storage
  *
  * @param {FormData} formData - Payload targeting the specific boardId marked for deletion.
@@ -182,6 +186,8 @@ export async function deleteForumBoardAction(formData: FormData): Promise<void> 
 }
 
 /**
+ * TODO:: implement board relocation
+ *
  * Reassigns a discussion board to a completely different parent category structural tree.
  *
  * @param {FormData} formData - Payload capturing target category transitions.
@@ -200,6 +206,8 @@ export async function moveForumBoardAction(formData: FormData): Promise<void> {
 }
 
 /**
+ * TODO:: implement action
+ *
  * Safety-checked re-indexing block that recalculates display sequences for boards nested in a category.
  * Cross-checks provided indices against active database items to shield data integrity from foreign input injections.
  *

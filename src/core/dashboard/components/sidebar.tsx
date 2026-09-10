@@ -47,7 +47,7 @@ export async function Sidebar(): Promise<JSX.Element> {
             title: "Test Pages",
             items: [
                 {
-                    href: "/style-test",
+                    href: "/test/styles/",
                     label: "Style Test",
                     icon: <QuestionIcon/>,
                 },
@@ -95,7 +95,7 @@ export async function Sidebar(): Promise<JSX.Element> {
             <div>
                 {session ? (
                     <div className={sidebarStyles.userCard}>
-                         <div>
+                        <div>
                             {avatarConfig ? (
                                 <AvatarRenderer config={avatarConfig} size={36}/>
                             ) : (

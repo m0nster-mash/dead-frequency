@@ -1,5 +1,6 @@
 "use client";
 
+import LoremIpsum from "@shared/components/lorem-ipsum";
 import {useState} from "react";
 import Image from 'next/image'
 import './style-test.css'
@@ -111,11 +112,7 @@ function StyleTestPage() {
                 <section className="test-section">
                     <div className="component-row">
                         <div className="component-tag">&lt;p&gt;</div>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                            labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                            laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
-                            voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                            cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                        <LoremIpsum length={2} regular={true}/>
                     </div>
 
                     <div className="component-row">
@@ -156,7 +153,7 @@ function StyleTestPage() {
                         <span className="component-tag">&lt;sub&gt; / &lt;sup&gt;</span>
                         <ul>
                             <li className={"list-element"}>Water is H<sub>2</sub>O.</li>
-                            <li className={"list-element"}> Einstein's equation is E = mc<sup>2</sup>.</li>
+                            <li className={"list-element"}> Einstein&#39;s equation is E = mc<sup>2</sup>.</li>
                         </ul>
                     </div>
 
@@ -324,43 +321,43 @@ function StyleTestPage() {
                             <legend>Text Inputs</legend>
 
                             <div className="component-row">
-                                <span className="component-tag">&lt;label&gt; + &lt;input type="text"&gt;</span>
+                                <span className="component-tag">&lt;label&gt; + &lt;input type=&#34;text&#34;&gt;</span>
                                 <label htmlFor="text-input">Text</label><br/>
                                 <input type="text" id="text-input" name="text-input" placeholder="Enter text"/>
                             </div>
 
                             <div className="component-row">
-                                <span className="component-tag">&lt;input type="password"&gt;</span>
+                                <span className="component-tag">&lt;input type=&#34;password&#34;&gt;</span>
                                 <label htmlFor="pw-input">Password</label><br/>
                                 <input type="password" id="pw-input" name="pw-input"/>
                             </div>
 
                             <div className="component-row">
-                                <span className="component-tag">&lt;input type="email"&gt;</span>
+                                <span className="component-tag">&lt;input type=&#34;email&#34;&gt;</span>
                                 <label htmlFor="email-input">Email</label><br/>
                                 <input type="email" id="email-input" name="email-input"/>
                             </div>
 
                             <div className="component-row">
-                                <span className="component-tag">&lt;input type="search"&gt;</span>
+                                <span className="component-tag">&lt;input type=&#34;search&#34;&gt;</span>
                                 <label htmlFor="search-input">Search</label><br/>
                                 <input type="search" id="search-input" name="search-input"/>
                             </div>
 
                             <div className="component-row">
-                                <span className="component-tag">&lt;input type="tel"&gt;</span>
+                                <span className="component-tag">&lt;input type=&#34;tel&#34;&gt;</span>
                                 <label htmlFor="tel-input">Phone</label><br/>
                                 <input type="tel" id="tel-input" name="tel-input"/>
                             </div>
 
                             <div className="component-row">
-                                <span className="component-tag">&lt;input type="url"&gt;</span>
+                                <span className="component-tag">&lt;input type=&#34;url&#34;&gt;</span>
                                 <label htmlFor="url-input">URL</label><br/>
                                 <input type="url" id="url-input" name="url-input"/>
                             </div>
 
                             <div className="component-row">
-                                <span className="component-tag">&lt;input type="number"&gt;</span>
+                                <span className="component-tag">&lt;input type=&#34;number&#34;&gt;</span>
                                 <label htmlFor="number-input">Number</label><br/>
                                 <input type="number" id="number-input" name="number-input" min="0" max="10"/>
                             </div>
@@ -377,31 +374,31 @@ function StyleTestPage() {
                             <legend>Date &amp; Time Inputs</legend>
 
                             <div className="component-row">
-                                <span className="component-tag">&lt;input type="date"&gt;</span>
+                                <span className="component-tag">&lt;input type=&#34;date&#34;&gt;</span>
                                 <label htmlFor="date-input">Date</label><br/>
                                 <input type="date" id="date-input" name="date-input"/>
                             </div>
 
                             <div className="component-row">
-                                <span className="component-tag">&lt;input type="time"&gt;</span>
+                                <span className="component-tag">&lt;input type=&#34;time&#34;&gt;</span>
                                 <label htmlFor="time-input">Time</label><br/>
                                 <input type="time" id="time-input" name="time-input"/>
                             </div>
 
                             <div className="component-row">
-                                <span className="component-tag">&lt;input type="datetime-local"&gt;</span>
+                                <span className="component-tag">&lt;input type=&#34;datetime-local&#34;&gt;</span>
                                 <label htmlFor="datetime-input">Date &amp; Time</label><br/>
                                 <input type="datetime-local" id="datetime-input" name="datetime-input"/>
                             </div>
 
                             <div className="component-row">
-                                <span className="component-tag">&lt;input type="month"&gt;</span>
+                                <span className="component-tag">&lt;input type=&#34;month&#34;&gt;</span>
                                 <label htmlFor="month-input">Month</label><br/>
                                 <input type="month" id="month-input" name="month-input"/>
                             </div>
 
                             <div className="component-row">
-                                <span className="component-tag">&lt;input type="week"&gt;</span>
+                                <span className="component-tag">&lt;input type=&#34;week&#34;&gt;</span>
                                 <label htmlFor="week-input">Week</label><br/>
                                 <input type="week" id="week-input" name="week-input"/>
                             </div>
@@ -411,7 +408,7 @@ function StyleTestPage() {
                             <legend>Choice Inputs</legend>
 
                             <div className="component-row">
-                                <span className="component-tag">&lt;input type="checkbox"&gt;</span>
+                                <span className="component-tag">&lt;input type=&#34;checkbox&#34;&gt;</span>
                                 <input type="checkbox" id="chk1" name="chk1"/>
                                 <label htmlFor="chk1">Checkbox option one</label><br/>
                                 <input type="checkbox" id="chk2" name="chk2" defaultChecked/>
@@ -419,7 +416,7 @@ function StyleTestPage() {
                             </div>
 
                             <div className="component-row">
-                                <span className="component-tag">&lt;input type="radio"&gt;</span>
+                                <span className="component-tag">&lt;input type=&#34;radio&#34;&gt;</span>
                                 <input type="radio" id="radio1" name="radio-group" value="a"/>
                                 <label htmlFor="radio1">Radio option A</label><br/>
                                 <input type="radio" id="radio2" name="radio-group" value="b" defaultChecked/>
@@ -467,7 +464,7 @@ function StyleTestPage() {
                             <legend>Range, File &amp; Color</legend>
 
                             <div className="component-row">
-                                <span className="component-tag">&lt;input type="range"&gt;</span>
+                                <span className="component-tag">&lt;input type=&#34;range&#34;&gt;</span>
                                 <label htmlFor="range-input">Range</label><br/>
                                 <input type="range"
                                        id="range-input"
@@ -479,13 +476,13 @@ function StyleTestPage() {
                             </div>
 
                             <div className="component-row">
-                                <span className="component-tag">&lt;input type="file"&gt;</span>
+                                <span className="component-tag">&lt;input type=&#34;file&#34;&gt;</span>
                                 <label htmlFor="file-input">File Upload</label><br/>
                                 <input type="file" id="file-input" name="file-input"/>
                             </div>
 
                             <div className="component-row">
-                                <span className="component-tag">&lt;input type="color"&gt;</span>
+                                <span className="component-tag">&lt;input type=&#34;color&#34;&gt;</span>
                                 <label htmlFor="color-input">Color</label><br/>
                                 <input type="color"
                                        id="color-input"
@@ -524,7 +521,7 @@ function StyleTestPage() {
                             </div>
 
                             <div className="component-row">
-                                <span className="component-tag">&lt;button type="submit"&gt;</span>
+                                <span className="component-tag">&lt;button type=&#34;submit&#34;&gt;</span>
                                 <button type="submit">Submit</button>
                                 <button type="reset">Reset</button>
                                 <input type="submit" value="Input Submit"/>

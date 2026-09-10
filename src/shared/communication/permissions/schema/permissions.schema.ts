@@ -56,6 +56,8 @@ export const userRole = pgTable(
 );
 
 /**
+ * TODO:: implement feature or delete function
+ *
  * Drizzle ORM Relational Mapping: userRole Scope.
  * Resolves safe bidirectional reverse lookup paths pointing back to parent entities.
  */

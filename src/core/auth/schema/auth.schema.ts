@@ -1,47 +1,40 @@
 import {relations} from "drizzle-orm";
-import {boolean, index, pgTable, text, timestamp, uniqueIndex} from "drizzle-orm/pg-core";
+import {boolean, index, pgTable, text, timestamp} from "drizzle-orm/pg-core";
 
 /**
  * Core relational table representation storing persistent user metrics and status profiles. Adapts to BetterAuth
  * specifications while extending columns to handle administrative fields and guest states.
  */
-export const user = pgTable("user", {
-    id: text("id")
-        .primaryKey(),
-    name: text("name")
-        .notNull(),
-    email: text("email")
-        .notNull()
-        .unique(),
-    emailVerified: boolean("email_verified")
-        .default(false)
-        .notNull(),
-    image: text("image"),
-    createdAt: timestamp("created_at")
-        .defaultNow()
-        .notNull(),
+export const user = pgTable(
+    "user", {
+        id: text("id")
+            .primaryKey(),
+        name: text("name")
+            .notNull(),
+        email: text("email")
+            .notNull()
+            .unique(),
+        emailVerified:
+            boolean("email_verified")
+                .default(false)
+                .notNull(),
+        image: text("image"),
+        createdAt: timestamp("created_at")
+            .defaultNow()
+            .notNull(),
+        updatedAt: timestamp("updated_at")
+            .defaultNow()
+            .$onUpdate(() => /* @__PURE__ */ new Date())
+            .notNull(),
+        role: text("role"),
+        banned: boolean("banned")
+            .default(false),
+        banReason: text("ban_reason"),
+        banExpires: timestamp("ban_expires"),
+        isAnonymous: boolean("is_anonymous")
+            .default(false),
+    });
 
-    // automatically intercepts database save updates to overwrite timestamps with fresh client execution periods.
-    updatedAt: timestamp("updated_at")
-        .defaultNow()
-        .$onUpdate(() => /* @__PURE__ */ new Date())
-        .notNull(),
-
-    // Administrative and security columns
-    role: text("role"),
-    banned: boolean("banned")
-        .default(false),
-    banReason: text("ban_reason"),
-    banExpires: timestamp("ban_expires"),
-
-    // guest/anonymous plugin State tracking flag
-    isAnonymous: boolean("is_anonymous")
-        .default(false),
-});
-
-/**
- * Tracking grid container managing continuous device interactions and session lifecycles.
- */
 export const session = pgTable(
     "session", {
         id: text("id")
@@ -59,27 +52,18 @@ export const session = pgTable(
             .notNull(),
         ipAddress: text("ip_address"),
         userAgent: text("user_agent"),
-
-        // Binds active session states directly down to users. Purging user profiles triggers an automatic cascading
-        // delete sweeping corresponding data records out of database tables.
         userId: text("user_id")
             .notNull()
             .references(() => user.id, {onDelete: "cascade"}),
         impersonatedBy: text("impersonated_by"),
     },
-    // Optimizes session evaluation lookups across relational joins
     (table) => [index("session_userId_idx").on(table.userId)],
 );
 
-/**
- * Storage dictionary capturing external credential maps and multi-provider token metrics.
- */
 export const account = pgTable(
     "account", {
         id: text("id")
             .primaryKey(),
-        issuer: text("issuer")
-            .notNull(),
         accountId: text("account_id")
             .notNull(),
         providerId: text("provider_id")
@@ -101,21 +85,9 @@ export const account = pgTable(
             .$onUpdate(() => /* @__PURE__ */ new Date())
             .notNull(),
     },
-    (table) => [
-
-        // Enforces absolute data boundaries blocking overlapping rows containing identical platform issuer types and
-        // internal identifiers.
-        uniqueIndex("account_issuer_accountId_uidx").on(
-            table.issuer,
-            table.accountId,
-        ),
-        index("account_userId_idx").on(table.userId),
-    ],
+    (table) => [index("account_userId_idx").on(table.userId)],
 );
 
-/**
- * Verification token map managing secure password reset trajectories or double email verification handshakes.
- */
 export const verification = pgTable(
     "verification", {
         id: text("id")

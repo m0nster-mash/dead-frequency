@@ -48,6 +48,8 @@ export const mention = pgTable(
 );
 
 /**
+ * TODO:: implement feature or delete function
+ *
  * Establishes safe lookups dividing row parameters cleanly between targeted users and origin authors.
  */
 export const mentionRelations = relations(mention, ({one}) => ({

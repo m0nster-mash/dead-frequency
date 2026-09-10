@@ -60,7 +60,7 @@ export function MainContentPanel({
             {/* Routes window scroll focus point straight back up to global parent boundary elements. */}
 
             {showBackToTop && (
-                <a href="#top"
+                <a href={"#top"}
                    className={`${buttonStyles.iconBtn} ${buttonStyles.iconBtnSubtle} ${cardStyles.cardBackToTop}`}
                    style={{display: "inline-flex", alignItems: "center", justifyContent: "center"}}
                    aria-label="Back to top of page">

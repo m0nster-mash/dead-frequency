@@ -5,6 +5,7 @@ import {AvatarConfig} from "@/feature/avatar/lib/types";
 import {validateAvatarConfig} from "@/feature/avatar/lib/validation";
 import {avatarConfig} from "@/feature/avatar/schema/avatar.schema";
 import {db} from "@/shared/db/client";
+import {eq} from "drizzle-orm";
 import {headers} from "next/headers";
 
 /**
@@ -62,12 +63,8 @@ export async function saveAvatarConfig(input: unknown): Promise<SaveAvatarConfig
  *                                         custom fields are missing.
  */
 export async function getAvatarConfigForUser(userId: string): Promise<AvatarConfig | null> {
-
     const row = await db.query.avatarConfig.findFirst({
-        where: (table, {eq}) =>
-            eq(table.userId, userId),
+        where: (table) => eq(table.userId, userId), // ← Simplified with static import
     });
-
-    // Fallback parsing engine returns null descriptors if users have not custom-built characters yet
     return row?.config ?? null;
 }

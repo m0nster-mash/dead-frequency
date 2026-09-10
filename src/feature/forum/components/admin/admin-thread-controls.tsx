@@ -21,7 +21,16 @@ export function AdminThreadControls({threadId, threadTitle,}: AdminThreadControl
                 </span>
 
                 <span className={modalStyles.modalDescription}>
-                    {threadTitle || <Placeholder text={"THREAD_NAME"}/>}
+                    {threadTitle}
+                </span>
+            </div>
+            <div className={panelStyles.panelPadded}>
+                <span className={modalStyles.modalHeader}>
+                    ID:
+                </span>
+
+                <span className={modalStyles.modalDescription}>
+                    {threadId}
                 </span>
             </div>
 
@@ -78,7 +87,7 @@ export function AdminThreadControls({threadId, threadTitle,}: AdminThreadControl
                     </button>
 
                     <button type="button"
-                            className={`${`${buttonStyles.btn} ${buttonStyles.btnPrimary}`} ${adminStyles.adminControlButtonDanger}`}>
+                            className={`${buttonStyles.btn} ${buttonStyles.btnPrimary} ${adminStyles.adminControlButtonDanger}`}>
                         <Placeholder text={"DELETE_THREAD"}/>
                     </button>
                 </div>

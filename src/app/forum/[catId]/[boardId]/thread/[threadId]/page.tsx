@@ -33,7 +33,7 @@ type PageProps = {
  * @returns {Promise<JSX.Element>} A promise resolving to the unified forum thread and post management layout UI
  */
 export default async function ForumThreadPage({params}: PageProps): Promise<JSX.Element> {
-    const {catId, boardId, threadId} = await params;
+    const {boardId, threadId} = await params;
     await requireSession();
     const data = await getThreadWithPosts(threadId);
 

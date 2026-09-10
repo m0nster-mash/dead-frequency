@@ -85,6 +85,8 @@ export const auditLog = pgTable(
 );
 
 /**
+ * TODO:: implement feature or delete function
+ *
  * Drizzle ORM Relational Mapping: auditLog Scope.  Facilitates safe single-step queries resolving user object
  * parameters from data storage.
  */

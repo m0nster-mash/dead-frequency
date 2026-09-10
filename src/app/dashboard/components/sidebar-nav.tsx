@@ -1,10 +1,10 @@
 "use client";
 
-import DownArrowIcon from "@/shared/svg/bootstrap-down-arrow-icon.svg";
 import sidebarStyles from "@/shared/styles/patterns/sidebar.module.css";
+import DownArrowIcon from "@/shared/svg/bootstrap-down-arrow-icon.svg";
 import Link from "next/link";
 import {usePathname} from "next/navigation";
-import {JSX, ReactNode, useEffect, useState} from "react";
+import {JSX, ReactNode, useState} from "react";
 
 /**
  * Structural definition for an individual navigation item anchor link.
@@ -109,33 +109,24 @@ function isExpandableItemActive(pathname: string, item: ExpandableNavItem): bool
  *
  * @returns {JSX.Element} The expandable menu UI element.
  */
-function ExpandableMenuItem({item, pathname}: {
-    item: ExpandableNavItem;
-    pathname: string;
-}): JSX.Element {
+function ExpandableMenuItem({item, pathname}: { item: ExpandableNavItem; pathname: string; }): JSX.Element {
     const hasActiveChild = isExpandableItemActive(pathname, item);
 
     const [isOpen, setIsOpen] = useState(
         item.defaultOpen ?? hasActiveChild,
     );
 
-    /**
-     * Automatically open the menu when the current route belongs to one
-     * of its child links.
-     */
-    useEffect(() => {
-        if (hasActiveChild) {
-            setIsOpen(true);
-        }
-    }, [hasActiveChild]);
+    const shouldBeOpen = isOpen || hasActiveChild;
 
     return (
         <div>
             <button type="button"
                     onClick={() => setIsOpen((open) => !open)}
-                    aria-expanded={isOpen}
+                    aria-expanded={shouldBeOpen}
                     title={item.label}
-                    className={`${sidebarStyles.expandableNavButton}${hasActiveChild ? ` ${sidebarStyles.active}` : ""}`}>
+                    className={`${sidebarStyles.expandableNavButton}${
+                        hasActiveChild ? ` ${sidebarStyles.active}` : ""
+                    }`}>
                 {item.icon}
 
                 <span className={sidebarStyles.hideOnCollapse}>
@@ -143,30 +134,24 @@ function ExpandableMenuItem({item, pathname}: {
                 </span>
 
                 <span className={`${sidebarStyles.expandIcon} ${
-                    isOpen ? sidebarStyles.expandIconOpen : ""
+                    shouldBeOpen ? sidebarStyles.expandIconOpen : ""
                 } ${sidebarStyles.hideOnCollapse}`}
                       aria-hidden="true">
                     <DownArrowIcon/>
                 </span>
             </button>
 
-            {isOpen && (
+            {shouldBeOpen && (
                 <div className={sidebarStyles.subNav}>
                     {item.links.map((link) => {
-                        const active = isNavItemActive(
-                            pathname,
-                            link.href,
-                        );
+                        const active = isNavItemActive(pathname, link.href,);
 
                         return (
                             <Link key={link.href}
                                   href={link.href}
                                   title={link.label}
-                                  className={`${sidebarStyles.subNavItem}${
-                                      active ? ` ${sidebarStyles.active}` : ""
-                                  }`}>
+                                  className={`${sidebarStyles.subNavItem}${active ? ` ${sidebarStyles.active}` : ""}`}>
                                 {link.icon}
-
                                 <span className={sidebarStyles.hideOnCollapse}>
                                     {link.label}
                                 </span>
@@ -191,7 +176,9 @@ function ExpandableMenuItem({item, pathname}: {
  *
  * @returns {JSX.Element} The visual side-panel interactive route matrix list block.
  */
-export function SidebarNav({sections}: SidebarNavProps): JSX.Element {
+export function SidebarNav({
+                               sections,
+                           }: SidebarNavProps): JSX.Element {
     const pathname = usePathname();
 
     return (
@@ -213,18 +200,14 @@ export function SidebarNav({sections}: SidebarNavProps): JSX.Element {
                             );
                         }
 
-                        const active = isNavItemActive(
-                            pathname,
-                            item.href,
-                        );
+                        const active = isNavItemActive(pathname, item.href);
 
                         return (
-                            <Link key={item.href}
-                                  href={item.href}
-                                  title={item.label}
-                                  className={`${sidebarStyles.navItem}${
-                                      active ? ` ${sidebarStyles.active}` : ""
-                                  }`}>
+                            <Link
+                                key={item.href}
+                                href={item.href}
+                                title={item.label}
+                                className={`${sidebarStyles.navItem}${active ? ` ${sidebarStyles.active}` : ""}`}>
                                 {item.icon}
 
                                 <span className={sidebarStyles.hideOnCollapse}>

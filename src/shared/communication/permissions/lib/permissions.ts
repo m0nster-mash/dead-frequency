@@ -1,6 +1,6 @@
 import {db} from "@shared/db/client";
 import {and, eq, isNull, or} from "drizzle-orm";
-import {userRole} from "../schema/permissions.schema";
+import {userRole} from "@shared/communication/permissions/schema/permissions.schema";
 
 /**
  * Centrally evaluates authorization rules by querying if a user possesses a specific role assignment.
@@ -48,6 +48,8 @@ export async function hasRole(
 }
 
 /**
+ * TODO:: implement feature or delete function
+ *
  * High-performance shortcut wrapper evaluating elevated system privileges. Automatically permits passage if the
  * subject exhibits either absolute administrator or situational moderator rights.
  *
