@@ -8,7 +8,7 @@ export * from "@/feature/avatar/schema/avatar.schema";
 export * from "@/feature/forum/schema/forum.schema";
 
 // Permissions schema
-export * from "@/feature/communication/permissions/schema/permissions.schema";
+export * from "@shared/communication/permissions/schema/permissions.schema";
 
 // Communication system schemas
 export * from "@/shared/communication/moderation/schema/moderation.schema";
