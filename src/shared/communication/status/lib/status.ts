@@ -1,8 +1,8 @@
 "use server";
 
-import {logModAction} from "@shared/communication/moderation/lib/audit-log";
-import {moduleEnum} from "@shared/communication/moderation/schema/moderation.schema";
-import {db} from "@shared/db/client";
+import {logModAction} from "@/shared/communication/moderation/lib/audit-log";
+import {moduleEnum} from "@/shared/communication/moderation/schema/moderation.schema";
+import {db} from "@/shared/db/client";
 import {randomUUID} from "crypto";
 import {and, eq, isNull, or} from "drizzle-orm";
 import {userStatus} from "../schema/status.schema";

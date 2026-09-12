@@ -1,6 +1,6 @@
 "use server";
 
-import {db} from "@shared/db/client";
+import {db} from "@/shared/db/client";
 import {eq, sql} from "drizzle-orm";
 import {userTrust} from "../schema/status.schema";
 

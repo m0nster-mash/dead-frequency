@@ -1,8 +1,8 @@
 "use server";
 
 import {requireSession} from "@/core/auth/lib/require-session";
-import {moduleEnum} from "@shared/communication/moderation/schema/moderation.schema";
-import {setPostingStatus} from "@shared/communication/status/lib/status";
+import {moduleEnum} from "@/shared/communication/moderation/schema/moderation.schema";
+import {setPostingStatus} from "@/shared/communication/status/lib/status";
 
 /**
  * Server action that modifies a user's posting standing or restriction states.

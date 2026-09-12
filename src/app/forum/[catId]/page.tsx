@@ -5,7 +5,7 @@ import {BoardDisplay} from "@/feature/forum/components/board-display";
 import {ForumStatsPanel} from "@/feature/forum/components/forum-stats-panel";
 import {getCategoryWithBoards} from "@/feature/forum/lib/queries";
 import {BreadcrumbLabel} from "@/shared/components/breadcrumb-label";
-import Placeholder from "@shared/components/placeholder";
+import Placeholder from "@/shared/components/placeholder";
 import {notFound} from "next/navigation";
 import {JSX} from "react";
 

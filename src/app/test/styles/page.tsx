@@ -1,6 +1,6 @@
 "use client";
 
-import LoremIpsum from "@shared/components/lorem-ipsum";
+import LoremIpsum from "@/shared/components/lorem-ipsum";
 import {useState} from "react";
 import Image from 'next/image'
 import './style-test.css'

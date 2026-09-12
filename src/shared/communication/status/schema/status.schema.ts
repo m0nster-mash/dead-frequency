@@ -1,5 +1,5 @@
 import {user} from "@/core/auth/schema/auth.schema";
-import {moduleEnum} from "@shared/communication/moderation/schema/moderation.schema";
+import {moduleEnum} from "@/shared/communication/moderation/schema/moderation.schema";
 import {relations, sql} from "drizzle-orm";
 import {index, integer, pgEnum, pgTable, text, timestamp, uniqueIndex} from "drizzle-orm/pg-core";
 

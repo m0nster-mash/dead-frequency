@@ -1,4 +1,4 @@
-import {db} from "@shared/db/client";
+import {db} from "@/shared/db/client";
 import {randomUUID} from "crypto";
 import {auditLog} from "../schema/moderation.schema";
 

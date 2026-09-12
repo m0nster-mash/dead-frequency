@@ -1,6 +1,6 @@
 import {user} from "@/core/auth/schema/auth.schema";
 import {forumBoard, forumCategory, forumPost, forumThread} from "@/feature/forum/schema/forum.schema";
-import {db} from "@shared/db/client";
+import {db} from "@/shared/db/client";
 import {asc, desc, eq} from "drizzle-orm";
 
 /**
