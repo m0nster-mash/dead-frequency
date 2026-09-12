@@ -38,7 +38,23 @@
 /* -----------------------------------------------------------
    MESSAGE ROW
    ----------------------------------------------------------- */
+.messageContainer {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--size-space-2);
+}
+
+.messageAvatar {
+    flex-shrink: 0;
+    margin-top: 0.35rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .message {
+    position: relative;
+    flex: 1;
     display: flex;
     flex-direction: column;
     gap: var(--size-space-2);
@@ -48,6 +64,21 @@
     background: var(--color-surface-raised);
 }
 
+/* Chat bubble arrow pointing left toward the avatar */
+.message::before {
+    content: "";
+    position: absolute;
+    top: 2rem;
+    left: -5px;
+    width: 8px;
+    height: 8px;
+    background: var(--color-surface-raised);
+    border-left: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+    transform: rotate(45deg);
+    z-index: 1;
+}
+
 .messageDeleted {
     opacity: 0.6;
     font-style: italic;
@@ -55,69 +86,12 @@
 }
 
 .messageHeader {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: var(--size-space-3);
+    font-size: var(--font-size-xs);
+    font-weight: 700;
 }
 
 .messageAuthor {
-    font-weight: 600;
-    font-size: var(--font-size-sm);
-    color: var(--color-text-primary);
-}
-
-.messageTime {
-    font-size: var(--font-size-xs);
-    color: var(--color-text-muted);
-    white-space: nowrap;
-}
-
-.messageBody {
-    word-wrap: break-word;
-    overflow-wrap: anywhere;
-    white-space: pre-wrap;
-    font-size: var(--font-size-sm);
-    line-height: 1.5;
-    color: var(--color-text-primary);
-}
-
-.messageActions {
-    display: flex;
-    align-items: center;
-    gap: var(--size-space-2);
-    justify-content: flex-end;
-}
-
-.messageAction {
-    padding: 0.3rem 0.6rem;
-    border: 1px solid var(--color-border);
-    border-radius: 0.3rem;
-    background: transparent;
-    color: var(--color-text-muted);
-    cursor: pointer;
-    font-size: 0.65rem;
-    font-weight: 500;
-    transition: background var(--transition-fast), color var(--transition-fast);
-}
-
-.messageAction:hover {
-    background: var(--color-surface-hover);
-    color: var(--color-text-primary);
-}
-
-.messageAction:focus-visible {
-    outline: 2px solid currentColor;
-    outline-offset: 2px;
-}
-
-.messageActionDanger {
-    border-color: var(--color-danger, rgba(255, 80, 80, 0.25));
-    color: var(--color-danger, #ff5050);
-}
-
-.messageActionDanger:hover {
-    background: rgba(255, 80, 80, 0.1);
+    padding-right: 10px;
 }
 
 /* -----------------------------------------------------------
