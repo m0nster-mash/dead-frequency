@@ -3,8 +3,8 @@ import {user} from "@/core/auth/schema/auth.schema";
 import {MainContentPanel} from "@/core/dashboard/components/panels/main-card";
 import {PageHeader} from "@/core/dashboard/components/panels/page-header";
 import tableStyle from "@/shared/styles/tables.module.css";
-import {auditLog} from "@shared/communication/moderation/schema/moderation.schema";
-import {db} from "@shared/db/client";
+import {auditLog} from "@/shared/communication/moderation/schema/moderation.schema";
+import {db} from "@/shared/db/client";
 import {desc, eq} from "drizzle-orm";
 import {JSX} from "react";
 

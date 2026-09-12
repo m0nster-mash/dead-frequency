@@ -3,7 +3,7 @@
 import {MainContentPanel} from "@/core/dashboard/components/panels/main-card";
 import formStyles from "@/shared/styles/form.module.css";
 import buttonStyles from "@/shared/styles/buttons.module.css";
-import panelStyles from "@shared/styles/panel.module.css";
+import panelStyles from "@/shared/styles/panel.module.css";
 import tableStyles from "@/shared/styles/tables.module.css";
 import {JSX, useMemo} from "react";
 

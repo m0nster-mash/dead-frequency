@@ -2,12 +2,12 @@
 
 import {auth} from "@/core/auth";
 import {forumPost, forumThread} from "@/feature/forum/schema/forum.schema";
-import {notify} from "@shared/communication/notifications/lib/notify";
-import {sanitizeContent} from "@shared/communication/sanitize/lib/sanitize";
-import {canInteract} from "@shared/communication/social/lib/can-interact";
-import {getPostingStatus} from "@shared/communication/status/lib/status";
-import {canPost, recordPost} from "@shared/communication/status/lib/trust";
-import {db} from "@shared/db/client";
+import {notify} from "@/shared/communication/notifications/lib/notify";
+import {sanitizeContent} from "@/shared/communication/sanitize/lib/sanitize";
+import {canInteract} from "@/shared/communication/social/lib/can-interact";
+import {getPostingStatus} from "@/shared/communication/status/lib/status";
+import {canPost, recordPost} from "@/shared/communication/status/lib/trust";
+import {db} from "@/shared/db/client";
 import {randomUUID} from "crypto";
 import {eq, sql} from "drizzle-orm";
 import {revalidatePath} from "next/cache";

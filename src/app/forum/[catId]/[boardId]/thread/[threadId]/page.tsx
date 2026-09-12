@@ -5,7 +5,7 @@ import {replyToThreadAction} from "@/feature/forum/lib/actions";
 import {getThreadWithPosts} from "@/feature/forum/lib/queries";
 import forumStyles from "@/feature/forum/styles/forum.module.css";
 import {BreadcrumbLabel} from "@/shared/components/breadcrumb-label";
-import Placeholder from "@shared/components/placeholder";
+import Placeholder from "@/shared/components/placeholder";
 import {notFound} from "next/navigation";
 import {JSX} from "react";
 

@@ -1,9 +1,9 @@
 import {requireSession} from "@/core/auth/lib/require-session";
 import {MainContentPanel} from "@/core/dashboard/components/panels/main-card";
 import {PageHeader} from "@/core/dashboard/components/panels/page-header";
-import {report} from "@shared/communication/interactions/schema/interactions.schema";
-import {db} from "@shared/db/client";
-import tableStyle from "@shared/styles/tables.module.css";
+import {report} from "@/shared/communication/interactions/schema/interactions.schema";
+import {db} from "@/shared/db/client";
+import tableStyle from "@/shared/styles/tables.module.css";
 import {desc, eq} from "drizzle-orm";
 import {JSX} from "react";
 

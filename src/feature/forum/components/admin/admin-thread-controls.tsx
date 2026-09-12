@@ -5,7 +5,7 @@ import buttonStyles from "@/shared/styles/buttons.module.css";
 import formStyles from "@/shared/styles/form.module.css";
 import modalStyles from "@/shared/styles/modal.module.css";
 import panelStyles from "@/shared/styles/panel.module.css";
-import Placeholder from "@shared/components/placeholder";
+import Placeholder from "@/shared/components/placeholder";
 
 type AdminThreadControlsProps = {
     threadId?: string;

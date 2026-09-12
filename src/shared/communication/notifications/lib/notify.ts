@@ -1,6 +1,6 @@
 import {randomUUID} from "crypto";
-import {notification} from "@shared/communication/notifications/schema/notifications.schema";
-import {db} from "@shared/db/client";
+import {notification} from "@/shared/communication/notifications/schema/notifications.schema";
+import {db} from "@/shared/db/client";
 
 /**
  * Structural payload contract mapping properties required to dispatch a notification. Extracts legal type string

@@ -1,5 +1,5 @@
 import {user} from "@/core/auth/schema/auth.schema";
-import {authorColumns} from "@shared/communication/author/lib/author";
+import {authorColumns} from "@/shared/communication/author/lib/author";
 import {relations} from "drizzle-orm";
 import {boolean, index, integer, pgTable, text, timestamp} from "drizzle-orm/pg-core";
 

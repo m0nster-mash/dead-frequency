@@ -1,7 +1,7 @@
 "use client";
 
 import modalStyles from "@/shared/styles/modal.module.css";
-import CloseIcon from "@shared/svg/bootstrap-close-icon.svg";
+import CloseIcon from "@/shared/svg/bootstrap-close-icon.svg";
 import React, {ReactNode, useEffect, useRef} from "react";
 
 export type AdminForumControlType =

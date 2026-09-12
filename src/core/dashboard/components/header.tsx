@@ -2,7 +2,7 @@ import {ThemeToggle} from "@/app/components/theme-toggle";
 import Breadcrumbs from "@/core/dashboard/components/breadcrumbs";
 import BellIcon from "@/shared/svg/bootstrap-bell-icon.svg";
 import sidebarStyles from "@/shared/styles/patterns/sidebar.module.css";
-import buttonStyles from "@shared/styles/buttons.module.css";
+import buttonStyles from "@/shared/styles/buttons.module.css";
 import {JSX} from "react";
 
 /**

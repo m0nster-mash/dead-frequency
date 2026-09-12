@@ -2,7 +2,7 @@
 
 import {MainContentPanel} from "@/core/dashboard/components/panels/main-card";
 import formStyles from "@/shared/styles/form.module.css";
-import buttonStyles from "@shared/styles/buttons.module.css";
+import buttonStyles from "@/shared/styles/buttons.module.css";
 import {JSX, useState} from "react";
 
 /**
