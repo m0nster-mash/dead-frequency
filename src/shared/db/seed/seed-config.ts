@@ -1,7 +1,7 @@
 export const SEED_ROLES = [
-    { id: "user", label: "User" },
-    { id: "moderate", label: "Moderator" },
-    { id: "admin", label: "Administrator" },
+    {id: "user", label: "User"},
+    {id: "moderate", label: "Moderator"},
+    {id: "admin", label: "Administrator"},
 ];
 
 export const SEED_TEST_USERS = [

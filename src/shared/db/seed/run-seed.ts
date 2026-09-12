@@ -1,6 +1,6 @@
 import "dotenv/config";
-import { seedRoles } from "@/shared/db/seed/seed-roles";
-import { seedTestUsers } from "@/shared/db/seed/seed-users";
+import {seedRoles} from "@/shared/db/seed/seed-roles";
+import {seedTestUsers} from "@/shared/db/seed/seed-users";
 
 /**
  * Seed runner entrypoint with connection validation

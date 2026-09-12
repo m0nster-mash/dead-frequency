@@ -1,8 +1,8 @@
-import { user, account } from "@/core/auth/schema/auth.schema";
-import { userRole } from "@/shared/communication/permissions/schema/permissions.schema";
-import { db } from "@/shared/db/client";
-import { SEED_TEST_USERS } from "@/shared/db/seed/seed-config";
-import { randomUUID } from "crypto";
+import {account, user} from "@/core/auth/schema/auth.schema";
+import {userRole} from "@/shared/communication/permissions/schema/permissions.schema";
+import {db} from "@/shared/db/client";
+import {SEED_TEST_USERS} from "@/shared/db/seed/seed-config";
+import {randomUUID} from "crypto";
 
 export async function seedTestUsers(): Promise<void> {
     try {

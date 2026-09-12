@@ -1,6 +1,6 @@
-import { role } from "@/shared/communication/permissions/schema/permissions.schema";
-import { db } from "@/shared/db/client";
-import { SEED_ROLES } from "@/shared/db/seed/seed-config";
+import {role} from "@/shared/communication/permissions/schema/permissions.schema";
+import {db} from "@/shared/db/client";
+import {SEED_ROLES} from "@/shared/db/seed/seed-config";
 
 export async function seedRoles(): Promise<void> {
     try {
