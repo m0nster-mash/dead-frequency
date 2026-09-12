@@ -5,7 +5,7 @@ import {requireUser} from "@/core/auth/lib/require-user";
 import {MainContentPanel} from "@/core/dashboard/components/panels/main-card";
 import {PageHeader} from "@/core/dashboard/components/panels/page-header";
 import formStyle from "@/shared/styles/form.module.css";
-import {auth} from "@core/auth";
+import {auth} from "@/core/auth";
 import {BreadcrumbLabel} from "@/shared/components/breadcrumb-label";
 import buttonStyles from "@/shared/styles/buttons.module.css";
 import EditIcon from "@/shared/svg/bootstrap-edit-icon.svg";

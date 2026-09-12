@@ -1,4 +1,4 @@
-import {auth} from "@core/auth";
+import {auth} from "@/core/auth";
 import {notFound} from "next/navigation";
 
 /**

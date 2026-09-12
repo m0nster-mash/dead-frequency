@@ -1,5 +1,4 @@
-CREATE TYPE "public"."posting_status" AS ENUM('active', 'muted', 'shadowbanned', 'banned');--> statement-breakpoint
-CREATE TYPE "public"."trust_level" AS ENUM('new', 'basic', 'trusted', 'veteran', 'restricted');--> statement-breakpoint
+CREATE TYPE "public"."report_reason" AS ENUM('spam', 'harassment', 'inappropriate_content', 'impersonation', 'other');--> statement-breakpoint
 CREATE TABLE "account" (
 	"id" text PRIMARY KEY NOT NULL,
 	"account_id" text NOT NULL,
@@ -119,24 +118,55 @@ CREATE TABLE "user_role" (
 	"created_at" timestamp DEFAULT now() NOT NULL
 );
 --> statement-breakpoint
-CREATE TABLE "user_status" (
+CREATE TABLE "activity_event" (
 	"id" text PRIMARY KEY NOT NULL,
-	"user_id" text NOT NULL,
-	"module" "module_name",
-	"status" "posting_status" DEFAULT 'active' NOT NULL,
-	"reason" text,
-	"expires_at" timestamp,
-	"created_at" timestamp DEFAULT now() NOT NULL,
-	"updated_at" timestamp DEFAULT now() NOT NULL
+	"module" "module_name" NOT NULL,
+	"record_id" text NOT NULL,
+	"event_type" text NOT NULL,
+	"actor_id" text NOT NULL,
+	"payload" jsonb,
+	"created_at" timestamp DEFAULT now() NOT NULL
 );
 --> statement-breakpoint
-CREATE TABLE "user_trust" (
-	"user_id" text PRIMARY KEY NOT NULL,
-	"trust_level" "trust_level" DEFAULT 'new' NOT NULL,
-	"post_count" integer DEFAULT 0 NOT NULL,
-	"negative_signal_count" integer DEFAULT 0 NOT NULL,
-	"cooldown_until" timestamp,
-	"updated_at" timestamp DEFAULT now() NOT NULL
+CREATE TABLE "comment" (
+	"id" text PRIMARY KEY NOT NULL,
+	"module" "module_name" NOT NULL,
+	"record_id" text NOT NULL,
+	"user_id" text NOT NULL,
+	"character_id" text,
+	"body" text NOT NULL,
+	"created_at" timestamp DEFAULT now() NOT NULL,
+	"updated_at" timestamp DEFAULT now() NOT NULL,
+	"deleted_at" timestamp
+);
+--> statement-breakpoint
+CREATE TABLE "reaction" (
+	"id" text PRIMARY KEY NOT NULL,
+	"module" "module_name" NOT NULL,
+	"record_id" text NOT NULL,
+	"user_id" text NOT NULL,
+	"character_id" text,
+	"emoji" text NOT NULL,
+	"created_at" timestamp DEFAULT now() NOT NULL
+);
+--> statement-breakpoint
+CREATE TABLE "report" (
+	"id" text PRIMARY KEY NOT NULL,
+	"module" "module_name" NOT NULL,
+	"record_id" text NOT NULL,
+	"reporter_id" text NOT NULL,
+	"reason" "report_reason" NOT NULL,
+	"details" text,
+	"resolved" text DEFAULT 'open',
+	"created_at" timestamp DEFAULT now() NOT NULL
+);
+--> statement-breakpoint
+CREATE TABLE "subscription" (
+	"id" text PRIMARY KEY NOT NULL,
+	"subscriber_id" text NOT NULL,
+	"module" "module_name" NOT NULL,
+	"record_id" text NOT NULL,
+	"created_at" timestamp DEFAULT now() NOT NULL
 );
 --> statement-breakpoint
 ALTER TABLE "account" ADD CONSTRAINT "account_user_id_user_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."user"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
@@ -150,8 +180,11 @@ ALTER TABLE "forum_thread" ADD CONSTRAINT "forum_thread_board_id_forum_board_id_
 ALTER TABLE "forum_thread" ADD CONSTRAINT "forum_thread_user_id_user_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."user"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "user_role" ADD CONSTRAINT "user_role_user_id_user_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."user"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "user_role" ADD CONSTRAINT "user_role_role_id_role_id_fk" FOREIGN KEY ("role_id") REFERENCES "public"."role"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
-ALTER TABLE "user_status" ADD CONSTRAINT "user_status_user_id_user_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."user"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
-ALTER TABLE "user_trust" ADD CONSTRAINT "user_trust_user_id_user_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."user"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "activity_event" ADD CONSTRAINT "activity_event_actor_id_user_id_fk" FOREIGN KEY ("actor_id") REFERENCES "public"."user"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "comment" ADD CONSTRAINT "comment_user_id_user_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."user"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "reaction" ADD CONSTRAINT "reaction_user_id_user_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."user"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "report" ADD CONSTRAINT "report_reporter_id_user_id_fk" FOREIGN KEY ("reporter_id") REFERENCES "public"."user"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "subscription" ADD CONSTRAINT "subscription_subscriber_id_user_id_fk" FOREIGN KEY ("subscriber_id") REFERENCES "public"."user"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 CREATE INDEX "account_userId_idx" ON "account" USING btree ("user_id");--> statement-breakpoint
 CREATE INDEX "session_userId_idx" ON "session" USING btree ("user_id");--> statement-breakpoint
 CREATE INDEX "verification_identifier_idx" ON "verification" USING btree ("identifier");--> statement-breakpoint
@@ -163,8 +196,9 @@ CREATE UNIQUE INDEX "user_role_unique_idx" ON "user_role" USING btree ("user_id"
             "context_id",
             ''
             ));--> statement-breakpoint
-CREATE UNIQUE INDEX "user_status_unique_idx" ON "user_status" USING btree ("user_id","module",COALESCE(
-            "module",
-            ''
-            ));--> statement-breakpoint
-CREATE INDEX "user_status_user_idx" ON "user_status" USING btree ("user_id");
+CREATE INDEX "activity_event_created_idx" ON "activity_event" USING btree ("created_at");--> statement-breakpoint
+CREATE INDEX "comment_module_record_idx" ON "comment" USING btree ("module","record_id");--> statement-breakpoint
+CREATE INDEX "reaction_module_record_idx" ON "reaction" USING btree ("module","record_id");--> statement-breakpoint
+CREATE INDEX "report_module_record_idx" ON "report" USING btree ("module","record_id");--> statement-breakpoint
+CREATE INDEX "subscription_subscriber_idx" ON "subscription" USING btree ("subscriber_id");--> statement-breakpoint
+CREATE INDEX "subscription_module_record_idx" ON "subscription" USING btree ("module","record_id");
