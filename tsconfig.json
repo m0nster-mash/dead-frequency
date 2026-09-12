@@ -29,10 +29,10 @@
       "@core/auth": [
         "./src/core/auth/index.ts"
       ],
-      "@core/dashboard": [
-        "./src/core/dashboard/index.ts"
-      ],
       "@shared/*": [
+        "./src/shared/*"
+      ],
+      "@/shared/*": [
         "./src/shared/*"
       ]
     }

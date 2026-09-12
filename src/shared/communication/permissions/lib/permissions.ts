@@ -1,6 +1,6 @@
-import {db} from "@shared/db/client";
+import {db} from "@/shared/db/client";
 import {and, eq, isNull, or} from "drizzle-orm";
-import {userRole} from "@shared/communication/permissions/schema/permissions.schema";
+import {userRole} from "@/shared/communication/permissions/schema/permissions.schema";
 
 /**
  * Centrally evaluates authorization rules by querying if a user possesses a specific role assignment.

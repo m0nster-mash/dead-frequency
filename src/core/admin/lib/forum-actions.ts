@@ -2,7 +2,7 @@
 
 import {requireSession} from "@/core/auth/lib/require-session";
 import {forumBoard, forumCategory} from "@/feature/forum/schema/forum.schema";
-import {db} from "@shared/db/client";
+import {db} from "@/shared/db/client";
 import {randomUUID} from "crypto";
 import {eq} from "drizzle-orm";
 import {revalidatePath} from "next/cache";

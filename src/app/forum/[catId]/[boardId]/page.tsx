@@ -9,7 +9,7 @@ import {getBoardWithThreads} from "@/feature/forum/lib/queries";
 import forumStyles from "@/feature/forum/styles/forum.module.css";
 import {BreadcrumbLabel} from "@/shared/components/breadcrumb-label";
 import tableStyles from "@/shared/styles/tables.module.css";
-import Placeholder from "@shared/components/placeholder";
+import Placeholder from "@/shared/components/placeholder";
 import Link from "next/link";
 import {notFound} from "next/navigation";
 import {JSX} from "react";

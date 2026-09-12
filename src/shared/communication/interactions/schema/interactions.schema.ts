@@ -1,6 +1,6 @@
 import {user} from "@/core/auth/schema/auth.schema";
-import {authorColumns} from "@shared/communication/author/lib/author";
-import {moduleEnum} from "@shared/communication/moderation/schema/moderation.schema";
+import {authorColumns} from "@/shared/communication/author/lib/author";
+import {moduleEnum} from "@/shared/communication/moderation/schema/moderation.schema";
 import {relations} from "drizzle-orm";
 import {index, jsonb, pgEnum, pgTable, text, timestamp} from "drizzle-orm/pg-core";
 

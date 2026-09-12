@@ -2,7 +2,7 @@ import {AdminEditUserForm} from "@/core/admin/components/admin-edit-user-form";
 import {requireSession} from "@/core/auth/lib/require-session";
 import {requireUser} from "@/core/auth/lib/require-user";
 import {PageHeader} from "@/core/dashboard/components/panels/page-header";
-import {BreadcrumbLabel} from "@shared/components/breadcrumb-label";
+import {BreadcrumbLabel} from "@/shared/components/breadcrumb-label";
 import {headers} from "next/headers";
 import {JSX} from "react";
 

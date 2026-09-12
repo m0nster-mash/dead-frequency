@@ -3,7 +3,7 @@
 import {AdminForumControls} from "@/feature/forum/components/admin/admin-forum-controls";
 import {AdminThreadControls} from "@/feature/forum/components/admin/admin-thread-controls";
 import buttonStyles from "@/shared/styles/buttons.module.css";
-import GearIcon from "@shared/svg/bootstrap-gear-icon.svg";
+import GearIcon from "@/shared/svg/bootstrap-gear-icon.svg";
 import {useState} from "react";
 
 type ThreadAdminButtonProps = {

@@ -4,7 +4,7 @@ import {PageHeader} from "@/core/dashboard/components/panels/page-header";
 import {BoardDisplay} from "@/feature/forum/components/board-display";
 import {ForumStatsPanel} from "@/feature/forum/components/forum-stats-panel";
 import {getForumHierarchy} from "@/feature/forum/lib/queries";
-import Placeholder from "@shared/components/placeholder";
+import Placeholder from "@/shared/components/placeholder";
 import {JSX} from "react";
 
 /**

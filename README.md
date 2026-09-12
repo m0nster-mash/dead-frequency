@@ -67,6 +67,12 @@ npm run db:studio
 npx auth@latest create-admin --email admin@email.com --name "admin" --password "password"
 ```
 
+### Populate role and user_role tables
+
+```bash
+npx tsx src/shared/db/seed/run-seed.ts
+```
+
 ### Kill Docker and remove old instances
 
 ```bash
