@@ -51,6 +51,11 @@ export async function Sidebar(): Promise<JSX.Element> {
                     label: "Style Test",
                     icon: <QuestionIcon/>,
                 },
+                {
+                    href: "/test/chatbox/",
+                    label: "Chatbox",
+                    icon: <QuestionIcon/>,
+                },
             ],
         },
         {
