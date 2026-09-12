@@ -1,6 +1,5 @@
 CREATE TABLE "account" (
 	"id" text PRIMARY KEY NOT NULL,
-	"issuer" text NOT NULL,
 	"account_id" text NOT NULL,
 	"provider_id" text NOT NULL,
 	"user_id" text NOT NULL,
@@ -104,6 +103,20 @@ CREATE TABLE "forum_thread" (
 	"deleted_at" timestamp
 );
 --> statement-breakpoint
+CREATE TABLE "role" (
+	"id" text PRIMARY KEY NOT NULL,
+	"label" text NOT NULL,
+	"created_at" timestamp DEFAULT now() NOT NULL
+);
+--> statement-breakpoint
+CREATE TABLE "user_role" (
+	"id" text PRIMARY KEY NOT NULL,
+	"user_id" text NOT NULL,
+	"role_id" text NOT NULL,
+	"context_id" text,
+	"created_at" timestamp DEFAULT now() NOT NULL
+);
+--> statement-breakpoint
 ALTER TABLE "account" ADD CONSTRAINT "account_user_id_user_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."user"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "session" ADD CONSTRAINT "session_user_id_user_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."user"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "avatar_config" ADD CONSTRAINT "avatar_config_user_id_user_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."user"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
@@ -113,11 +126,16 @@ ALTER TABLE "forum_post" ADD CONSTRAINT "forum_post_user_id_user_id_fk" FOREIGN 
 ALTER TABLE "forum_post" ADD CONSTRAINT "forum_post_reply_to_user_id_user_id_fk" FOREIGN KEY ("reply_to_user_id") REFERENCES "public"."user"("id") ON DELETE set null ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "forum_thread" ADD CONSTRAINT "forum_thread_board_id_forum_board_id_fk" FOREIGN KEY ("board_id") REFERENCES "public"."forum_board"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "forum_thread" ADD CONSTRAINT "forum_thread_user_id_user_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."user"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
-CREATE UNIQUE INDEX "account_issuer_accountId_uidx" ON "account" USING btree ("issuer","account_id");--> statement-breakpoint
+ALTER TABLE "user_role" ADD CONSTRAINT "user_role_user_id_user_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."user"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "user_role" ADD CONSTRAINT "user_role_role_id_role_id_fk" FOREIGN KEY ("role_id") REFERENCES "public"."role"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 CREATE INDEX "account_userId_idx" ON "account" USING btree ("user_id");--> statement-breakpoint
 CREATE INDEX "session_userId_idx" ON "session" USING btree ("user_id");--> statement-breakpoint
 CREATE INDEX "verification_identifier_idx" ON "verification" USING btree ("identifier");--> statement-breakpoint
 CREATE INDEX "forum_board_category_idx" ON "forum_board" USING btree ("category_id");--> statement-breakpoint
 CREATE INDEX "forum_post_thread_idx" ON "forum_post" USING btree ("thread_id");--> statement-breakpoint
 CREATE INDEX "forum_thread_board_idx" ON "forum_thread" USING btree ("board_id");--> statement-breakpoint
-CREATE INDEX "forum_thread_last_post_idx" ON "forum_thread" USING btree ("board_id","last_post_at");
+CREATE INDEX "forum_thread_last_post_idx" ON "forum_thread" USING btree ("board_id","last_post_at");--> statement-breakpoint
+CREATE UNIQUE INDEX "user_role_unique_idx" ON "user_role" USING btree ("user_id","role_id",COALESCE(
+            "context_id",
+            ''
+            ));
