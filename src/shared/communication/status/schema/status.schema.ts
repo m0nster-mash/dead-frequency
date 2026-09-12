@@ -3,78 +3,47 @@ import {moduleEnum} from "@/shared/communication/moderation/schema/moderation.sc
 import {relations, sql} from "drizzle-orm";
 import {index, integer, pgEnum, pgTable, text, timestamp, uniqueIndex} from "drizzle-orm/pg-core";
 
-/**
- * System enumeration specifying explicitly defined moderation states that can be administratively applied to restrict
- * or modify a user's posting capabilities.
- */
 export const postingStatusEnum = pgEnum("posting_status", [
-    "active",       // Standard operational privileges
-    "muted",        // Read-only access constraints
-    "shadowbanned", // Content remains hidden from public feeds but appears normal to the author
-    "banned",       // Absolute hard lockdown restricting system input pathways entirely
+    "active",
+    "muted",
+    "shadowbanned",
+    "banned",
 ]);
 
-/**
- * Administrative user status restriction mapping table. Houses explicit posting restrictions imposed manually by
- * supervisors or safety scripts. Supports granular sub-system isolation boundaries separate from authentication
- * account locks.
- */
 export const userStatus = pgTable(
     "user_status", {
         id: text("id")
             .primaryKey(),
-
-        /**
-         * Relational user binding links records directly to a matching profile. Purging user profiles triggers an
-         * automatic cascading delete sweeping matching status tracking entries completely out of database storage.
-         */
         userId: text("user_id")
             .notNull()
             .references(() => user.id, {onDelete: "cascade"}),
-
-        /**
-         * Polymorphic Feature Scope Pointer:
-         * - null = Configures a global, site-wide restriction block across all communication pipelines.
-         * - non-null = Scopes the penalty tightly to an isolated component branch (ex. "forum").
-         */
         module: moduleEnum("module"),
-
         status: postingStatusEnum("status")
             .notNull()
             .default("active"),
-
         reason: text("reason"),
-
-        expiresAt: timestamp("expires_at"), // Temporal expiration boundary limit token. null = indefinite penalty length
-
+        expiresAt: timestamp("expires_at"),
         createdAt: timestamp("created_at")
             .defaultNow()
             .notNull(),
-
-        /**
-         * Automatically logs updated modification intervals on data manipulation queries.
-         */
         updatedAt: timestamp("updated_at")
             .defaultNow()
             .$onUpdate(() => new Date())
             .notNull(),
     },
     (table) => [
-        /**
-         * Enforces a rule restricting accounts to a maximum of one status tracking row per unique (userId, module)
-         * coordinate context set. Uses sql`COALESCE(...)` macros since standard SQL specifications allow multiple
-         * null values to bypass standard uniqueness checks, ensuring strict unique compliance across null site-wide
-         * fields.
-         */
-        uniqueIndex("user_status_unique_idx").on(
-            table.userId,
-            table.module,
-            sql`COALESCE(
-            ${table.module},
-            ''
-            )`,
-        ),
-        // Optimizes account lookup routines inside administrative profile drawers
+        // Unique constraint when module is specified
+        uniqueIndex("user_status_user_module_unique_idx")
+            .on(table.userId, table.module)
+            .where(sql`${table.module}
+            IS NOT NULL`),
+
+        // Unique constraint when module is NULL (site-wide)
+        uniqueIndex("user_status_user_global_unique_idx")
+            .on(table.userId)
+            .where(sql`${table.module}
+            IS NULL`),
+
         index("user_status_user_idx").on(table.userId),
     ],
 );

@@ -1,6 +1,6 @@
 {
-  "id": "78cec9e4-9790-4931-b92f-e633490123ad",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "6aedc9df-9494-4ef7-b93b-2f987e1ac1af",
+  "prevId": "78cec9e4-9790-4931-b92f-e633490123ad",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -1490,6 +1490,74 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
+    "public.user_trust": {
+      "name": "user_trust",
+      "schema": "",
+      "columns": {
+        "user_id": {
+          "name": "user_id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "trust_level": {
+          "name": "trust_level",
+          "type": "trust_level",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'new'"
+        },
+        "post_count": {
+          "name": "post_count",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        },
+        "negative_signal_count": {
+          "name": "negative_signal_count",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        },
+        "cooldown_until": {
+          "name": "cooldown_until",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "user_trust_user_id_user_id_fk": {
+          "name": "user_trust_user_id_user_id_fk",
+          "tableFrom": "user_trust",
+          "tableTo": "user",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
     "public.activity_event": {
       "name": "activity_event",
       "schema": "",
@@ -2091,6 +2159,17 @@
         "muted",
         "shadowbanned",
         "banned"
+      ]
+    },
+    "public.trust_level": {
+      "name": "trust_level",
+      "schema": "public",
+      "values": [
+        "new",
+        "basic",
+        "trusted",
+        "veteran",
+        "restricted"
       ]
     },
     "public.report_reason": {
