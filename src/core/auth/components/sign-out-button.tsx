@@ -1,9 +1,6 @@
 "use client";
 
-import {useSidebar} from "@/app/dashboard/components/sidebar-context";
-import {authClient} from "@/core/auth/lib/auth-client";
-import sidebarStyles from "@/shared/styles/patterns/sidebar.module.css";
-import ExitIcon from "@/shared/svg/bootstrap-exit-icon.svg";
+import ExitIcon from "/public/bootstrap-exit-icon.svg";
 import {useRouter} from "next/navigation";
 import {JSX} from "react";
 

@@ -1,6 +1,6 @@
 "use client";
 
-import {authClient} from "@/core/auth/lib/auth-client";
+import {authClient} from "@/_core/auth/lib/auth-client";
 import brandStyles from "@/shared/styles/brand.module.css";
 import buttonStyles from "@/shared/styles/buttons.module.css";
 import formStyles from "@/shared/styles/form.module.css";

@@ -1,1 +1,0 @@
-export {auth} from "@/core/auth/lib/auth";

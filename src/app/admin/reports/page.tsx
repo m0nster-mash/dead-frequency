@@ -1,7 +1,7 @@
 import {user} from "@/core/auth/schema/auth.schema";
 import {report} from "@/shared/communication/interactions/schema/interactions.schema";
 import {db} from "@/shared/db/client";
-import {resolveReportAction} from "@shared/communication/interactions/lib/actions";
+import {resolveReportAction} from "@/shared/communication/interactions/lib/actions";
 import {desc, eq} from "drizzle-orm";
 
 /**

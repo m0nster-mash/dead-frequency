@@ -7,8 +7,6 @@ import {JSX} from "react";
 
 /**
  * The primary administrator control panel.
- *
- * @returns {Promise<JSX.Element>} A promise resolving to the main administrative landing layout view.
  */
 export default async function AdminPage(): Promise<JSX.Element> {
     const requestHeaders = await headers();

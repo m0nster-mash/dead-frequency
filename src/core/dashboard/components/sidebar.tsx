@@ -17,9 +17,6 @@ import {JSX} from "react";
 import SidebarFrame from "./sidebar-frame";
 import SidebarToggleButton from "./sidebar-toggle-button";
 
-/**
- * The left-side bar.
- */
 export async function Sidebar(): Promise<JSX.Element> {
     const requestHeaders = await headers();
     const session = await auth.api.getSession({headers: requestHeaders});
@@ -28,12 +25,7 @@ export async function Sidebar(): Promise<JSX.Element> {
     const isAdmin = userRole === "admin";
 
     const initials = session?.user?.name
-        ? session.user.name
-            .split(" ")
-            .map((part) => part[0])
-            .join("")
-            .slice(0, 2)
-            .toUpperCase()
+        ? session.user.name.split(" ").map((part) => part).join("").slice(0, 2).toUpperCase()
         : ":)";
 
     const avatarConfig = session
@@ -44,31 +36,15 @@ export async function Sidebar(): Promise<JSX.Element> {
         {
             title: "Test Pages",
             items: [
-                {
-                    href: "/test/styles/",
-                    label: "Style Test",
-                    icon: <QuestionIcon/>,
-                },
-                {
-                    href: "/test/chatbox/",
-                    label: "Chatbox",
-                    icon: <QuestionIcon/>,
-                },
+                {href: "/test/styles/", label: "Style Test", icon: <QuestionIcon/>},
+                {href: "/test/chatbox/", label: "Chatbox", icon: <QuestionIcon/>},
             ],
         },
         {
             title: "Features",
             items: [
-                {
-                    href: "/avatar",
-                    label: "Avatar System",
-                    icon: <PersonIcon/>,
-                },
-                {
-                    href: "/forum",
-                    label: "Forum",
-                    icon: <ForumIcon/>,
-                }
+                {href: "/avatar", label: "Avatar System", icon: <PersonIcon/>},
+                {href: "/forum", label: "Forum", icon: <ForumIcon/>},
             ],
         },
         ...(isAdmin
@@ -84,7 +60,7 @@ export async function Sidebar(): Promise<JSX.Element> {
                                 {href: "/admin/users", label: "Users", icon: <GearIcon/>},
                                 {href: "/admin/forum", label: "Forum Management", icon: <GearIcon/>},
                                 {href: "/admin/audit-log", label: "Audit Log", icon: <GearIcon/>},
-                                {href: "/admin/reports", label: "Reports", icon: <GearIcon/>}
+                                {href: "/admin/reports", label: "Reports", icon: <GearIcon/>},
                             ],
                         },
                     ],
@@ -105,14 +81,12 @@ export async function Sidebar(): Promise<JSX.Element> {
                                 <span>{initials}</span>
                             )}
                         </div>
-
                         <div className={`${sidebarStyles.userInfo} ${sidebarStyles.hideOnCollapse}`}>
                             <strong>
                                 <Link href={`/user/${session.user.id}`}>{userName}</Link>
                             </strong>
                             <span>{userRole}</span>
                         </div>
-
                         <div className={sidebarStyles.hideOnCollapse}>
                             <DropdownMenu
                                 trigger={<DotIcon/>}
@@ -135,12 +109,10 @@ export async function Sidebar(): Promise<JSX.Element> {
                         </div>
                     </div>
                 ) : (
-                    <span></span>
+                    <span/>
                 )}
             </div>
-
             <SidebarNav sections={sections}/>
-
             {session ? (
                 <div className={sidebarStyles.sidebarFooter}>
                     <SignOutButton/>

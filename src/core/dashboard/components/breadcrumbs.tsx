@@ -9,10 +9,8 @@ import {JSX} from "react";
 /**
  * An interactive Client Component that parses the browser path routing location to render dynamic navigational
  * breadcrumb paths.
-
- * @returns {JSX.Element} The visual breadcrumb navigational trace node.
  */
-export default function Breadcrumbs(): JSX.Element {
+export default function _breadcrumbs(): JSX.Element {
     const pathname = usePathname();
     const {labels} = useBreadcrumbLabels();
     const segments = pathname.split("/").filter(Boolean);

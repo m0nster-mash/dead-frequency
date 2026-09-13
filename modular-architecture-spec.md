@@ -33,7 +33,7 @@ Even when developing 100% locally, all feature modules MUST adhere to these pack
 Future AI assistants working on this repository **MUST** adhere to the following principles:
 
 ### 1. Inversion of Control (IoC) & Adapter Pattern
-- **Rule**: Feature modules MUST NEVER directly import files or components from the host project (`apps/web` or `src/core/auth`, etc.).
+- **Rule**: Feature modules MUST NEVER directly import files or components from the host project (`apps/web` or `src/_core`, etc.).
 - **Implementation**: Modules define TypeScript interface contracts (e.g., `ChatboxAuthAdapter`, `ModuleUser`) for the capabilities they require.
 - **Host Responsibility**: The Host application implements these adapters and passes them into the module via React Context Providers or props.
 

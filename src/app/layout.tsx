@@ -1,38 +1,28 @@
-import {ThemeProvider} from "@/app/components/theme-provider";
-import {AppShell} from "@/core/dashboard/components/app-shell";
-import {BreadcrumbsProvider} from "@/shared/components/breadcrumbs-context";
-import type {Metadata} from "next";
-import "./globals.css";
-import React, {JSX, ReactNode} from "react";
+import "@/app/globals.css";
+import AppShellFrame from "@/core/dashboard/components/app-shell-frame";
+import Sidebar from "@/core/dashboard/components/sidebar";
+import Header from "@/core/dashboard/components/header";
+import { SidebarNav } from "@/app/dashboard/components/sidebar-nav";
+import { buildDynamicSidebarNav } from "@/core/registry/lib/module-loader";
+import { ThemeProvider } from "@/app/components/theme-provider";
 
-/**
- * Global application metadata dictionary configuration for Next.js. Controls the fallback document head tags, site
- * indexing signatures, and default titles.
- */
-export const metadata: Metadata = {
-    title: "dead-frequency",
-};
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+    const navSections = buildDynamicSidebarNav();
 
-/**
- * The core architectural Next.js Root Layout component that wraps the entire HTML document tree.
- *
- * @param {Object} props - The component properties.
- * @param {ReactNode} props.children - Dynamic view page streams injected into the layout framework.
- *
- * @returns {JSX.Element} The foundational framework layout container wrapping the application ecosystem.
- */
-export default function RootLayout({children}: { children: ReactNode }): JSX.Element {
     return (
-        /**
-         * suppressHydrationWarning is mandatory on the root html element when using theme providers. It tells Next.js
-         * not to flag light/dark class mismatches caused by theme synchronization scripts.
-         */
-        <html lang="en" suppressHydrationWarning>
+        <html lang="en">
         <body>
         <ThemeProvider>
-            <BreadcrumbsProvider>
-                <AppShell>{children}</AppShell>
-            </BreadcrumbsProvider>
+            <AppShellFrame
+                sidebar={
+                    <Sidebar>
+                        <SidebarNav sections={navSections} />
+                    </Sidebar>
+                }
+                header={<Header />}
+            >
+                {children}
+            </AppShellFrame>
         </ThemeProvider>
         </body>
         </html>
