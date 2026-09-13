@@ -2,6 +2,7 @@
 
 import {ChatboxPanel} from "@/feature/chatbox/components/chatbox-panel";
 import buttonStyles from "@/shared/styles/buttons.module.css";
+import dropdownStyles from "@/feature/chatbox/styles/chatbox.module.css";
 import ChatIcon from "@/shared/svg/bootstrap-chat-icon.svg";
 import {JSX, useState} from "react";
 
@@ -13,7 +14,7 @@ export function ChatboxDropdown({isAdmin = false}: ChatboxDropdownProps): JSX.El
     const [isOpen, setIsOpen] = useState(false);
 
     return (
-        <div style={{position: "relative"}}>
+        <div className={dropdownStyles.dropdownWrapper}>
             <button type="button"
                     className={`${buttonStyles.iconBtn} ${buttonStyles.iconBtnFilled}`}
                     aria-label="ChatBox"
@@ -23,16 +24,7 @@ export function ChatboxDropdown({isAdmin = false}: ChatboxDropdownProps): JSX.El
             </button>
 
             {isOpen && (
-                <div style={{
-                    position: "absolute",
-                    top: "calc(100% + 0.5rem)",
-                    right: 0,
-                    width: "360px",
-                    maxWidth: "90vw",
-                    zIndex: 100,
-                    boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.3)",
-                    borderRadius: "var(--radius-sm, 8px)",
-                }}>
+                <div className={dropdownStyles.dropdownMenu}>
                     <ChatboxPanel isAdmin={isAdmin}/>
                 </div>
             )}

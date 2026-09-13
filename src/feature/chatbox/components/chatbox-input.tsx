@@ -55,7 +55,8 @@ export function ChatboxInput({
                                   value={body}
                                   onChange={(e) => setBody(e.target.value)}
                                   disabled={isLoading}
-                                  rows={2}/>
+                                  rows={2}
+                                  maxLength={250}/>
                         <div className={chatboxStyles.inputActions}>
                             <button type="submit"
                                     className={`${chatboxStyles.inputButton} ${chatboxStyles.inputButtonPrimary}`}

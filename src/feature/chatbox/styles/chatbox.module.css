@@ -297,6 +297,24 @@
 }
 
 /* -----------------------------------------------------------
+   DROPDOWN
+   ----------------------------------------------------------- */
+.dropdownWrapper {
+    position: relative;
+}
+
+.dropdownMenu {
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    right: 0;
+    width: 360px;
+    max-width: 90vw;
+    z-index: 100;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+    border-radius: var(--radius-sm, 8px);
+}
+
+/* -----------------------------------------------------------
    RESPONSIVE
    ----------------------------------------------------------- */
 @media (max-width: 600px) {
