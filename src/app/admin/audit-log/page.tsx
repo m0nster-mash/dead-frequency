@@ -2,28 +2,22 @@ import {requireSession} from "@/core/auth/lib/require-session";
 import {user} from "@/core/auth/schema/auth.schema";
 import {MainContentPanel} from "@/core/dashboard/components/panels/main-card";
 import {PageHeader} from "@/core/dashboard/components/panels/page-header";
-import tableStyle from "@/shared/styles/tables.module.css";
 import {auditLog} from "@/shared/communication/moderation/schema/moderation.schema";
 import {db} from "@/shared/db/client";
+import tableStyle from "@/shared/styles/tables.module.css";
 import {desc, eq} from "drizzle-orm";
+import {alias} from "drizzle-orm/pg-core";
 import {JSX} from "react";
 
 /**
- * The system audit log.
- *
- * @returns {Promise<JSX.Element>} A promise resolving to the administrative system-wide audit history dashboard UI
+ * The system audit log page with detailed moderation tracking.
  */
 export default async function AdminAuditLogPage(): Promise<JSX.Element> {
     await requireSession({role: "admin"});
 
-    // Projection reference block mapping relational structural bindings from schema imports
-    const moderator = {
-        id: user.id,
-        name: user.name,
-        email: user.email
-    };
+    const moderator = alias(user, "moderator");
+    const targetUser = alias(user, "targetUser");
 
-    // Pulls tracking entries, joining user meta fields via Drizzle ORM
     const entries = await db
         .select({
             id: auditLog.id,
@@ -34,9 +28,12 @@ export default async function AdminAuditLogPage(): Promise<JSX.Element> {
             createdAt: auditLog.createdAt,
             moderatorName: moderator.name,
             moderatorEmail: moderator.email,
+            targetName: targetUser.name,
+            targetEmail: targetUser.email,
         })
         .from(auditLog)
-        .leftJoin(user, eq(auditLog.moderatorId, user.id))
+        .leftJoin(moderator, eq(auditLog.moderatorId, moderator.id))
+        .leftJoin(targetUser, eq(auditLog.targetUserId, targetUser.id))
         .orderBy(desc(auditLog.createdAt))
         .limit(100);
 
@@ -55,23 +52,30 @@ export default async function AdminAuditLogPage(): Promise<JSX.Element> {
                             <th>Module</th>
                             <th>Action</th>
                             <th>Moderator</th>
+                            <th>Target User</th>
+                            <th>Record ID</th>
                             <th>Reason</th>
                         </tr>
                         </thead>
                         <tbody>
-
                         {entries.map((e) => (
                             <tr key={e.id}>
                                 <td>{new Date(e.createdAt).toLocaleString()}</td>
-                                <td><span className={tableStyle.statusBadge}>{e.module}</span></td>
+                                <td>
+                                    <span className={tableStyle.statusBadge}>{e.module}</span>
+                                </td>
                                 <td>{e.action}</td>
                                 <td>{e.moderatorName || e.moderatorEmail || "—"}</td>
+                                <td>{e.targetName || e.targetEmail || "—"}</td>
+                                <td>
+                                    <code>{e.recordId}</code>
+                                </td>
                                 <td>{e.reason || "—"}</td>
                             </tr>
                         ))}
                         {entries.length === 0 && (
                             <tr>
-                                <td colSpan={5} className={tableStyle.tableEmptyCell}>
+                                <td colSpan={7} className={tableStyle.tableEmptyCell}>
                                     No mod actions recorded yet.
                                 </td>
                             </tr>

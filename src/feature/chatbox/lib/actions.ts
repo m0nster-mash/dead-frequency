@@ -1,12 +1,11 @@
 "use server";
 
 import {auth} from "@/core/auth";
-import {user} from "@/core/auth/schema/auth.schema";
+import {logModAction} from "@/shared/communication/moderation/lib/audit-log";
 import {sanitizeContent} from "@/shared/communication/sanitize/lib/sanitize";
 import {getPostingStatus} from "@/shared/communication/status/lib/status";
 import {canPost, recordPost} from "@/shared/communication/status/lib/trust";
 import {db} from "@/shared/db/client";
-import {logModAction} from "@shared/communication/moderation/lib/audit-log";
 import {randomUUID} from "crypto";
 import {eq} from "drizzle-orm";
 import {revalidatePath} from "next/cache";
@@ -18,13 +17,12 @@ import {chatboxMessage} from "../schema/chatbox.schema";
  */
 async function getAuthenticatedUser(context: string) {
     const reqHeaders = await headers();
-    const session = await auth.api.getSession({ headers: reqHeaders });
+    const session = await auth.api.getSession({headers: reqHeaders});
 
     if (!session?.user) {
         throw new Error("Unauthorized: You must be logged in to perform this action.");
     }
 
-    // Return session.user directly to avoid 403 APIError from requireUser
     return session.user;
 }
 
@@ -108,7 +106,7 @@ export async function deleteChatboxMessageAction(
         action: "delete",
         moderatorId: admin.id,
         targetUserId: message.userId,
-        reason: input.reason,
+        reason: input.reason ?? "Deleted by admin",
     });
 
     revalidatePath("/", "layout");
@@ -132,13 +130,13 @@ export async function restoreChatboxMessageAction(
         throw new Error("Message not found.");
     }
 
-    // Un-delete the message by resetting deletedAt to null
+    // Clear soft-delete timestamp
     await db
         .update(chatboxMessage)
-        .set({ deletedAt: null })
+        .set({deletedAt: null})
         .where(eq(chatboxMessage.id, input.messageId));
 
-    // Record moderation event in system audit log
+    // Log the restoration action
     await logModAction({
         module: "chatbox",
         recordId: input.messageId,
