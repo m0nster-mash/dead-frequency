@@ -12,7 +12,7 @@ import {JSX} from "react";
  *
  * @returns {JSX.Element} The visual structural layout state modifier switch button.
  */
-export default function SidebarToggleButton(): JSX.Element {
+export default function _sidebarToggleButton(): JSX.Element {
     const {collapsed, toggle} = useSidebar();
 
     return (

@@ -15,7 +15,7 @@ import {headers} from "next/headers";
 import Link from "next/link";
 import {JSX} from "react";
 import SidebarFrame from "./sidebar-frame";
-import SidebarToggleButton from "./sidebar-toggle-button";
+import _sidebarToggleButton from "./_sidebar-toggle-button";
 
 /**
  * The left-side bar.
@@ -94,7 +94,7 @@ export async function _sidebar(): Promise<JSX.Element> {
     ];
 
     return (
-        <SidebarFrame toggleButton={<SidebarToggleButton/>}>
+        <SidebarFrame toggleButton={<_sidebarToggleButton/>}>
             <div>
                 {session ? (
                     <div className={sidebarStyles.userCard}>

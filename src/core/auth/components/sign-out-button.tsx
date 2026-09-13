@@ -1,6 +1,8 @@
 "use client";
 
 import ExitIcon from "/public/bootstrap-exit-icon.svg";
+import sidebarStyles from "@/shared/styles/patterns/sidebar.module.css";
+import {useSidebar} from "@/core/dashboard/components/sidebar-context";
 import {useRouter} from "next/navigation";
 import {JSX} from "react";
 

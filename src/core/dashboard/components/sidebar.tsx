@@ -1,23 +1,26 @@
-import {NavSection, SidebarNav} from "@/app/dashboard/components/sidebar-nav";
-import {auth, SignOutButton} from "@/core/auth";
-import {AvatarRenderer} from "@/feature/avatar/components/avatar-renderer";
-import {getAvatarConfigForUser} from "@/feature/avatar/lib/actions";
-import {DEFAULT_AVATAR_CONFIG} from "@/feature/avatar/lib/options";
-import {DropdownMenu} from "@/shared/components/dropdown-menu";
-import sidebarStyles from "@/shared/styles/patterns/sidebar.module.css";
-import ForumIcon from "@/shared/svg/bootstrap-forum-icon.svg";
-import GearIcon from "@/shared/svg/bootstrap-gear-icon.svg";
-import PersonIcon from "@/shared/svg/bootstrap-person-icon.svg";
-import QuestionIcon from "@/shared/svg/bootstrap-question-icon.svg";
-import AdminIcon from "@/shared/svg/bootstrap-settings.svg";
-import DotIcon from "@/shared/svg/bootstrap-three-dot-icon.svg";
+import {_sidebarNav, NavSection} from "@/_app/dashboard/components/_sidebar-nav";
+import {_signOutButton, auth} from "@/_core/auth";
+import {AvatarRenderer} from "@/_feature/avatar/components/avatar-renderer";
+import {getAvatarConfigForUser} from "@/_feature/avatar/lib/actions";
+import {DEFAULT_AVATAR_CONFIG} from "@/_feature/avatar/lib/options";
+import {DropdownMenu} from "@/_shared/components/dropdown-menu";
+import sidebarStyles from "@/_shared/styles/patterns/sidebar.module.css";
+import ForumIcon from "@/_shared/svg/bootstrap-forum-icon.svg";
+import GearIcon from "@/_shared/svg/bootstrap-gear-icon.svg";
+import PersonIcon from "@/_shared/svg/bootstrap-person-icon.svg";
+import QuestionIcon from "@/_shared/svg/bootstrap-question-icon.svg";
+import AdminIcon from "@/_shared/svg/bootstrap-settings.svg";
+import DotIcon from "@/_shared/svg/bootstrap-three-dot-icon.svg";
 import {headers} from "next/headers";
 import Link from "next/link";
 import {JSX} from "react";
 import SidebarFrame from "./sidebar-frame";
 import SidebarToggleButton from "./sidebar-toggle-button";
 
-export async function Sidebar(): Promise<JSX.Element> {
+/**
+ * The left-side bar.
+ */
+export async function _sidebar(): Promise<JSX.Element> {
     const requestHeaders = await headers();
     const session = await auth.api.getSession({headers: requestHeaders});
     const userName = session ? session.user.name : null;
@@ -25,7 +28,12 @@ export async function Sidebar(): Promise<JSX.Element> {
     const isAdmin = userRole === "admin";
 
     const initials = session?.user?.name
-        ? session.user.name.split(" ").map((part) => part).join("").slice(0, 2).toUpperCase()
+        ? session.user.name
+            .split(" ")
+            .map((part) => part[0])
+            .join("")
+            .slice(0, 2)
+            .toUpperCase()
         : ":)";
 
     const avatarConfig = session
@@ -36,15 +44,31 @@ export async function Sidebar(): Promise<JSX.Element> {
         {
             title: "Test Pages",
             items: [
-                {href: "/test/styles/", label: "Style Test", icon: <QuestionIcon/>},
-                {href: "/test/chatbox/", label: "Chatbox", icon: <QuestionIcon/>},
+                {
+                    href: "/test/styles/",
+                    label: "Style Test",
+                    icon: <QuestionIcon/>,
+                },
+                {
+                    href: "/test/chatbox/",
+                    label: "Chatbox",
+                    icon: <QuestionIcon/>,
+                },
             ],
         },
         {
             title: "Features",
             items: [
-                {href: "/avatar", label: "Avatar System", icon: <PersonIcon/>},
-                {href: "/forum", label: "Forum", icon: <ForumIcon/>},
+                {
+                    href: "/avatar",
+                    label: "Avatar System",
+                    icon: <PersonIcon/>,
+                },
+                {
+                    href: "/forum",
+                    label: "Forum",
+                    icon: <ForumIcon/>,
+                }
             ],
         },
         ...(isAdmin
@@ -60,7 +84,7 @@ export async function Sidebar(): Promise<JSX.Element> {
                                 {href: "/admin/users", label: "Users", icon: <GearIcon/>},
                                 {href: "/admin/forum", label: "Forum Management", icon: <GearIcon/>},
                                 {href: "/admin/audit-log", label: "Audit Log", icon: <GearIcon/>},
-                                {href: "/admin/reports", label: "Reports", icon: <GearIcon/>},
+                                {href: "/admin/reports", label: "Reports", icon: <GearIcon/>}
                             ],
                         },
                     ],
@@ -81,12 +105,14 @@ export async function Sidebar(): Promise<JSX.Element> {
                                 <span>{initials}</span>
                             )}
                         </div>
+
                         <div className={`${sidebarStyles.userInfo} ${sidebarStyles.hideOnCollapse}`}>
                             <strong>
                                 <Link href={`/user/${session.user.id}`}>{userName}</Link>
                             </strong>
                             <span>{userRole}</span>
                         </div>
+
                         <div className={sidebarStyles.hideOnCollapse}>
                             <DropdownMenu
                                 trigger={<DotIcon/>}
@@ -109,13 +135,15 @@ export async function Sidebar(): Promise<JSX.Element> {
                         </div>
                     </div>
                 ) : (
-                    <span/>
+                    <span></span>
                 )}
             </div>
-            <SidebarNav sections={sections}/>
+
+            <_sidebarNav sections={sections}/>
+
             {session ? (
                 <div className={sidebarStyles.sidebarFooter}>
-                    <SignOutButton/>
+                    <_signOutButton/>
                 </div>
             ) : (
                 <div>
