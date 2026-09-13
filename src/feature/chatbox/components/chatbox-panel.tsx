@@ -1,19 +1,19 @@
 "use client";
 
-import {authClient} from "@/core/auth/lib/auth-client";
-import {AvatarConfig} from "@/feature/avatar/lib/types";
-import {ChatboxMessage} from "@/feature/chatbox/components/chatbox-message";
+import { authClient } from "@/core/auth/lib/auth-client";
+import { AvatarConfig } from "@/feature/avatar/lib/types";
+import { ChatboxMessage } from "@/feature/chatbox/components/chatbox-message";
 import chatboxStyles from "@/feature/chatbox/styles/chatbox.module.css";
+import {ReportPanel} from "@shared/components/report-panel";
 import Link from "next/link";
-import {JSX, useEffect, useRef, useState} from "react";
+import { JSX, useEffect, useRef, useState } from "react";
 import {
     createChatboxMessageAction,
     deleteChatboxMessageAction,
     restoreChatboxMessageAction,
 } from "../lib/actions";
-import {getChatboxMessages} from "../lib/queries";
-import {ChatboxInput} from "./chatbox-input";
-
+import { getChatboxMessages } from "../lib/queries";
+import { ChatboxInput } from "./chatbox-input";
 
 type Message = {
     id: string;
@@ -32,20 +32,26 @@ type ChatboxPanelProps = {
     refreshInterval?: number; // Time in milliseconds between message polls
 };
 
+type ReportingTarget = {
+    messageId: string;
+    targetUserId: string;
+} | null;
+
 export function ChatboxPanel({
                                  isAdmin = false,
-                                 refreshInterval = 5000, // Default to polling every 5 seconds
+                                 refreshInterval = 5000,
                              }: ChatboxPanelProps): JSX.Element {
-    const {data: session, isPending: isSessionLoading} = authClient.useSession();
+    const { data: session, isPending: isSessionLoading } = authClient.useSession();
     const [messages, setMessages] = useState<Message[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [submitting, setSubmitting] = useState(false);
+    const [reportingTarget, setReportingTarget] = useState<ReportingTarget>(null);
     const messagesEndRef = useRef<HTMLDivElement>(null);
 
     // Auto-scroll to the bottom when new messages arrive or are optimistically added
     useEffect(() => {
-        messagesEndRef.current?.scrollIntoView({behavior: "smooth"});
+        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
     }, [messages]);
 
     // Initial load and recurring interval polling every `refreshInterval` ms
@@ -58,17 +64,6 @@ export function ChatboxPanel({
 
         return () => clearInterval(intervalId);
     }, [refreshInterval]);
-
-    async function handleRestoreMessage(messageId: string) {
-        try {
-            await restoreChatboxMessageAction({ messageId });
-            await loadMessages();
-        } catch (err) {
-            const message =
-                err instanceof Error ? err.message : "Failed to restore message";
-            setError(message);
-        }
-    }
 
     async function loadMessages() {
         try {
@@ -106,9 +101,9 @@ export function ChatboxPanel({
 
         try {
             // 3. Persist to server database
-            await createChatboxMessageAction({body});
+            await createChatboxMessageAction({ body });
 
-            // 4. Fetch actual server records to replace optimistic message with real ID & avatar state
+            // 4. Fetch actual server records to replace optimistic message
             await loadMessages();
         } catch (err) {
             // Revert optimistic message if server action fails
@@ -125,10 +120,20 @@ export function ChatboxPanel({
         }
 
         try {
-            await deleteChatboxMessageAction({messageId});
+            await deleteChatboxMessageAction({ messageId });
             await loadMessages();
         } catch (err) {
             const message = err instanceof Error ? err.message : "Failed to delete message";
+            setError(message);
+        }
+    }
+
+    async function handleRestoreMessage(messageId: string) {
+        try {
+            await restoreChatboxMessageAction({ messageId });
+            await loadMessages();
+        } catch (err) {
+            const message = err instanceof Error ? err.message : "Failed to restore message";
             setError(message);
         }
     }
@@ -146,7 +151,8 @@ export function ChatboxPanel({
                     </div>
                 ) : (
                     messages.map((msg) => (
-                        <ChatboxMessage                            key={msg.id}
+                        <ChatboxMessage
+                            key={msg.id}
                             id={msg.id}
                             userId={msg.userId}
                             authorName={msg.authorName}
@@ -157,17 +163,23 @@ export function ChatboxPanel({
                             deletedAt={msg.deletedAt}
                             isAdmin={isAdmin}
                             onDeleteAction={isAdmin ? handleDeleteMessage : undefined}
-                            onRestoreAction={isAdmin ? handleRestoreMessage : undefined}                        />
+                            onRestoreAction={isAdmin ? handleRestoreMessage : undefined}
+                            onReportAction={(messageId, targetUserId) =>
+                                setReportingTarget({ messageId, targetUserId })
+                            }
+                        />
                     ))
                 )}
-                <div ref={messagesEndRef}/>
+                <div ref={messagesEndRef} />
             </div>
 
             {!isSessionLoading && session?.user ? (
-                <ChatboxInput onSubmitAction={handleSendMessage}
-                              isLoading={submitting}
-                              error={error}
-                              placeholder="Write a message..."/>
+                <ChatboxInput
+                    onSubmitAction={handleSendMessage}
+                    isLoading={submitting}
+                    error={error}
+                    placeholder="Write a message..."
+                />
             ) : (
                 <div className={chatboxStyles.loggedOutNotice}>
                     You must be{" "}
@@ -176,6 +188,18 @@ export function ChatboxPanel({
                     </Link>{" "}
                     to post.
                 </div>
+            )}
+
+            {/* Reusable Report Modal */}
+            {reportingTarget && (
+                <ReportPanel
+                    module="chatbox"
+                    recordId={reportingTarget.messageId}
+                    targetUserId={reportingTarget.targetUserId}
+                    isOpen={!!reportingTarget}
+                    onClose={() => setReportingTarget(null)}
+                    onSuccess={() => alert("Report submitted successfully.")}
+                />
             )}
         </div>
     );
