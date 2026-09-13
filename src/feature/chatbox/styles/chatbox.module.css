@@ -12,6 +12,8 @@
     border-radius: var(--radius-sm);
     background: var(--color-surface-raised);
     min-height: 24rem;
+    max-height: 32rem;
+    height: 500px;
 }
 
 .chatboxMessages {
@@ -64,7 +66,6 @@
     background: var(--color-surface-raised);
 }
 
-/* Chat bubble arrow pointing left toward the avatar */
 .message::before {
     content: "";
     position: absolute;
@@ -92,6 +93,38 @@
 
 .messageAuthor {
     padding-right: 10px;
+}
+
+.messageAuthorLink {
+    padding-right: 10px;
+    color: inherit;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.messageAuthorLink:hover {
+    text-decoration: underline;
+    color: var(--color-text-primary, #0066cc);
+}
+
+.messageDeletedAdmin {
+    border-color: var(--color-danger, #ff5050);
+    background: rgba(255, 80, 80, 0.08);
+}
+
+.deletedBadge {
+    color: var(--color-danger, #ff5050);
+    font-size: var(--font-size-xs);
+    font-weight: 700;
+    margin-left: 0.5rem;
+}
+
+ .messageActions button  {
+     background-color: var(--color-danger-bg);
+     border: 1px solid var(--color-danger);
+     display: flex;
+     float:right;
+     padding: 5px;
 }
 
 /* -----------------------------------------------------------
@@ -239,6 +272,28 @@
     color: var(--color-danger, #ff5050);
     font-size: var(--font-size-sm);
     line-height: 1.4;
+}
+
+/* -----------------------------------------------------------
+   LOGGED OUT NOTICE
+   ----------------------------------------------------------- */
+.loggedOutNotice {
+    padding: var(--size-space-4);
+    border-top: 1px solid var(--color-border);
+    background: var(--color-surface-raised);
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+    text-align: center;
+}
+
+.loginLink {
+    color: var(--color-text-primary, #0066cc);
+    font-weight: 600;
+    text-decoration: underline;
+}
+
+.loginLink:hover {
+    opacity: 0.85;
 }
 
 /* -----------------------------------------------------------

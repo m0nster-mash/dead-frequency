@@ -1,7 +1,10 @@
 "use client";
 
+import {authClient} from "@/core/auth/lib/auth-client";
+import {AvatarConfig} from "@/feature/avatar/lib/types";
 import {ChatboxMessage} from "@/feature/chatbox/components/chatbox-message";
 import chatboxStyles from "@/feature/chatbox/styles/chatbox.module.css";
+import Link from "next/link";
 import {JSX, useEffect, useRef, useState} from "react";
 import {createChatboxMessageAction, deleteChatboxMessageAction} from "../lib/actions";
 import {getChatboxMessages} from "../lib/queries";
@@ -16,49 +19,44 @@ type Message = {
     deletedAt: Date | string | null;
     authorName: string | null;
     authorEmail: string | null;
+    avatarConfig?: AvatarConfig | null;
 };
 
 type ChatboxPanelProps = {
     isAdmin?: boolean;
-    refreshInterval?: number;
+    refreshInterval?: number; // Time in milliseconds between message polls
 };
 
 export function ChatboxPanel({
                                  isAdmin = false,
-                                 refreshInterval = 5000, // Refresh every 5 seconds
+                                 refreshInterval = 5000, // Default to polling every 5 seconds
                              }: ChatboxPanelProps): JSX.Element {
+    const {data: session, isPending: isSessionLoading} = authClient.useSession();
     const [messages, setMessages] = useState<Message[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [submitting, setSubmitting] = useState(false);
     const messagesEndRef = useRef<HTMLDivElement>(null);
-    const refreshIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
-    // Scroll to bottom when messages update
+    // Auto-scroll to the bottom when new messages arrive or are optimistically added
     useEffect(() => {
         messagesEndRef.current?.scrollIntoView({behavior: "smooth"});
     }, [messages]);
 
-    // Load messages on mount
+    // Initial load and recurring interval polling every `refreshInterval` ms
     useEffect(() => {
         loadMessages();
 
-        // Set up auto-refresh
-        refreshIntervalRef.current = setInterval(() => {
+        const intervalId = setInterval(() => {
             loadMessages();
         }, refreshInterval);
 
-        return () => {
-            if (refreshIntervalRef.current) {
-                clearInterval(refreshIntervalRef.current);
-            }
-        };
+        return () => clearInterval(intervalId);
     }, [refreshInterval]);
 
     async function loadMessages() {
         try {
             const data = await getChatboxMessages(50);
-            // Reverse to show oldest first visually (newest at bottom)
             setMessages((data as Message[]).reverse());
             setError(null);
         } catch (err) {
@@ -70,12 +68,35 @@ export function ChatboxPanel({
     }
 
     async function handleSendMessage(body: string) {
+        if (!session?.user) return;
+
+        // 1. Generate an optimistic temporary message
+        const tempId = `temp-${Date.now()}`;
+        const optimisticMsg: Message = {
+            id: tempId,
+            userId: session.user.id,
+            authorName: session.user.name || null,
+            authorEmail: session.user.email || null,
+            body,
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString(),
+            deletedAt: null,
+            avatarConfig: null,
+        };
+
+        // 2. Immediately render optimistic message in UI
+        setMessages((prev) => [...prev, optimisticMsg]);
         setSubmitting(true);
+
         try {
+            // 3. Persist to server database
             await createChatboxMessageAction({body});
-            // Reload messages to show the new one
+
+            // 4. Fetch actual server records to replace optimistic message with real ID & avatar state
             await loadMessages();
         } catch (err) {
+            // Revert optimistic message if server action fails
+            setMessages((prev) => prev.filter((msg) => msg.id !== tempId));
             throw err;
         } finally {
             setSubmitting(false);
@@ -111,8 +132,10 @@ export function ChatboxPanel({
                     messages.map((msg) => (
                         <ChatboxMessage key={msg.id}
                                         id={msg.id}
+                                        userId={msg.userId}
                                         authorName={msg.authorName}
                                         authorEmail={msg.authorEmail}
+                                        avatarConfig={msg.avatarConfig}
                                         body={msg.body}
                                         createdAt={msg.createdAt}
                                         deletedAt={msg.deletedAt}
@@ -122,10 +145,23 @@ export function ChatboxPanel({
                 )}
                 <div ref={messagesEndRef}/>
             </div>
-            <ChatboxInput onSubmitAction={handleSendMessage}
-                          isLoading={submitting}
-                          error={error}
-                          placeholder="Write a message..."/>
+
+            {!isSessionLoading && session?.user ? (
+                <ChatboxInput
+                    onSubmitAction={handleSendMessage}
+                    isLoading={submitting}
+                    error={error}
+                    placeholder="Write a message..."
+                />
+            ) : (
+                <div className={chatboxStyles.loggedOutNotice}>
+                    You must be{" "}
+                    <Link href="/login" className={chatboxStyles.loginLink}>
+                        logged in
+                    </Link>{" "}
+                    to post.
+                </div>
+            )}
         </div>
     );
 }

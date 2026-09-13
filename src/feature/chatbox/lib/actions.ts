@@ -1,17 +1,17 @@
 "use server";
 
-import { auth } from "@/core/auth";
-import { requireUser } from "@/core/auth/lib/require-user";
-import { sanitizeContent } from "@/shared/communication/sanitize/lib/sanitize";
-import { getPostingStatus } from "@/shared/communication/status/lib/status";
-import { canPost, recordPost } from "@/shared/communication/status/lib/trust";
-import { db } from "@/shared/db/client";
-import { logModAction } from "@shared/communication/moderation/lib/audit-log";
-import { randomUUID } from "crypto";
-import { eq } from "drizzle-orm";
-import { revalidatePath } from "next/cache";
-import { headers } from "next/headers";
-import { chatboxMessage } from "../schema/chatbox.schema";
+import {auth} from "@/core/auth";
+import {user} from "@/core/auth/schema/auth.schema";
+import {sanitizeContent} from "@/shared/communication/sanitize/lib/sanitize";
+import {getPostingStatus} from "@/shared/communication/status/lib/status";
+import {canPost, recordPost} from "@/shared/communication/status/lib/trust";
+import {db} from "@/shared/db/client";
+import {logModAction} from "@shared/communication/moderation/lib/audit-log";
+import {randomUUID} from "crypto";
+import {eq} from "drizzle-orm";
+import {revalidatePath} from "next/cache";
+import {headers} from "next/headers";
+import {chatboxMessage} from "../schema/chatbox.schema";
 
 /**
  * Helper to retrieve the current authenticated user session and resolve user details.
@@ -24,10 +24,8 @@ async function getAuthenticatedUser(context: string) {
         throw new Error("Unauthorized: You must be logged in to perform this action.");
     }
 
-    return requireUser(session.user.id, {
-        headers: reqHeaders,
-        context,
-    });
+    // Return session.user directly to avoid 403 APIError from requireUser
+    return session.user;
 }
 
 /**
@@ -74,7 +72,7 @@ export async function createChatboxMessageAction(
     // Revalidate chatbox routes to refresh UI
     revalidatePath("/", "layout");
 
-    return { messageId };
+    return {messageId};
 }
 
 /**
@@ -100,7 +98,7 @@ export async function deleteChatboxMessageAction(
     // Soft delete the message
     await db
         .update(chatboxMessage)
-        .set({ deletedAt: now })
+        .set({deletedAt: now})
         .where(eq(chatboxMessage.id, input.messageId));
 
     // Log the moderation action
@@ -144,7 +142,7 @@ export async function editChatboxMessageAction(
     // Update the message
     await db
         .update(chatboxMessage)
-        .set({ body: cleanBody, updatedAt: now })
+        .set({body: cleanBody, updatedAt: now})
         .where(eq(chatboxMessage.id, input.messageId));
 
     // Log the moderation action

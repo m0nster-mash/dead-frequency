@@ -1,4 +1,5 @@
 import {ThemeToggle} from "@/app/components/theme-toggle";
+import {requireSession} from "@/core/auth/lib/require-session";
 import Breadcrumbs from "@/core/dashboard/components/breadcrumbs";
 import {ChatboxDropdown} from "@/feature/chatbox/components/chatbox-dropdown";
 import buttonStyles from "@shared/styles/buttons.module.css";
@@ -10,6 +11,9 @@ import {JSX} from "react";
  * Renders the central top navigation toolbar.
  */
 export default async function Header(): Promise<JSX.Element> {
+
+    const session = await requireSession({role: "admin"});
+    const isAdmin = session.user.role == "admin";
 
     return (
         <header className={sidebarStyles.topbar}>
@@ -25,7 +29,7 @@ export default async function Header(): Promise<JSX.Element> {
                     <BellIcon/>
                     <span className={sidebarStyles.notificationDot}></span>
                 </button>
-                <ChatboxDropdown/>
+                <ChatboxDropdown isAdmin={isAdmin}/>
             </div>
         </header>
     );

@@ -4,10 +4,12 @@ import {AvatarRenderer} from "@/feature/avatar/components/avatar-renderer";
 import {DEFAULT_AVATAR_CONFIG} from "@/feature/avatar/lib/options";
 import {AvatarConfig} from "@/feature/avatar/lib/types";
 import chatboxStyles from "@/feature/chatbox/styles/chatbox.module.css";
+import Link from "next/link";
 import {JSX} from "react";
 
 type ChatboxMessageProps = {
     id: string;
+    userId: string;
     authorName: string | null;
     authorEmail: string | null;
     avatarConfig?: AvatarConfig | null;
@@ -16,11 +18,11 @@ type ChatboxMessageProps = {
     deletedAt: Date | string | null;
     isAdmin?: boolean;
     onDeleteAction?: (messageId: string) => void;
-    onEditAction?: (messageId: string, body: string) => void;
 };
 
 export function ChatboxMessage({
                                    id,
+                                   userId,
                                    authorName,
                                    authorEmail,
                                    avatarConfig,
@@ -29,30 +31,15 @@ export function ChatboxMessage({
                                    deletedAt,
                                    isAdmin = false,
                                    onDeleteAction,
-                                   onEditAction,
                                }: ChatboxMessageProps): JSX.Element {
     const author = authorName || authorEmail || "Anonymous";
     const isDeleted = !!deletedAt;
     const timestamp = new Date(createdAt).toLocaleString();
     const effectiveAvatarConfig = avatarConfig ?? DEFAULT_AVATAR_CONFIG;
 
-    if (isDeleted) {
-        return (
-            <div className={chatboxStyles.messageContainer}>
-                <div className={chatboxStyles.messageAvatar}>
-                    <AvatarRenderer config={effectiveAvatarConfig} size={50}/>
-                </div>
-                <article className={`${chatboxStyles.message} ${chatboxStyles.messageDeleted}`}>
-                    <div className={chatboxStyles.messageHeader}>
-                        <span className={chatboxStyles.messageAuthor}>{author}</span>
-                        <time className={chatboxStyles.messageTime}>{timestamp}</time>
-                    </div>
-                    <div className={chatboxStyles.messageBody}>
-                        [Message deleted]
-                    </div>
-                </article>
-            </div>
-        );
+    // Non-admins do not see soft-deleted messages
+    if (isDeleted && !isAdmin) {
+        return <></>;
     }
 
     return (
@@ -60,32 +47,30 @@ export function ChatboxMessage({
             <div className={chatboxStyles.messageAvatar}>
                 <AvatarRenderer config={effectiveAvatarConfig} size={50}/>
             </div>
-            <article className={chatboxStyles.message}>
+            <article className={`${chatboxStyles.message} ${
+                isDeleted ? chatboxStyles.messageDeletedAdmin : ""
+            }`}>
                 <div className={chatboxStyles.messageHeader}>
-                    <span className={chatboxStyles.messageAuthor}>{author}</span>
+                    <Link href={`/user/${userId}`}
+                          className={chatboxStyles.messageAuthorLink}>
+                        {author}
+                    </Link>
                     <time className={chatboxStyles.messageTime}>{timestamp}</time>
+                    {isDeleted && isAdmin && (
+                        <span className={chatboxStyles.deletedBadge}>[DELETED]</span>
+                    )}
                 </div>
-                <div className={chatboxStyles.messageBody}>
-                    {body}
-                </div>
-                {isAdmin && (onDeleteAction || onEditAction) && (
+
+                <div className={chatboxStyles.messageBody}>{body}</div>
+
+                {/* Admin Delete Action Button */}
+                {isAdmin && onDeleteAction && !isDeleted && (
                     <div className={chatboxStyles.messageActions}>
-                        {onEditAction && (
-                            <button type="button"
-                                    className={chatboxStyles.messageAction}
-                                    onClick={() => {
-                                        console.log("Edit message:", id);
-                                    }}>
-                                Edit
-                            </button>
-                        )}
-                        {onDeleteAction && (
-                            <button type="button"
-                                    className={`${chatboxStyles.messageAction} ${chatboxStyles.messageActionDanger}`}
-                                    onClick={() => onDeleteAction(id)}>
-                                Delete
-                            </button>
-                        )}
+                        <button type="button"
+                                className={`${chatboxStyles.messageAction} ${chatboxStyles.messageActionDanger}`}
+                                onClick={() => onDeleteAction(id)}>
+                            Delete
+                        </button>
                     </div>
                 )}
             </article>
