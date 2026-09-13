@@ -8,6 +8,7 @@ export * from "@/core/auth/schema/auth.schema";
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 export * from "@/feature/avatar/schema/avatar.schema";
 export * from "@/feature/forum/schema/forum.schema";
+export * from "@/feature/chatbox/schema/chatbox.schema";
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * Communication Schemas

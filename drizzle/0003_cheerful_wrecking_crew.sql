@@ -1,0 +1,1 @@
+ALTER TYPE "public"."mod_action" ADD VALUE 'restore';

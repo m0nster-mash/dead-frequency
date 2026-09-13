@@ -1,68 +1,83 @@
-import {requireSession} from "@/core/auth/lib/require-session";
-import {MainContentPanel} from "@/core/dashboard/components/panels/main-card";
-import {PageHeader} from "@/core/dashboard/components/panels/page-header";
+import {user} from "@/core/auth/schema/auth.schema";
 import {report} from "@/shared/communication/interactions/schema/interactions.schema";
 import {db} from "@/shared/db/client";
-import tableStyle from "@/shared/styles/tables.module.css";
+import {resolveReportAction} from "@shared/communication/interactions/lib/actions";
 import {desc, eq} from "drizzle-orm";
-import {JSX} from "react";
 
 /**
  * The central moderation reports queue.
- *
- * @returns {Promise<JSX.Element>} A promise resolving to the administrative user reports moderation viewport.
  */
-export default async function AdminReportsPage(): Promise<JSX.Element> {
-    await requireSession({role: "admin"});
-
-    // DB Query Execution: Pulls open tickets matching status codes via Drizzle ORM
-    const openReports =
-        await db
-            .select()
-            .from(report)
-            .where(eq(report.resolved, "open"))
-            .orderBy(desc(report.createdAt))
-            .limit(100);
+export default async function AdminReportsPage() {
+    const openReports = await db
+        .select({
+            id: report.id,
+            module: report.module,
+            recordId: report.recordId,
+            reason: report.reason,
+            details: report.details,
+            resolved: report.resolved,
+            createdAt: report.createdAt,
+            reporterName: user.name,
+            reporterEmail: user.email,
+        })
+        .from(report)
+        .leftJoin(user, eq(report.reporterId, user.id))
+        .orderBy(desc(report.createdAt));
 
     return (
-        <div>
-            <PageHeader eyebrow={"Administration"}
-                        title={"Reports Queue"}
-                        subtitle={`${openReports.length} open reports`}/>
-
-            <MainContentPanel title={"Open reports"}>
-                <div className={tableStyle.tableWrapper}>
-                    <table className={tableStyle.table}>
-                        <thead>
-                        <tr>
-                            <th>Module</th>
-                            <th>Reason</th>
-                            <th>Details</th>
-                            <th>Reported</th>
-                            <th className={tableStyle.tableActionsColumn}>Actions</th>
+        <div style={{padding: "2rem"}}>
+            <h1>Content Moderation Queue</h1>
+            <table style={{width: "100%", borderCollapse: "collapse", marginTop: "1rem"}}>
+                <thead>
+                <tr style={{textAlign: "left", borderBottom: "2px solid #ccc"}}>
+                    <th>Module</th>
+                    <th>Reason</th>
+                    <th>Details</th>
+                    <th>Reporter</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {openReports.length === 0 ? (
+                    <tr>
+                        <td colSpan={6} style={{padding: "1rem", textAlign: "center"}}>
+                            No moderation reports found.
+                        </td>
+                    </tr>
+                ) : (
+                    openReports.map((item) => (
+                        <tr key={item.id} style={{borderBottom: "1px solid #eee"}}>
+                            <td style={{padding: "0.5rem"}}>{item.module}</td>
+                            <td style={{padding: "0.5rem"}}>{item.reason}</td>
+                            <td style={{padding: "0.5rem"}}>{item.details || "—"}</td>
+                            <td style={{padding: "0.5rem"}}>{item.reporterName || item.reporterEmail}</td>
+                            <td style={{padding: "0.5rem"}}>
+                                <strong>{item.resolved}</strong>
+                            </td>
+                            <td style={{padding: "0.5rem"}}>
+                                {item.resolved === "open" && (
+                                    <div style={{display: "flex", gap: "0.5rem"}}>
+                                        <form action={async () => {
+                                            "use server";
+                                            await resolveReportAction({reportId: item.id, status: "actioned"});
+                                        }}>
+                                            <button type="submit">Action</button>
+                                        </form>
+                                        <form action={async () => {
+                                            "use server";
+                                            await resolveReportAction({reportId: item.id, status: "dismissed"});
+                                        }}>
+                                            <button type="submit">Dismiss</button>
+                                        </form>
+                                    </div>
+                                )}
+                            </td>
                         </tr>
-                        </thead>
-                        <tbody>
-                        {openReports.map((r) => (
-                            <tr key={r.id}>
-                                <td><span className={tableStyle.badgeTag}>{r.module}</span></td>
-                                <td>{r.reason}</td>
-                                <td>{r.details || "—"}</td>
-                                <td>{new Date(r.createdAt).toLocaleString()}</td>
-                                <td className={tableStyle.tableActionsColumn}>
-                                    {/* TODO:: wire up server actions: mark actioned/dismissed, jump to record via module+recordId once module views exist */}
-                                </td>
-                            </tr>
-                        ))}
-                        {openReports.length === 0 && (
-                            <tr>
-                                <td colSpan={5} className={tableStyle.tableEmptyCell}>No open reports.</td>
-                            </tr>
-                        )}
-                        </tbody>
-                    </table>
-                </div>
-            </MainContentPanel>
+                    ))
+                )}
+                </tbody>
+            </table>
         </div>
     );
 }

@@ -15,6 +15,20 @@
       "when": 1789249871143,
       "tag": "0001_flippant_the_hood",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1789254829180,
+      "tag": "0002_colossal_rhino",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1789263333992,
+      "tag": "0003_cheerful_wrecking_crew",
+      "breakpoints": true
     }
   ]
 }
