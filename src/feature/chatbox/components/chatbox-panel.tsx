@@ -4,6 +4,7 @@ import { authClient } from "@/core/auth/lib/auth-client";
 import { AvatarConfig } from "@/feature/avatar/lib/types";
 import { ChatboxMessage } from "@/feature/chatbox/components/chatbox-message";
 import chatboxStyles from "@/feature/chatbox/styles/chatbox.module.css";
+import { toggleReactionAction } from "@/shared/communication/interactions/lib/actions";
 import {ReportPanel} from "@shared/components/report-panel";
 import Link from "next/link";
 import { JSX, useEffect, useRef, useState } from "react";
@@ -25,11 +26,13 @@ type Message = {
     authorName: string | null;
     authorEmail: string | null;
     avatarConfig?: AvatarConfig | null;
+    likeCount?: number;
+    hasLiked?: boolean;
 };
 
 type ChatboxPanelProps = {
     isAdmin?: boolean;
-    refreshInterval?: number; // Time in milliseconds between message polls
+    refreshInterval?: number;
 };
 
 type ReportingTarget = {
@@ -49,12 +52,10 @@ export function ChatboxPanel({
     const [reportingTarget, setReportingTarget] = useState<ReportingTarget>(null);
     const messagesEndRef = useRef<HTMLDivElement>(null);
 
-    // Auto-scroll to the bottom when new messages arrive or are optimistically added
     useEffect(() => {
         messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
     }, [messages]);
 
-    // Initial load and recurring interval polling every `refreshInterval` ms
     useEffect(() => {
         loadMessages();
 
@@ -63,11 +64,12 @@ export function ChatboxPanel({
         }, refreshInterval);
 
         return () => clearInterval(intervalId);
-    }, [refreshInterval]);
+    }, [refreshInterval, session?.user?.id]);
 
     async function loadMessages() {
         try {
-            const data = await getChatboxMessages(50, undefined, isAdmin);
+            const currentUserId = session?.user?.id;
+            const data = await getChatboxMessages(50, undefined, isAdmin, currentUserId);
             setMessages((data as Message[]).reverse());
             setError(null);
         } catch (err) {
@@ -81,7 +83,6 @@ export function ChatboxPanel({
     async function handleSendMessage(body: string) {
         if (!session?.user) return;
 
-        // 1. Generate an optimistic temporary message
         const tempId = `temp-${Date.now()}`;
         const optimisticMsg: Message = {
             id: tempId,
@@ -93,24 +94,53 @@ export function ChatboxPanel({
             updatedAt: new Date().toISOString(),
             deletedAt: null,
             avatarConfig: null,
+            likeCount: 0,
+            hasLiked: false,
         };
 
-        // 2. Immediately render optimistic message in UI
         setMessages((prev) => [...prev, optimisticMsg]);
         setSubmitting(true);
 
         try {
-            // 3. Persist to server database
             await createChatboxMessageAction({ body });
-
-            // 4. Fetch actual server records to replace optimistic message
             await loadMessages();
         } catch (err) {
-            // Revert optimistic message if server action fails
             setMessages((prev) => prev.filter((msg) => msg.id !== tempId));
             throw err;
         } finally {
             setSubmitting(false);
+        }
+    }
+
+    async function handleLikeMessage(messageId: string, targetUserId: string) {
+        if (!session?.user) return;
+
+        setMessages((prev) =>
+            prev.map((msg) => {
+                if (msg.id === messageId) {
+                    const newHasLiked = !msg.hasLiked;
+                    const currentCount = msg.likeCount || 0;
+                    return {
+                        ...msg,
+                        hasLiked: newHasLiked,
+                        likeCount: newHasLiked ? currentCount + 1 : Math.max(0, currentCount - 1),
+                    };
+                }
+                return msg;
+            })
+        );
+
+        try {
+            await toggleReactionAction({
+                module: "chatbox",
+                recordId: messageId,
+                targetUserId,
+                emoji: "👍",
+            });
+            await loadMessages();
+        } catch (err) {
+            await loadMessages();
+            setError(err instanceof Error ? err.message : "Failed to toggle reaction");
         }
     }
 
@@ -162,6 +192,9 @@ export function ChatboxPanel({
                             createdAt={msg.createdAt}
                             deletedAt={msg.deletedAt}
                             isAdmin={isAdmin}
+                            likeCount={msg.likeCount}
+                            hasLiked={msg.hasLiked}
+                            onLikeAction={session?.user ? handleLikeMessage : undefined}
                             onDeleteAction={isAdmin ? handleDeleteMessage : undefined}
                             onRestoreAction={isAdmin ? handleRestoreMessage : undefined}
                             onReportAction={(messageId, targetUserId) =>
@@ -197,8 +230,8 @@ export function ChatboxPanel({
                     recordId={reportingTarget.messageId}
                     targetUserId={reportingTarget.targetUserId}
                     isOpen={!!reportingTarget}
-                    onClose={() => setReportingTarget(null)}
-                    onSuccess={() => alert("Report submitted successfully.")}
+                    onCloseAction={() => setReportingTarget(null)}
+                    onSuccessAction={() => alert("Report submitted successfully.")}
                 />
             )}
         </div>

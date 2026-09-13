@@ -1,10 +1,11 @@
 "use client";
-import {AvatarRenderer} from "@/feature/avatar/components/avatar-renderer";
-import {DEFAULT_AVATAR_CONFIG} from "@/feature/avatar/lib/options";
-import {AvatarConfig} from "@/feature/avatar/lib/types";
+
+import { AvatarRenderer } from "@/feature/avatar/components/avatar-renderer";
+import { DEFAULT_AVATAR_CONFIG } from "@/feature/avatar/lib/options";
+import { AvatarConfig } from "@/feature/avatar/lib/types";
 import chatboxStyles from "@/feature/chatbox/styles/chatbox.module.css";
 import Link from "next/link";
-import {JSX} from "react";
+import { JSX } from "react";
 
 type ChatboxMessageProps = {
     id: string;
@@ -16,6 +17,9 @@ type ChatboxMessageProps = {
     createdAt: Date | string;
     deletedAt: Date | string | null;
     isAdmin?: boolean;
+    likeCount?: number;
+    hasLiked?: boolean;
+    onLikeAction?: (messageId: string, targetUserId: string) => void;
     onDeleteAction?: (messageId: string) => void;
     onRestoreAction?: (messageId: string) => void;
     onReportAction?: (messageId: string, targetUserId: string) => void;
@@ -31,6 +35,9 @@ export function ChatboxMessage({
                                    createdAt,
                                    deletedAt,
                                    isAdmin = false,
+                                   likeCount = 0,
+                                   hasLiked = false,
+                                   onLikeAction,
                                    onDeleteAction,
                                    onRestoreAction,
                                    onReportAction,
@@ -47,7 +54,7 @@ export function ChatboxMessage({
     return (
         <div className={chatboxStyles.messageContainer}>
             <div className={chatboxStyles.messageAvatar}>
-                <AvatarRenderer config={effectiveAvatarConfig} size={50}/>
+                <AvatarRenderer config={effectiveAvatarConfig} size={50} />
             </div>
             <article className={`${chatboxStyles.message} ${isDeleted ? chatboxStyles.messageDeletedAdmin : ""}`}>
                 <div className={chatboxStyles.messageHeader}>
@@ -63,26 +70,46 @@ export function ChatboxMessage({
                 <div className={chatboxStyles.messageBody}>{body}</div>
 
                 <div className={chatboxStyles.messageActions}>
-                    {!isDeleted && onReportAction && (
-                        <button type="button"
-                                className={chatboxStyles.messageAction}
-                                onClick={() => onReportAction(id, userId)}>
-                            Report
-                        </button>
+                    {!isDeleted && (
+                        <>
+                            {onLikeAction && (
+                                <button
+                                    type="button"
+                                    className={`${chatboxStyles.messageAction} ${hasLiked ? chatboxStyles.liked : ""}`}
+                                    onClick={() => onLikeAction(id, userId)}
+                                >
+                                    👍 {likeCount > 0 ? likeCount : "Like"}
+                                </button>
+                            )}
+
+                            {onReportAction && (
+                                <button
+                                    type="button"
+                                    className={chatboxStyles.messageAction}
+                                    onClick={() => onReportAction(id, userId)}
+                                >
+                                    Report
+                                </button>
+                            )}
+                        </>
                     )}
 
                     {isAdmin && isDeleted && onRestoreAction && (
-                        <button type="button"
-                                className={chatboxStyles.messageAction}
-                                onClick={() => onRestoreAction(id)}>
+                        <button
+                            type="button"
+                            className={chatboxStyles.messageAction}
+                            onClick={() => onRestoreAction(id)}
+                        >
                             Restore
                         </button>
                     )}
 
                     {isAdmin && !isDeleted && onDeleteAction && (
-                        <button type="button"
-                                className={`${chatboxStyles.messageAction} ${chatboxStyles.messageActionDanger}`}
-                                onClick={() => onDeleteAction(id)}>
+                        <button
+                            type="button"
+                            className={`${chatboxStyles.messageAction} ${chatboxStyles.messageActionDanger}`}
+                            onClick={() => onDeleteAction(id)}
+                        >
                             Delete
                         </button>
                     )}

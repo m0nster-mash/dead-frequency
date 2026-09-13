@@ -14,12 +14,12 @@ type TargetModule = (typeof moduleEnum.enumValues)[number];
 type ReportReason = (typeof reportReasonEnum.enumValues)[number];
 
 type ReportPanelProps = {
+    isOpen: boolean;
     module: TargetModule;
+    onCloseAction: () => void;
+    onSuccessAction?: () => void;
     recordId: string;
     targetUserId?: string;
-    isOpen: boolean;
-    onClose: () => void;
-    onSuccess?: () => void;
 };
 
 export function ReportPanel({
@@ -27,8 +27,8 @@ export function ReportPanel({
                                 recordId,
                                 targetUserId,
                                 isOpen,
-                                onClose,
-                                onSuccess,
+                                onCloseAction,
+                                onSuccessAction,
                             }: ReportPanelProps) {
     const [mounted, setMounted] = useState(false);
     const [reason, setReason] = useState<ReportReason>("spam");
@@ -43,7 +43,7 @@ export function ReportPanel({
 
     if (!isOpen || !mounted) return null;
 
-    async function handleSubmit(e: React.FormEvent) {
+    async function handleSubmit(e: React.SubmitEvent) {
         e.preventDefault();
         setSubmitting(true);
         setError(null);
@@ -59,8 +59,8 @@ export function ReportPanel({
 
             setDetails("");
             setReason("spam");
-            onSuccess?.();
-            onClose();
+            onSuccessAction?.();
+            onCloseAction();
         } catch (err) {
             setError(err instanceof Error ? err.message : "Failed to submit report.");
         } finally {
@@ -69,7 +69,7 @@ export function ReportPanel({
     }
 
     return createPortal(
-        <div className={modalStyles.modalOverlay} onClick={onClose}>
+        <div className={modalStyles.modalOverlay} onClick={onCloseAction}>
             <div className={modalStyles.modal} onClick={(e) => e.stopPropagation()}>
                 {/* Modal Header */}
                 <div className={modalStyles.modalHeader}>
@@ -80,7 +80,7 @@ export function ReportPanel({
                     <button
                         type="button"
                         className={`${buttonStyles.iconBtn} ${buttonStyles.iconBtnGhost} ${modalStyles.modalCloseButton}`}
-                        onClick={onClose}
+                        onClick={onCloseAction}
                         aria-label="Close modal"
                     >
                         &times;
@@ -131,7 +131,7 @@ export function ReportPanel({
                             <button
                                 type="button"
                                 className={`${buttonStyles.btn} ${buttonStyles.btnSecondary}`}
-                                onClick={onClose}
+                                onClick={onCloseAction}
                                 disabled={submitting}
                             >
                                 Cancel
