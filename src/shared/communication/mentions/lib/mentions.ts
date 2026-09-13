@@ -1,13 +1,13 @@
 "use server";
 
-import { db } from "@/shared/db/client";
-import { user } from "@/core/auth/schema/auth.schema";
-import { mention } from "@/shared/communication/mentions/schema/mentions.schema";
-import { moduleEnum } from "@/shared/communication/moderation/schema/moderation.schema";
-import { canInteract } from "@/shared/communication/social/lib/can-interact";
-import { notify } from "@/shared/communication/notifications/lib/notify";
-import { randomUUID } from "crypto";
-import { inArray } from "drizzle-orm";
+import {user} from "@/core/auth/schema/auth.schema";
+import {mention} from "@/shared/communication/mentions/schema/mentions.schema";
+import {moduleEnum} from "@/shared/communication/moderation/schema/moderation.schema";
+import {notify} from "@/shared/communication/notifications/lib/notify";
+import {canInteract} from "@/shared/communication/social/lib/can-interact";
+import {db} from "@/shared/db/client";
+import {randomUUID} from "crypto";
+import {inArray} from "drizzle-orm";
 
 type TargetModule = (typeof moduleEnum.enumValues)[number];
 
@@ -15,6 +15,7 @@ export async function processMentions(input: {
     module: TargetModule;
     recordId: string;
     authorId: string;
+    username?: string;
     text: string;
 }): Promise<void> {
     const mentionMatches = input.text.match(/@([a-zA-Z0-9_]+)/g);
@@ -25,7 +26,7 @@ export async function processMentions(input: {
     );
 
     const matchedUsers = await db
-        .select({ id: user.id, name: user.name })
+        .select({id: user.id, name: user.name})
         .from(user)
         .where(inArray(user.name, usernames));
 
@@ -50,8 +51,9 @@ export async function processMentions(input: {
             payload: {
                 module: input.module,
                 recordId: input.recordId,
-                mentionedByUserId: input.authorId,
-                url: "/notifications",
+                fromUserId: input.authorId,
+                fromUsername: input.username || "A user",
+                url: `/user/${input.authorId}`,
             },
         });
     }

@@ -14,6 +14,7 @@ import { resolveAuthor } from "@/shared/communication/author/lib/author";
 import { canInteract } from "@/shared/communication/social/lib/can-interact";
 import { inArray, eq, and } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
+import HeartIcon from "@/shared/svg/bootstrap-heart-icon.svg";
 
 type ReportReason = (typeof reportReasonEnum.enumValues)[number];
 type TargetModule = (typeof moduleEnum.enumValues)[number];
@@ -95,6 +96,7 @@ export async function toggleReactionAction(input: {
     recordId: string;
     targetUserId?: string;
     emoji?: string;
+    allowSelfNotify?: boolean;
 }): Promise<{ reacted: boolean; count: number }> {
     const reqHeaders = await headers();
     const session = auth ? await auth.api.getSession({ headers: reqHeaders }) : null;
@@ -103,7 +105,7 @@ export async function toggleReactionAction(input: {
         throw new Error("Unauthorized: Log in required to react.");
     }
 
-    const emoji = input.emoji ?? "👍";
+    const emoji = input.emoji ?? HeartIcon;
     const author = resolveAuthor(session.user.id);
 
     if (input.targetUserId && !(await canInteract(session.user.id, input.targetUserId))) {
@@ -138,10 +140,13 @@ export async function toggleReactionAction(input: {
         });
         reacted = true;
 
-        // Send notification to post author when someone likes their message
-        if (input.targetUserId && input.targetUserId !== session.user.id) {
+        const shouldNotify =
+            input.targetUserId &&
+            (input.allowSelfNotify || input.targetUserId !== session.user.id);
+
+        if (shouldNotify) {
             await notify({
-                userId: input.targetUserId,
+                userId: input.targetUserId!,
                 type: "comment",
                 payload: {
                     action: "reaction",
@@ -149,7 +154,8 @@ export async function toggleReactionAction(input: {
                     recordId: input.recordId,
                     emoji,
                     fromUserId: session.user.id,
-                    url: "/notifications", // Directs to /notifications for chatbox reactions
+                    fromUsername: session.user.name || session.user.email || "A user",
+                    url: `/user/${session.user.id}`,
                 },
             });
         }

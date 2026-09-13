@@ -1,9 +1,10 @@
+import {PageHeader} from "@/core/dashboard/components/panels/page-header";
 import {NotificationPanel} from "@/shared/communication/notifications/components/notification-panel";
 
 export default function NotificationsPage() {
     return (
-        <main style={{padding: "2rem", maxWidth: "800px", margin: "0 auto"}}>
-            <h1 style={{marginBottom: "1.5rem"}}>Activity &amp; Notifications</h1>
+        <main>
+            <PageHeader eyebrow={"Activity"} title={"Your Notifications"} subtitle={""}/>
             <NotificationPanel limit={50}/>
         </main>
     );

@@ -6,12 +6,9 @@ import {auditLog} from "../schema/moderation.schema";
  * Structural payload contract mapping properties required to register a moderation event. Extracts legal string value
  * configurations dynamically straight from the underlying schema definition arrays.
  *
- * @property {(typeof auditLog.module.enumValues)[number]} module - The sub-system target where the action occurred
- *                                                                  (ex. "forum", "chatbox").
- * @property {string} recordId - Unique key identification identifier matching the modified or deleted source record
- *                               document.
- * @property {(typeof auditLog.action.enumValues)[number]} action - The operational mutation class performed
- *                                                                  (ex. "ban", "delete", "mute").
+ * @property module - The sub-system target where the action occurred (ex. "forum", "chatbox").
+ * @property {string} recordId - Unique key identifier matching the modified or deleted source record document.
+ * @property action - The operational mutation class performed (ex. "ban", "delete", "mute").
  * @property {string} moderatorId - Unique user identification primary key of the administrator enforcing the action.
  * @property {string | null} [targetUserId] - Optional reference identifier mapping the account receiving the standing
  *                                            correction.

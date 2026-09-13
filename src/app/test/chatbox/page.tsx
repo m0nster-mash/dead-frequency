@@ -8,9 +8,9 @@ function ChatboxTextPage() {
     return (
         <div>
             <PageHeader
-                eyebrow="Style Test"
-                title="HTML Element Test Page"
-                subtitle="An example of each major HTML element, for the purpose of testing out styles and themes."/>
+                eyebrow="Test Page"
+                title="ChatBox Test Page"
+                subtitle="An example of the chatbox feature"/>
             <ChatboxPanel/>
         </div>
     );

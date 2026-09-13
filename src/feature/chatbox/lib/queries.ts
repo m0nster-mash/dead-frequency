@@ -1,11 +1,11 @@
 "use server";
 
-import { user } from "@/core/auth/schema/auth.schema";
-import { avatarConfig } from "@/feature/avatar/schema/avatar.schema";
-import { reaction } from "@/shared/communication/interactions/schema/interactions.schema";
-import { db } from "@/shared/db/client";
-import { and, desc, eq, inArray, isNull, lte } from "drizzle-orm";
-import { chatboxMessage } from "../schema/chatbox.schema";
+import {user} from "@/core/auth/schema/auth.schema";
+import {avatarConfig} from "@/feature/avatar/schema/avatar.schema";
+import {reaction} from "@/shared/communication/interactions/schema/interactions.schema";
+import {db} from "@/shared/db/client";
+import {and, desc, eq, inArray, isNull, lte} from "drizzle-orm";
+import {chatboxMessage} from "../schema/chatbox.schema";
 
 export async function getChatboxMessages(
     limit: number = 50,
@@ -21,7 +21,7 @@ export async function getChatboxMessages(
             createdAt: chatboxMessage.createdAt,
             updatedAt: chatboxMessage.updatedAt,
             deletedAt: chatboxMessage.deletedAt,
-            authorName: user.name,
+            username: user.name,
             authorEmail: user.email,
             avatarConfig: avatarConfig.config,
         })

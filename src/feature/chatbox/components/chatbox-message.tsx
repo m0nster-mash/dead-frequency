@@ -1,16 +1,17 @@
 "use client";
 
-import { AvatarRenderer } from "@/feature/avatar/components/avatar-renderer";
-import { DEFAULT_AVATAR_CONFIG } from "@/feature/avatar/lib/options";
-import { AvatarConfig } from "@/feature/avatar/lib/types";
+import {AvatarRenderer} from "@/feature/avatar/components/avatar-renderer";
+import {DEFAULT_AVATAR_CONFIG} from "@/feature/avatar/lib/options";
+import {AvatarConfig} from "@/feature/avatar/lib/types";
 import chatboxStyles from "@/feature/chatbox/styles/chatbox.module.css";
+import HeartIcon from "@/shared/svg/bootstrap-heart-icon.svg";
 import Link from "next/link";
-import { JSX } from "react";
+import {JSX} from "react";
 
 type ChatboxMessageProps = {
     id: string;
     userId: string;
-    authorName: string | null;
+    username: string | null;
     authorEmail: string | null;
     avatarConfig?: AvatarConfig | null;
     body: string;
@@ -28,7 +29,7 @@ type ChatboxMessageProps = {
 export function ChatboxMessage({
                                    id,
                                    userId,
-                                   authorName,
+                                   username,
                                    authorEmail,
                                    avatarConfig,
                                    body,
@@ -42,7 +43,7 @@ export function ChatboxMessage({
                                    onRestoreAction,
                                    onReportAction,
                                }: ChatboxMessageProps): JSX.Element {
-    const author = authorName || authorEmail || "Anonymous";
+    const displayName = username || authorEmail || "Anonymous";
     const isDeleted = !!deletedAt;
     const timestamp = new Date(createdAt).toLocaleString();
     const effectiveAvatarConfig = avatarConfig ?? DEFAULT_AVATAR_CONFIG;
@@ -54,12 +55,12 @@ export function ChatboxMessage({
     return (
         <div className={chatboxStyles.messageContainer}>
             <div className={chatboxStyles.messageAvatar}>
-                <AvatarRenderer config={effectiveAvatarConfig} size={50} />
+                <AvatarRenderer config={effectiveAvatarConfig} size={50}/>
             </div>
             <article className={`${chatboxStyles.message} ${isDeleted ? chatboxStyles.messageDeletedAdmin : ""}`}>
                 <div className={chatboxStyles.messageHeader}>
                     <Link href={`/user/${userId}`} className={chatboxStyles.messageAuthorLink}>
-                        {author}
+                        {displayName}
                     </Link>
                     <time className={chatboxStyles.messageTime}>{timestamp}</time>
                     {isDeleted && isAdmin && (
@@ -73,21 +74,18 @@ export function ChatboxMessage({
                     {!isDeleted && (
                         <>
                             {onLikeAction && (
-                                <button
-                                    type="button"
-                                    className={`${chatboxStyles.messageAction} ${hasLiked ? chatboxStyles.liked : ""}`}
-                                    onClick={() => onLikeAction(id, userId)}
-                                >
-                                    👍 {likeCount > 0 ? likeCount : "Like"}
+                                <button type="button"
+                                        className={`${chatboxStyles.messageAction} ${hasLiked ? chatboxStyles.liked : ""}`}
+                                        onClick={() => onLikeAction(id, userId)}>
+                                    <HeartIcon/>
+                                    {likeCount > 0 ? likeCount : "Like"}
                                 </button>
                             )}
 
                             {onReportAction && (
-                                <button
-                                    type="button"
-                                    className={chatboxStyles.messageAction}
-                                    onClick={() => onReportAction(id, userId)}
-                                >
+                                <button type="button"
+                                        className={chatboxStyles.messageAction}
+                                        onClick={() => onReportAction(id, userId)}>
                                     Report
                                 </button>
                             )}
@@ -95,21 +93,17 @@ export function ChatboxMessage({
                     )}
 
                     {isAdmin && isDeleted && onRestoreAction && (
-                        <button
-                            type="button"
-                            className={chatboxStyles.messageAction}
-                            onClick={() => onRestoreAction(id)}
-                        >
+                        <button type="button"
+                                className={chatboxStyles.messageAction}
+                                onClick={() => onRestoreAction(id)}>
                             Restore
                         </button>
                     )}
 
                     {isAdmin && !isDeleted && onDeleteAction && (
-                        <button
-                            type="button"
-                            className={`${chatboxStyles.messageAction} ${chatboxStyles.messageActionDanger}`}
-                            onClick={() => onDeleteAction(id)}
-                        >
+                        <button type="button"
+                                className={`${chatboxStyles.messageAction} ${chatboxStyles.messageActionDanger}`}
+                                onClick={() => onDeleteAction(id)}>
                             Delete
                         </button>
                     )}

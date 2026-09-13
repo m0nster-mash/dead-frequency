@@ -1,24 +1,21 @@
 "use server";
 
-import { auth } from "@/core/auth";
-import { logModAction } from "@/shared/communication/moderation/lib/audit-log";
-import { sanitizeContent } from "@/shared/communication/sanitize/lib/sanitize";
-import { getPostingStatus } from "@/shared/communication/status/lib/status";
-import { canPost, recordPost } from "@/shared/communication/status/lib/trust";
-import { processMentions } from "@/shared/communication/mentions/lib/mentions";
-import { db } from "@/shared/db/client";
-import { randomUUID } from "crypto";
-import { eq } from "drizzle-orm";
-import { revalidatePath } from "next/cache";
-import { headers } from "next/headers";
-import { chatboxMessage } from "../schema/chatbox.schema";
+import {auth} from "@/core/auth";
+import {processMentions} from "@/shared/communication/mentions/lib/mentions";
+import {logModAction} from "@/shared/communication/moderation/lib/audit-log";
+import {sanitizeContent} from "@/shared/communication/sanitize/lib/sanitize";
+import {getPostingStatus} from "@/shared/communication/status/lib/status";
+import {canPost, recordPost} from "@/shared/communication/status/lib/trust";
+import {db} from "@/shared/db/client";
+import {randomUUID} from "crypto";
+import {eq} from "drizzle-orm";
+import {revalidatePath} from "next/cache";
+import {headers} from "next/headers";
+import {chatboxMessage} from "../schema/chatbox.schema";
 
-/**
- * Helper to retrieve the current authenticated user session and resolve user details.
- */
-async function getAuthenticatedUser(context: string) {
+async function getAuthenticatedUser() {
     const reqHeaders = await headers();
-    const session = auth ? await auth.api.getSession({ headers: reqHeaders }) : null;
+    const session = auth ? await auth.api.getSession({headers: reqHeaders}) : null;
 
     if (!session?.user) {
         throw new Error("Unauthorized: You must be logged in to perform this action.");
@@ -26,27 +23,21 @@ async function getAuthenticatedUser(context: string) {
     return session.user;
 }
 
-/**
- * Server action to create a new chatbox message.
- */
 export async function createChatboxMessageAction(input: {
     body: string;
 }): Promise<{ messageId: string }> {
-    const user = await getAuthenticatedUser("createChatboxMessageAction");
+    const user = await getAuthenticatedUser();
 
-    // System-level posting status check
     const status = await getPostingStatus(user.id, "chatbox");
     if (status === "banned" || status === "muted") {
         throw new Error(`Posting not allowed: ${status}`);
     }
 
-    // Trust level and cooldown validation
     const trust = await canPost(user.id);
     if (!trust.allowed) {
         throw new Error(trust.reason);
     }
 
-    // Content sanitization
     const cleanBody = sanitizeContent(input.body).clean.trim();
     if (!cleanBody) {
         throw new Error("Message body is required.");
@@ -55,7 +46,6 @@ export async function createChatboxMessageAction(input: {
     const messageId = randomUUID();
     const now = new Date();
 
-    // Database insertion
     await db.insert(chatboxMessage).values({
         id: messageId,
         userId: user.id,
@@ -64,30 +54,25 @@ export async function createChatboxMessageAction(input: {
         updatedAt: now,
     });
 
-    // Track user activity for reputation/engagement metrics
     await recordPost(user.id);
 
-    // Parse and log @mentions
     await processMentions({
         module: "chatbox",
         recordId: messageId,
         authorId: user.id,
+        username: user.name || user.email || "A user",
         text: cleanBody,
     });
 
-    // Revalidate chatbox routes to refresh UI
     revalidatePath("/", "layout");
-    return { messageId };
+    return {messageId};
 }
 
-/**
- * Admin action to delete a chatbox message (soft delete).
- */
 export async function deleteChatboxMessageAction(input: {
     messageId: string;
     reason?: string;
 }): Promise<void> {
-    const admin = await getAuthenticatedUser("deleteChatboxMessageAction");
+    const admin = await getAuthenticatedUser();
 
     const [message] = await db
         .select()
@@ -101,13 +86,11 @@ export async function deleteChatboxMessageAction(input: {
 
     const now = new Date();
 
-    // Soft delete the message
     await db
         .update(chatboxMessage)
-        .set({ deletedAt: now })
+        .set({deletedAt: now})
         .where(eq(chatboxMessage.id, input.messageId));
 
-    // Log the moderation action
     await logModAction({
         module: "chatbox",
         recordId: input.messageId,
@@ -120,14 +103,11 @@ export async function deleteChatboxMessageAction(input: {
     revalidatePath("/", "layout");
 }
 
-/**
- * Admin action to restore a soft-deleted chatbox message.
- */
 export async function restoreChatboxMessageAction(input: {
     messageId: string;
     reason?: string;
 }): Promise<void> {
-    const admin = await getAuthenticatedUser("restoreChatboxMessageAction");
+    const admin = await getAuthenticatedUser();
 
     const [message] = await db
         .select()
@@ -139,13 +119,11 @@ export async function restoreChatboxMessageAction(input: {
         throw new Error("Message not found.");
     }
 
-    // Clear soft-delete timestamp
     await db
         .update(chatboxMessage)
-        .set({ deletedAt: null })
+        .set({deletedAt: null})
         .where(eq(chatboxMessage.id, input.messageId));
 
-    // Log the restoration action
     await logModAction({
         module: "chatbox",
         recordId: input.messageId,
@@ -153,52 +131,6 @@ export async function restoreChatboxMessageAction(input: {
         moderatorId: admin.id,
         targetUserId: message.userId,
         reason: input.reason ?? "Restored by admin",
-    });
-
-    revalidatePath("/", "layout");
-}
-
-/**
- * Admin action to edit a chatbox message.
- */
-export async function editChatboxMessageAction(input: {
-    messageId: string;
-    body: string;
-    reason?: string;
-}): Promise<void> {
-    const admin = await getAuthenticatedUser("editChatboxMessageAction");
-
-    const cleanBody = sanitizeContent(input.body).clean.trim();
-    if (!cleanBody) {
-        throw new Error("Message body is required.");
-    }
-
-    const [message] = await db
-        .select()
-        .from(chatboxMessage)
-        .where(eq(chatboxMessage.id, input.messageId))
-        .limit(1);
-
-    if (!message) {
-        throw new Error("Message not found.");
-    }
-
-    const now = new Date();
-
-    // Update the message
-    await db
-        .update(chatboxMessage)
-        .set({ body: cleanBody, updatedAt: now })
-        .where(eq(chatboxMessage.id, input.messageId));
-
-    // Log the moderation action
-    await logModAction({
-        module: "chatbox",
-        recordId: input.messageId,
-        action: "edit",
-        moderatorId: admin.id,
-        targetUserId: message.userId,
-        reason: input.reason,
     });
 
     revalidatePath("/", "layout");
