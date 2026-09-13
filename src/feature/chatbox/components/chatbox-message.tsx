@@ -18,6 +18,7 @@ type ChatboxMessageProps = {
     deletedAt: Date | string | null;
     isAdmin?: boolean;
     onDeleteAction?: (messageId: string) => void;
+    onRestoreAction?: (messageId: string) => void;
 };
 
 export function ChatboxMessage({
@@ -31,13 +32,13 @@ export function ChatboxMessage({
                                    deletedAt,
                                    isAdmin = false,
                                    onDeleteAction,
+                                   onRestoreAction,
                                }: ChatboxMessageProps): JSX.Element {
     const author = authorName || authorEmail || "Anonymous";
     const isDeleted = !!deletedAt;
     const timestamp = new Date(createdAt).toLocaleString();
     const effectiveAvatarConfig = avatarConfig ?? DEFAULT_AVATAR_CONFIG;
 
-    // Non-admins do not see soft-deleted messages
     if (isDeleted && !isAdmin) {
         return <></>;
     }
@@ -47,9 +48,7 @@ export function ChatboxMessage({
             <div className={chatboxStyles.messageAvatar}>
                 <AvatarRenderer config={effectiveAvatarConfig} size={50}/>
             </div>
-            <article className={`${chatboxStyles.message} ${
-                isDeleted ? chatboxStyles.messageDeletedAdmin : ""
-            }`}>
+            <article className={`${chatboxStyles.message} ${isDeleted ? chatboxStyles.messageDeletedAdmin : ""}`}>
                 <div className={chatboxStyles.messageHeader}>
                     <Link href={`/user/${userId}`}
                           className={chatboxStyles.messageAuthorLink}>
@@ -63,14 +62,22 @@ export function ChatboxMessage({
 
                 <div className={chatboxStyles.messageBody}>{body}</div>
 
-                {/* Admin Delete Action Button */}
-                {isAdmin && onDeleteAction && !isDeleted && (
+                {/* Admin Action Buttons */}
+                {isAdmin && (
                     <div className={chatboxStyles.messageActions}>
-                        <button type="button"
-                                className={`${chatboxStyles.messageAction} ${chatboxStyles.messageActionDanger}`}
-                                onClick={() => onDeleteAction(id)}>
-                            Delete
-                        </button>
+                        {isDeleted && onRestoreAction ? (
+                            <button type="button"
+                                    className={chatboxStyles.messageAction}
+                                    onClick={() => onRestoreAction(id)}>
+                                Restore
+                            </button>
+                        ) : !isDeleted && onDeleteAction ? (
+                            <button type="button"
+                                    className={`${chatboxStyles.messageAction} ${chatboxStyles.messageActionDanger}`}
+                                    onClick={() => onDeleteAction(id)}>
+                                Delete
+                            </button>
+                        ) : null}
                     </div>
                 )}
             </article>

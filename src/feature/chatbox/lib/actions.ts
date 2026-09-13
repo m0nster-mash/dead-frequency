@@ -115,6 +115,43 @@ export async function deleteChatboxMessageAction(
 }
 
 /**
+ * Admin action to restore a soft-deleted chatbox message.
+ */
+export async function restoreChatboxMessageAction(
+    input: { messageId: string; reason?: string }
+): Promise<void> {
+    const admin = await getAuthenticatedUser("restoreChatboxMessageAction");
+
+    const [message] = await db
+        .select()
+        .from(chatboxMessage)
+        .where(eq(chatboxMessage.id, input.messageId))
+        .limit(1);
+
+    if (!message) {
+        throw new Error("Message not found.");
+    }
+
+    // Un-delete the message by resetting deletedAt to null
+    await db
+        .update(chatboxMessage)
+        .set({ deletedAt: null })
+        .where(eq(chatboxMessage.id, input.messageId));
+
+    // Record moderation event in system audit log
+    await logModAction({
+        module: "chatbox",
+        recordId: input.messageId,
+        action: "restore",
+        moderatorId: admin.id,
+        targetUserId: message.userId,
+        reason: input.reason ?? "Restored by admin",
+    });
+
+    revalidatePath("/", "layout");
+}
+
+/**
  * Admin action to edit a chatbox message.
  */
 export async function editChatboxMessageAction(

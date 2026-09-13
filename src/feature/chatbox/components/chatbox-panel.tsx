@@ -6,9 +6,14 @@ import {ChatboxMessage} from "@/feature/chatbox/components/chatbox-message";
 import chatboxStyles from "@/feature/chatbox/styles/chatbox.module.css";
 import Link from "next/link";
 import {JSX, useEffect, useRef, useState} from "react";
-import {createChatboxMessageAction, deleteChatboxMessageAction} from "../lib/actions";
+import {
+    createChatboxMessageAction,
+    deleteChatboxMessageAction,
+    restoreChatboxMessageAction,
+} from "../lib/actions";
 import {getChatboxMessages} from "../lib/queries";
 import {ChatboxInput} from "./chatbox-input";
+
 
 type Message = {
     id: string;
@@ -53,6 +58,17 @@ export function ChatboxPanel({
 
         return () => clearInterval(intervalId);
     }, [refreshInterval]);
+
+    async function handleRestoreMessage(messageId: string) {
+        try {
+            await restoreChatboxMessageAction({ messageId });
+            await loadMessages();
+        } catch (err) {
+            const message =
+                err instanceof Error ? err.message : "Failed to restore message";
+            setError(message);
+        }
+    }
 
     async function loadMessages() {
         try {
@@ -130,29 +146,28 @@ export function ChatboxPanel({
                     </div>
                 ) : (
                     messages.map((msg) => (
-                        <ChatboxMessage key={msg.id}
-                                        id={msg.id}
-                                        userId={msg.userId}
-                                        authorName={msg.authorName}
-                                        authorEmail={msg.authorEmail}
-                                        avatarConfig={msg.avatarConfig}
-                                        body={msg.body}
-                                        createdAt={msg.createdAt}
-                                        deletedAt={msg.deletedAt}
-                                        isAdmin={isAdmin}
-                                        onDeleteAction={isAdmin ? handleDeleteMessage : undefined}/>
+                        <ChatboxMessage                            key={msg.id}
+                            id={msg.id}
+                            userId={msg.userId}
+                            authorName={msg.authorName}
+                            authorEmail={msg.authorEmail}
+                            avatarConfig={msg.avatarConfig}
+                            body={msg.body}
+                            createdAt={msg.createdAt}
+                            deletedAt={msg.deletedAt}
+                            isAdmin={isAdmin}
+                            onDeleteAction={isAdmin ? handleDeleteMessage : undefined}
+                            onRestoreAction={isAdmin ? handleRestoreMessage : undefined}                        />
                     ))
                 )}
                 <div ref={messagesEndRef}/>
             </div>
 
             {!isSessionLoading && session?.user ? (
-                <ChatboxInput
-                    onSubmitAction={handleSendMessage}
-                    isLoading={submitting}
-                    error={error}
-                    placeholder="Write a message..."
-                />
+                <ChatboxInput onSubmitAction={handleSendMessage}
+                              isLoading={submitting}
+                              error={error}
+                              placeholder="Write a message..."/>
             ) : (
                 <div className={chatboxStyles.loggedOutNotice}>
                     You must be{" "}

@@ -34,6 +34,7 @@ export const modActionEnum = pgEnum(
         "unban",
         "pin",
         "unpin",
+        "restore"
     ]);
 
 /**
