@@ -23,7 +23,7 @@ export default async function Header(): Promise<JSX.Element> {
 
             <div className={sidebarStyles.topbarRight}>
                 <ThemeToggle/>
-                <NotificationDropdown />
+                <NotificationDropdown/>
                 <ChatboxDropdown isAdmin={isAdmin}/>
             </div>
         </header>

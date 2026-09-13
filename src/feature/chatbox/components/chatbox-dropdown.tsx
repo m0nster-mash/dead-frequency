@@ -1,8 +1,8 @@
 "use client";
 
 import {ChatboxPanel} from "@/feature/chatbox/components/chatbox-panel";
-import buttonStyles from "@/shared/styles/buttons.module.css";
 import dropdownStyles from "@/feature/chatbox/styles/chatbox.module.css";
+import buttonStyles from "@/shared/styles/buttons.module.css";
 import ChatIcon from "@/shared/svg/bootstrap-chat-icon.svg";
 import {JSX, useState} from "react";
 

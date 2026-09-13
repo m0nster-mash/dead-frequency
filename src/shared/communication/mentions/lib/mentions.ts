@@ -14,10 +14,14 @@ type TargetModule = (typeof moduleEnum.enumValues)[number];
 export async function processMentions(input: {
     module: TargetModule;
     recordId: string;
-    authorId: string;
+    userId?: string;
+    authorId?: string;
     username?: string;
     text: string;
 }): Promise<void> {
+    const fromUserId = input.userId || input.authorId;
+    if (!fromUserId) return;
+
     const mentionMatches = input.text.match(/@([a-zA-Z0-9_]+)/g);
     if (!mentionMatches || mentionMatches.length === 0) return;
 
@@ -31,9 +35,9 @@ export async function processMentions(input: {
         .where(inArray(user.name, usernames));
 
     for (const targetUser of matchedUsers) {
-        if (targetUser.id === input.authorId) continue;
+        if (targetUser.id === fromUserId) continue;
 
-        if (!(await canInteract(input.authorId, targetUser.id))) continue;
+        if (!(await canInteract(fromUserId, targetUser.id))) continue;
 
         const mentionId = randomUUID();
 
@@ -42,7 +46,7 @@ export async function processMentions(input: {
             module: input.module,
             recordId: input.recordId,
             mentionedUserId: targetUser.id,
-            mentionedByUserId: input.authorId,
+            mentionedByUserId: fromUserId,
         });
 
         await notify({
@@ -51,9 +55,9 @@ export async function processMentions(input: {
             payload: {
                 module: input.module,
                 recordId: input.recordId,
-                fromUserId: input.authorId,
-                fromUsername: input.username || "A user",
-                url: `/user/${input.authorId}`,
+                fromUserId: fromUserId,
+                fromUsername: input.username || "Anonymous",
+                url: `/user/${fromUserId}`,
             },
         });
     }

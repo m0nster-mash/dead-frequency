@@ -1,20 +1,20 @@
 "use server";
 
-import { auth } from "@/core/auth";
-import { headers } from "next/headers";
-import { db } from "@/shared/db/client";
-import { randomUUID } from "crypto";
-import { report, reportReasonEnum, reaction } from "@/shared/communication/interactions/schema/interactions.schema";
-import { userRole } from "@/shared/communication/permissions/schema/permissions.schema";
-import { recordNegativeSignal } from "@/shared/communication/status/lib/trust";
-import { notify } from "@/shared/communication/notifications/lib/notify";
-import { moduleEnum } from "@/shared/communication/moderation/schema/moderation.schema";
-import { isModerator } from "@/shared/communication/permissions/lib/permissions";
-import { resolveAuthor } from "@/shared/communication/author/lib/author";
-import { canInteract } from "@/shared/communication/social/lib/can-interact";
-import { inArray, eq, and } from "drizzle-orm";
-import { revalidatePath } from "next/cache";
-import HeartIcon from "@/shared/svg/bootstrap-heart-icon.svg";
+import {auth} from "@/core/auth";
+import {reaction, report, reportReasonEnum,} from "@/shared/communication/interactions/schema/interactions.schema";
+
+import {notify} from "@/shared/communication/notifications/lib/notify";
+import {isModerator} from "@/shared/communication/permissions/lib/permissions";
+import {userRole} from "@/shared/communication/permissions/schema/permissions.schema";
+import {canInteract} from "@/shared/communication/social/lib/can-interact";
+import {recordNegativeSignal} from "@/shared/communication/status/lib/trust";
+
+import {db} from "@/shared/db/client";
+import {moduleEnum} from "@shared/communication/moderation/schema/moderation.schema";
+import {randomUUID} from "crypto";
+import {and, eq, inArray} from "drizzle-orm";
+import {revalidatePath} from "next/cache";
+import {headers} from "next/headers";
 
 type ReportReason = (typeof reportReasonEnum.enumValues)[number];
 type TargetModule = (typeof moduleEnum.enumValues)[number];
@@ -27,7 +27,7 @@ export async function submitReportAction(input: {
     details?: string;
 }): Promise<{ reportId: string }> {
     const reqHeaders = await headers();
-    const session = auth ? await auth.api.getSession({ headers: reqHeaders }) : null;
+    const session = auth ? await auth.api.getSession({headers: reqHeaders}) : null;
 
     if (!session?.user) {
         throw new Error("Unauthorized: You must be logged in to report content.");
@@ -50,7 +50,7 @@ export async function submitReportAction(input: {
     }
 
     const moderators = await db
-        .select({ userId: userRole.userId })
+        .select({userId: userRole.userId})
         .from(userRole)
         .where(inArray(userRole.roleId, ["admin", "moderator"]));
 
@@ -69,7 +69,7 @@ export async function submitReportAction(input: {
     }
 
     revalidatePath("/admin/reports");
-    return { reportId };
+    return {reportId};
 }
 
 export async function resolveReportAction(input: {
@@ -77,7 +77,7 @@ export async function resolveReportAction(input: {
     status: "actioned" | "dismissed";
 }): Promise<void> {
     const reqHeaders = await headers();
-    const session = auth ? await auth.api.getSession({ headers: reqHeaders }) : null;
+    const session = auth ? await auth.api.getSession({headers: reqHeaders}) : null;
 
     if (!session?.user || !(await isModerator(session.user.id))) {
         throw new Error("Unauthorized: Moderation clearance required.");
@@ -85,7 +85,7 @@ export async function resolveReportAction(input: {
 
     await db
         .update(report)
-        .set({ resolved: input.status })
+        .set({resolved: input.status})
         .where(eq(report.id, input.reportId));
 
     revalidatePath("/admin/reports");
@@ -99,16 +99,18 @@ export async function toggleReactionAction(input: {
     allowSelfNotify?: boolean;
 }): Promise<{ reacted: boolean; count: number }> {
     const reqHeaders = await headers();
-    const session = auth ? await auth.api.getSession({ headers: reqHeaders }) : null;
+    const session = auth ? await auth.api.getSession({headers: reqHeaders}) : null;
 
     if (!session?.user) {
         throw new Error("Unauthorized: Log in required to react.");
     }
 
-    const emoji = input.emoji ?? HeartIcon;
-    const author = resolveAuthor(session.user.id);
+    const emoji = input.emoji ?? "heart";
 
-    if (input.targetUserId && !(await canInteract(session.user.id, input.targetUserId))) {
+    if (
+        input.targetUserId &&
+        !(await canInteract(session.user.id, input.targetUserId))
+    ) {
         throw new Error("Interaction not permitted.");
     }
 
@@ -134,8 +136,8 @@ export async function toggleReactionAction(input: {
             id: randomUUID(),
             module: input.module,
             recordId: input.recordId,
-            userId: author.userId,
-            characterId: author.characterId,
+            userId: session.user.id,
+            characterId: null,
             emoji,
         });
         reacted = true;
@@ -145,6 +147,7 @@ export async function toggleReactionAction(input: {
             (input.allowSelfNotify || input.targetUserId !== session.user.id);
 
         if (shouldNotify) {
+            const username = session.user.name || session.user.email || "Anonymous";
             await notify({
                 userId: input.targetUserId!,
                 type: "comment",
@@ -154,7 +157,7 @@ export async function toggleReactionAction(input: {
                     recordId: input.recordId,
                     emoji,
                     fromUserId: session.user.id,
-                    fromUsername: session.user.name || session.user.email || "A user",
+                    fromUsername: username,
                     url: `/user/${session.user.id}`,
                 },
             });
@@ -164,8 +167,13 @@ export async function toggleReactionAction(input: {
     const totalReactions = await db
         .select()
         .from(reaction)
-        .where(and(eq(reaction.module, input.module), eq(reaction.recordId, input.recordId)));
+        .where(
+            and(
+                eq(reaction.module, input.module),
+                eq(reaction.recordId, input.recordId)
+            )
+        );
 
     revalidatePath("/", "layout");
-    return { reacted, count: totalReactions.length };
+    return {reacted, count: totalReactions.length};
 }

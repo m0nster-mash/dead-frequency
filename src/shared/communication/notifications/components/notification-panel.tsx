@@ -2,12 +2,11 @@
 
 import {
     markAllNotificationsAsReadAction,
-    markNotificationAsReadAction
+    markNotificationAsReadAction,
 } from "@/shared/communication/notifications/lib/actions";
 import {getUserNotifications} from "@/shared/communication/notifications/lib/queries";
 import buttonStyles from "@/shared/styles/buttons.module.css";
 import panelStyles from "@/shared/styles/panel.module.css";
-
 import HeartIcon from "@/shared/svg/bootstrap-heart-icon.svg";
 import Link from "next/link";
 import {useRouter} from "next/navigation";
@@ -22,7 +21,11 @@ type NotificationItem = {
 };
 
 export function resolveNotificationUrl(item: NotificationItem): string {
-    if (item.payload && typeof item.payload.url === "string" && item.payload.url.trim()) {
+    if (
+        item.payload &&
+        typeof item.payload.url === "string" &&
+        item.payload.url.trim()
+    ) {
         return item.payload.url;
     }
 
@@ -79,9 +82,8 @@ export function NotificationPanel({limit = 20}: { limit?: number }) {
         const username =
             (item.payload?.fromUsername as string | undefined) ||
             (item.payload?.username as string | undefined) ||
-            "A user";
+            "Anonymous";
         const moduleName = (item.payload?.module as string | undefined) || "post";
-        const emoji = (item.payload?.emoji as string | undefined) || HeartIcon;
 
         const userLink = fromUserId ? (
             <Link
@@ -102,7 +104,17 @@ export function NotificationPanel({limit = 20}: { limit?: number }) {
         if (item.type === "comment" && item.payload?.action === "reaction") {
             return (
                 <>
-                    {userLink} reacted {emoji} to your <strong>{moduleName}</strong> message.
+                    {userLink} reacted{" "}
+                    <HeartIcon
+                        style={{
+                            display: "inline-block",
+                            verticalAlign: "middle",
+                            width: "1em",
+                            height: "1em",
+                            margin: "0 2px",
+                        }}
+                    />{" "}
+                    to your <strong>{moduleName}</strong> message.
                 </>
             );
         }
@@ -168,19 +180,16 @@ export function NotificationPanel({limit = 20}: { limit?: number }) {
                                         : "var(--color-surface-hover)",
                                     cursor: "pointer",
                                     display: "flex",
-                                    justifyContent: "space-between",
+                                    // justifySpace: "space-between",
                                     alignItems: "center",
                                 }}>
                                 <div>
                                     <p style={{margin: 0, fontSize: "0.875rem"}}>
                                         {renderNotificationContent(item)}
                                     </p>
-                                    <span style={{
-                                        fontSize: "0.75rem",
-                                        color: "var(--color-text-muted)",
-                                    }}>
-                    {new Date(item.createdAt).toLocaleString()}
-                  </span>
+                                    <span>
+                                        {new Date(item.createdAt).toLocaleString()}
+                                    </span>
                                 </div>
                                 {!item.read && (
                                     <span style={{

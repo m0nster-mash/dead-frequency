@@ -18,7 +18,9 @@ async function getAuthenticatedUser() {
     const session = auth ? await auth.api.getSession({headers: reqHeaders}) : null;
 
     if (!session?.user) {
-        throw new Error("Unauthorized: You must be logged in to perform this action.");
+        throw new Error(
+            "Unauthorized: You must be logged in to perform this action."
+        );
     }
     return session.user;
 }
@@ -59,8 +61,8 @@ export async function createChatboxMessageAction(input: {
     await processMentions({
         module: "chatbox",
         recordId: messageId,
-        authorId: user.id,
-        username: user.name || user.email || "A user",
+        userId: user.id,
+        username: user.name || user.email || "Anonymous",
         text: cleanBody,
     });
 

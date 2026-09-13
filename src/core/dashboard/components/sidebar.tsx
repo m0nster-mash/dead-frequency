@@ -19,8 +19,6 @@ import SidebarToggleButton from "./sidebar-toggle-button";
 
 /**
  * The left-side bar.
- *
- * @returns {Promise<JSX.Element>} A promise resolving to the fully hydrated navigation column cluster.
  */
 export async function Sidebar(): Promise<JSX.Element> {
     const requestHeaders = await headers();

@@ -21,6 +21,9 @@ type SearchParams = Promise<{
 type AuditModule = (typeof auditLog.module.enumValues)[number];
 type AuditAction = (typeof auditLog.action.enumValues)[number];
 
+/**
+ * The system audit log.
+ */
 export default async function AdminAuditLogPage({searchParams}: { searchParams: SearchParams; }): Promise<JSX.Element> {
     await requireSession({role: "admin"});
 
