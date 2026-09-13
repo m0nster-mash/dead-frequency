@@ -5,6 +5,7 @@ import {JSX, useState} from "react";
 import {saveAvatarConfig} from "../lib/actions";
 import {AVATAR_OPTIONS, AvatarPartCategory} from "../lib/options";
 import {AvatarConfig} from "../lib/types";
+import {AvatarRenderer} from "./avatar-renderer";
 
 /**
  * Properties for the AvatarBuilder component.

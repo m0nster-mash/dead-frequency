@@ -2,7 +2,7 @@
 
 import {eq} from "drizzle-orm";
 import {headers} from "next/headers";
-import {avatarConfig} from "../schema/avatar.schema";
+import {avatar} from "../schema/avatar.schema";
 import {AvatarConfig} from "./types";
 import {validateAvatarConfig} from "./validation";
 
@@ -40,11 +40,11 @@ export async function saveAvatarConfig(input: unknown): Promise<SaveAvatarConfig
     }
 
     await db
-        .insert(avatarConfig)
+        .insert(avatar)
         .values({userId: session.user.id, config: result.config})
         .onConflictDoUpdate({
             // Target Key constraint tracking unique singular relationships per row profile
-            target: avatarConfig.userId,
+            target: avatar.userId,
             set: {config: result.config},
         });
 
