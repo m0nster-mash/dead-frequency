@@ -1,6 +1,6 @@
 import {ThemeProvider} from "@/app/components/theme-provider";
 import {AppShell} from "@/core/dashboard/components/app-shell";
-import {BreadcrumbsProvider} from "@/shared/components/breadcrumbs-context";
+import {BreadcrumbsProvider} from "@/core/dashboard/components/breadcrumbs-context";
 import type {Metadata} from "next";
 import "./globals.css";
 import React, {JSX, ReactNode} from "react";
