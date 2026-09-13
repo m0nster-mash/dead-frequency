@@ -62,6 +62,7 @@ export async function submitReportAction(input: {
                 recordId: input.recordId,
                 reportId,
                 reason: input.reason,
+                url: "/admin/reports",
             },
         });
     }
@@ -137,6 +138,7 @@ export async function toggleReactionAction(input: {
         });
         reacted = true;
 
+        // Send notification to post author when someone likes their message
         if (input.targetUserId && input.targetUserId !== session.user.id) {
             await notify({
                 userId: input.targetUserId,
@@ -147,6 +149,7 @@ export async function toggleReactionAction(input: {
                     recordId: input.recordId,
                     emoji,
                     fromUserId: session.user.id,
+                    url: "/notifications", // Directs to /notifications for chatbox reactions
                 },
             });
         }

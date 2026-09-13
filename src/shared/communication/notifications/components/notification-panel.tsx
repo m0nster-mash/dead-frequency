@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { getUserNotifications } from "@/shared/communication/notifications/lib/queries";
 import {
     markNotificationAsReadAction,
@@ -18,11 +19,34 @@ type NotificationItem = {
     createdAt: Date | string;
 };
 
+/**
+ * Resolves the destination URL for a given notification.
+ * If no explicit route is specified in the payload, defaults to /notifications.
+ */
+export function resolveNotificationUrl(item: NotificationItem): string {
+    if (item.payload && typeof item.payload.url === "string" && item.payload.url.trim()) {
+        return item.payload.url;
+    }
+
+    const moduleName = item.payload?.module;
+
+    if (item.type === "mod_action") {
+        return "/admin/reports";
+    }
+
+    if (moduleName === "forum" && typeof item.payload?.threadId === "string") {
+        return `/forum/thread/${item.payload.threadId}`;
+    }
+
+    // Fallback for chatbox messages, reactions, or generic notifications without dedicated pages
+    return "/notifications";
+}
+
 export function NotificationPanel({ limit = 20 }: { limit?: number }) {
     const [notifications, setNotifications] = useState<NotificationItem[]>([]);
     const [loading, setLoading] = useState(true);
+    const router = useRouter();
 
-    // Function declared prior to useEffect hook usage via useCallback
     const loadNotifications = useCallback(async () => {
         try {
             const data = await getUserNotifications(limit);
@@ -36,14 +60,20 @@ export function NotificationPanel({ limit = 20 }: { limit?: number }) {
         loadNotifications();
     }, [loadNotifications]);
 
-    async function handleMarkAsRead(id: string) {
-        await markNotificationAsReadAction(id);
-        setNotifications((prev) =>
-            prev.map((n) => (n.id === id ? { ...n, read: true } : n))
-        );
+    async function handleNotificationClick(item: NotificationItem) {
+        if (!item.read) {
+            await markNotificationAsReadAction(item.id);
+            setNotifications((prev) =>
+                prev.map((n) => (n.id === item.id ? { ...n, read: true } : n))
+            );
+        }
+
+        const destinationUrl = resolveNotificationUrl(item);
+        router.push(destinationUrl);
     }
 
-    async function handleMarkAllAsRead() {
+    async function handleMarkAllAsRead(e: React.MouseEvent) {
+        e.stopPropagation();
         await markAllNotificationsAsReadAction();
         setNotifications((prev) => prev.map((n) => ({ ...n, read: true })));
     }
@@ -54,7 +84,7 @@ export function NotificationPanel({ limit = 20 }: { limit?: number }) {
                 return "You were mentioned in a post.";
             case "comment":
                 return item.payload?.action === "reaction"
-                    ? `Someone reacted ${item.payload.emoji ?? "👍"} to your post.`
+                    ? `Someone reacted ${item.payload.emoji ?? "👍"} to your message.`
                     : "Someone commented on your post.";
             case "mod_action":
                 return "A moderation action requires administrative review.";
@@ -97,14 +127,14 @@ export function NotificationPanel({ limit = 20 }: { limit?: number }) {
                         {notifications.map((item) => (
                             <li
                                 key={item.id}
-                                onClick={() => !item.read && handleMarkAsRead(item.id)}
+                                onClick={() => handleNotificationClick(item)}
                                 style={{
                                     padding: "12px 16px",
                                     borderBottom: "1px solid var(--color-border)",
                                     backgroundColor: item.read
                                         ? "transparent"
                                         : "var(--color-surface-hover)",
-                                    cursor: item.read ? "default" : "pointer",
+                                    cursor: "pointer",
                                     display: "flex",
                                     justifyContent: "space-between",
                                     alignItems: "center",
