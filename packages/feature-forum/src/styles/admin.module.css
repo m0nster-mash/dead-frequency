@@ -1,251 +1,251 @@
-/* =========================================================
-   FORUM-ADMIN
-   ========================================================= */
+/*!* =========================================================*/
+/*   FORUM-ADMIN*/
+/*   ========================================================= *!*/
 
-/* -----------------------------------------------------------
-   LAYOUT
-   ----------------------------------------------------------- */
-.categoryEditor {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-}
+/*!* -----------------------------------------------------------*/
+/*   LAYOUT*/
+/*   ----------------------------------------------------------- *!*/
+/*.categoryEditor {*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    gap: 0;*/
+/*}*/
 
-/* -----------------------------------------------------------
-   FORUM HIERARCHY TABLE
-   ----------------------------------------------------------- */
-.forumOrderColumn {
-    width: 7rem;
-}
+/*!* -----------------------------------------------------------*/
+/*   FORUM HIERARCHY TABLE*/
+/*   ----------------------------------------------------------- *!*/
+/*.forumOrderColumn {*/
+/*    width: 7rem;*/
+/*}*/
 
-.forumNameColumn {
-    width: 18%;
-}
+/*.forumNameColumn {*/
+/*    width: 18%;*/
+/*}*/
 
-.forumDescriptionColumn {
-    width: auto;
-}
+/*.forumDescriptionColumn {*/
+/*    width: auto;*/
+/*}*/
 
-.forumStatisticColumn {
-    width: 8.5rem;
-}
+/*.forumStatisticColumn {*/
+/*    width: 8.5rem;*/
+/*}*/
 
-.forumActionsColumn {
-    width: 6rem;
-    text-align: right !important;
-}
+/*.forumActionsColumn {*/
+/*    width: 6rem;*/
+/*    text-align: right !important;*/
+/*}*/
 
-.forumCategoryRow {
-    background: var(--color-surface-strong);
-}
+/*.forumCategoryRow {*/
+/*    background: var(--color-surface-strong);*/
+/*}*/
 
-.forumCategoryRow:hover {
-    background: var(--color-surface-raised);
-}
+/*.forumCategoryRow:hover {*/
+/*    background: var(--color-surface-raised);*/
+/*}*/
 
-.forumCategoryRow td:first-child {
-    border-left: 3px solid var(--color-border);
-    padding-left: calc(var(--size-space-4) - 3px);
-}
+/*.forumCategoryRow td:first-child {*/
+/*    border-left: 3px solid var(--color-border);*/
+/*    padding-left: calc(var(--size-space-4) - 3px);*/
+/*}*/
 
-.forumCategoryName {
-    color: var(--color-text-primary);
-    font-size: var(--font-size-sm);
-    font-weight: 700;
-}
+/*.forumCategoryName {*/
+/*    color: var(--color-text-primary);*/
+/*    font-size: var(--font-size-sm);*/
+/*    font-weight: 700;*/
+/*}*/
 
-.forumCategoryDescription {
-    color: var(--color-text-muted);
-    font-size: var(--font-size-sm);
-}
+/*.forumCategoryDescription {*/
+/*    color: var(--color-text-muted);*/
+/*    font-size: var(--font-size-sm);*/
+/*}*/
 
-.forumBoardRow {
-    background: var(--color-surface);
-}
+/*.forumBoardRow {*/
+/*    background: var(--color-surface);*/
+/*}*/
 
-.forumBoardRow:hover {
-    background: var(--color-surface-raised);
-}
+/*.forumBoardRow:hover {*/
+/*    background: var(--color-surface-raised);*/
+/*}*/
 
-.forumBoardName {
-    position: relative;
-    padding-left: 1.35rem;
-    color: var(--color-text-primary);
-    font-size: var(--font-size-sm);
-    font-weight: 500;
-}
+/*.forumBoardName {*/
+/*    position: relative;*/
+/*    padding-left: 1.35rem;*/
+/*    color: var(--color-text-primary);*/
+/*    font-size: var(--font-size-sm);*/
+/*    font-weight: 500;*/
+/*}*/
 
-.forumBoardName::before {
-    position: absolute;
-    top: 50%;
-    left: 0.35rem;
-    width: 0.4rem;
-    height: 0.4rem;
-    border-right: 1px solid var(--color-text-muted);
-    border-bottom: 1px solid var(--color-text-muted);
-    content: "";
-    transform: translateY(-65%) rotate(-45deg);
-}
+/*.forumBoardName::before {*/
+/*    position: absolute;*/
+/*    top: 50%;*/
+/*    left: 0.35rem;*/
+/*    width: 0.4rem;*/
+/*    height: 0.4rem;*/
+/*    border-right: 1px solid var(--color-text-muted);*/
+/*    border-bottom: 1px solid var(--color-text-muted);*/
+/*    content: "";*/
+/*    transform: translateY(-65%) rotate(-45deg);*/
+/*}*/
 
-.forumBoardDescription {
-    color: var(--color-text-muted);
-    font-size: var(--font-size-sm);
-}
+/*.forumBoardDescription {*/
+/*    color: var(--color-text-muted);*/
+/*    font-size: var(--font-size-sm);*/
+/*}*/
 
-.forumOrderCell {
-    color: var(--color-text-muted) !important;
-    font-size: var(--font-size-xs) !important;
-    font-variant-numeric: tabular-nums;
-    white-space: nowrap;
-}
+/*.forumOrderCell {*/
+/*    color: var(--color-text-muted) !important;*/
+/*    font-size: var(--font-size-xs) !important;*/
+/*    font-variant-numeric: tabular-nums;*/
+/*    white-space: nowrap;*/
+/*}*/
 
-.forumStatisticCell {
-    color: var(--color-text-muted) !important;
-    font-size: var(--font-size-xs) !important;
-    font-variant-numeric: tabular-nums;
-    white-space: nowrap;
-}
+/*.forumStatisticCell {*/
+/*    color: var(--color-text-muted) !important;*/
+/*    font-size: var(--font-size-xs) !important;*/
+/*    font-variant-numeric: tabular-nums;*/
+/*    white-space: nowrap;*/
+/*}*/
 
-.forumActionCell {
-    width: 6rem;
-    text-align: right !important;
-    white-space: nowrap;
-}
+/*.forumActionCell {*/
+/*    width: 6rem;*/
+/*    text-align: right !important;*/
+/*    white-space: nowrap;*/
+/*}*/
 
-.forumEditButton {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 4rem;
-    min-height: var(--size-control-sm);
-    padding: var(--size-space-2) var(--size-space-3);
-    border: 1px solid var(--color-border);
-    border-radius: var(--form-radius);
-    background: var(--color-surface);
-    color: var(--color-text-primary);
-    font: inherit;
-    font-size: var(--font-size-xs);
-    font-weight: 600;
-    cursor: pointer;
-}
+/*.forumEditButton {*/
+/*    display: inline-flex;*/
+/*    align-items: center;*/
+/*    justify-content: center;*/
+/*    min-width: 4rem;*/
+/*    min-height: var(--size-control-sm);*/
+/*    padding: var(--size-space-2) var(--size-space-3);*/
+/*    border: 1px solid var(--color-border);*/
+/*    border-radius: var(--form-radius);*/
+/*    background: var(--color-surface);*/
+/*    color: var(--color-text-primary);*/
+/*    font: inherit;*/
+/*    font-size: var(--font-size-xs);*/
+/*    font-weight: 600;*/
+/*    cursor: pointer;*/
+/*}*/
 
-.forumEditButton:hover {
-    border-color: var(--color-border);
-    background: var(--color-surface-hover);
-    color: var(--color-text-primary);
-}
+/*.forumEditButton:hover {*/
+/*    border-color: var(--color-border);*/
+/*    background: var(--color-surface-hover);*/
+/*    color: var(--color-text-primary);*/
+/*}*/
 
-/* -----------------------------------------------------------
-   FORUM VIEWER / BOARD EDITOR
-   ----------------------------------------------------------- */
-.forumViewer {
-    display: flex;
-    flex-direction: column;
-    gap: var(--size-space-4);
-}
+/*!* -----------------------------------------------------------*/
+/*   FORUM VIEWER / BOARD EDITOR*/
+/*   ----------------------------------------------------------- *!*/
+/*.forumViewer {*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    gap: var(--size-space-4);*/
+/*}*/
 
-.boardEditor {
-    display: flex;
-    flex-direction: column;
-    gap: var(--size-space-4);
-}
+/*.boardEditor {*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    gap: var(--size-space-4);*/
+/*}*/
 
-/* -----------------------------------------------------------
-   ADMIN STATS
-   ----------------------------------------------------------- */
-.adminStatsGrid {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: var(--size-space-3);
-}
+/*!* -----------------------------------------------------------*/
+/*   ADMIN STATS*/
+/*   ----------------------------------------------------------- *!*/
+/*.adminStatsGrid {*/
+/*    display: grid;*/
+/*    grid-template-columns: repeat(4, minmax(0, 1fr));*/
+/*    gap: var(--size-space-3);*/
+/*}*/
 
-.adminStat {
-    display: flex;
-    flex-direction: column;
-    gap: var(--size-space-2);
-    min-width: 0;
-    padding: var(--size-space-4);
-    border: 1px solid var(--color-border);
-    border-radius: var(--form-radius);
-    background: var(--color-surface-strong);
-}
+/*.adminStat {*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    gap: var(--size-space-2);*/
+/*    min-width: 0;*/
+/*    padding: var(--size-space-4);*/
+/*    border: 1px solid var(--color-border);*/
+/*    border-radius: var(--form-radius);*/
+/*    background: var(--color-surface-strong);*/
+/*}*/
 
-.adminStatLabel {
-    color: var(--color-text-muted);
-    font-size: var(--font-size-xs);
-    font-weight: 700;
-    letter-spacing: var(--tracking-wide);
-    text-transform: uppercase;
-}
+/*.adminStatLabel {*/
+/*    color: var(--color-text-muted);*/
+/*    font-size: var(--font-size-xs);*/
+/*    font-weight: 700;*/
+/*    letter-spacing: var(--tracking-wide);*/
+/*    text-transform: uppercase;*/
+/*}*/
 
-/* -----------------------------------------------------------
-   UNASSIGNED BOARDS
-   ----------------------------------------------------------- */
-.unassignedIntro p {
-    margin: 0;
-    color: var(--color-text-muted);
-    font-size: var(--font-size-sm);
-    line-height: 1.45;
-}
+/*!* -----------------------------------------------------------*/
+/*   UNASSIGNED BOARDS*/
+/*   ----------------------------------------------------------- *!*/
+/*.unassignedIntro p {*/
+/*    margin: 0;*/
+/*    color: var(--color-text-muted);*/
+/*    font-size: var(--font-size-sm);*/
+/*    line-height: 1.45;*/
+/*}*/
 
-.unassignedBoardRow {
-    background: var(--color-surface);
-    transition: background-color var(--form-transition);
-}
+/*.unassignedBoardRow {*/
+/*    background: var(--color-surface);*/
+/*    transition: background-color var(--form-transition);*/
+/*}*/
 
-.unassignedBoardRow:hover {
-    background: var(--color-surface-strong);
-}
+/*.unassignedBoardRow:hover {*/
+/*    background: var(--color-surface-strong);*/
+/*}*/
 
-.unassignedBoardName {
-    color: var(--color-text-primary);
-    font-size: var(--font-size-sm);
-    font-weight: 600;
-}
+/*.unassignedBoardName {*/
+/*    color: var(--color-text-primary);*/
+/*    font-size: var(--font-size-sm);*/
+/*    font-weight: 600;*/
+/*}*/
 
-.unassignedBoardDescription {
-    color: var(--color-text-muted);
-    font-size: var(--font-size-sm);
-    line-height: 1.4;
-}
+/*.unassignedBoardDescription {*/
+/*    color: var(--color-text-muted);*/
+/*    font-size: var(--font-size-sm);*/
+/*    line-height: 1.4;*/
+/*}*/
 
-.assignColumn {
-    width: 17rem;
-}
+/*.assignColumn {*/
+/*    width: 17rem;*/
+/*}*/
 
-.assignCategoryForm {
-    display: flex;
-    align-items: center;
-    gap: var(--size-space-2);
-}
+/*.assignCategoryForm {*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    gap: var(--size-space-2);*/
+/*}*/
 
-.assignCategoryForm > input {
-    min-width: 0;
-    flex: 1;
-}
+/*.assignCategoryForm > input {*/
+/*    min-width: 0;*/
+/*    flex: 1;*/
+/*}*/
 
-.assignCategoryForm > button {
-    flex-shrink: 0;
-    white-space: nowrap;
-}
+/*.assignCategoryForm > button {*/
+/*    flex-shrink: 0;*/
+/*    white-space: nowrap;*/
+/*}*/
 
-/* -----------------------------------------------------------
-   RESPONSIVE
-   ----------------------------------------------------------- */
-@media (max-width: 900px) {
-    .adminStatsGrid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-}
+/*!* -----------------------------------------------------------*/
+/*   RESPONSIVE*/
+/*   ----------------------------------------------------------- *!*/
+/*@media (max-width: 900px) {*/
+/*    .adminStatsGrid {*/
+/*        grid-template-columns: repeat(2, minmax(0, 1fr));*/
+/*    }*/
+/*}*/
 
-@media (max-width: 600px) {
-    .adminStatsGrid {
-        grid-template-columns: 1fr;
-    }
+/*@media (max-width: 600px) {*/
+/*    .adminStatsGrid {*/
+/*        grid-template-columns: 1fr;*/
+/*    }*/
 
-    .assignCategoryForm {
-        align-items: stretch;
-        flex-direction: column;
-    }
-}
+/*    .assignCategoryForm {*/
+/*        align-items: stretch;*/
+/*        flex-direction: column;*/
+/*    }*/
+/*}*/
 
