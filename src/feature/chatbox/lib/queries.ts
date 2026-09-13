@@ -6,11 +6,11 @@ import {db} from "@shared/db/client";
 import {and, desc, eq, isNull, lte} from "drizzle-orm";
 import {chatboxMessage} from "../schema/chatbox.schema";
 
-/**
- * Fetches paginated chatbox messages ordered chronologically (newest first).
- * Excludes soft-deleted messages.
- */
-export async function getChatboxMessages(limit: number = 50, before?: Date) {
+export async function getChatboxMessages(
+    limit: number = 50,
+    before?: Date,
+    includeDeleted: boolean = false
+) {
     return db
         .select({
             id: chatboxMessage.id,
@@ -28,7 +28,7 @@ export async function getChatboxMessages(limit: number = 50, before?: Date) {
         .leftJoin(avatarConfig, eq(chatboxMessage.userId, avatarConfig.userId)) // Join avatar_config table
         .where(
             and(
-                isNull(chatboxMessage.deletedAt),
+                includeDeleted ? undefined : isNull(chatboxMessage.deletedAt),
                 before ? lte(chatboxMessage.createdAt, before) : undefined
             )
         )

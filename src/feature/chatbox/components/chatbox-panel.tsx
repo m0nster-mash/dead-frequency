@@ -56,7 +56,7 @@ export function ChatboxPanel({
 
     async function loadMessages() {
         try {
-            const data = await getChatboxMessages(50);
+            const data = await getChatboxMessages(50, undefined, isAdmin);
             setMessages((data as Message[]).reverse());
             setError(null);
         } catch (err) {
