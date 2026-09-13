@@ -109,7 +109,6 @@ export async function toggleReactionAction(input: {
         throw new Error("Interaction not permitted.");
     }
 
-    // Destructure array to properly access single existing row
     const [existing] = await db
         .select()
         .from(reaction)

@@ -2,9 +2,8 @@ import {ThemeToggle} from "@/app/components/theme-toggle";
 import {auth} from "@/core/auth";
 import Breadcrumbs from "@/core/dashboard/components/breadcrumbs";
 import {ChatboxDropdown} from "@/feature/chatbox/components/chatbox-dropdown";
-import buttonStyles from "@shared/styles/buttons.module.css";
+import {NotificationDropdown} from "@/shared/communication/notifications/components/notification-dropdown";
 import sidebarStyles from "@shared/styles/patterns/sidebar.module.css";
-import BellIcon from "@shared/svg/bootstrap-bell-icon.svg";
 import {headers} from "next/headers";
 import {JSX} from "react";
 
@@ -24,12 +23,7 @@ export default async function Header(): Promise<JSX.Element> {
 
             <div className={sidebarStyles.topbarRight}>
                 <ThemeToggle/>
-                <button
-                    className={`${buttonStyles.iconBtn} ${buttonStyles.iconBtnFilled} ${sidebarStyles.notificationButton}`}
-                    aria-label="Notifications">
-                    <BellIcon/>
-                    <span className={sidebarStyles.notificationDot}></span>
-                </button>
+                <NotificationDropdown />
                 <ChatboxDropdown isAdmin={isAdmin}/>
             </div>
         </header>
