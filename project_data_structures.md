@@ -118,14 +118,14 @@ the required specification template.
 
 #### Overview
 
-* User-created sub-communities featuring member rosters, application approvals, custom themes, a dedicated forum
+* User-created sub-communities featuring user rosters, application approvals, custom themes, a dedicated forum
   category, and scoped chatboxes (similar to Neopets guilds).
 
 #### Expanded details
 
-* **Scoped Context Architecture**: Scoped features (forum, chatbox, member list) utilize a nullable `context_id`
+* **Scoped Context Architecture**: Scoped features (forum, chatbox, user list) utilize a nullable `context_id`
   (`null` = site-wide, `guild_id` = guild-scoped) to prevent refactoring when instantiating per-guild modules.
-* **Ranks & Governance**: Multi-tiered membership hierarchy ('owner', 'moderator', 'member', 'banned', 'pending').
+* **Ranks & Governance**: Multi-tiered membership hierarchy ('owner', 'moderator', 'user', 'banned', 'pending').
 * **Applications**: Join requests require manual approval by a guild owner or moderator.
 
 #### Table Details

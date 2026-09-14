@@ -5,13 +5,16 @@ import {jsonb, pgTable, text, timestamp} from "drizzle-orm/pg-core";
  * Decoupled owner attribution supporting either core user or character entities.
  */
 export const avatar = pgTable("avatar", {
-    id: text("id").primaryKey(),
 
-    // Decoupled Owner Attribution (unique standalone text identifiers)
-    userId: text("userId").unique(),
-    characterId: text("characterId").unique(),
+    id: text("id")
+        .primaryKey(),
 
-    // Modular Layer Configuration (Layer key -> Asset ID / filename)
+    userId: text("userId")
+        .unique(),
+
+    characterId: text("characterId")
+        .unique(),
+
     layerConfig: jsonb("layerConfig")
         .$type<{
             base: string;
@@ -22,9 +25,13 @@ export const avatar = pgTable("avatar", {
         }>()
         .notNull(),
 
-    // Pre-rendered/rasterized cache URL
     rasterUrl: text("rasterUrl"),
 
-    createdAt: timestamp("createdAt").notNull().defaultNow(),
-    updatedAt: timestamp("updatedAt").notNull().defaultNow(),
+    createdAt: timestamp("createdAt")
+        .notNull()
+        .defaultNow(),
+
+    updatedAt: timestamp("updatedAt")
+        .notNull()
+        .defaultNow(),
 });

@@ -5,19 +5,32 @@ import {boolean, pgTable, text, timestamp} from "drizzle-orm/pg-core";
  * Completely decoupled with standalone text columns for user and context IDs.
  */
 export const chatboxMessage = pgTable("chatbox_message", {
-    id: text("id").primaryKey(),
+
+    id: text("id")
+        .primaryKey(),
 
     // Scoped Context (null = Site-wide Shoutbox; guildId = Guild-scoped Shoutbox)
     contextId: text("contextId"),
 
-    // Decoupled Account Attribution (no host table FK constraint)
-    userId: text("userId").notNull(),
+    userId: text("userId")
+        .notNull(),
+
     characterId: text("characterId"),
 
-    message: text("message").notNull(),
-    isPinned: boolean("isPinned").notNull().default(false),
+    message: text("message")
+        .notNull(),
 
-    createdAt: timestamp("createdAt").notNull().defaultNow(),
-    updatedAt: timestamp("updatedAt").notNull().defaultNow(),
+    isPinned: boolean("isPinned")
+        .notNull()
+        .default(false),
+
+    createdAt: timestamp("createdAt")
+        .notNull()
+        .defaultNow(),
+
+    updatedAt: timestamp("updatedAt")
+        .notNull()
+        .defaultNow(),
+
     deletedAt: timestamp("deletedAt"),
 });

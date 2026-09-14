@@ -1,8 +1,11 @@
+import {ActorType} from "@/shared/constants/ActorType";
+import {EventType} from "@/shared/constants/EventType";
+
 export interface NotificationPayload {
     recipientUserId: string;
-    eventType: "PING" | "DM" | "REACTION" | "FRIEND_REQUEST" | "BLOG_POST" | "MOD_ALERT";
+    eventType: EventType.PING | EventType.DM | EventType.REACTION | EventType.FRIEND_REQUEST | EventType.BLOG_POST | EventType.MOD_ALERT;
     actorId: string;
-    actorType?: "USER" | "CHARACTER";
+    actorType?: ActorType.USER | ActorType.CHARACTER;
     targetModule: string;
     targetRecordId: string;
     payload?: Record<string, unknown>;

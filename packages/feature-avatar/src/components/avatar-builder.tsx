@@ -26,7 +26,7 @@
 // ];
 //
 // /**
-//  * An interactive Client Component studio interface allowing members to customize their vector avatar character
+//  * An interactive Client Component studio interface allowing users to customize their vector avatar character
 //  * profiles. Displays real-time asset modifications via a decoupled layout layer and saves configs via server action.
 //  *
 //  * @param {AvatarBuilderProps} props - The component properties.
@@ -45,7 +45,7 @@
 //      * Alters local visual properties instantaneously to enable interactive studio feedback.
 //      *
 //      * @param {AvatarPartCategory} category - The design scope identifier being swapped (ex. "eyes", "mouth").
-//      * @param {string} id - The specific vector item part identity string map selected by the member.
+//      * @param {string} id - The specific vector item part identity string map selected by the user.
 //      */
 //     function updatePart(category: AvatarPartCategory, id: string) {
 //         setConfig((prev) => ({...prev, [category]: id}));
