@@ -9,8 +9,6 @@ import {JSX} from "react";
 /**
  * An interactive Client Component that parses the browser path routing location to render dynamic navigational
  * breadcrumb paths.
-
- * @returns {JSX.Element} The visual breadcrumb navigational trace node.
  */
 export default function Breadcrumbs(): JSX.Element {
     const pathname = usePathname();
@@ -22,13 +20,8 @@ export default function Breadcrumbs(): JSX.Element {
             <Link className={breadcrumbStyles.home} href="/"> Home </Link>
 
             {segments.map((segment, index) => {
-                // Cuts the original segment sequence up to the active depth index to build the valid pathway target
                 const href = "/" + segments.slice(0, index + 1).join("/");
-
-                // Fallback - merges contextual string maps, fallback-parsing uri text strings if missing
                 const label = labels[segment] ?? decodeURIComponent(segment);
-
-                // Evaluates if the current step indicates the actual page terminal destination block
                 const isLast = index === segments.length - 1;
 
                 return (

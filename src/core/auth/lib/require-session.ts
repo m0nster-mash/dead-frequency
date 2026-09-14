@@ -1,7 +1,7 @@
-import { auth } from "@/core/auth/lib/auth";
-import { requireRoles } from "@/core/auth/lib/require-roles";
-import { headers } from "next/headers";
-import { redirect, notFound } from "next/navigation";
+import {auth} from "@/core/auth/lib/auth";
+import {requireRoles} from "@/core/auth/lib/require-roles";
+import {headers} from "next/headers";
+import {redirect} from "next/navigation";
 
 interface RequireSessionOptions {
     role?: "admin" | "moderator" | "member";

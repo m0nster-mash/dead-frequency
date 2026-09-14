@@ -34,7 +34,6 @@ export interface UserDetails {
  * Triggers `notFound()` automatically if the core user record does not exist.
  */
 export async function getUserDetails(userId: string): Promise<UserDetails> {
-    // 1. Core user record
     const [targetUser] = await db
         .select()
         .from(user)
@@ -44,7 +43,6 @@ export async function getUserDetails(userId: string): Promise<UserDetails> {
         notFound();
     }
 
-    // 2. Assigned roles via user_role junction table
     const assignedRoles = await db
         .select({
             roleId: role.id,
@@ -56,13 +54,11 @@ export async function getUserDetails(userId: string): Promise<UserDetails> {
         .innerJoin(role, eq(userRole.roleId, role.id))
         .where(eq(userRole.userId, userId));
 
-    // 3. User profile extension
     const [profile] = await db
         .select()
         .from(userProfile)
         .where(eq(userProfile.userId, userId));
 
-    // 4. User activity statistics & trust score
     const [statsRow] = await db
         .select()
         .from(userStats)

@@ -5,8 +5,6 @@ import {JSX} from "react";
 
 /**
  * The profile and identity settings dashboard.
- *
- * @returns {Promise<JSX.Element>} A promise resolving to the user account settings panel view.
  */
 export default async function SettingsPage(): Promise<JSX.Element> {
     const session = await requireSession();

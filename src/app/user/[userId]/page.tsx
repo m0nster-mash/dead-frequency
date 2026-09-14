@@ -1,9 +1,15 @@
-import {getUserDetails} from "@/core/auth/lib/get-user-details";
-import {role, user, userProfile, userRole, userStats,} from "@/core/auth/schema/auth.schema";
+import {requireSession} from "@/core/auth/lib/require-session";
+import {user, userProfile, userStats} from "@/core/auth/schema/auth.schema";
 import {MainContentPanel} from "@/core/dashboard/components/panels/main-card";
 import {PageHeader} from "@/core/dashboard/components/panels/page-header";
+// import { character } from "@/shared/db/schema";
 import {db} from "@/shared/db/client";
+import buttonStyle from "@/shared/styles/buttons.module.css";
+import panelStyle from "@/shared/styles/panel.module.css";
+import cardStyle from "@/shared/styles/patterns/card.module.css";
+import tableStyle from "@/shared/styles/tables.module.css";
 import {eq} from "drizzle-orm";
+import Link from "next/link";
 import {notFound} from "next/navigation";
 import {JSX} from "react";
 
@@ -13,122 +19,144 @@ type Props = {
     }>;
 };
 
-export default async function UserProfilePage({params}: Props): Promise<JSX.Element> {
-    const { userId } = await params;
-    const { user, roles, profile, stats } = await getUserDetails(userId);
+/**
+ * Public and Self User Profile Page.
+ */
+export default async function UserProfilePage({
+                                                  params,
+                                              }: Props): Promise<JSX.Element> {
+    const {userId} = await params;
+    const session = await requireSession();
+    const isOwner = session?.user?.id === userId;
+    const [userData] = await db
+        .select({
+            id: user.id,
+            name: user.name,
+            email: user.email,
+            image: user.image,
+            createdAt: user.createdAt,
+            bio: userProfile.bio,
+            bannerUrl: userProfile.bannerUrl,
+            forumPostCount: userStats.forumPostCount,
+            chatMessageCount: userStats.chatMessageCount,
+            chatboxMessageCount: userStats.chatboxMessageCount,
+            commentCount: userStats.commentCount,
+            trustScore: userStats.trustScore,
+        })
+        .from(user)
+        .leftJoin(userProfile, eq(userProfile.userId, user.id))
+        .leftJoin(userStats, eq(userStats.userId, user.id))
+        .where(eq(user.id, userId))
+        .limit(1);
+
+    if (!userData) {
+        notFound();
+    }
+
+    // // Fetch active characters owned by this user account
+    // const ownedCharacters = await db
+    //     .select({
+    //         id: character.id,
+    //         name: character.name,
+    //         slug: character.slug,
+    //         createdAt: character.createdAt,
+    //     })
+    //     .from(character)
+    //     .where(and(eq(character.ownerUserId, userId), isNull(character.deletedAt)));
 
     return (
         <div>
-            <PageHeader
-                eyebrow="User Profile"
-                title={user.name}
-                subtitle={`Member since ${new Date(user.createdAt).toLocaleDateString()}`}
-            />
+            <PageHeader eyebrow="User Profile"
+                        title={userData.name}
+                        subtitle={`Member since ${new Date(userData.createdAt).toLocaleDateString()}`}/>
 
-            {/* Profile Bio & Banner */}
-            <MainContentPanel title="Profile Overview">
-                {profile?.bannerUrl && (
-                    <div style={{marginBottom: "1rem", maxHeight: "180px", overflow: "hidden", borderRadius: "6px"}}>
-                        <img
-                            src={profile.bannerUrl}
-                            alt={`${user.name}'s banner`}
-                            style={{width: "100%", objectFit: "cover"}}
-                        />
+            {isOwner && (
+                <div className={panelStyle.panel}>
+                    <div className={panelStyle.actions}>
+                        <Link href="/settings"
+                              className={`${buttonStyle.btn} ${buttonStyle.btnPrimary}`}>
+                            Edit Account & Profile
+                        </Link>
                     </div>
-                )}
+                </div>
+            )}
 
-                <div style={{display: "flex", gap: "1.5rem", alignItems: "flex-start"}}>
-                    {user.image ? (
-                        <img
-                            src={user.image}
-                            alt={user.name}
-                            style={{width: "80px", height: "80px", borderRadius: "50%", objectFit: "cover"}}
-                        />
-                    ) : (
-                        <div
-                            style={{
-                                width: "80px",
-                                height: "80px",
-                                borderRadius: "50%",
-                                background: "#333",
-                                color: "#fff",
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "center",
-                                fontSize: "2rem",
-                                fontWeight: "bold",
-                            }}
-                        >
-                            {user.name.charAt(0).toUpperCase()}
-                        </div>
-                    )}
+            <MainContentPanel title="About">
+                <div className={cardStyle.card}>
+                    <p>{userData.bio || "This user has not provided a bio yet."}</p>
+                </div>
+            </MainContentPanel>
 
-                    <div>
-                        <h2 style={{margin: "0 0 0.25rem 0"}}>{user.name}</h2>
-                        <p style={{margin: "0 0 0.5rem 0", color: "#666", fontSize: "0.9rem"}}>
-                            {user.email} &bull;{" "}
-                            <span>{user.emailVerified ? "Verified Account" : "Unverified Account"}</span>
+            <MainContentPanel title="Activity Statistics">
+                <div className={cardStyle.grid}>
+                    <div className={cardStyle.card}>
+                        <h3>Forum Posts</h3>
+                        <p className={cardStyle.statValue}>
+                            {userData.forumPostCount ?? 0}
                         </p>
-                        <p style={{margin: 0}}>{profile?.bio || <em>No bio provided.</em>}</p>
+                    </div>
+                    <div className={cardStyle.card}>
+                        <h3>Chatbox Messages</h3>
+                        <p className={cardStyle.statValue}>
+                            {userData.chatboxMessageCount ?? 0}
+                        </p>
+                    </div>
+                    <div className={cardStyle.card}>
+                        <h3>Comments</h3>
+                        <p className={cardStyle.statValue}>
+                            {userData.commentCount ?? 0}
+                        </p>
+                    </div>
+                    <div className={cardStyle.card}>
+                        <h3>Trust Score</h3>
+                        <p className={cardStyle.statValue}>
+                            {userData.trustScore ?? 0}
+                        </p>
                     </div>
                 </div>
             </MainContentPanel>
 
-            {/* Assigned Roles & Governance */}
-            <MainContentPanel title="Assigned Roles">
-                <ul style={{paddingLeft: "1.25rem", margin: 0}}>
-                    {roles.map((r) => (
-                        <li key={r.roleId} style={{marginBottom: "0.5rem"}}>
-                            <strong>{r.name}</strong> (<code>{r.roleId}</code>)
-                            {r.description && ` — ${r.description}`}
-                            {r.bypassesCooldown && (
-                                <span style={{
-                                    marginLeft: "0.5rem",
-                                    fontSize: "0.8rem",
-                                    background: "#0070f3",
-                                    color: "#fff",
-                                    padding: "0.1rem 0.4rem",
-                                    borderRadius: "3px"
-                                }}>
-                  Bypasses Cooldown
-                </span>
-                            )}
-                        </li>
-                    ))}
-                    {roles.length === 0 && <li>Standard Member</li>}
-                </ul>
-            </MainContentPanel>
-
-            {/* Activity Statistics & Standing */}
-            <MainContentPanel title="Activity Metrics & Standing">
-                <div
-                    style={{display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: "1rem"}}>
-                    <div style={{padding: "0.75rem", border: "1px solid #333", borderRadius: "4px"}}>
-                        <h4 style={{margin: "0 0 0.25rem 0"}}>Forum Posts</h4>
-                        <p style={{margin: 0, fontSize: "1.25rem", fontWeight: "bold"}}>{stats.forumPostCount}</p>
-                    </div>
-                    <div style={{padding: "0.75rem", border: "1px solid #333", borderRadius: "4px"}}>
-                        <h4 style={{margin: "0 0 0.25rem 0"}}>Chat Messages</h4>
-                        <p style={{margin: 0, fontSize: "1.25rem", fontWeight: "bold"}}>{stats.chatMessageCount}</p>
-                    </div>
-                    <div style={{padding: "0.75rem", border: "1px solid #333", borderRadius: "4px"}}>
-                        <h4 style={{margin: "0 0 0.25rem 0"}}>Chatbox Shouts</h4>
-                        <p style={{margin: 0, fontSize: "1.25rem", fontWeight: "bold"}}>{stats.chatboxMessageCount}</p>
-                    </div>
-                    <div style={{padding: "0.75rem", border: "1px solid #333", borderRadius: "4px"}}>
-                        <h4 style={{margin: "0 0 0.25rem 0"}}>Comments</h4>
-                        <p style={{margin: 0, fontSize: "1.25rem", fontWeight: "bold"}}>{stats.commentCount}</p>
-                    </div>
-                    <div style={{padding: "0.75rem", border: "1px solid #333", borderRadius: "4px"}}>
-                        <h4 style={{margin: "0 0 0.25rem 0"}}>Trust Score</h4>
-                        <p style={{margin: 0, fontSize: "1.25rem", fontWeight: "bold"}}>{stats.trustScore}</p>
-                    </div>
+            <MainContentPanel title="Owned Characters">
+                <div className={tableStyle.tableWrapper}>
+                    <table className={tableStyle.table}>
+                        <thead>
+                        <tr>
+                            <th>Character Name</th>
+                            <th>Slug</th>
+                            <th>Created</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {/*{ownedCharacters.map((char) => (*/}
+                        {/*    <tr key={char.id}>*/}
+                        {/*        <td>*/}
+                        {/*            <strong>{char.name}</strong>*/}
+                        {/*        </td>*/}
+                        {/*        <td>*/}
+                        {/*            <code>{char.slug}</code>*/}
+                        {/*        </td>*/}
+                        {/*        <td>{new Date(char.createdAt).toLocaleDateString()}</td>*/}
+                        {/*        <td>*/}
+                        {/*            <Link*/}
+                        {/*                href={`/character/${char.id}`}*/}
+                        {/*                className={`${buttonStyle.btn} ${buttonStyle.btnSecondary}`}*/}
+                        {/*            >*/}
+                        {/*                View Profile*/}
+                        {/*            </Link>*/}
+                        {/*        </td>*/}
+                        {/*    </tr>*/}
+                        {/*))}*/}
+                        {/*{ownedCharacters.length === 0 && (*/}
+                        {/*    <tr>*/}
+                        {/*        <td colSpan={4} className={tableStyle.tableEmptyCell}>*/}
+                        {/*            This user does not own any characters yet.*/}
+                        {/*        </td>*/}
+                        {/*    </tr>*/}
+                        {/*)}*/}
+                        </tbody>
+                    </table>
                 </div>
-
-                <p style={{marginTop: "1rem", fontSize: "0.85rem", color: "#888"}}>
-                    Last
-                    active: {stats.lastPostedAt ? new Date(stats.lastPostedAt).toLocaleString() : "No recent activity recorded"}
-                </p>
             </MainContentPanel>
         </div>
     );

@@ -1,8 +1,8 @@
 "use client";
 
 import {useSidebar} from "@/core/dashboard/components/navigation/sidebar-context";
-import sidebarStyles from "@/shared/styles/patterns/sidebar.module.css";
 import brandStyles from "@/shared/styles/brand.module.css";
+import sidebarStyles from "@/shared/styles/patterns/sidebar.module.css";
 import Link from "next/link";
 import {JSX, ReactNode} from "react";
 
@@ -21,8 +21,6 @@ type SidebarFrameProps = {
  * The primary sidebar column for the dashboard layout.
  *
  * @param {SidebarFrameProps} props - The component properties.
- *
- * @returns {JSX.Element} The visual side drawer component layer container wrapper.
  */
 export default function SidebarFrame({toggleButton, children}: SidebarFrameProps): JSX.Element {
     const {collapsed} = useSidebar();

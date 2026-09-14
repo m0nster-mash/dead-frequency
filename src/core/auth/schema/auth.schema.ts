@@ -1,4 +1,4 @@
-import { pgTable, text, timestamp, boolean, integer, primaryKey, jsonb } from 'drizzle-orm/pg-core';
+import {boolean, integer, jsonb, pgTable, primaryKey, text, timestamp} from 'drizzle-orm/pg-core';
 
 // --- BetterAuth Native Core ---
 export const user = pgTable('user', {
@@ -13,7 +13,7 @@ export const user = pgTable('user', {
 
 export const session = pgTable('session', {
     id: text('id').primaryKey(),
-    userId: text('userId').notNull().references(() => user.id, { onDelete: 'cascade' }),
+    userId: text('userId').notNull().references(() => user.id, {onDelete: 'cascade'}),
     token: text('token').notNull().unique(),
     expiresAt: timestamp('expiresAt').notNull(),
     ipAddress: text('ipAddress'),
@@ -24,7 +24,7 @@ export const session = pgTable('session', {
 
 export const account = pgTable('account', {
     id: text('id').primaryKey(),
-    userId: text('userId').notNull().references(() => user.id, { onDelete: 'cascade' }),
+    userId: text('userId').notNull().references(() => user.id, {onDelete: 'cascade'}),
     accountId: text('accountId').notNull(),
     providerId: text('providerId').notNull(),
     password: text('password'),
@@ -57,17 +57,17 @@ export const role = pgTable('role', {
 });
 
 export const userRole = pgTable('user_role', {
-    userId: text('userId').notNull().references(() => user.id, { onDelete: 'cascade' }),
-    roleId: text('roleId').notNull().references(() => role.id, { onDelete: 'cascade' }),
+    userId: text('userId').notNull().references(() => user.id, {onDelete: 'cascade'}),
+    roleId: text('roleId').notNull().references(() => role.id, {onDelete: 'cascade'}),
     assignedAt: timestamp('assignedAt').notNull().defaultNow(),
 }, (table) => ({
-    pk: primaryKey({ columns: [table.userId, table.roleId] }),
+    pk: primaryKey({columns: [table.userId, table.roleId]}),
 }));
 
 // --- User Extensions ---
 export const userProfile = pgTable('user_profile', {
     id: text('id').primaryKey(),
-    userId: text('userId').notNull().unique().references(() => user.id, { onDelete: 'cascade' }),
+    userId: text('userId').notNull().unique().references(() => user.id, {onDelete: 'cascade'}),
     bio: text('bio'),
     bannerUrl: text('bannerUrl'),
     themeConfig: jsonb('themeConfig'),
@@ -75,7 +75,7 @@ export const userProfile = pgTable('user_profile', {
 });
 
 export const userStats = pgTable('user_stats', {
-    userId: text('userId').primaryKey().references(() => user.id, { onDelete: 'cascade' }),
+    userId: text('userId').primaryKey().references(() => user.id, {onDelete: 'cascade'}),
     forumPostCount: integer('forumPostCount').notNull().default(0),
     chatMessageCount: integer('chatMessageCount').notNull().default(0),
     chatboxMessageCount: integer('chatboxMessageCount').notNull().default(0),

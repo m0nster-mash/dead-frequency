@@ -21,8 +21,6 @@ type AppShellFrameProps = {
  * A Client Component frame orchestrating the spatial grid coordinates of the workspace.
  *
  * @param {AppShellFrameProps} props - The component properties.
- *
- * @returns {JSX.Element} The visual structural wrapper organizing side navigation blocks and main viewport containers.
  */
 export default function AppShellFrame({sidebar, header, children}: AppShellFrameProps): JSX.Element {
     const {collapsed} = useSidebar();

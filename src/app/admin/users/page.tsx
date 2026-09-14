@@ -28,11 +28,11 @@ export default async function AdminUsersPage(): Promise<JSX.Element> {
                         title="User Directory"
                         subtitle="View and manage registered accounts"/>
 
-            <AdminUserTable users={usersList.map((u) => ({
-                id: u.id,
-                name: u.name ?? "",
-                email: u.email,
-                role: rolesByUserId[u.id] ?? "Member",
+            <AdminUserTable users={usersList.map((user) => ({
+                id: user.id,
+                name: user.name ?? "",
+                email: user.email,
+                role: rolesByUserId[user.id] ?? "Member",
                 banned: false,
             }))} currentUserId={session.user.id}/>
         </div>
