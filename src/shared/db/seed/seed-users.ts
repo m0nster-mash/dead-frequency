@@ -6,42 +6,15 @@ import {
     userProfile,
     userStats,
 } from "@/core/auth/schema/auth.schema";
+import {SEED_TEST_USERS} from "@shared/db/seed/seed-config";
 import {randomUUID} from "node:crypto";
-
-/**
- * Initial development seed users representing each system tier.
- */
-const INITIAL_USERS = [
-    {
-        id: randomUUID(),
-        name: "System Admin",
-        email: "admin@test.com",
-        roleId: "admin",
-        bio: "System Administrator for Dead Frequency",
-    },
-    {
-        id: randomUUID(),
-        name: "Community Moderator",
-        email: "moderator@test.com",
-        roleId: "moderator",
-        bio: "Content and Community Moderator",
-    },
-    {
-        id: randomUUID(),
-        name: "Standard User",
-        email: "user@test.com",
-        roleId: "user",
-        bio: "Registered Community Member",
-    },
-];
-
 /**
  * Seeds initial users, credential account records, RBAC roles, profiles, and stats.
  */
 export async function seedUsers(): Promise<void> {
     console.log("Seeding initial users...");
 
-    for (const u of INITIAL_USERS) {
+    for (const u of SEED_TEST_USERS) {
         // 1. Core BetterAuth User Record
         await db
             .insert(user)
@@ -57,12 +30,11 @@ export async function seedUsers(): Promise<void> {
         await db
             .insert(account)
             .values({
-                id: `acc_${u.id}`,
+                id: randomUUID(),
                 userId: u.id,
-                accountId: u.email,
+                accountId: u.id,
                 providerId: "credential",
-                // Pre-hashed credential placeholder string for development
-                password: "$2a$10$e8W/X2zO.01nO/5m8h1c.Oq3YV6w8P8P8P8P8P8P8P8P8P8P8P8P8",
+                password: "e0d6fe7baecccb95d8026055b2799024:33ef504900fe6855a0231484f3e07cc27d205acc651561323c52e7db47098289b1c84f2b87c1bb927931378d471bfcb72c8f95dc8f8ce5a1e402d46d4cb9e78c",
             })
             .onConflictDoNothing();
 

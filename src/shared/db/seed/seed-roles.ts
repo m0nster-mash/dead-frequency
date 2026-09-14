@@ -1,30 +1,17 @@
-import { db } from "@/shared/db/client";
-import { role } from "@/core/auth/schema/auth.schema";
+import {role} from "@/core/auth/schema/auth.schema";
+import {db} from "@/shared/db/client";
+import {SEED_ROLES} from "@shared/db/seed/seed-config";
 
-export async function seedRoles() {
-    const roles = [
-        {
-            id: "admin",
-            name: "Administrator",
-            description: "Full administrative access across all modules",
-            bypassesCooldown: true,
-        },
-        {
-            id: "moderator",
-            name: "Moderator",
-            description: "Content moderation, audit log access, and user sanction rights",
-            bypassesCooldown: true,
-        },
-        {
-            id: "user",
-            name: "User",
-            description: "Standard registered user account with posting capabilities",
-            bypassesCooldown: false,
-        },
-    ];
+export async function seedRoles(): Promise<void> {
+    try {
+        await db
+            .insert(role)
+            .values([...SEED_ROLES])
+            .onConflictDoNothing();
 
-    for (const r of roles) {
-        await db.insert(role).values(r).onConflictDoNothing();
+        console.log(`✓ Seeded ${SEED_ROLES.length} roles`);
+    } catch (error) {
+        console.error("Failed to seed roles:", error);
+        throw error;
     }
-    console.log("System roles seeded successfully.");
 }
