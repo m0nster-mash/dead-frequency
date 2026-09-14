@@ -5,7 +5,7 @@ export * from '../../core/auth/schema/auth.schema';
 
 // --- 2. Shared Communication Services Schemas ---
 // export * from '../communication/social/schema/social.schema';
-// export * from '../communication/moderation/schema/moderation.schema';
+export * from '../communication/moderation/schema/moderation.schema';
 // export * from '../communication/notification/schema/notifications.schema';
 // export * from '../communication/interactions/schema/interactions.schema';
 // export * from '../communication/dm/schema/dm.schema';

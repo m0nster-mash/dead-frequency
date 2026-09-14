@@ -1,9 +1,13 @@
-import {auth} from "@/core/auth/lib/auth";
-import {headers} from "next/headers";
-import {redirect} from "next/navigation";
-import {getUserRoles} from "./get-user-roles";
+import { auth } from "@/core/auth/lib/auth";
+import { requireRoles } from "@/core/auth/lib/require-roles";
+import { headers } from "next/headers";
+import { redirect, notFound } from "next/navigation";
 
-export async function requireSession(options?: { role?: string }) {
+interface RequireSessionOptions {
+    role?: "admin" | "moderator" | "member";
+}
+
+export async function requireSession(options?: RequireSessionOptions) {
     const session = await auth.api.getSession({
         headers: await headers(),
     });
@@ -12,12 +16,18 @@ export async function requireSession(options?: { role?: string }) {
         redirect("/login");
     }
 
-    // Retrieve assigned roles from the user_role table
-    const userRoles = await getUserRoles(session.user.id);
+    // Fetch assigned roles from user_role junction table
+    const userRoles = await requireRoles(session.user.id);
 
-    // If a specific role check is required, verify permission
-    if (options?.role && !userRoles.includes(options.role)) {
-        redirect("/dashboard");
+    if (options?.role) {
+        const hasRole = options.role === "moderator"
+            ? userRoles.includes("moderator") || userRoles.includes("admin")
+            : userRoles.includes(options.role);
+
+        if (!hasRole) {
+            // Use redirect("/dashboard") if you don't want unauthorized access to trigger a 404
+            redirect("/dashboard");
+        }
     }
 
     return {
@@ -25,7 +35,6 @@ export async function requireSession(options?: { role?: string }) {
         user: {
             ...session.user,
             roles: userRoles,
-            primaryRole: userRoles || "member",
         },
     };
 }

@@ -7,7 +7,7 @@ import { eq } from "drizzle-orm";
  *
  * Fetches all assigned role IDs for a given user ID from the user_role junction table.
  */
-export async function getUserRoles(userId: string): Promise<string[]> {
+export async function requireRoles(userId: string): Promise<string[]> {
     const roles = await db
         .select({ roleId: userRole.roleId })
         .from(userRole)

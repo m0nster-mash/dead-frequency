@@ -1,7 +1,6 @@
 
 import {auth, SignOutButton} from "@/core/auth";
-import {getUserRoles} from "@/core/auth/lib/get-user-roles";
-import {requireUser} from "@/core/auth/lib/require-user";
+import {requireRoles} from "@/core/auth/lib/require-roles";
 import SidebarFrame from "@/core/dashboard/components/frames/sidebar-frame";
 import {NavSection, SidebarNav} from "@/core/dashboard/components/navigation/sidebar-nav";
 import sidebarStyles from "@/shared/styles/patterns/sidebar.module.css";
@@ -11,7 +10,7 @@ import PersonIcon from "@/shared/svg/bootstrap-person-icon.svg";
 import QuestionIcon from "@/shared/svg/bootstrap-question-icon.svg";
 import AdminIcon from "@/shared/svg/bootstrap-settings.svg";
 import DotIcon from "@/shared/svg/bootstrap-three-dot-icon.svg";
-import {DropdownMenu} from "@shared/components/dropdown-menu";``
+import {DropdownMenu} from "@shared/components/dropdown-menu";
 import {headers} from "next/headers";
 import Link from "next/link";
 import {JSX} from "react";
@@ -26,17 +25,17 @@ export async function Sidebar(): Promise<JSX.Element> {
     const requestHeaders = await headers();
     const session = await auth.api.getSession({headers: requestHeaders});
     const userName = session ? session.user.name : null;
-    const userRole = session?.user ? await getUserRoles(session.user.id) : [];
+    const userRole = session?.user ? await requireRoles(session.user.id) : [];
     const isAdmin = userRole.includes("admin");
 
-    const initials = session?.user?.name
-        ? session.user.name
-            .split(" ")
-            .map((part) => part[0])
-            .join("")
-            .slice(0, 2)
-            .toUpperCase()
-        : ":)";
+    // const initials = session?.user?.name
+    //     ? session.user.name
+    //         .split(" ")
+    //         .map((part) => part[0])
+    //         .join("")
+    //         .slice(0, 2)
+    //         .toUpperCase()
+    //     : ":)";
 
     // const avatarConfig = session
     //     ? (await getAvatarConfigForUser(session.user.id)) ?? DEFAULT_AVATAR_CONFIG
