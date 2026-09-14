@@ -1,5 +1,7 @@
 
 import {auth, SignOutButton} from "@/core/auth";
+import {getUserRoles} from "@/core/auth/lib/get-user-roles";
+import {requireUser} from "@/core/auth/lib/require-user";
 import SidebarFrame from "@/core/dashboard/components/frames/sidebar-frame";
 import {NavSection, SidebarNav} from "@/core/dashboard/components/navigation/sidebar-nav";
 import sidebarStyles from "@/shared/styles/patterns/sidebar.module.css";
@@ -9,12 +11,12 @@ import PersonIcon from "@/shared/svg/bootstrap-person-icon.svg";
 import QuestionIcon from "@/shared/svg/bootstrap-question-icon.svg";
 import AdminIcon from "@/shared/svg/bootstrap-settings.svg";
 import DotIcon from "@/shared/svg/bootstrap-three-dot-icon.svg";
-import {DropdownMenu} from "@shared/components/dropdown-menu";
+import {DropdownMenu} from "@shared/components/dropdown-menu";``
 import {headers} from "next/headers";
 import Link from "next/link";
 import {JSX} from "react";
-import {AvatarRenderer, DEFAULT_AVATAR_CONFIG} from "../../../../../packages/feature-avatar/src";
-import {getAvatarConfigForUser} from "../../../../../packages/feature-avatar/src/lib/actions";
+// import {AvatarRenderer, DEFAULT_AVATAR_CONFIG} from "../../../../../packages/feature-avatar/src";
+// import {getAvatarConfigForUser} from "../../../../../packages/feature-avatar/src/lib/actions";
 import SidebarToggleButton from "./sidebar-toggle-button";
 
 /**
@@ -24,8 +26,8 @@ export async function Sidebar(): Promise<JSX.Element> {
     const requestHeaders = await headers();
     const session = await auth.api.getSession({headers: requestHeaders});
     const userName = session ? session.user.name : null;
-    const userRole = session ? session.user.role : null;
-    const isAdmin = userRole === "admin";
+    const userRole = session?.user ? await getUserRoles(session.user.id) : [];
+    const isAdmin = userRole.includes("admin");
 
     const initials = session?.user?.name
         ? session.user.name
@@ -36,9 +38,9 @@ export async function Sidebar(): Promise<JSX.Element> {
             .toUpperCase()
         : ":)";
 
-    const avatarConfig = session
-        ? (await getAvatarConfigForUser(session.user.id)) ?? DEFAULT_AVATAR_CONFIG
-        : null;
+    // const avatarConfig = session
+    //     ? (await getAvatarConfigForUser(session.user.id)) ?? DEFAULT_AVATAR_CONFIG
+    //     : null;
 
     const sections: NavSection[] = [
         {
@@ -98,13 +100,13 @@ export async function Sidebar(): Promise<JSX.Element> {
             <div>
                 {session ? (
                     <div className={sidebarStyles.userCard}>
-                        <div>
-                            {avatarConfig ? (
-                                <AvatarRenderer config={avatarConfig} size={36}/>
-                            ) : (
-                                <span>{initials}</span>
-                            )}
-                        </div>
+                        {/*<div>*/}
+                        {/*    {avatarConfig ? (*/}
+                        {/*        <AvatarRenderer config={avatarConfig} size={36}/>*/}
+                        {/*    ) : (*/}
+                        {/*        <span>{initials}</span>*/}
+                        {/*    )}*/}
+                        {/*</div>*/}
 
                         <div className={`${sidebarStyles.userInfo} ${sidebarStyles.hideOnCollapse}`}>
                             <strong>

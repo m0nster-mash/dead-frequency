@@ -1,6 +1,6 @@
 // --- 1. Core Host Schemas ---
 export * from '../../core/auth/schema/auth.schema';
-export * from '../../core/governance/schema/governance.schema';
+// export * from '../../core/governance/schema/governance.schema';
 // export * from '../../core/character/schema/character.schema';
 
 // --- 2. Shared Communication Services Schemas ---

@@ -1,6 +1,6 @@
-import {boolean, integer, jsonb, pgTable, text, timestamp} from 'drizzle-orm/pg-core';
+import { pgTable, text, timestamp, boolean, integer, primaryKey, jsonb } from 'drizzle-orm/pg-core';
 
-// --- BetterAuth Native Core Tables ---
+// --- BetterAuth Native Core ---
 export const user = pgTable('user', {
     id: text('id').primaryKey(),
     name: text('name').notNull(),
@@ -13,7 +13,7 @@ export const user = pgTable('user', {
 
 export const session = pgTable('session', {
     id: text('id').primaryKey(),
-    userId: text('userId').notNull().references(() => user.id, {onDelete: 'cascade'}),
+    userId: text('userId').notNull().references(() => user.id, { onDelete: 'cascade' }),
     token: text('token').notNull().unique(),
     expiresAt: timestamp('expiresAt').notNull(),
     ipAddress: text('ipAddress'),
@@ -24,7 +24,7 @@ export const session = pgTable('session', {
 
 export const account = pgTable('account', {
     id: text('id').primaryKey(),
-    userId: text('userId').notNull().references(() => user.id, {onDelete: 'cascade'}),
+    userId: text('userId').notNull().references(() => user.id, { onDelete: 'cascade' }),
     accountId: text('accountId').notNull(),
     providerId: text('providerId').notNull(),
     password: text('password'),
@@ -47,22 +47,35 @@ export const verification = pgTable('verification', {
     updatedAt: timestamp('updatedAt').notNull().defaultNow(),
 });
 
-// --- User Profile & Metrics Extensions ---
+// --- RBAC & Governance ---
+export const role = pgTable('role', {
+    id: text('id').primaryKey(), // 'admin' | 'moderator' | 'member'
+    name: text('name').notNull(),
+    description: text('description'),
+    bypassesCooldown: boolean('bypassesCooldown').notNull().default(false),
+    createdAt: timestamp('createdAt').notNull().defaultNow(),
+});
+
+export const userRole = pgTable('user_role', {
+    userId: text('userId').notNull().references(() => user.id, { onDelete: 'cascade' }),
+    roleId: text('roleId').notNull().references(() => role.id, { onDelete: 'cascade' }),
+    assignedAt: timestamp('assignedAt').notNull().defaultNow(),
+}, (table) => ({
+    pk: primaryKey({ columns: [table.userId, table.roleId] }),
+}));
+
+// --- User Extensions ---
 export const userProfile = pgTable('user_profile', {
     id: text('id').primaryKey(),
-    userId: text('userId').notNull().unique().references(() => user.id, {onDelete: 'cascade'}),
+    userId: text('userId').notNull().unique().references(() => user.id, { onDelete: 'cascade' }),
     bio: text('bio'),
     bannerUrl: text('bannerUrl'),
-    themeConfig: jsonb('themeConfig').$type<{
-        primaryColor?: string;
-        backgroundColor?: string;
-        customCss?: string;
-    }>(),
+    themeConfig: jsonb('themeConfig'),
     updatedAt: timestamp('updatedAt').notNull().defaultNow(),
 });
 
 export const userStats = pgTable('user_stats', {
-    userId: text('userId').primaryKey().references(() => user.id, {onDelete: 'cascade'}),
+    userId: text('userId').primaryKey().references(() => user.id, { onDelete: 'cascade' }),
     forumPostCount: integer('forumPostCount').notNull().default(0),
     chatMessageCount: integer('chatMessageCount').notNull().default(0),
     chatboxMessageCount: integer('chatboxMessageCount').notNull().default(0),
