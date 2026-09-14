@@ -1,17 +1,23 @@
-import { pgTable, text, timestamp, boolean } from 'drizzle-orm/pg-core';
+import {boolean, pgTable, text, timestamp} from "drizzle-orm/pg-core";
 
-export const chatboxMessage = pgTable('chatbox_message', {
-    id: text('id').primaryKey(),
-    contextId: text('contextId'), // NULL = Global; guild.id = Guild-scoped
+/**
+ * Portable Chatbox Shoutbox Message Schema.
+ * Completely decoupled with standalone text columns for user and context IDs.
+ */
+export const chatboxMessage = pgTable("chatbox_message", {
+    id: text("id").primaryKey(),
 
-    // Generic Author Strings (Decoupled from host tables)
-    userId: text('userId').notNull(),
-    characterId: text('characterId'),
+    // Scoped Context (null = Site-wide Shoutbox; guildId = Guild-scoped Shoutbox)
+    contextId: text("contextId"),
 
-    message: text('message').notNull(),
-    isPinned: boolean('isPinned').notNull().default(false),
+    // Decoupled Account Attribution (no host table FK constraint)
+    userId: text("userId").notNull(),
+    characterId: text("characterId"),
 
-    createdAt: timestamp('createdAt').notNull().defaultNow(),
-    updatedAt: timestamp('updatedAt').notNull().defaultNow(),
-    deletedAt: timestamp('deletedAt'),
+    message: text("message").notNull(),
+    isPinned: boolean("isPinned").notNull().default(false),
+
+    createdAt: timestamp("createdAt").notNull().defaultNow(),
+    updatedAt: timestamp("updatedAt").notNull().defaultNow(),
+    deletedAt: timestamp("deletedAt"),
 });

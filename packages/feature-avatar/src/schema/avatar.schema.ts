@@ -1,21 +1,30 @@
-import { pgTable, text, timestamp, jsonb } from 'drizzle-orm/pg-core';
+import {jsonb, pgTable, text, timestamp} from "drizzle-orm/pg-core";
 
-export const avatar = pgTable('avatar', {
-    id: text('id').primaryKey(),
+/**
+ * Unified Modular SVG Avatar Schema.
+ * Decoupled owner attribution supporting either core user or character entities.
+ */
+export const avatar = pgTable("avatar", {
+    id: text("id").primaryKey(),
 
-    // Generic Owner Strings (Decoupled from host tables)
-    userId: text('userId').unique(),
-    characterId: text('characterId').unique(),
+    // Decoupled Owner Attribution (unique standalone text identifiers)
+    userId: text("userId").unique(),
+    characterId: text("characterId").unique(),
 
-    layerConfig: jsonb('layerConfig').$type<{
-        base: string;
-        eyes: string;
-        hair: string;
-        mouth: string;
-        [key: string]: string;
-    }>().notNull(),
+    // Modular Layer Configuration (Layer key -> Asset ID / filename)
+    layerConfig: jsonb("layerConfig")
+        .$type<{
+            base: string;
+            eyes: string;
+            hair: string;
+            mouth: string;
+            [key: string]: string;
+        }>()
+        .notNull(),
 
-    rasterUrl: text('rasterUrl'),
-    createdAt: timestamp('createdAt').notNull().defaultNow(),
-    updatedAt: timestamp('updatedAt').notNull().defaultNow(),
+    // Pre-rendered/rasterized cache URL
+    rasterUrl: text("rasterUrl"),
+
+    createdAt: timestamp("createdAt").notNull().defaultNow(),
+    updatedAt: timestamp("updatedAt").notNull().defaultNow(),
 });

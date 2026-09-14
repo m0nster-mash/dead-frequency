@@ -10,23 +10,34 @@ import tableStyle from "@/shared/styles/tables.module.css";
 import {and, desc, eq} from "drizzle-orm";
 import {alias} from "drizzle-orm/pg-core";
 import Link from "next/link";
-import {JSX} from "react";
+import React, {JSX} from "react";
 
 type SearchParams = Promise<{
     module?: string;
     action?: string;
 }>;
 
-export default async function AdminAuditLogPage({searchParams}: { searchParams: SearchParams }): Promise<JSX.Element> {
+/**
+ * System-wide administrative audit log view.
+ */
+export default async function AdminAuditLogPage({
+                                                    searchParams,
+                                                }: {
+    searchParams: SearchParams;
+}): Promise<JSX.Element> {
     await requireSession({role: "admin"});
+
     const params = await searchParams;
+    const selectedModule =
+        params.module && params.module !== "all" ? params.module : undefined;
+    const selectedAction =
+        params.action && params.action !== "all" ? params.action : undefined;
 
-    const selectedModule = params.module && params.module !== "all" ? params.module : undefined;
-    const selectedAction = params.action && params.action !== "all" ? params.action : undefined;
-
-    const actorUser = alias(user, "actorUser");
+    // Drizzle table aliases to join moderator and target user records
+    const moderator = alias(user, "moderator");
     const targetUser = alias(user, "targetUser");
 
+    // Dynamic Drizzle query conditions aligned with moderation.schema.ts
     const whereConditions = and(
         selectedModule ? eq(auditLog.targetModule, selectedModule) : undefined,
         selectedAction ? eq(auditLog.actionType, selectedAction) : undefined
@@ -35,17 +46,18 @@ export default async function AdminAuditLogPage({searchParams}: { searchParams: 
     const entries = await db
         .select({
             id: auditLog.id,
-            actionType: auditLog.actionType,
             targetModule: auditLog.targetModule,
             targetRecordId: auditLog.targetRecordId,
+            actionType: auditLog.actionType,
             metadata: auditLog.metadata,
             createdAt: auditLog.createdAt,
-            actorName: actorUser.name,
-            actorEmail: actorUser.email,
+            moderatorName: moderator.name,
+            moderatorEmail: moderator.email,
             targetName: targetUser.name,
+            targetEmail: targetUser.email,
         })
         .from(auditLog)
-        .leftJoin(actorUser, eq(auditLog.actorUserId, actorUser.id))
+        .leftJoin(moderator, eq(auditLog.actorUserId, moderator.id))
         .leftJoin(targetUser, eq(auditLog.targetUserId, targetUser.id))
         .where(whereConditions)
         .orderBy(desc(auditLog.createdAt))
@@ -55,7 +67,7 @@ export default async function AdminAuditLogPage({searchParams}: { searchParams: 
         <div>
             <PageHeader eyebrow="Administration"
                         title="Audit Log"
-                        subtitle="Immutable record of administrative and moderation actions"/>
+                        subtitle="Unified moderation history across every module"/>
 
             <MainContentPanel title="Filter Audit Records">
                 <form method="GET" className={formStyle.filterForm}>
@@ -68,9 +80,12 @@ export default async function AdminAuditLogPage({searchParams}: { searchParams: 
                                 defaultValue={selectedModule || "all"}
                                 className={formStyle.select}>
                             <option value="all">All Modules</option>
-                            <option value="USERS">Users</option>
-                            <option value="FORUM_POST">Forum</option>
-                            <option value="CHATBOX">Chatbox</option>
+                            <option value="chatbox">Chatbox</option>
+                            <option value="forum">Forum</option>
+                            <option value="avatar">Avatar</option>
+                            <option value="users">Users</option>
+                            <option value="auth">Auth</option>
+                            <option value="system">System</option>
                         </select>
                     </div>
 
@@ -83,18 +98,24 @@ export default async function AdminAuditLogPage({searchParams}: { searchParams: 
                                 defaultValue={selectedAction || "all"}
                                 className={formStyle.select}>
                             <option value="all">All Actions</option>
-                            <option value="USER_EDITED">User Edited</option>
-                            <option value="REPORT_RESOLVED">Report Resolved</option>
-                            <option value="USER_MUTE">User Muted</option>
+                            <option value="delete">Delete</option>
+                            <option value="restore">Restore</option>
+                            <option value="edit">Edit</option>
+                            <option value="ban">Ban</option>
+                            <option value="mute">Mute</option>
+                            <option value="role_change">Role Change</option>
+                            <option value="inspect">Inspect</option>
                         </select>
                     </div>
 
                     <div className={formStyle.actions}>
-                        <button type="submit" className={`${buttonStyle.btn} ${buttonStyle.btnPrimary}`}>
+                        <button type="submit"
+                                className={`${buttonStyle.btn} ${buttonStyle.btnPrimary}`}>
                             Apply Filter
                         </button>
                         {(selectedModule || selectedAction) && (
-                            <Link href="/admin/audit-log" className={`${buttonStyle.btn} ${buttonStyle.btnSecondary}`}>
+                            <Link href="/admin/audit-log"
+                                  className={`${buttonStyle.btn} ${buttonStyle.btnSecondary}`}>
                                 Reset
                             </Link>
                         )}
@@ -102,37 +123,44 @@ export default async function AdminAuditLogPage({searchParams}: { searchParams: 
                 </form>
             </MainContentPanel>
 
-            <MainContentPanel title="Recent Audit Records">
+            <MainContentPanel title="Recent Mod Actions">
                 <div className={tableStyle.tableWrapper}>
                     <table className={tableStyle.table}>
                         <thead>
                         <tr>
-                            <th>Timestamp</th>
-                            <th>Action</th>
+                            <th>When</th>
                             <th>Module</th>
-                            <th>Actor</th>
-                            <th>Target</th>
-                            <th>Details</th>
+                            <th>Action</th>
+                            <th>Moderator</th>
+                            <th>Target User</th>
+                            <th>Record ID</th>
+                            <th>Reason</th>
                         </tr>
                         </thead>
                         <tbody>
-                        {entries.map((entry) => (
-                            <tr key={entry.id}>
-                                <td>{new Date(entry.createdAt).toLocaleString()}</td>
-                                <td>
-                                    <span className={tableStyle.statusBadge}>{entry.actionType}</span>
-                                </td>
-                                <td>{entry.targetModule || "—"}</td>
-                                <td>{entry.actorName || entry.actorEmail || "System"}</td>
-                                <td>{entry.targetName || "—"}</td>
-                                <td>
-                                    <code>{JSON.stringify(entry.metadata || {})}</code>
-                                </td>
-                            </tr>
-                        ))}
+                        {entries.map((e) => {
+                            const reason = (e.metadata as { reason?: string } | null)?.reason;
+                            return (
+                                <tr key={e.id}>
+                                    <td>{new Date(e.createdAt).toLocaleString()}</td>
+                                    <td>
+                                      <span className={tableStyle.statusBadge}>
+                                        {e.targetModule || "—"}
+                                      </span>
+                                    </td>
+                                    <td>{e.actionType}</td>
+                                    <td>{e.moderatorName || e.moderatorEmail || "—"}</td>
+                                    <td>{e.targetName || e.targetEmail || "—"}</td>
+                                    <td>
+                                        <code>{e.targetRecordId || "—"}</code>
+                                    </td>
+                                    <td>{reason || "—"}</td>
+                                </tr>
+                            );
+                        })}
                         {entries.length === 0 && (
                             <tr>
-                                <td colSpan={6} className={tableStyle.tableEmptyCell}>
+                                <td colSpan={7} className={tableStyle.tableEmptyCell}>
                                     No audit records match the selected filters.
                                 </td>
                             </tr>

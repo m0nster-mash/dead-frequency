@@ -162,26 +162,26 @@ export default async function AdminReportsPage({
                                     )}
                                 </td>
                                 <td>
-                                    {item.status === "PENDING" ? (
-                                        <div className={formStyle.actions}>
-                                            <form action={resolveReportAction}>
-                                                <input type="hidden" name="reportId" value={item.id}/>
-                                                <button type="submit"
-                                                        className={`${buttonStyle.btn} ${buttonStyle.btnPrimary}`}>
-                                                    Resolve
-                                                </button>
-                                            </form>
-                                            <form action={resolveReportAction}>
-                                                <input type="hidden" name="reportId" value={item.id}/>
-                                                <button type="submit"
-                                                        className={`${buttonStyle.btn} ${buttonStyle.btnSecondary}`}>
-                                                    Dismiss
-                                                </button>
-                                            </form>
-                                        </div>
-                                    ) : (
-                                        "—"
-                                    )}
+                                    {/*{item.status === "PENDING" ? (*/}
+                                    {/*    <div className={formStyle.actions}>*/}
+                                    {/*        <form action={resolveReportAction}>*/}
+                                    {/*            <input type="hidden" name="reportId" value={item.id}/>*/}
+                                    {/*            <button type="submit"*/}
+                                    {/*                    className={`${buttonStyle.btn} ${buttonStyle.btnPrimary}`}>*/}
+                                    {/*                Resolve*/}
+                                    {/*            </button>*/}
+                                    {/*        </form>*/}
+                                    {/*        <form action={resolveReportAction}>*/}
+                                    {/*            <input type="hidden" name="reportId" value={item.id}/>*/}
+                                    {/*            <button type="submit"*/}
+                                    {/*                    className={`${buttonStyle.btn} ${buttonStyle.btnSecondary}`}>*/}
+                                    {/*                Dismiss*/}
+                                    {/*            </button>*/}
+                                    {/*        </form>*/}
+                                    {/*    </div>*/}
+                                    {/*) : (*/}
+                                    {/*    "—"*/}
+                                    {/*)}*/}
                                 </td>
                             </tr>
                         ))}
