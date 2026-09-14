@@ -1,0 +1,6 @@
+export enum UserStatus {
+    USER_MUTED = "USER_MUTED",
+    USER_EDITED = "USER_EDITED",
+    POST_DELETED = "POST_DELETED",
+    REPORT_RESOLVED = "REPORT_RESOLVED"
+}

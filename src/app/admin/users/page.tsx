@@ -1,48 +1,40 @@
 import {AdminUserTable} from "@/core/admin/components/admin-user-table";
-import {auth} from "@/core/auth";
 import {requireSession} from "@/core/auth/lib/require-session";
+import {role, user, userRole} from "@/core/auth/schema/auth.schema";
 import {PageHeader} from "@/core/dashboard/components/panels/page-header";
-import {headers} from "next/headers";
-import {JSX} from "react";
+import {db} from "@/shared/db/client";
+import {UserRole} from "@shared/constants/enums/user-role";
+import {eq} from "drizzle-orm";
 
-/**
- * The primary administrator control panel.
- *
- * @returns {Promise<JSX.Element>} A promise resolving to the main administrative landing layout view.
- */
-export default async function AdminPage(): Promise<JSX.Element> {
-    const requestHeaders = await headers();
-    const session = await requireSession({role: "admin"});
+export default async function AdminUsersPage() {
+    const session = await requireSession({role: UserRole.ADMIN});
+    const usersList = await db.select().from(user);
+    const rolesList = await db
+        .select({
+            userId: userRole.userId,
+            roleName: role.name,
+        })
+        .from(userRole)
+        .innerJoin(role, eq(userRole.roleId, role.id));
 
-    // pulls the initial slice of registered users sorted chronologically
-    const {users, total} = await auth.api.listUsers({
-        query: {
-            sortBy: "createdAt",
-            sortDirection: "desc",
-            limit: 10
-        },
-        headers: requestHeaders
-    });
-
-    // dynamic localization label generation handling pluralization formatting constraints
-    const registeredUsers = total + " registered " + ((total == 1)
-        ? "user"
-        : "users");
+    const rolesByUserId = rolesList.reduce<Record<string, string>>((acc, curr) => {
+        acc[curr.userId] = curr.roleName;
+        return acc;
+    }, {});
 
     return (
         <div>
-            <PageHeader eyebrow={"Administration"} title={"Admin Panel"} subtitle={registeredUsers}/>
+            <PageHeader eyebrow="Administration"
+                        title="User Directory"
+                        subtitle="View and manage registered accounts"/>
 
-            <AdminUserTable
-                users={
-                    users.map((user) => ({
-                        id: user.id,
-                        name: user.name ?? "",
-                        email: user.email,
-                        role: user.role ?? "user",
-                        banned: Boolean(user.banned)
-                    }))}
-                currentUserId={session.user.id}/>
+            <AdminUserTable users={usersList.map((user) => ({
+                id: user.id,
+                name: user.name ?? "",
+                email: user.email,
+                role: rolesByUserId[user.id] ?? UserRole.USER,
+                banned: false,
+            }))} currentUserId={session.user.id}/>
         </div>
     );
 }

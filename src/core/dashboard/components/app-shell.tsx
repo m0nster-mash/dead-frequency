@@ -1,8 +1,8 @@
-import {SidebarProvider} from "@/app/dashboard/components/sidebar-context";
 import {Sidebar} from "@/core";
+import AppShellFrame from "@/core/dashboard/components/frames/app-shell-frame";
+import Header from "@/core/dashboard/components/navigation/header";
+import {SidebarProvider} from "@/core/dashboard/components/navigation/sidebar-context";
 import {JSX, ReactNode} from "react";
-import AppShellFrame from "./app-shell-frame";
-import Header from "./header";
 
 /**
  * Properties for the AppShell component.

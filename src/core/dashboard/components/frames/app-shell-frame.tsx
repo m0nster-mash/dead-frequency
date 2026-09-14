@@ -1,0 +1,49 @@
+"use client";
+
+import {useSidebar} from "@/core/dashboard/components/navigation/sidebar-context";
+import sidebarStyles from "@/shared/styles/patterns/sidebar.module.css";
+import {CSSProperties, JSX, ReactNode} from "react";
+
+/**
+ * Properties for the AppShellFrame component.
+ *
+ * @property {ReactNode} sidebar - The side drawer navigation viewport layout.
+ * @property {ReactNode} header - The top toolbar panel containing search tools, indicators, and profile buttons.
+ * @property {ReactNode} children - Dynamic view content streams rendered within the core main workspace block.
+ */
+type AppShellFrameProps = {
+    sidebar: ReactNode;
+    header: ReactNode;
+    children: ReactNode;
+};
+
+/**
+ * A Client Component frame orchestrating the spatial grid coordinates of the workspace.
+ *
+ * @param {AppShellFrameProps} props - The component properties.
+ */
+export default function AppShellFrame({sidebar, header, children}: AppShellFrameProps): JSX.Element {
+    const {collapsed} = useSidebar();
+
+    /**
+     * Translates reactive layout parameters straight into global token definitions. This avoids constant inline
+     * re-renders by letting standard CSS variables manage column resizing.
+     */
+    const shellStyle = {
+        "--current-sidebar-width": collapsed
+            ? "var(--sidebar-collapsed-width)"
+            : "var(--sidebar-width)",
+    } as CSSProperties;
+
+    return (
+        <div className="app" style={shellStyle}>
+            {sidebar}
+            <div className={sidebarStyles.mainShell}>
+                {header}
+                <main className={sidebarStyles.appContent}>
+                    <div id="top">{children}</div>
+                </main>
+            </div>
+        </div>
+    );
+}

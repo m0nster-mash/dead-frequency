@@ -1,88 +1,159 @@
-import {auth} from "@/core/auth";
+import {requireSession} from "@/core/auth/lib/require-session";
+import {user, userProfile, userStats} from "@/core/auth/schema/auth.schema";
 import {MainContentPanel} from "@/core/dashboard/components/panels/main-card";
 import {PageHeader} from "@/core/dashboard/components/panels/page-header";
-import formStyles from "@/shared/styles/form.module.css";
-import {role, userRole} from "@/shared/communication/permissions/schema/permissions.schema";
-import {userTrust} from "@/shared/communication/status/schema/status.schema";
+// import { character } from "@/shared/db/schema";
 import {db} from "@/shared/db/client";
+import buttonStyle from "@/shared/styles/buttons.module.css";
+import panelStyle from "@/shared/styles/panel.module.css";
+import cardStyle from "@/shared/styles/patterns/card.module.css";
+import tableStyle from "@/shared/styles/tables.module.css";
 import {eq} from "drizzle-orm";
-import {headers} from "next/headers";
+import Link from "next/link";
 import {notFound} from "next/navigation";
-import {JSX} from "react";
 
-/**
- * Properties for the PublicProfilePage component.
- *
- * @property {Promise<{ userId: string }>} params - A promise resolving to the route parameters containing the
- *                                                  targeted user ID.
- */
-type PageProps = {
-    params: Promise<{ userId: string }>;
+type Props = {
+    params: Promise<{
+        userId: string;
+    }>;
 };
 
 /**
- * Publicly accessible member profile page.
- *
- * @param {PageProps} props - The component properties.
- * @param {Promise<{ userId: string }>} props.params - Route parameter promise containing the user unique identifier.
- *
- * @returns {Promise<JSX.Element>} A promise resolving to the public member profile directory viewport.
+ * Public and Self User Profile Page.
  */
-export default async function PublicProfilePage({params}: PageProps): Promise<JSX.Element> {
+export default async function UserProfilePage({params}: Props) {
     const {userId} = await params;
-    const requestHeaders = await headers();
-    let user;
+    const session = await requireSession();
+    const isOwner = session?.user?.id === userId;
+    const [userData] = await db
+        .select({
+            id: user.id,
+            name: user.name,
+            email: user.email,
+            image: user.image,
+            createdAt: user.createdAt,
+            bio: userProfile.bio,
+            bannerUrl: userProfile.bannerUrl,
+            forumPostCount: userStats.forumPostCount,
+            chatMessageCount: userStats.chatMessageCount,
+            chatboxMessageCount: userStats.chatboxMessageCount,
+            commentCount: userStats.commentCount,
+            trustScore: userStats.trustScore,
+        })
+        .from(user)
+        .leftJoin(userProfile, eq(userProfile.userId, user.id))
+        .leftJoin(userStats, eq(userStats.userId, user.id))
+        .where(eq(user.id, userId))
+        .limit(1);
 
-    // core profile lookup loop matching targeted URL parameters
-    try {
-        user = await auth.api.getUser({
-            query: {id: userId},
-            headers: requestHeaders
-        });
-    } catch {
+    if (!userData) {
         notFound();
     }
 
-    // throw a 404 response layout if the target account does not exist
-    if (!user) {
-        notFound();
-    }
-
-    // resolves specific text labels for assigned user roles via an inner join
-    const roles =
-        await db
-            .select({label: role.label})
-            .from(userRole)
-            .innerJoin(role, eq(userRole.roleId, role.id))
-            .where(eq(userRole.userId, userId));
-
-    // extracts structural engagement tracking metrics for the target account
-    const [trust] =
-        await db
-            .select()
-            .from(userTrust)
-            .where(eq(userTrust.userId, userId))
-            .limit(1);
+    // // Fetch active characters owned by this user account
+    // const ownedCharacters = await db
+    //     .select({
+    //         id: character.id,
+    //         name: character.name,
+    //         slug: character.slug,
+    //         createdAt: character.createdAt,
+    //     })
+    //     .from(character)
+    //     .where(and(eq(character.ownerUserId, userId), isNull(character.deletedAt)));
 
     return (
         <div>
-            <PageHeader eyebrow={"Profile"}
-                        title={user.name || user.email}
-                        subtitle={roles.map((r) => r.label).join(", ") || "Member"}/>
+            <PageHeader eyebrow="User Profile"
+                        title={userData.name}
+                        subtitle={`Member since ${new Date(userData.createdAt).toLocaleDateString()}`}/>
 
-            <MainContentPanel title={"Overview"}>
-                <dl className={formStyles.detailList}>
-                    <div className={formStyles.detailRow}>
-                        <dt className={formStyles.detailLabel}>Post count</dt>
-                        <dd className={formStyles.detailValue}>{trust?.postCount ?? 0}</dd>
+            {isOwner && (
+                <div className={panelStyle.panel}>
+                    <div className={panelStyle.actions}>
+                        <Link href="/settings"
+                              className={`${buttonStyle.btn} ${buttonStyle.btnPrimary}`}>
+                            Edit Account & Profile
+                        </Link>
                     </div>
-                    <div className={formStyles.detailRow}>
-                        <dt className={formStyles.detailLabel}>Trust level</dt>
-                        <dd className={formStyles.detailValue}>{trust?.trustLevel ?? "new"}</dd>
-                    </div>
-                </dl>
+                </div>
+            )}
 
-                {/* TODO:: Post history section: once Task 4 forum lands, query forumPost where authorColumns.userId = userId, ordered by createdAt desc */}
+            <MainContentPanel title="About">
+                <div className={cardStyle.card}>
+                    <p>{userData.bio || "This user has not provided a bio yet."}</p>
+                </div>
+            </MainContentPanel>
+
+            <MainContentPanel title="Activity Statistics">
+                <div className={cardStyle.grid}>
+                    <div className={cardStyle.card}>
+                        <h3>Forum Posts</h3>
+                        <p className={cardStyle.statValue}>
+                            {userData.forumPostCount ?? 0}
+                        </p>
+                    </div>
+                    <div className={cardStyle.card}>
+                        <h3>Chatbox Messages</h3>
+                        <p className={cardStyle.statValue}>
+                            {userData.chatboxMessageCount ?? 0}
+                        </p>
+                    </div>
+                    <div className={cardStyle.card}>
+                        <h3>Comments</h3>
+                        <p className={cardStyle.statValue}>
+                            {userData.commentCount ?? 0}
+                        </p>
+                    </div>
+                    <div className={cardStyle.card}>
+                        <h3>Trust Score</h3>
+                        <p className={cardStyle.statValue}>
+                            {userData.trustScore ?? 0}
+                        </p>
+                    </div>
+                </div>
+            </MainContentPanel>
+
+            <MainContentPanel title="Owned Characters">
+                <div className={tableStyle.tableWrapper}>
+                    <table className={tableStyle.table}>
+                        <thead>
+                        <tr>
+                            <th>Character Name</th>
+                            <th>Slug</th>
+                            <th>Created</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {/*{ownedCharacters.map((char) => (*/}
+                        {/*    <tr key={char.id}>*/}
+                        {/*        <td>*/}
+                        {/*            <strong>{char.name}</strong>*/}
+                        {/*        </td>*/}
+                        {/*        <td>*/}
+                        {/*            <code>{char.slug}</code>*/}
+                        {/*        </td>*/}
+                        {/*        <td>{new Date(char.createdAt).toLocaleDateString()}</td>*/}
+                        {/*        <td>*/}
+                        {/*            <Link*/}
+                        {/*                href={`/character/${char.id}`}*/}
+                        {/*                className={`${buttonStyle.btn} ${buttonStyle.btnSecondary}`}*/}
+                        {/*            >*/}
+                        {/*                View Profile*/}
+                        {/*            </Link>*/}
+                        {/*        </td>*/}
+                        {/*    </tr>*/}
+                        {/*))}*/}
+                        {/*{ownedCharacters.length === 0 && (*/}
+                        {/*    <tr>*/}
+                        {/*        <td colSpan={4} className={tableStyle.tableEmptyCell}>*/}
+                        {/*            This user does not own any characters yet.*/}
+                        {/*        </td>*/}
+                        {/*    </tr>*/}
+                        {/*)}*/}
+                        </tbody>
+                    </table>
+                </div>
             </MainContentPanel>
         </div>
     );

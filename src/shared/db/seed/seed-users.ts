@@ -1,53 +1,75 @@
-import {account, user} from "@/core/auth/schema/auth.schema";
-import {userRole} from "@/shared/communication/permissions/schema/permissions.schema";
-import {db} from "@/shared/db/client";
-import {SEED_TEST_USERS} from "@/shared/db/seed/seed-config";
-import {randomUUID} from "crypto";
+import { db } from "@/shared/db/client";
+import {
+    user,
+    account,
+    userRole,
+    userProfile,
+    userStats,
+} from "@/core/auth/schema/auth.schema";
+import {SEED_TEST_USERS} from "@shared/db/seed/seed-config";
+import {randomUUID} from "node:crypto";
+/**
+ * Seeds initial users, credential account records, RBAC roles, profiles, and stats.
+ */
+export async function seedUsers(): Promise<void> {
+    console.log("Seeding initial users...");
 
-export async function seedTestUsers(): Promise<void> {
-    try {
-        for (const testUser of [...SEED_TEST_USERS]) {
-            const userId = randomUUID();
+    for (const u of SEED_TEST_USERS) {
+        // 1. Core BetterAuth User Record
+        await db
+            .insert(user)
+            .values({
+                id: u.id,
+                name: u.name,
+                email: u.email,
+                emailVerified: true,
+            })
+            .onConflictDoNothing();
 
-            // Insert user
-            await db
-                .insert(user)
-                .values({
-                    id: userId,
-                    email: testUser.email,
-                    name: testUser.name,
-                    role: testUser.roleId,
-                    emailVerified: true,
-                })
-                .onConflictDoNothing();
+        // 2. Credentials Account Entry (BetterAuth Native)
+        await db
+            .insert(account)
+            .values({
+                id: randomUUID(),
+                userId: u.id,
+                accountId: u.id,
+                providerId: "credential",
+                password: "e0d6fe7baecccb95d8026055b2799024:33ef504900fe6855a0231484f3e07cc27d205acc651561323c52e7db47098289b1c84f2b87c1bb927931378d471bfcb72c8f95dc8f8ce5a1e402d46d4cb9e78c",
+            })
+            .onConflictDoNothing();
 
-            // Insert account with password
-            await db
-                .insert(account)
-                .values({
-                    id: randomUUID(),
-                    userId: userId,
-                    accountId: userId,
-                    providerId: "credential",
-                    password: "e0d6fe7baecccb95d8026055b2799024:33ef504900fe6855a0231484f3e07cc27d205acc651561323c52e7db47098289b1c84f2b87c1bb927931378d471bfcb72c8f95dc8f8ce5a1e402d46d4cb9e78c",
-                })
-                .onConflictDoNothing();
+        // 3. Assign Role in Junction Table
+        await db
+            .insert(userRole)
+            .values({
+                userId: u.id,
+                roleId: u.roleId,
+            })
+            .onConflictDoNothing();
 
-            // Assign role
-            await db
-                .insert(userRole)
-                .values({
-                    id: randomUUID(),
-                    userId: userId,
-                    roleId: testUser.roleId,
-                    contextId: null,
-                })
-                .onConflictDoNothing();
-        }
+        // 4. Initialize User Profile
+        await db
+            .insert(userProfile)
+            .values({
+                id: `prof_${u.id}`,
+                userId: u.id,
+                bio: u.bio,
+            })
+            .onConflictDoNothing();
 
-        console.log(`Seeded ${SEED_TEST_USERS.length} test users`);
-    } catch (error) {
-        console.error("Failed to seed test users:", error);
-        throw error;
+        // 5. Initialize Post Activity & Trust Counters
+        await db
+            .insert(userStats)
+            .values({
+                userId: u.id,
+                forumPostCount: 0,
+                chatMessageCount: 0,
+                chatboxMessageCount: 0,
+                commentCount: 0,
+                trustScore: 100,
+            })
+            .onConflictDoNothing();
     }
+
+    console.log("Initial users, roles, profiles, and stats seeded successfully.");
 }

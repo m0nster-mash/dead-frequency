@@ -1,17 +1,30 @@
-import {role} from "@/shared/communication/permissions/schema/permissions.schema";
+import {role} from "@/core/auth/schema/auth.schema";
 import {db} from "@/shared/db/client";
-import {SEED_ROLES} from "@/shared/db/seed/seed-config";
+import {ROLE_PERMISSIONS, Role} from "@shared/constants/user-role";
 
 export async function seedRoles(): Promise<void> {
-    try {
-        await db
-            .insert(role)
-            .values([...SEED_ROLES])
-            .onConflictDoNothing();
+    const roleEntries = Object.values(Role).map((roleId) => {
+        const config = ROLE_PERMISSIONS[roleId];
+        return {
+            id: roleId,
+            name: config.name,
+            description: config.description,
+            bypassesCooldown: config.bypassesCooldown,
+        };
+    });
 
-        console.log(`✓ Seeded ${SEED_ROLES.length} roles`);
-    } catch (error) {
-        console.error("Failed to seed roles:", error);
-        throw error;
-    }
+    // Upsert roles into database
+    await db
+        .insert(role)
+        .values(roleEntries)
+        .onConflictDoUpdate({
+            target: role.id,
+            set: {
+                name: role.name,
+                description: role.description,
+                bypassesCooldown: role.bypassesCooldown,
+            },
+        });
+
+    console.log("Roles successfully seeded.");
 }

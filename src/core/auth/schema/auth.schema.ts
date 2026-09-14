@@ -1,147 +1,102 @@
-import {relations} from "drizzle-orm";
-import {boolean, index, pgTable, text, timestamp} from "drizzle-orm/pg-core";
+import {boolean, integer, jsonb, pgTable, primaryKey, text, timestamp} from "drizzle-orm/pg-core";
 
-/**
- * Core relational table representation storing persistent user metrics and status profiles. Adapts to BetterAuth
- * specifications while extending columns to handle administrative fields and guest states.
- */
-export const user = pgTable(
-    "user", {
-        id: text("id")
-            .primaryKey(),
-        name: text("name")
-            .notNull(),
-        email: text("email")
-            .notNull()
-            .unique(),
-        emailVerified:
-            boolean("email_verified")
-                .default(false)
-                .notNull(),
-        image: text("image"),
-        createdAt: timestamp("created_at")
-            .defaultNow()
-            .notNull(),
-        updatedAt: timestamp("updated_at")
-            .defaultNow()
-            .$onUpdate(() => /* @__PURE__ */ new Date())
-            .notNull(),
-        role: text("role"),
-        banned: boolean("banned")
-            .default(false),
-        banReason: text("ban_reason"),
-        banExpires: timestamp("ban_expires"),
-        isAnonymous: boolean("is_anonymous")
-            .default(false),
-    });
+// --- BetterAuth Native Core Tables ---
+export const user = pgTable("user", {
+    id: text("id").primaryKey(),
+    name: text("name").notNull(),
+    email: text("email").notNull().unique(),
+    emailVerified: boolean("emailVerified").notNull().default(false),
+    image: text("image"),
+    createdAt: timestamp("createdAt").notNull().defaultNow(),
+    updatedAt: timestamp("updatedAt").notNull().defaultNow(),
+});
 
-export const session = pgTable(
-    "session", {
-        id: text("id")
-            .primaryKey(),
-        expiresAt: timestamp("expires_at")
-            .notNull(),
-        token: text("token")
-            .notNull()
-            .unique(),
-        createdAt: timestamp("created_at")
-            .defaultNow()
-            .notNull(),
-        updatedAt: timestamp("updated_at")
-            .$onUpdate(() => /* @__PURE__ */ new Date())
-            .notNull(),
-        ipAddress: text("ip_address"),
-        userAgent: text("user_agent"),
-        userId: text("user_id")
-            .notNull()
-            .references(() => user.id, {onDelete: "cascade"}),
-        impersonatedBy: text("impersonated_by"),
-    },
-    (table) => [index("session_userId_idx").on(table.userId)],
-);
+export const session = pgTable("session", {
+    id: text("id").primaryKey(),
+    userId: text("userId")
+        .notNull()
+        .references(() => user.id, {onDelete: "cascade"}),
+    token: text("token").notNull().unique(),
+    expiresAt: timestamp("expiresAt").notNull(),
+    ipAddress: text("ipAddress"),
+    userAgent: text("userAgent"),
+    createdAt: timestamp("createdAt").notNull().defaultNow(),
+    updatedAt: timestamp("updatedAt").notNull().defaultNow(),
+});
 
-export const account = pgTable(
-    "account", {
-        id: text("id")
-            .primaryKey(),
-        accountId: text("account_id")
-            .notNull(),
-        providerId: text("provider_id")
-            .notNull(),
-        userId: text("user_id")
+export const account = pgTable("account", {
+    id: text("id").primaryKey(),
+    userId: text("userId")
+        .notNull()
+        .references(() => user.id, {onDelete: "cascade"}),
+    accountId: text("accountId").notNull(),
+    providerId: text("providerId").notNull(),
+    password: text("password"),
+    accessToken: text("accessToken"),
+    refreshToken: text("refreshToken"),
+    idToken: text("idToken"),
+    accessTokenExpiresAt: timestamp("accessTokenExpiresAt"),
+    refreshTokenExpiresAt: timestamp("refreshTokenExpiresAt"),
+    scope: text("scope"),
+    createdAt: timestamp("createdAt").notNull().defaultNow(),
+    updatedAt: timestamp("updatedAt").notNull().defaultNow(),
+});
+
+export const verification = pgTable("verification", {
+    id: text("id").primaryKey(),
+    identifier: text("identifier").notNull(),
+    value: text("value").notNull(),
+    expiresAt: timestamp("expiresAt").notNull(),
+    createdAt: timestamp("createdAt").notNull().defaultNow(),
+    updatedAt: timestamp("updatedAt").notNull().defaultNow(),
+});
+
+// --- Site-Wide Role-Based Access Control (RBAC) ---
+export const role = pgTable("role", {
+    id: text("id").primaryKey(), // 'admin' | 'moderator' | 'user'
+    name: text("name").notNull(),
+    description: text("description"),
+    bypassesCooldown: boolean("bypassesCooldown").notNull().default(false),
+    createdAt: timestamp("createdAt").notNull().defaultNow(),
+});
+
+export const userRole = pgTable(
+    "user_role",
+    {
+        userId: text("userId")
             .notNull()
             .references(() => user.id, {onDelete: "cascade"}),
-        accessToken: text("access_token"),
-        refreshToken: text("refresh_token"),
-        idToken: text("id_token"),
-        accessTokenExpiresAt: timestamp("access_token_expires_at"),
-        refreshTokenExpiresAt: timestamp("refresh_token_expires_at"),
-        scope: text("scope"),
-        password: text("password"),
-        createdAt: timestamp("created_at")
-            .defaultNow()
-            .notNull(),
-        updatedAt: timestamp("updated_at")
-            .$onUpdate(() => /* @__PURE__ */ new Date())
-            .notNull(),
+        roleId: text("roleId")
+            .notNull()
+            .references(() => role.id, {onDelete: "cascade"}),
+        assignedAt: timestamp("assignedAt").notNull().defaultNow(),
     },
-    (table) => [index("account_userId_idx").on(table.userId)],
+    (table) => ({
+        pk: primaryKey({columns: [table.userId, table.roleId]}),
+    })
 );
 
-export const verification = pgTable(
-    "verification", {
-        id: text("id")
-            .primaryKey(),
-        identifier: text("identifier")
-            .notNull(),
-        value: text("value")
-            .notNull(),
-        expiresAt: timestamp("expires_at")
-            .notNull(),
-        createdAt: timestamp("created_at")
-            .defaultNow()
-            .notNull(),
-        updatedAt: timestamp("updated_at")
-            .defaultNow()
-            .$onUpdate(() => /* @__PURE__ */ new Date())
-            .notNull(),
-    },
-    (table) => [index("verification_identifier_idx").on(table.identifier)],
-);
+// --- User Profile & Metrics Extensions ---
+export const userProfile = pgTable("user_profile", {
+    id: text("id").primaryKey(),
+    userId: text("userId")
+        .notNull()
+        .unique()
+        .references(() => user.id, {onDelete: "cascade"}),
+    bio: text("bio"),
+    bannerUrl: text("bannerUrl"),
+    themeConfig: jsonb("themeConfig"),
+    updatedAt: timestamp("updatedAt").notNull().defaultNow(),
+});
 
-/**
- * TODO:: determine if this is still going to be used or else delete
- *
- * Drizzle ORM Relational Mapping: User Definition Scope. Explains structural 1-to-many lookup trees for hydration
- * tasks.
- */
-export const userRelations = relations(user, ({many}) => ({
-    sessions: many(session),
-    accounts: many(account),
-}));
-
-/**
- * TODO:: determine if this is still going to be used or else delete
- *
- * Drizzle ORM Relational Mapping: Session Definition Scope. Links individual transient connection traces directly to
- * their parent User model structure.
- */
-export const sessionRelations = relations(session, ({one}) => ({
-    user: one(user, {
-        fields: [session.userId],
-        references: [user.id],
-    }),
-}));
-
-/**
- * TODO:: determine if this is still going to be used or else delete
- *
- * Drizzle ORM Relational Mapping: Account Definition Scope. Maps individual integration keys up to a primary single
- * user anchor entity.
- */
-export const accountRelations = relations(account, ({one}) => ({
-    user: one(user, {
-        fields: [account.userId],
-        references: [user.id],
-    }),
-}));
+export const userStats = pgTable("user_stats", {
+    userId: text("userId")
+        .primaryKey()
+        .references(() => user.id, {onDelete: "cascade"}),
+    forumPostCount: integer("forumPostCount").notNull().default(0),
+    chatMessageCount: integer("chatMessageCount").notNull().default(0),
+    chatboxMessageCount: integer("chatboxMessageCount").notNull().default(0),
+    commentCount: integer("commentCount").notNull().default(0),
+    trustScore: integer("trustScore").notNull().default(0),
+    lastPostedAt: timestamp("lastPostedAt"),
+});

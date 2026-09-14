@@ -1,5 +1,6 @@
 import {requireSession} from "@/core/auth/lib/require-session";
 import {MainContentPanel} from "@/core/dashboard/components/panels/main-card";
+import {UserRole} from "@shared/constants/enums/user-role";
 import Link from "next/link";
 import {JSX} from "react";
 
@@ -8,8 +9,8 @@ import {JSX} from "react";
  *
  * @returns {Promise<JSX.Element>} A promise resolving to the main administrative landing layout view.
  */
-export default async function AdminPage(): Promise<JSX.Element> {
-    await requireSession({role: "admin"});
+export default async function AdminPage() {
+    await requireSession({role: UserRole.ADMIN});
 
     return (
         <div>

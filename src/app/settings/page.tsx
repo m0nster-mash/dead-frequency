@@ -1,14 +1,11 @@
 import {requireSession} from "@/core/auth/lib/require-session";
 import {PageHeader} from "@/core/dashboard/components/panels/page-header";
 import {AccountSettingsForm} from "@/core/settings/components/account-settings-form";
-import {JSX} from "react";
 
 /**
  * The profile and identity settings dashboard.
- *
- * @returns {Promise<JSX.Element>} A promise resolving to the user account settings panel view.
  */
-export default async function SettingsPage(): Promise<JSX.Element> {
+export default async function SettingsPage() {
     const session = await requireSession();
     const userName = session.user.name;
     const userEmail = session.user.email;

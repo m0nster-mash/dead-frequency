@@ -1,6 +1,6 @@
 import "dotenv/config";
 import {seedRoles} from "@/shared/db/seed/seed-roles";
-import {seedTestUsers} from "@/shared/db/seed/seed-users";
+import {seedUsers} from "@shared/db/seed/seed-users";
 
 /**
  * Seed runner entrypoint with connection validation
@@ -21,7 +21,7 @@ async function main(): Promise<void> {
     try {
         // Run seeds in order
         await seedRoles();
-        await seedTestUsers();
+        await seedUsers();
 
         console.log("✓ All seeds completed successfully");
         process.exit(0);
