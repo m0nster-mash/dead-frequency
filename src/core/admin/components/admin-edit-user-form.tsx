@@ -3,9 +3,9 @@
 import {DeleteUserModal} from "@/core/admin/components/delete-user-modal";
 import {authClient} from "@/core/auth/lib/auth-client";
 import {MainContentPanel} from "@/core/dashboard/components/panels/main-card";
+import buttonStyles from "@/shared/styles/buttons.module.css";
 import formStyles from "@/shared/styles/form.module.css";
 import panelStyles from "@/shared/styles/panel.module.css";
-import buttonStyles from "@/shared/styles/buttons.module.css";
 import {useRouter} from "next/navigation";
 import {JSX, SubmitEvent, useState} from "react";
 

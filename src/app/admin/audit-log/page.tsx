@@ -116,17 +116,17 @@ export default async function AdminAuditLogPage({searchParams}: { searchParams: 
                         </tr>
                         </thead>
                         <tbody>
-                        {entries.map((e) => (
-                            <tr key={e.id}>
-                                <td>{new Date(e.createdAt).toLocaleString()}</td>
+                        {entries.map((entry) => (
+                            <tr key={entry.id}>
+                                <td>{new Date(entry.createdAt).toLocaleString()}</td>
                                 <td>
-                                    <span className={tableStyle.statusBadge}>{e.actionType}</span>
+                                    <span className={tableStyle.statusBadge}>{entry.actionType}</span>
                                 </td>
-                                <td>{e.targetModule || "—"}</td>
-                                <td>{e.actorName || e.actorEmail || "System"}</td>
-                                <td>{e.targetName || "—"}</td>
+                                <td>{entry.targetModule || "—"}</td>
+                                <td>{entry.actorName || entry.actorEmail || "System"}</td>
+                                <td>{entry.targetName || "—"}</td>
                                 <td>
-                                    <code>{JSON.stringify(e.metadata || {})}</code>
+                                    <code>{JSON.stringify(entry.metadata || {})}</code>
                                 </td>
                             </tr>
                         ))}

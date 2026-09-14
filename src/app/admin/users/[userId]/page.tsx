@@ -1,68 +1,49 @@
-import { requireSession } from "@/core/auth/lib/require-session";
-import { getUserDetails } from "@/core/auth/lib/get-user-details";
-import { PageHeader } from "@/core/dashboard/components/panels/page-header";
-import { MainContentPanel } from "@/core/dashboard/components/panels/main-card";
-import { AdminEditUserForm } from "@/core/admin/components/admin-edit-user-form";
-import { AdminPostingStatusForm } from "@/core/admin/components/admin-posting-status-form";
-import { DeleteUserModal } from "@/core/admin/components/delete-user-modal";
-import { JSX } from "react";
+import {AdminEditUserForm} from "@/core/admin/components/admin-edit-user-form";
+import {requireRoles} from "@/core/auth/lib/require-roles";
+import {requireSession} from "@/core/auth/lib/require-session";
+import {BreadcrumbLabel} from "@/core/dashboard/components/breadcrumb-label";
+import {PageHeader} from "@/core/dashboard/components/panels/page-header";
+import {User} from "better-auth";
+import {JSX} from "react";
 
-type Props = {
-    params: Promise<{
-        userId: string;
-    }>;
+/**
+ * Properties for the AdminEditUserPage component.
+ *
+ * @property {Promise<{ userId: string }>} params - A promise that resolves to the route parameters containing the
+ *                                                  user ID.
+ */
+type PageProps = {
+    params: Promise<{ userId: string }>;
 };
 
-export default async function AdminUserPage({ params }: Props): Promise<JSX.Element> {
-    // 1. Enforce admin session
-    await requireSession({ role: "admin" });
-
-    // 2. Await Next.js 15 params and fetch centralized user details
-    const { userId } = await params;
-    const { user, roles, profile, stats } = await getUserDetails(userId);
-
-    // Extract primary role ID for component form state
-    const primaryRole = roles?.roleId || "member";
+/**
+ * A page that allows administrators to edit a user's details.
+ *
+ * @param {PageProps} props - The component properties
+ * @param {Promise<{ userId: string }>} props.params - Route parameter promise containing the ID of the user being
+ *                                                     edited.
+ *
+ * @returns {Promise<JSX.Element>} A promise that resolves to the admin user edit dashboard UI.
+ */
+export default async function AdminEditUserPage({params}: PageProps): Promise<JSX.Element> {
+    const {userId} = await params;
+    const session = await requireSession();
+    const user = session.user as User;
+    const role = await requireRoles(userId)
 
     return (
         <div>
-            <PageHeader
-                eyebrow="Administration"
-                title={`Manage Account: ${user.name}`}
-                subtitle={`System ID: ${user.id}`}
-            />
+            <BreadcrumbLabel segment={userId} label={user.name ?? undefined}/>
 
-            {/* Account Details & Role Management Form */}
-            <MainContentPanel title="Account Details & Role Management">
-                <AdminEditUserForm
-                    user={{
-                        id: user.id,
-                        name: user.name,
-                        email: user.email,
-                        role: primaryRole,
-                        bio: profile?.bio || "",
-                    }}
-                />
-            </MainContentPanel>
+            <PageHeader eyebrow={"Viewing Profile Details For..."}
+                        title={user.name + " (" + user.email + ")"}
+                        subtitle={"Update this user's account details."}/>
 
-            {/* Standing & Trust Metrics Form */}
-            <MainContentPanel title="Standing & Trust Metrics">
-                <AdminPostingStatusForm
-                    userId={user.id}
-                    stats={{
-                        forumPostCount: stats.forumPostCount,
-                        chatMessageCount: stats.chatMessageCount,
-                        chatboxMessageCount: stats.chatboxMessageCount,
-                        commentCount: stats.commentCount,
-                        trustScore: stats.trustScore,
-                    }}
-                />
-            </MainContentPanel>
-
-            {/* Account Deactivation Modal */}
-            <MainContentPanel title="Account Deactivation">
-                <DeleteUserModal userId={user.id} userName={user.name} />
-            </MainContentPanel>
+            <AdminEditUserForm userId={user.id}
+                               currentName={user.name ?? ""}
+                               currentEmail={user.email}
+                               currentRole={role.toString() ?? "user"}
+                               isCurrentUser={user.id === userId}/>
         </div>
     );
 }

@@ -1,110 +1,83 @@
-import {resolveReportAction} from "@/core/admin/lib/moderation-actions";
-import {requireSession} from "@/core/auth/lib/require-session";
 import {user} from "@/core/auth/schema/auth.schema";
-import {MainContentPanel} from "@/core/dashboard/components/panels/main-card";
-import {PageHeader} from "@/core/dashboard/components/panels/page-header";
-import {report} from "@/shared/communication/moderation/schema/moderation.schema";
+import {report} from "@/shared/communication/interactions/schema/interactions.schema";
 import {db} from "@/shared/db/client";
-import buttonStyle from "@/shared/styles/buttons.module.css";
-import tableStyle from "@/shared/styles/tables.module.css";
+import {resolveReportAction} from "@shared/communication/interactions/lib/actions";
 import {desc, eq} from "drizzle-orm";
-import {alias} from "drizzle-orm/pg-core";
-import {JSX} from "react";
 
-export default async function AdminReportsPage(): Promise<JSX.Element> {
-    await requireSession({role: "admin"});
-
-    const reporterUser = alias(user, "reporterUser");
-    const resolverUser = alias(user, "resolverUser");
-
-    const reportsList = await db
+/**
+ * The central moderation reports queue.
+ */
+export default async function AdminReportsPage() {
+    const openReports = await db
         .select({
             id: report.id,
-            targetModule: report.targetModule,
-            targetRecordId: report.targetRecordId,
+            module: report.module,
+            recordId: report.recordId,
             reason: report.reason,
-            status: report.status,
-            resolutionNote: report.resolutionNote,
+            details: report.details,
+            resolved: report.resolved,
             createdAt: report.createdAt,
-            reporterName: reporterUser.name,
-            resolverName: resolverUser.name,
+            reporterName: user.name,
+            reporterEmail: user.email,
         })
         .from(report)
-        .leftJoin(reporterUser, eq(report.reporterUserId, reporterUser.id))
-        .leftJoin(resolverUser, eq(report.resolvedByUserId, resolverUser.id))
+        .leftJoin(user, eq(report.reporterId, user.id))
         .orderBy(desc(report.createdAt));
 
     return (
-        <div>
-            <PageHeader eyebrow="Administration"
-                        title="Moderation Reports Queue"
-                        subtitle="Review and resolve user-submitted content reports"/>
-
-            <MainContentPanel title="Reports Queue">
-                <div className={tableStyle.tableWrapper}>
-                    <table className={tableStyle.table}>
-                        <thead>
-                        <tr>
-                            <th>Submitted</th>
-                            <th>Module</th>
-                            <th>Reporter</th>
-                            <th>Reason</th>
-                            <th>Status</th>
-                            <th>Actions</th>
+        <div style={{padding: "2rem"}}>
+            <h1>Content Moderation Queue</h1>
+            <table style={{width: "100%", borderCollapse: "collapse", marginTop: "1rem"}}>
+                <thead>
+                <tr style={{textAlign: "left", borderBottom: "2px solid #ccc"}}>
+                    <th>Module</th>
+                    <th>Reason</th>
+                    <th>Details</th>
+                    <th>Reporter</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {openReports.length === 0 ? (
+                    <tr>
+                        <td colSpan={6} style={{padding: "1rem", textAlign: "center"}}>
+                            No moderation reports found.
+                        </td>
+                    </tr>
+                ) : (
+                    openReports.map((item) => (
+                        <tr key={item.id} style={{borderBottom: "1px solid #eee"}}>
+                            <td style={{padding: "0.5rem"}}>{item.module}</td>
+                            <td style={{padding: "0.5rem"}}>{item.reason}</td>
+                            <td style={{padding: "0.5rem"}}>{item.details || "—"}</td>
+                            <td style={{padding: "0.5rem"}}>{item.reporterName || item.reporterEmail}</td>
+                            <td style={{padding: "0.5rem"}}>
+                                <strong>{item.resolved}</strong>
+                            </td>
+                            <td style={{padding: "0.5rem"}}>
+                                {item.resolved === "open" && (
+                                    <div style={{display: "flex", gap: "0.5rem"}}>
+                                        <form action={async () => {
+                                            "use server";
+                                            await resolveReportAction({reportId: item.id, status: "actioned"});
+                                        }}>
+                                            <button type="submit">Action</button>
+                                        </form>
+                                        <form action={async () => {
+                                            "use server";
+                                            await resolveReportAction({reportId: item.id, status: "dismissed"});
+                                        }}>
+                                            <button type="submit">Dismiss</button>
+                                        </form>
+                                    </div>
+                                )}
+                            </td>
                         </tr>
-                        </thead>
-                        <tbody>
-                        {reportsList.map((r) => (
-                            <tr key={r.id}>
-                                <td>{new Date(r.createdAt).toLocaleDateString()}</td>
-                                <td>
-                                    <span className={tableStyle.statusBadge}>{r.targetModule}</span>
-                                </td>
-                                <td>{r.reporterName || "Anonymous"}</td>
-                                <td>{r.reason}</td>
-                                <td>
-                                    <span className={tableStyle.statusBadge}>{r.status}</span>
-                                </td>
-                                <td>
-                                    {r.status === "PENDING" ? (
-                                        <div className={buttonStyle.buttonGroup}>
-                                            <form action={async () => {
-                                                "use server";
-                                                await resolveReportAction(r.id, "RESOLVED", "Action taken by admin");
-                                            }}>
-                                                <button type="submit"
-                                                        className={`${buttonStyle.btn} ${buttonStyle.btnPrimary}`}>
-                                                    Resolve
-                                                </button>
-                                            </form>
-
-                                            <form action={async () => {
-                                                "use server";
-                                                await resolveReportAction(r.id, "DISMISSED", "Dismissed by admin");
-                                            }}>
-                                                <button type="submit"
-                                                        className={`${buttonStyle.btn} ${buttonStyle.btnSecondary}`}>
-                                                    Dismiss
-                                                </button>
-                                            </form>
-                                        </div>
-                                    ) : (
-                                        <span>Resolved by {r.resolverName || "Admin"}</span>
-                                    )}
-                                </td>
-                            </tr>
-                        ))}
-                        {reportsList.length === 0 && (
-                            <tr>
-                                <td colSpan={6} className={tableStyle.tableEmptyCell}>
-                                    No pending or historical reports found.
-                                </td>
-                            </tr>
-                        )}
-                        </tbody>
-                    </table>
-                </div>
-            </MainContentPanel>
+                    ))
+                )}
+                </tbody>
+            </table>
         </div>
     );
 }
