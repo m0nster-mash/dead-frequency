@@ -53,7 +53,7 @@ export const verification = pgTable("verification", {
 
 // --- Site-Wide Role-Based Access Control (RBAC) ---
 export const role = pgTable("role", {
-    id: text("id").primaryKey(), // 'admin' | 'moderator' | 'member' | 'newcomer'
+    id: text("id").primaryKey(), // 'admin' | 'moderator' | 'user'
     name: text("name").notNull(),
     description: text("description"),
     bypassesCooldown: boolean("bypassesCooldown").notNull().default(false),

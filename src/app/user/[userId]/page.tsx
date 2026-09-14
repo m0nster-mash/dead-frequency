@@ -11,7 +11,6 @@ import tableStyle from "@/shared/styles/tables.module.css";
 import {eq} from "drizzle-orm";
 import Link from "next/link";
 import {notFound} from "next/navigation";
-import {JSX} from "react";
 
 type Props = {
     params: Promise<{
@@ -22,9 +21,7 @@ type Props = {
 /**
  * Public and Self User Profile Page.
  */
-export default async function UserProfilePage({
-                                                  params,
-                                              }: Props): Promise<JSX.Element> {
+export default async function UserProfilePage({params}: Props) {
     const {userId} = await params;
     const session = await requireSession();
     const isOwner = session?.user?.id === userId;

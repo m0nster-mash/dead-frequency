@@ -1,4 +1,3 @@
-import {resolveReportAction} from "@/core/admin/lib/moderation-actions";
 import {requireSession} from "@/core/auth/lib/require-session";
 import {user} from "@/core/auth/schema/auth.schema";
 import {MainContentPanel} from "@/core/dashboard/components/panels/main-card";
@@ -8,10 +7,11 @@ import buttonStyle from "@/shared/styles/buttons.module.css";
 import formStyle from "@/shared/styles/form.module.css";
 import tableStyle from "@/shared/styles/tables.module.css";
 import {report} from "@shared/communication/moderation/schema/moderation.schema";
+import {UserRole} from "@shared/constants/enums/user-role";
+import {UserStatus} from "@shared/constants/UserStatus";
 import {and, desc, eq} from "drizzle-orm";
 import {alias} from "drizzle-orm/pg-core";
 import Link from "next/link";
-import {JSX} from "react";
 
 type SearchParams = Promise<{
     status?: string;
@@ -21,12 +21,8 @@ type SearchParams = Promise<{
 /**
  * Moderation Reports Queue page.
  */
-export default async function AdminReportsPage({
-                                                   searchParams,
-                                               }: {
-    searchParams: SearchParams;
-}): Promise<JSX.Element> {
-    await requireSession({role: "admin"});
+export default async function AdminReportsPage({searchParams,}: { searchParams: SearchParams; }) {
+    await requireSession({role: UserRole.ADMIN});
 
     // Next.js 15 searchParams resolution
     const params = await searchParams;
@@ -67,11 +63,9 @@ export default async function AdminReportsPage({
 
     return (
         <div>
-            <PageHeader
-                eyebrow={"Administration"}
-                title={"Moderation Reports"}
-                subtitle={"Review and resolve user-submitted moderation tickets"}
-            />
+            <PageHeader eyebrow={"Administration"}
+                        title={"Moderation Reports"}
+                        subtitle={"Review and resolve user-submitted moderation tickets"}/>
 
             <MainContentPanel title={"Filter Reports"}>
                 <form method="GET" className={formStyle.filterForm}>
@@ -84,9 +78,9 @@ export default async function AdminReportsPage({
                                 defaultValue={selectedStatus || "all"}
                                 className={formStyle.select}>
                             <option value="all">All Statuses</option>
-                            <option value="PENDING">Pending</option>
-                            <option value="RESOLVED">Resolved</option>
-                            <option value="DISMISSED">Dismissed</option>
+                            <option value={UserStatus.PENDING}>Pending</option>
+                            <option value={UserStatus.RESOLVED}>Resolved</option>
+                            <option value={UserStatus.DISMISSED}>Dismissed</option>
                         </select>
                     </div>
 
@@ -152,7 +146,7 @@ export default async function AdminReportsPage({
                                     <span className={tableStyle.statusBadge}>{item.status}</span>
                                 </td>
                                 <td>
-                                    {item.status !== "PENDING" ? (
+                                    {item.status !== UserStatus.PENDING ? (
                                         <div>
                                             <strong>{item.resolverName || item.resolverEmail || "System"}</strong>
                                             {item.resolutionNote && <div>{item.resolutionNote}</div>}

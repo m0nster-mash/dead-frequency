@@ -7,6 +7,7 @@ import {db} from "@/shared/db/client";
 import buttonStyle from "@/shared/styles/buttons.module.css";
 import formStyle from "@/shared/styles/form.module.css";
 import tableStyle from "@/shared/styles/tables.module.css";
+import {UserRole} from "@shared/constants/enums/user-role";
 import {and, desc, eq} from "drizzle-orm";
 import {alias} from "drizzle-orm/pg-core";
 import Link from "next/link";
@@ -25,7 +26,7 @@ export default async function AdminAuditLogPage({
                                                 }: {
     searchParams: SearchParams;
 }): Promise<JSX.Element> {
-    await requireSession({role: "admin"});
+    await requireSession({role: UserRole.ADMIN});
 
     const params = await searchParams;
     const selectedModule =
@@ -138,21 +139,21 @@ export default async function AdminAuditLogPage({
                         </tr>
                         </thead>
                         <tbody>
-                        {entries.map((e) => {
-                            const reason = (e.metadata as { reason?: string } | null)?.reason;
+                        {entries.map((entry) => {
+                            const reason = (entry.metadata as { reason?: string } | null)?.reason;
                             return (
-                                <tr key={e.id}>
-                                    <td>{new Date(e.createdAt).toLocaleString()}</td>
+                                <tr key={entry.id}>
+                                    <td>{new Date(entry.createdAt).toLocaleString()}</td>
                                     <td>
                                       <span className={tableStyle.statusBadge}>
-                                        {e.targetModule || "—"}
+                                        {entry.targetModule || "—"}
                                       </span>
                                     </td>
-                                    <td>{e.actionType}</td>
-                                    <td>{e.moderatorName || e.moderatorEmail || "—"}</td>
-                                    <td>{e.targetName || e.targetEmail || "—"}</td>
+                                    <td>{entry.actionType}</td>
+                                    <td>{entry.moderatorName || entry.moderatorEmail || "—"}</td>
+                                    <td>{entry.targetName || entry.targetEmail || "—"}</td>
                                     <td>
-                                        <code>{e.targetRecordId || "—"}</code>
+                                        <code>{entry.targetRecordId || "—"}</code>
                                     </td>
                                     <td>{reason || "—"}</td>
                                 </tr>

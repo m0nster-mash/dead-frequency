@@ -4,7 +4,6 @@ import {requireSession} from "@/core/auth/lib/require-session";
 import {BreadcrumbLabel} from "@/core/dashboard/components/breadcrumb-label";
 import {PageHeader} from "@/core/dashboard/components/panels/page-header";
 import {User} from "better-auth";
-import {JSX} from "react";
 
 /**
  * Properties for the AdminEditUserPage component.
@@ -22,10 +21,8 @@ type PageProps = {
  * @param {PageProps} props - The component properties
  * @param {Promise<{ userId: string }>} props.params - Route parameter promise containing the ID of the user being
  *                                                     edited.
- *
- * @returns {Promise<JSX.Element>} A promise that resolves to the admin user edit dashboard UI.
  */
-export default async function AdminEditUserPage({params}: PageProps): Promise<JSX.Element> {
+export default async function AdminEditUserPage({params}: PageProps) {
     const {userId} = await params;
     const session = await requireSession();
     const user = session.user as User;

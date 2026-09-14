@@ -3,11 +3,11 @@ import {requireSession} from "@/core/auth/lib/require-session";
 import {role, user, userRole} from "@/core/auth/schema/auth.schema";
 import {PageHeader} from "@/core/dashboard/components/panels/page-header";
 import {db} from "@/shared/db/client";
+import {UserRole} from "@shared/constants/enums/user-role";
 import {eq} from "drizzle-orm";
-import {JSX} from "react";
 
-export default async function AdminUsersPage(): Promise<JSX.Element> {
-    const session = await requireSession({role: "admin"});
+export default async function AdminUsersPage() {
+    const session = await requireSession({role: UserRole.ADMIN});
     const usersList = await db.select().from(user);
     const rolesList = await db
         .select({
@@ -32,7 +32,7 @@ export default async function AdminUsersPage(): Promise<JSX.Element> {
                 id: user.id,
                 name: user.name ?? "",
                 email: user.email,
-                role: rolesByUserId[user.id] ?? "Member",
+                role: rolesByUserId[user.id] ?? UserRole.USER,
                 banned: false,
             }))} currentUserId={session.user.id}/>
         </div>

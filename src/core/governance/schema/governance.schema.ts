@@ -3,7 +3,7 @@ import {user} from '../../auth/schema/auth.schema';
 
 // --- System Roles & Multi-Role Junction ---
 export const role = pgTable('role', {
-    id: text('id').primaryKey(), // 'admin' | 'moderator' | 'member'
+    id: text('id').primaryKey(), // 'admin' | 'moderator' | 'user'
     name: text('name').notNull(),
     description: text('description'),
     bypassesCooldown: boolean('bypassesCooldown').notNull().default(false),

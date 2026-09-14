@@ -42,7 +42,7 @@ export async function updateUserRoleAction(formData: FormData): Promise<{ succes
     try {
         const admin = await requireAdminSession();
         const targetUserId = formData.get("userId") as string;
-        const roleId = formData.get("roleId") as string; // 'admin' | 'moderator' | 'member' | 'newcomer'
+        const roleId = formData.get("roleId") as string; // 'admin' | 'moderator' | 'user'
 
         if (!targetUserId || !roleId) {
             return {success: false, error: "Target User ID and Role ID are required."};
