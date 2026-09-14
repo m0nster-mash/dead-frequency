@@ -22,7 +22,7 @@ export const hostAuthAdapter: ChatboxAuthAdapter & AvatarAuthAdapter & ForumAuth
             id: session.user.id,
             name: session.user.name,
             image: session.user.image ?? null,
-            role: (session.user as { role?: string }).role ?? "member",
+            role: (session.user as { role?: string }).role ?? "user",
         };
     },
 

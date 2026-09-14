@@ -4,7 +4,7 @@ import {headers} from "next/headers";
 import {redirect} from "next/navigation";
 
 interface RequireSessionOptions {
-    role?: "admin" | "moderator" | "member";
+    role?: "admin" | "moderator" | "user";
 }
 
 export async function requireSession(options?: RequireSessionOptions) {
