@@ -3,7 +3,7 @@
 import { requireSession } from "@/core/auth/lib/require-session";
 import { db } from "@/shared/db/client";
 import { report, userSanction } from "@/shared/communication/moderation/schema/moderation.schema";
-import { logAuditEvent } from "@/shared/communication/moderation/lib/audit-log";
+import { logAuditAction } from "@/shared/communication/moderation/lib/audit-log";
 import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 
@@ -50,7 +50,7 @@ export async function resolveReportAction(reportId: string, status: "RESOLVED" |
         })
         .where(eq(report.id, reportId));
 
-    await logAuditEvent({
+    await logAuditAction({
         actorUserId: adminUserId,
         actionType: "REPORT_RESOLVED",
         targetModule: existingReport.targetModule,
@@ -81,7 +81,7 @@ export async function issueSanctionAction(userId: string, sanctionType: string, 
         createdAt: new Date(),
     });
 
-    await logAuditEvent({
+    await logAuditAction({
         actorUserId: adminUserId,
         actionType: `USER_${sanctionType.toUpperCase()}`,
         targetModule: targetModule || "GLOBAL",
