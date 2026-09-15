@@ -1,4 +1,4 @@
-import {AvatarConfig} from "../lib/types";
+import {ComponentType, JSX} from "react";
 import HeadBase from "../assets/base/base_1.svg";
 import Eyes01 from "../assets/eyes/eyes_1.svg";
 import Eyes02 from "../assets/eyes/eyes_2.svg";
@@ -6,7 +6,7 @@ import Hair01 from "../assets/hair/hair_1.svg";
 import Hair02 from "../assets/hair/hair_2.svg";
 import Mouth01 from "../assets/mouth/mouth_1.svg";
 import Mouth02 from "../assets/mouth/mouth_2.svg";
-import {ComponentType, JSX} from "react";
+import {AvatarConfig} from "../lib/types";
 
 const EYES_MAP: Record<string, ComponentType> = {
     "eyes-01": Eyes01,

@@ -24,7 +24,6 @@ const PART_CATEGORIES: AvatarPartCategory[] = ["eyes", "mouth", "hair"];
  *                                         states.
  */
 export function validateAvatarConfig(input: unknown): AvatarConfigValidationResult {
-    // Step 1: Base Shape Verification
     if (typeof input !== "object" || input === null) {
         return {valid: false, error: "Avatar config must be an object."};
     }
@@ -32,7 +31,6 @@ export function validateAvatarConfig(input: unknown): AvatarConfigValidationResu
     // Direct cast to record map facilitates safe parameter query tests
     const candidate = input as Record<string, unknown>;
 
-    // Step 2: Enforce Blueprint Version Invariants
     if (candidate.version !== AVATAR_CONFIG_VERSION) {
         return {
             valid: false,
@@ -40,7 +38,6 @@ export function validateAvatarConfig(input: unknown): AvatarConfigValidationResu
         };
     }
 
-    // Step 3: Sequential Key Analysis Loop
     for (const category of PART_CATEGORIES) {
         const value = candidate[category];
 
@@ -55,7 +52,6 @@ export function validateAvatarConfig(input: unknown): AvatarConfigValidationResu
         }
     }
 
-    // Step 4: Secure Data Structuring Allocation
     return {
         valid: true,
         config: {
