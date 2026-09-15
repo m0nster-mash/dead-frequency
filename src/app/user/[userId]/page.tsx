@@ -7,10 +7,12 @@ import {db} from "@/shared/db/client";
 import buttonStyle from "@/shared/styles/buttons.module.css";
 import panelStyle from "@/shared/styles/panel.module.css";
 import cardStyle from "@/shared/styles/patterns/card.module.css";
-import tableStyle from "@/shared/styles/tables.module.css";
+import {MODULE_KEYS} from "@shared/constants/modules";
+import {isModuleEnabled} from "@shared/lib/modules";
 import {eq} from "drizzle-orm";
 import Link from "next/link";
 import {notFound} from "next/navigation";
+import {CharacterProfileCard, getCharactersForUser} from "../../../../packages/feature-character";
 
 type Props = {
     params: Promise<{
@@ -22,9 +24,15 @@ type Props = {
  * Public and Self User Profile Page.
  */
 export default async function UserProfilePage({params}: Props) {
+    type CharacterItem = Awaited<ReturnType<typeof getCharactersForUser>>[number];
+
     const {userId} = await params;
-    const session = await requireSession();
+    const session = await requireSession().catch(() => null);
     const isOwner = session?.user?.id === userId;
+    const characterModuleEnabled = await isModuleEnabled(MODULE_KEYS.CHARACTERS);
+    const userCharacters: CharacterItem[] = characterModuleEnabled
+        ? await getCharactersForUser(db, userId)
+        : [];
     const [userData] = await db
         .select({
             id: user.id,
@@ -49,17 +57,6 @@ export default async function UserProfilePage({params}: Props) {
     if (!userData) {
         notFound();
     }
-
-    // // Fetch active characters owned by this user account
-    // const ownedCharacters = await db
-    //     .select({
-    //         id: character.id,
-    //         name: character.name,
-    //         slug: character.slug,
-    //         createdAt: character.createdAt,
-    //     })
-    //     .from(character)
-    //     .where(and(eq(character.ownerUserId, userId), isNull(character.deletedAt)));
 
     return (
         <div>
@@ -114,46 +111,37 @@ export default async function UserProfilePage({params}: Props) {
             </MainContentPanel>
 
             <MainContentPanel title="Owned Characters">
-                <div className={tableStyle.tableWrapper}>
-                    <table className={tableStyle.table}>
-                        <thead>
-                        <tr>
-                            <th>Character Name</th>
-                            <th>Slug</th>
-                            <th>Created</th>
-                            <th>Actions</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {/*{ownedCharacters.map((char) => (*/}
-                        {/*    <tr key={char.id}>*/}
-                        {/*        <td>*/}
-                        {/*            <strong>{char.name}</strong>*/}
-                        {/*        </td>*/}
-                        {/*        <td>*/}
-                        {/*            <code>{char.slug}</code>*/}
-                        {/*        </td>*/}
-                        {/*        <td>{new Date(char.createdAt).toLocaleDateString()}</td>*/}
-                        {/*        <td>*/}
-                        {/*            <Link*/}
-                        {/*                href={`/character/${char.id}`}*/}
-                        {/*                className={`${buttonStyle.btn} ${buttonStyle.btnSecondary}`}*/}
-                        {/*            >*/}
-                        {/*                View Profile*/}
-                        {/*            </Link>*/}
-                        {/*        </td>*/}
-                        {/*    </tr>*/}
-                        {/*))}*/}
-                        {/*{ownedCharacters.length === 0 && (*/}
-                        {/*    <tr>*/}
-                        {/*        <td colSpan={4} className={tableStyle.tableEmptyCell}>*/}
-                        {/*            This user does not own any characters yet.*/}
-                        {/*        </td>*/}
-                        {/*    </tr>*/}
-                        {/*)}*/}
-                        </tbody>
-                    </table>
+                <div className={panelStyle.detailsSection}>
+                    <h2>Member Details</h2>
+                    <p>User ID: {userId}</p>
                 </div>
+
+                {characterModuleEnabled && (
+                    <div className={panelStyle.charactersSection}>
+                        <div className={panelStyle.sectionHeader}>
+                            <h3>Owned Characters ({userCharacters.length} / 10)</h3>
+                            {isOwner && (
+                                <Link href="/character/create" className={panelStyle.createButton}>
+                                    + Create Character
+                                </Link>
+                            )}
+                        </div>
+
+                        {userCharacters.length > 0 ? (
+                            <div className={panelStyle.grid}>
+                                {userCharacters.map((char) => (
+                                    <CharacterProfileCard key={char.id}
+                                                          character={char}
+                                                          isOwner={isOwner}/>
+                                ))}
+                            </div>
+                        ) : (
+                            <p className={panelStyle.emptyState}>
+                                This user has not created any characters yet.
+                            </p>
+                        )}
+                    </div>
+                )}
             </MainContentPanel>
         </div>
     );

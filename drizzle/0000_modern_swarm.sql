@@ -81,26 +81,7 @@ CREATE TABLE "verification" (
 	"updatedAt" timestamp DEFAULT now() NOT NULL
 );
 --> statement-breakpoint
-CREATE TABLE "character" (
-	"id" text PRIMARY KEY NOT NULL,
-	"ownerUserId" text NOT NULL,
-	"name" text NOT NULL,
-	"slug" text NOT NULL,
-	"createdAt" timestamp DEFAULT now() NOT NULL,
-	"updatedAt" timestamp DEFAULT now() NOT NULL,
-	"deletedAt" timestamp
-);
---> statement-breakpoint
-CREATE TABLE "character_profile" (
-	"id" text PRIMARY KEY NOT NULL,
-	"characterId" text NOT NULL,
-	"bio" text,
-	"themeConfig" jsonb,
-	"updatedAt" timestamp DEFAULT now() NOT NULL,
-	CONSTRAINT "character_profile_characterId_unique" UNIQUE("characterId")
-);
---> statement-breakpoint
-CREATE TABLE "auditLog" (
+CREATE TABLE "audit-log" (
 	"id" text PRIMARY KEY NOT NULL,
 	"actorUserId" text NOT NULL,
 	"actionType" text NOT NULL,
@@ -231,10 +212,8 @@ ALTER TABLE "user_profile" ADD CONSTRAINT "user_profile_userId_user_id_fk" FOREI
 ALTER TABLE "user_role" ADD CONSTRAINT "user_role_userId_user_id_fk" FOREIGN KEY ("userId") REFERENCES "public"."user"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "user_role" ADD CONSTRAINT "user_role_roleId_role_id_fk" FOREIGN KEY ("roleId") REFERENCES "public"."role"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "user_stats" ADD CONSTRAINT "user_stats_userId_user_id_fk" FOREIGN KEY ("userId") REFERENCES "public"."user"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
-ALTER TABLE "character" ADD CONSTRAINT "character_ownerUserId_user_id_fk" FOREIGN KEY ("ownerUserId") REFERENCES "public"."user"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
-ALTER TABLE "character_profile" ADD CONSTRAINT "character_profile_characterId_character_id_fk" FOREIGN KEY ("characterId") REFERENCES "public"."character"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
-ALTER TABLE "auditLog" ADD CONSTRAINT "auditLog_actorUserId_user_id_fk" FOREIGN KEY ("actorUserId") REFERENCES "public"."user"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
-ALTER TABLE "auditLog" ADD CONSTRAINT "auditLog_targetUserId_user_id_fk" FOREIGN KEY ("targetUserId") REFERENCES "public"."user"("id") ON DELETE set null ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "audit-log" ADD CONSTRAINT "audit-log_actorUserId_user_id_fk" FOREIGN KEY ("actorUserId") REFERENCES "public"."user"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "audit-log" ADD CONSTRAINT "audit-log_targetUserId_user_id_fk" FOREIGN KEY ("targetUserId") REFERENCES "public"."user"("id") ON DELETE set null ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "report" ADD CONSTRAINT "report_reporterUserId_user_id_fk" FOREIGN KEY ("reporterUserId") REFERENCES "public"."user"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "report" ADD CONSTRAINT "report_resolvedByUserId_user_id_fk" FOREIGN KEY ("resolvedByUserId") REFERENCES "public"."user"("id") ON DELETE set null ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "user_sanction" ADD CONSTRAINT "user_sanction_userId_user_id_fk" FOREIGN KEY ("userId") REFERENCES "public"."user"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
