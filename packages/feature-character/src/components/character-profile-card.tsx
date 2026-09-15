@@ -20,13 +20,13 @@ export function CharacterProfileCard({character, isOwner = false}: CharacterProf
             <div className={characterStyle.cardHeader}>
                 <h3 className={characterStyle.cardTitle}>{character.name}</h3>
                 {isOwner && (
-                    <Link href={`/character/${character.id}/edit`} className={characterStyle.editLink}>
+                    <Link href={`/character/${character.id}/edit`}>
                         Edit Character
                     </Link>
                 )}
             </div>
 
-            <div className={characterStyle.ownerInfo}>
+            <div>
                 Owned by User ID: <Link href={`/user/${character.ownerUserId}`}>{character.ownerUserId}</Link>
             </div>
 

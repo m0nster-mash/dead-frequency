@@ -1,56 +1,16 @@
 :root {
+    --theme-slate-002: #222633;
+
+
     --space-md: 1rem;
     --space-xs: 0.25rem;
 
     --text-color: #333;
     --border-color: #ccc;
-    --bg-surface: #fff;
+    --bg-surface: var(--theme-slate-002);
     --color-primary: #0066cc;
     --text-muted: #666;
     --bg-card: #ffffff;
-}
-
-
-.container {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-md, 1rem);
-    width: 100%;
-}
-
-.formGroup {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-xs, 0.25rem);
-}
-
-.label {
-    font-weight: 600;
-    font-size: 0.875rem;
-    color: var(--text-color, #333);
-}
-
-.input,
-.textarea {
-    width: 100%;
-    padding: 0.625rem 0.75rem;
-    border: 1px solid var(--border-color, #ccc);
-    border-radius: var(--radius-sm, 4px);
-    background: var(--bg-surface, #fff);
-    font-size: 0.9375rem;
-    transition: border-color 0.2s ease;
-}
-
-.input:focus,
-.textarea:focus {
-    outline: none;
-    border-color: var(--color-primary, #0066cc);
-    box-shadow: 0 0 0 2px rgba(0, 102, 204, 0.2);
-}
-
-.textarea {
-    min-height: 120px;
-    resize: vertical;
 }
 
 .counterBadge {
@@ -64,23 +24,6 @@
     margin-bottom: 1rem;
     font-size: 0.875rem;
     font-weight: 500;
-}
-
-.actionsRow {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 1rem;
-}
-
-.submitBtn {
-    padding: 0.625rem 1.25rem;
-    background-color: var(--color-primary, #0066cc);
-    color: #ffffff;
-    border: none;
-    border-radius: var(--radius-sm, 4px);
-    font-weight: 600;
-    cursor: pointer;
 }
 
 .deleteBtn {
@@ -97,7 +40,7 @@
     border: 1px solid var(--border-color, #e0e0e0);
     border-radius: var(--radius-md, 8px);
     padding: 1.25rem;
-    background: var(--bg-card, #ffffff);
+    margin: 1rem;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
@@ -112,18 +55,6 @@
     font-size: 1.25rem;
     font-weight: 700;
     margin: 0;
-}
-
-.editLink {
-    font-size: 0.875rem;
-    color: var(--color-primary, #0066cc);
-    text-decoration: none;
-}
-
-.ownerInfo {
-    font-size: 0.875rem;
-    color: var(--text-muted, #666);
-    margin-bottom: 0.75rem;
 }
 
 .bioText {

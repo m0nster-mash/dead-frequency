@@ -1,7 +1,7 @@
 "use client";
 
-import {MAX_CHARACTERS_PER_USER} from "../lib/constants";
 import React, {useTransition} from "react";
+import {MAX_CHARACTERS_PER_USER} from "../lib/constants";
 import characterStyle from "../styles/character.module.css";
 
 interface CharacterCreateFormProps {
@@ -15,7 +15,9 @@ export function CharacterCreateForm({currentCount, onSubmitAction}: CharacterCre
 
     const handleSubmit = (event: React.SubmitEvent<HTMLFormElement>) => {
         event.preventDefault();
-        if (isLimitReached) return;
+        if (isLimitReached) {
+            return;
+        }
 
         const formData = new FormData(event.currentTarget);
         startTransition(async () => {
@@ -24,7 +26,7 @@ export function CharacterCreateForm({currentCount, onSubmitAction}: CharacterCre
     };
 
     return (
-        <form onSubmit={handleSubmit} className={characterStyle.container}>
+        <form onSubmit={handleSubmit}>
             <div className={characterStyle.counterBadge}>
                 Characters Created: <strong>{currentCount} / {MAX_CHARACTERS_PER_USER}</strong>
             </div>
@@ -36,30 +38,24 @@ export function CharacterCreateForm({currentCount, onSubmitAction}: CharacterCre
                 </div>
             )}
 
-            <div className={characterStyle.formGroup}>
-                <label htmlFor="name" className={characterStyle.label}>Character Name *</label>
+            <div>
+                <label htmlFor="name">Character Name *</label>
                 <input id="name"
                        name="name"
                        type="text"
                        required
-                       disabled={isPending || isLimitReached}
-                       className={characterStyle.input}
-                       placeholder="e.g. Sir Gareth the Brave"/>
+                       disabled={isPending || isLimitReached}/>
             </div>
 
-            <div className={characterStyle.formGroup}>
-                <label htmlFor="bio" className={characterStyle.label}>Description / Bio</label>
+            <div>
+                <label htmlFor="bio">Description / Bio</label>
                 <textarea id="bio"
                           name="bio"
-                          disabled={isPending || isLimitReached}
-                          className={characterStyle.textarea}
-                          placeholder="Describe your character's backstory, physical features, personality, etc."/>
+                          disabled={isPending || isLimitReached}/>
             </div>
 
-            <div className={characterStyle.actionsRow}>
-                <button type="submit"
-                        disabled={isPending || isLimitReached}
-                        className={characterStyle.submitBtn}>
+            <div>
+                <button type="submit" disabled={isPending || isLimitReached}>
                     {isPending ? "Creating..." : "Create Character"}
                 </button>
             </div>

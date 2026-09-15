@@ -1,5 +1,6 @@
 import {character, characterProfile} from "../schema/character.schema";
 import {eq} from "drizzle-orm";
+import type { NodePgDatabase } from "drizzle-orm/node-postgres";
 import {CharacterAuditAction, MAX_CHARACTERS_PER_USER} from "./constants";
 import {getCharacterCountForUser} from "./queries";
 
@@ -12,7 +13,7 @@ function slugify(text: string): string {
         .replace(/-+/g, "-");
 }
 
-export async function requireOwnedCharacter(db: any, characterId: string, userId: string) {
+export async function requireOwnedCharacter(db: NodePgDatabase<Record<string, unknown>>, characterId: string, userId: string) {
     const [existing] = await db
         .select({id: character.id, ownerUserId: character.ownerUserId, name: character.name})
         .from(character)
@@ -31,7 +32,7 @@ export async function requireOwnedCharacter(db: any, characterId: string, userId
 }
 
 export async function createCharacter(
-    db: any,
+    db: NodePgDatabase<Record<string, unknown>>,
     ownerUserId: string,
     data: { name: string; bio?: string }
 ): Promise<{ characterId: string; name: string; actionType: string }> {
@@ -74,7 +75,7 @@ export async function createCharacter(
 }
 
 export async function updateCharacter(
-    db: any,
+    db: NodePgDatabase<Record<string, unknown>>,
     ownerUserId: string,
     data: { characterId: string; name: string; bio?: string }
 ): Promise<{ characterId: string; name: string; actionType: string }> {
@@ -108,7 +109,7 @@ export async function updateCharacter(
 }
 
 export async function deleteCharacter(
-    db: any,
+    db: NodePgDatabase<Record<string, unknown>>,
     ownerUserId: string,
     characterId: string
 ): Promise<{ characterId: string; name: string; actionType: string }> {
