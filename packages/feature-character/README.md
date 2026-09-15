@@ -17,7 +17,7 @@ packages/feature-character/
 ├── lib/
 │   ├── constants.ts   # Package audit action vocabulary & MAX_CHARACTERS_PER_USER = 10
 │   ├── queries.ts     # Data retrieval queries
-│   └── actions.ts     # Server actions (create, edit, soft-delete + audit logging)
+│   └── character-create-actions.ts     # Server actions (create, edit, soft-delete + audit logging)
 ├── styles/
 │   └── character.module.css # Isolated CSS styles for character forms & cards
 └── components/

@@ -13,10 +13,10 @@ import {systemModules} from "@/shared/db/system-modules";
 export const schema = {
     ...authSchema,
     ...moderationSchema,
-    ...characterSchema,
     systemModules, // Explicitly register the table definition
+    ...characterSchema,
+    ...avatarSchema,
     // ...chatboxSchema,
-    // ...avatarSchema,
     // ...forumSchema,
 };
 

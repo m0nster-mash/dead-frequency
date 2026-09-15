@@ -1,9 +1,9 @@
 "use server";
 
-import {createCharacter, deleteCharacter, updateCharacter} from "@/../packages/feature-character/src/lib/actions";
+import {createCharacter, deleteCharacter, updateCharacter} from "../../packages/feature-character/src/lib/actions";
 import {requireSession} from "@/core/auth/lib/require-session";
-import {logAuditAction} from "@/shared/communication/moderation/lib/audit-log";
-import {db} from "@/shared/db/client";
+import {logAuditAction} from "@shared/communication/moderation/lib/audit-log";
+import {db} from "@shared/db/client";
 import {TargetModule} from "@shared/constants/target-module";
 import {revalidatePath} from "next/cache";
 
