@@ -6,7 +6,7 @@ import {MainContentPanel} from "@/core/dashboard/components/panels/main-card";
 import buttonStyles from "@/shared/styles/buttons.module.css";
 import formStyles from "@/shared/styles/form.module.css";
 import panelStyles from "@/shared/styles/panel.module.css";
-import {UserRole} from "@shared/constants/enums/user-role";
+import {UserRole} from "@shared/constants/user-role";
 import {useRouter} from "next/navigation";
 import {JSX, SubmitEvent, useState} from "react";
 
@@ -119,7 +119,7 @@ export function AdminEditUserForm({
                 const roleResult =
                     await authClient.admin.setRole({
                         userId,
-                        role: role as UserRole.USER | UserRole.ADMIN,
+                        role: role as typeof UserRole.USER | typeof UserRole.ADMIN,
                     });
 
                 if (roleResult.error) {

@@ -3,7 +3,7 @@ import {requireSession} from "@/core/auth/lib/require-session";
 import {role, user, userRole} from "@/core/auth/schema/auth.schema";
 import {PageHeader} from "@/core/dashboard/components/panels/page-header";
 import {db} from "@/shared/db/client";
-import {UserRole} from "@shared/constants/enums/user-role";
+import {UserRole} from "@shared/constants/user-role";
 import {eq} from "drizzle-orm";
 
 export default async function AdminUsersPage() {

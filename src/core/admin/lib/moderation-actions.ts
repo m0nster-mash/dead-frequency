@@ -1,11 +1,11 @@
 "use server";
 
-import { requireSession } from "@/core/auth/lib/require-session";
-import { db } from "@/shared/db/client";
-import { report, userSanction } from "@/shared/communication/moderation/schema/moderation.schema";
-import { logAuditAction } from "@/shared/communication/moderation/lib/audit-log";
-import { eq } from "drizzle-orm";
-import { revalidatePath } from "next/cache";
+import {requireSession} from "@/core/auth/lib/require-session";
+import {logAuditAction} from "@/shared/communication/moderation/lib/audit-log";
+import {report, userSanction} from "@/shared/communication/moderation/schema/moderation.schema";
+import {db} from "@/shared/db/client";
+import {eq} from "drizzle-orm";
+import {revalidatePath} from "next/cache";
 
 export interface CreateReportPayload {
     targetModule: string;
@@ -27,11 +27,11 @@ export async function createReportAction(payload: CreateReportPayload) {
         createdAt: new Date(),
     });
 
-    return { success: true };
+    return {success: true};
 }
 
 export async function resolveReportAction(reportId: string, status: "RESOLVED" | "DISMISSED", resolutionNote?: string) {
-    const session = await requireSession({ role: "admin" });
+    const session = await requireSession({role: "admin"});
     const adminUserId = session.user.id;
 
     const [existingReport] = await db.select().from(report).where(eq(report.id, reportId));
@@ -64,11 +64,11 @@ export async function resolveReportAction(reportId: string, status: "RESOLVED" |
     });
 
     revalidatePath("/admin/reports");
-    return { success: true };
+    return {success: true};
 }
 
 export async function issueSanctionAction(userId: string, sanctionType: string, reason: string, targetModule?: string) {
-    const session = await requireSession({ role: "admin" });
+    const session = await requireSession({role: "admin"});
     const adminUserId = session.user.id;
 
     await db.insert(userSanction).values({
@@ -86,9 +86,9 @@ export async function issueSanctionAction(userId: string, sanctionType: string, 
         actionType: `USER_${sanctionType.toUpperCase()}`,
         targetModule: targetModule || "GLOBAL",
         targetUserId: userId,
-        metadata: { reason },
+        metadata: {reason},
     });
 
     revalidatePath("/admin/users");
-    return { success: true };
+    return {success: true};
 }

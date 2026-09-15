@@ -1,10 +1,17 @@
-import {UserRole} from "@shared/constants/enums/user-role";
+/**
+ * Core system permission roles.
+ */
+export const USER_ROLES = ['admin', 'moderator', 'user'] as const;
+export type UserRole = (typeof USER_ROLES)[number];
 
-export const Role = UserRole;
-export type Role = (typeof Role)[keyof typeof Role];
-
-export const ROLE_PERMISSIONS = {
-    [Role.ADMIN]: {name: "Administrator", description: "Full system access", bypassesCooldown: true},
-    [Role.MODERATOR]: {name: "Moderator", description: "Content moderation capabilities", bypassesCooldown: true},
-    [Role.USER]: {name: "User", description: "Standard user account", bypassesCooldown: false},
+export const UserRole = {
+    ADMIN: 'admin',
+    MODERATOR: 'moderator',
+    USER: 'user'
 } as const;
+
+export const USER_ROLE_LABELS: Record<UserRole, string> = {
+    [UserRole.ADMIN]: 'Administrator',
+    [UserRole.MODERATOR]: 'Moderator',
+    [UserRole.USER]: 'User'
+};

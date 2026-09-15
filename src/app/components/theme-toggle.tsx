@@ -13,6 +13,8 @@ const emptySubscribe = () => () => {
  */
 export function ThemeToggle(): JSX.Element | null {
     const {theme, setTheme} = useTheme();
+    const LIGHT = "light";
+    const DARK = "dark";
 
     const mounted = useSyncExternalStore(
         emptySubscribe,
@@ -25,9 +27,9 @@ export function ThemeToggle(): JSX.Element | null {
     }
 
     return (
-        <button onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+        <button onClick={() => setTheme(theme === DARK ? LIGHT : DARK)}
                 aria-label="Toggle theme">
-            {theme === "dark" ? "light" : "dark"}
+            {theme === DARK ? LIGHT : DARK}
         </button>
     );
 }

@@ -1,10 +1,11 @@
 import {auth} from "@/core/auth/lib/auth";
 import {requireRoles} from "@/core/auth/lib/require-roles";
+import {UserRole} from "@shared/constants";
 import {headers} from "next/headers";
 import {redirect} from "next/navigation";
 
 interface RequireSessionOptions {
-    role?: "admin" | "moderator" | "user";
+    role?: UserRole;
 }
 
 export async function requireSession(options?: RequireSessionOptions) {
@@ -16,16 +17,14 @@ export async function requireSession(options?: RequireSessionOptions) {
         redirect("/login");
     }
 
-    // Fetch assigned roles from user_role junction table
     const userRoles = await requireRoles(session.user.id);
 
     if (options?.role) {
-        const hasRole = options.role === "moderator"
-            ? userRoles.includes("moderator") || userRoles.includes("admin")
+        const hasRole = options.role === UserRole.MODERATOR
+            ? userRoles.includes(UserRole.MODERATOR) || userRoles.includes(UserRole.ADMIN)
             : userRoles.includes(options.role);
 
         if (!hasRole) {
-            // Use redirect("/dashboard") if you don't want unauthorized access to trigger a 404
             redirect("/dashboard");
         }
     }

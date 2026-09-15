@@ -7,8 +7,8 @@ import buttonStyle from "@/shared/styles/buttons.module.css";
 import formStyle from "@/shared/styles/form.module.css";
 import tableStyle from "@/shared/styles/tables.module.css";
 import {report} from "@shared/communication/moderation/schema/moderation.schema";
-import {UserRole} from "@shared/constants/enums/user-role";
-import {UserStatus} from "@shared/constants/UserStatus";
+import {ReportStatus, TargetModule} from "@shared/constants";
+import {UserRole} from "@shared/constants/user-role";
 import {and, desc, eq} from "drizzle-orm";
 import {alias} from "drizzle-orm/pg-core";
 import Link from "next/link";
@@ -78,9 +78,9 @@ export default async function AdminReportsPage({searchParams,}: { searchParams: 
                                 defaultValue={selectedStatus || "all"}
                                 className={formStyle.select}>
                             <option value="all">All Statuses</option>
-                            <option value={UserStatus.PENDING}>Pending</option>
-                            <option value={UserStatus.RESOLVED}>Resolved</option>
-                            <option value={UserStatus.DISMISSED}>Dismissed</option>
+                            <option value={ReportStatus.PENDING}>Pending</option>
+                            <option value={ReportStatus.RESOLVED}>Resolved</option>
+                            <option value={ReportStatus.DISMISSED}>Dismissed</option>
                         </select>
                     </div>
 
@@ -93,12 +93,12 @@ export default async function AdminReportsPage({searchParams,}: { searchParams: 
                                 defaultValue={selectedModule || "all"}
                                 className={formStyle.select}>
                             <option value="all">All Modules</option>
-                            <option value="FORUM_POST">Forum Post</option>
-                            <option value="BLOG_POST">Blog Post</option>
-                            <option value="COMMENT">Comment</option>
-                            <option value="CHATBOX_MESSAGE">Chatbox Message</option>
-                            <option value="USER_PROFILE">User Profile</option>
-                            <option value="DM_CONVERSATION">DM Conversation</option>
+                            <option value={TargetModule.FORUM_POST}>Forum Post</option>
+                            <option value={TargetModule.BLOG_POST}>Blog Post</option>
+                            <option value={TargetModule.COMMENT}>Comment</option>
+                            <option value={TargetModule.CHATBOX_MESSAGE}>Chatbox Message</option>
+                            <option value={TargetModule.USER_PROFILE}>User Profile</option>
+                            <option value={TargetModule.DIRECT_MESSAGE}>DM Conversation</option>
                         </select>
                     </div>
 
@@ -146,7 +146,7 @@ export default async function AdminReportsPage({searchParams,}: { searchParams: 
                                     <span className={tableStyle.statusBadge}>{item.status}</span>
                                 </td>
                                 <td>
-                                    {item.status !== UserStatus.PENDING ? (
+                                    {item.status !== ReportStatus.PENDING ? (
                                         <div>
                                             <strong>{item.resolverName || item.resolverEmail || "System"}</strong>
                                             {item.resolutionNote && <div>{item.resolutionNote}</div>}

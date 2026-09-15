@@ -7,11 +7,11 @@ import {db} from "@/shared/db/client";
 import buttonStyle from "@/shared/styles/buttons.module.css";
 import formStyle from "@/shared/styles/form.module.css";
 import tableStyle from "@/shared/styles/tables.module.css";
-import {UserRole} from "@shared/constants/enums/user-role";
+import {UserRole} from "@shared/constants/user-role";
 import {and, desc, eq} from "drizzle-orm";
 import {alias} from "drizzle-orm/pg-core";
 import Link from "next/link";
-import React, {JSX} from "react";
+import React from "react";
 
 type SearchParams = Promise<{
     module?: string;
@@ -21,11 +21,8 @@ type SearchParams = Promise<{
 /**
  * System-wide administrative audit log view.
  */
-export default async function AdminAuditLogPage({
-                                                    searchParams,
-                                                }: {
-    searchParams: SearchParams;
-}): Promise<JSX.Element> {
+export default async function AdminAuditLogPage({searchParams,}: { searchParams: SearchParams; }) {
+
     await requireSession({role: UserRole.ADMIN});
 
     const params = await searchParams;
