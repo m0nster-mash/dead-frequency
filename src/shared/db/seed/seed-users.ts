@@ -1,32 +1,32 @@
-import { db } from "@/shared/db/client";
-import {
-    user,
-    account,
-    userRole,
-    userProfile,
-    userStats,
-} from "@/core/auth/schema/auth.schema";
+import {account, user, userProfile, userRole, userStats,} from "@/core/auth/schema/auth.schema";
+import {db} from "@/shared/db/client";
 import {SEED_TEST_USERS} from "@shared/db/seed/seed-config";
 import {randomUUID} from "node:crypto";
+
 /**
  * Seeds initial users, credential account records, RBAC roles, profiles, and stats.
  */
 export async function seedUsers(): Promise<void> {
     console.log("Seeding initial users...");
 
-    for (const u of SEED_TEST_USERS) {
+    for (const seedTestUser of SEED_TEST_USERS) {
         const uuid = randomUUID();
 
-        // 1. Core BetterAuth User Record
         await db
             .insert(user)
             .values({
                 id: uuid,
-                name: u.name,
-                email: u.email,
+                name: seedTestUser.name,
+                email: seedTestUser.email,
                 emailVerified: true,
             })
-            .onConflictDoNothing();
+            .onConflictDoUpdate({
+                target: user.email,
+                set: {
+                    name: seedTestUser.name,
+                    emailVerified: true,
+                }
+            });
 
         // 2. Credentials Account Entry (BetterAuth Native)
         await db
@@ -45,7 +45,7 @@ export async function seedUsers(): Promise<void> {
             .insert(userRole)
             .values({
                 userId: uuid,
-                roleId: u.roleId,
+                roleId: seedTestUser.roleId,
             })
             .onConflictDoNothing();
 
@@ -55,7 +55,7 @@ export async function seedUsers(): Promise<void> {
             .values({
                 id: `prof_${uuid}`,
                 userId: uuid,
-                bio: u.bio,
+                bio: seedTestUser.bio,
             })
             .onConflictDoNothing();
 
