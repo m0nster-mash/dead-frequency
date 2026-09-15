@@ -5,36 +5,15 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1789348970106,
-      "tag": "0000_far_crusher_hogan",
+      "when": 1789495539208,
+      "tag": "0000_modern_swarm",
       "breakpoints": true
     },
     {
       "idx": 1,
       "version": "7",
-      "when": 1789402677375,
-      "tag": "0001_robust_the_spike",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "7",
-      "when": 1789437079888,
-      "tag": "0002_burly_crystal",
-      "breakpoints": true
-    },
-    {
-      "idx": 3,
-      "version": "7",
-      "when": 1789437574554,
-      "tag": "0003_known_ultron",
-      "breakpoints": true
-    },
-    {
-      "idx": 4,
-      "version": "7",
-      "when": 1789439111228,
-      "tag": "0004_stale_paper_doll",
+      "when": 1789495954601,
+      "tag": "0001_late_chamber",
       "breakpoints": true
     }
   ]
