@@ -10,8 +10,8 @@ export const UserRole = {
     USER: 'user'
 } as const;
 
-export const USER_ROLE_LABELS: Record<UserRole, string> = {
-    [UserRole.ADMIN]: 'Administrator',
-    [UserRole.MODERATOR]: 'Moderator',
-    [UserRole.USER]: 'User'
-};
+export const ROLE_PERMISSIONS: Record<UserRole, {name: string, description: string, bypassesCooldown: boolean}> = {
+    [UserRole.ADMIN]: {name: "Administrator", description: "Full system access", bypassesCooldown: true},
+    [UserRole.MODERATOR]: {name: "Moderator", description: "Content moderation capabilities", bypassesCooldown: true},
+    [UserRole.USER]: {name: "User", description: "Standard user account", bypassesCooldown: false},
+} as const;

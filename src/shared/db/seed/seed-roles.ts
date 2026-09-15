@@ -1,9 +1,9 @@
 import {role} from "@/core/auth/schema/auth.schema";
 import {db} from "@/shared/db/client";
-import {ROLE_PERMISSIONS, Role} from "@shared/constants/user-role";
+import {ROLE_PERMISSIONS, UserRole} from "@shared/constants/user-role";
 
 export async function seedRoles(): Promise<void> {
-    const roleEntries = Object.values(Role).map((roleId) => {
+    const roleEntries = Object.values(UserRole).map((roleId) => {
         const config = ROLE_PERMISSIONS[roleId];
         return {
             id: roleId,

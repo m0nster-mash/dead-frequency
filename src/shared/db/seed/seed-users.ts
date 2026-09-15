@@ -15,11 +15,13 @@ export async function seedUsers(): Promise<void> {
     console.log("Seeding initial users...");
 
     for (const u of SEED_TEST_USERS) {
+        const uuid = randomUUID();
+
         // 1. Core BetterAuth User Record
         await db
             .insert(user)
             .values({
-                id: u.id,
+                id: uuid,
                 name: u.name,
                 email: u.email,
                 emailVerified: true,
@@ -30,9 +32,9 @@ export async function seedUsers(): Promise<void> {
         await db
             .insert(account)
             .values({
-                id: randomUUID(),
-                userId: u.id,
-                accountId: u.id,
+                id: `acc_${uuid}`,
+                userId: uuid,
+                accountId: uuid,
                 providerId: "credential",
                 password: "e0d6fe7baecccb95d8026055b2799024:33ef504900fe6855a0231484f3e07cc27d205acc651561323c52e7db47098289b1c84f2b87c1bb927931378d471bfcb72c8f95dc8f8ce5a1e402d46d4cb9e78c",
             })
@@ -42,7 +44,7 @@ export async function seedUsers(): Promise<void> {
         await db
             .insert(userRole)
             .values({
-                userId: u.id,
+                userId: uuid,
                 roleId: u.roleId,
             })
             .onConflictDoNothing();
@@ -51,8 +53,8 @@ export async function seedUsers(): Promise<void> {
         await db
             .insert(userProfile)
             .values({
-                id: `prof_${u.id}`,
-                userId: u.id,
+                id: `prof_${uuid}`,
+                userId: uuid,
                 bio: u.bio,
             })
             .onConflictDoNothing();
@@ -61,7 +63,7 @@ export async function seedUsers(): Promise<void> {
         await db
             .insert(userStats)
             .values({
-                userId: u.id,
+                userId: uuid,
                 forumPostCount: 0,
                 chatMessageCount: 0,
                 chatboxMessageCount: 0,
