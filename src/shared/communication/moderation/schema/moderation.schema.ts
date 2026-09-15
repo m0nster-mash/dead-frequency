@@ -19,7 +19,7 @@ export const report = pgTable("report", {
 });
 
 // 2. Immutable Moderation Audit Trail
-export const auditLog = pgTable("auditLog", {
+export const auditLog = pgTable("audit-log", {
     id: text("id").primaryKey(),
     actorUserId: text("actorUserId")
         .notNull()

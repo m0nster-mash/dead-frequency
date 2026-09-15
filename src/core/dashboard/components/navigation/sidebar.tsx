@@ -85,7 +85,8 @@ export async function Sidebar(): Promise<JSX.Element> {
                                 {href: "/admin/users", label: "Users", icon: <GearIcon/>},
                                 {href: "/admin/forum", label: "Forum Management", icon: <GearIcon/>},
                                 {href: "/admin/audit-log", label: "Audit Log", icon: <GearIcon/>},
-                                {href: "/admin/reports", label: "Reports", icon: <GearIcon/>}
+                                {href: "/admin/reports", label: "Reports", icon: <GearIcon/>},
+                                {href: "/admin/modules", label: "Modules", icon: <GearIcon/>}
                             ],
                         },
                     ],

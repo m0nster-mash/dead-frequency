@@ -73,6 +73,10 @@ npx auth@latest create-admin --email admin@email.com --name "admin" --password "
 npx tsx src/shared/db/seed/run-seed.ts
 ```
 
+```bash
+npx tsx src/shared/db/seed/migrate-debug.ts
+```
+
 ### Kill Docker and remove old instances
 
 ```bash

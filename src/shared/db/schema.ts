@@ -13,9 +13,9 @@ export const schema = {
     ...authSchema,
     ...characterSchema,
     ...moderationSchema,
-    ...chatboxSchema,
-    ...avatarSchema,
-    ...forumSchema,
+    // ...chatboxSchema,
+    // ...avatarSchema,
+    // ...forumSchema,
 };
 
 export default schema;
