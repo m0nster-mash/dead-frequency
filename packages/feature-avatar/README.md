@@ -19,7 +19,7 @@ packages/feature-avatar/
 │   ├── types.ts       # Layer config & state types
 │   ├── options.ts     # Available asset options registry
 │   ├── queries.ts     # Data retrieval queries
-│   └── actions.ts     # Server actions (save/update avatar + audit logging)
+│   └── character-create-actions.ts     # Server actions (save/update avatar + audit logging)
 └── components/
 ├── avatar-builder.tsx   # Interactive customization builder panel
 ├── avatar-provider.tsx  # Context provider for active selection state

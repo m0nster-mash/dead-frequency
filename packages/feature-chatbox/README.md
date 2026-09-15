@@ -12,7 +12,7 @@ packages/feature-chatbox/
     ├── contracts/
     │   └── auth.ts           # (NEW) Decoupled user/auth interface contract
     ├── lib/
-    │   ├── actions.ts           # (MOVE from src/feature/chatbox/lib/)
+    │   ├── character-create-actions.ts           # (MOVE from src/feature/chatbox/lib/)
     │   └── queries.ts           # (MOVE from src/feature/chatbox/lib/)
     ├── schema/
     │   └── chatbox.schema.ts           # (MOVE from src/feature/chatbox/schema/)

@@ -5,15 +5,8 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1789495539208,
-      "tag": "0000_modern_swarm",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "7",
-      "when": 1789495954601,
-      "tag": "0001_late_chamber",
+      "when": 1789511162299,
+      "tag": "0000_left_mole_man",
       "breakpoints": true
     }
   ]

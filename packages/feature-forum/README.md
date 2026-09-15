@@ -24,7 +24,7 @@ packages/feature-forum/
     ├── contracts/
     │   └── auth.ts           # (NEW) Decoupled user/auth interface contract
     ├── lib/
-    │   ├── actions.ts           # (MOVE from src/feature/forum/lib/)
+    │   ├── character-create-actions.ts           # (MOVE from src/feature/forum/lib/)
     │   └── queries.ts           # (MOVE from src/feature/forum/lib/)
     ├── schema/
     │   └── forum.schema.ts           # (MOVE from src/feature/forum/schema/)

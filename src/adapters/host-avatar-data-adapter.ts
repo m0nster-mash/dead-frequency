@@ -1,5 +1,5 @@
-import type {AvatarConfig} from "@/../packages/feature-avatar/src/lib/types";
 import type {AvatarDataAdapter} from "@/../packages/feature-avatar/src/contracts/data";
+import type {AvatarConfig} from "@/../packages/feature-avatar/src/lib/types";
 import {avatar} from "@/../packages/feature-avatar/src/schema/avatar.schema";
 import {db} from "@/shared/db/client";
 import {eq} from "drizzle-orm";
@@ -15,16 +15,12 @@ export const hostAvatarDataAdapter: AvatarDataAdapter = {
             .values({
                 id: `avatar_${ownerId}`,
                 userId: ownerId,
-                // NOTE: avatar.schema.ts's layerConfig type ({base, eyes, hair, mouth} strings) doesn't
-                // match AvatarConfig ({version: 1, eyes, mouth, hair}) used everywhere else in the
-                // package. Casting here as a stopgap until you decide whether to update the schema's
-                // shape or keep translating at this boundary permanently.
-                layerConfig: config as unknown as Record<string, string>,
+                layerConfig: config,
             })
             .onConflictDoUpdate({
                 target: avatar.userId,
                 set: {
-                    layerConfig: config as unknown as Record<string, string>,
+                    layerConfig: config,
                     updatedAt: new Date(),
                 },
             });
@@ -32,8 +28,8 @@ export const hostAvatarDataAdapter: AvatarDataAdapter = {
 };
 
 /**
- * Host-side read helper. Not part of the package's own contract — per your call, reads stay
- * entirely host-side, so this lives next to the adapter rather than being injected into the package.
+ * Host-side read helper. Reads stay entirely host-side (not part of the package's contract),
+ * so this lives next to the adapter rather than being injected into the package.
  */
 export async function getAvatarConfigForUser(userId: string): Promise<AvatarConfig | null> {
     const [row] = await db
@@ -42,5 +38,5 @@ export async function getAvatarConfigForUser(userId: string): Promise<AvatarConf
         .where(eq(avatar.userId, userId))
         .limit(1);
 
-    return (row?.layerConfig as AvatarConfig | undefined) ?? null;
+    return row?.layerConfig ?? null;
 }

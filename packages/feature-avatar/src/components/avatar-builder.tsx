@@ -49,14 +49,14 @@ export function AvatarBuilder({initialConfig}: AvatarBuilderProps): JSX.Element 
 
     return (
         <div>
-            <div style={{display: "flex", gap: "2rem", alignItems: "flex-start"}}>
+            <div>
                 <AvatarRenderer config={config} size={160}/>
 
-                <div style={{flex: 1}}>
+                <div>
                     {CATEGORIES.map(({key, label}) => (
                         <div key={key}>
                             <label>{label}</label>
-                            <div style={{display: "flex", gap: "0.5rem"}}>
+                            <div>
                                 {AVATAR_OPTIONS[key].map((option) => (
                                     <button key={option.id}
                                             type="button"

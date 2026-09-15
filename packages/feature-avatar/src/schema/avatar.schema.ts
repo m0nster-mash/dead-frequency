@@ -1,4 +1,5 @@
 import {jsonb, pgTable, text, timestamp} from "drizzle-orm/pg-core";
+import type {AvatarConfig} from "../lib/types";
 
 /**
  * Unified Modular SVG Avatar Schema.
@@ -16,13 +17,7 @@ export const avatar = pgTable("avatar", {
         .unique(),
 
     layerConfig: jsonb("layerConfig")
-        .$type<{
-            base: string;
-            eyes: string;
-            hair: string;
-            mouth: string;
-            [key: string]: string;
-        }>()
+        .$type<AvatarConfig>()
         .notNull(),
 
     rasterUrl: text("rasterUrl"),

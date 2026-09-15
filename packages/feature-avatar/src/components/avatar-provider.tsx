@@ -1,32 +1,25 @@
 "use client";
 
 import React, {createContext, ReactNode, useContext} from "react";
-import type {AvatarAuthAdapter} from "../contracts/auth";
-import type {AvatarDataAdapter} from "../contracts/data";
-import {createAvatarActions, SaveAvatarConfigResult} from "../lib/actions";
+import type {SaveAvatarConfigResult} from "../lib/actions";
 
 interface AvatarContextValue {
-    authAdapter: AvatarAuthAdapter;
     saveAvatarConfig: (input: unknown) => Promise<SaveAvatarConfigResult>;
 }
 
 const AvatarContext = createContext<AvatarContextValue | null>(null);
 
 export interface AvatarProviderProps {
-    authAdapter: AvatarAuthAdapter;
-    dataAdapter: AvatarDataAdapter;
+    saveAvatarConfig: (input: unknown) => Promise<SaveAvatarConfigResult>;
     children: ReactNode;
 }
 
 export const AvatarProvider: React.FC<AvatarProviderProps> = ({
-                                                                  authAdapter,
-                                                                  dataAdapter,
+                                                                  saveAvatarConfig,
                                                                   children,
                                                               }) => {
-    const {saveAvatarConfig} = createAvatarActions(authAdapter, dataAdapter);
-
     return (
-        <AvatarContext.Provider value={{authAdapter, saveAvatarConfig}}>
+        <AvatarContext.Provider value={{saveAvatarConfig}}>
             {children}
         </AvatarContext.Provider>
     );

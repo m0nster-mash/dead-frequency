@@ -1,6 +1,6 @@
 import {CharacterEditForm} from "@/../packages/feature-character/src/components/character-edit-form";
 import {getCharacterById} from "@/../packages/feature-character/src/lib/queries";
-import {handleDeleteCharacter, handleUpdateCharacter} from "@/app/character/create/actions";
+import {handleDeleteCharacter, handleUpdateCharacter} from "@/adapters/character-create-actions";
 import {requireSession} from "@/core/auth/lib/require-session";
 import {MainContentPanel} from "@/core/dashboard/components/panels/main-card";
 import {PageHeader} from "@/core/dashboard/components/panels/page-header";
