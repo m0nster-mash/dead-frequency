@@ -1,6 +1,6 @@
+import {ReportStatus} from "@shared/constants";
 import { pgTable, text, timestamp, boolean, jsonb } from "drizzle-orm/pg-core";
 import { user } from "@/core/auth/schema/auth.schema";
-import {UserStatus} from "@shared/constants/UserStatus";
 
 // 1. Polymorphic User Reports Queue
 export const report = pgTable("report", {
@@ -11,7 +11,7 @@ export const report = pgTable("report", {
         .notNull()
         .references(() => user.id, { onDelete: "cascade" }),
     reason: text("reason").notNull(),
-    status: text("status").notNull().default(UserStatus.PENDING), // 'PENDING' | 'RESOLVED' | 'DISMISSED'
+    status: text("status").notNull().default(ReportStatus.PENDING), // 'PENDING' | 'RESOLVED' | 'DISMISSED'
     resolvedByUserId: text("resolvedByUserId").references(() => user.id, { onDelete: "set null" }),
     resolutionNote: text("resolutionNote"),
     createdAt: timestamp("createdAt").notNull().defaultNow(),

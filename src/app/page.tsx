@@ -1,18 +1,12 @@
 import HomePage from "@/app/home/page";
-import {auth} from "@/core/auth";
-import {headers} from "next/headers";
-import {JSX} from "react";
+import {requireSession} from "@/core/auth/lib/require-session";
 import DashboardPage from "./dashboard/page";
 
 /**
  * The root entry conditional router for the application.
- *
- * @returns {Promise<JSX.Element>} A promise resolving to the correct contextual landing viewport component stream.
  */
-export default async function Home(): Promise<JSX.Element> {
-    const session = await auth.api.getSession({
-        headers: await headers()
-    });
+export default async function Home() {
+    const session = await requireSession();
 
     return (
         <main>

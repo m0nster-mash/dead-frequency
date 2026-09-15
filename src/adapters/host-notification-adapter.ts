@@ -1,15 +1,15 @@
-import {ActorType} from "@/shared/constants/ActorType";
-import {EventType} from "@/shared/constants/EventType";
+import {ActorType, EventType} from '@/shared/constants';
 
 export interface NotificationPayload {
     recipientUserId: string;
-    eventType: EventType.PING | EventType.DM | EventType.REACTION | EventType.FRIEND_REQUEST | EventType.BLOG_POST | EventType.MOD_ALERT;
+    eventType: EventType;
     actorId: string;
-    actorType?: ActorType.USER | ActorType.CHARACTER;
+    actorType?: ActorType;
     targetModule: string;
     targetRecordId: string;
     payload?: Record<string, unknown>;
 }
+
 
 export interface HostNotificationAdapter {
     dispatchNotification(notification: NotificationPayload): Promise<void>;

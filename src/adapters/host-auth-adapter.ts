@@ -2,7 +2,7 @@ import type {AvatarAuthAdapter} from "@/../packages/feature-avatar/src/contracts
 import type {ChatboxAuthAdapter, ModuleUser} from "@/../packages/feature-chatbox/src/contracts/auth";
 import type {ForumAuthAdapter} from "@/../packages/feature-forum/src/contracts/auth";
 import {requireSession} from "@/core/auth/lib/require-session";
-import {UserRole} from "@shared/constants/enums/user-role";
+import {UserRole} from "@shared/constants/user-role";
 
 /**
  * Concrete host implementation of authentication adapters for feature modules.

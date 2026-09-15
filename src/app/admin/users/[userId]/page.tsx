@@ -3,6 +3,7 @@ import {requireRoles} from "@/core/auth/lib/require-roles";
 import {requireSession} from "@/core/auth/lib/require-session";
 import {BreadcrumbLabel} from "@/core/dashboard/components/breadcrumb-label";
 import {PageHeader} from "@/core/dashboard/components/panels/page-header";
+import {UserRole} from "@shared/constants";
 import {User} from "better-auth";
 
 /**
@@ -39,7 +40,7 @@ export default async function AdminEditUserPage({params}: PageProps) {
             <AdminEditUserForm userId={user.id}
                                currentName={user.name ?? ""}
                                currentEmail={user.email}
-                               currentRole={role.toString() ?? "user"}
+                               currentRole={role.toString() ?? UserRole.USER}
                                isCurrentUser={user.id === userId}/>
         </div>
     );
